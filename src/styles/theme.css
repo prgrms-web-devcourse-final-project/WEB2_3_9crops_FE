@@ -1,0 +1,33 @@
+/* https://tailwindcss.com/docs/theme */
+/* 테마 변수 정의 */
+
+@theme {
+  --color-black: #1c1b1a;
+  --color-white: #fff;
+
+  --color-gray-5: #f2f2f2;
+  --color-gray-10: #e7e7e7;
+  --color-gray-15: #dadada;
+  --color-gray-20: #cecece;
+  --color-gray-30: #b6b6b6;
+  --color-gray-40: #9d9d9d;
+  --color-gray-50: #858585;
+  --color-gray-60: #6c6c6c;
+  --color-gray-70: #545454;
+  --color-gray-80: #3b3b3b;
+  --color-gray-90: #232323;
+  --color-gray-100: #0a0a0a;
+
+  --color-accent-1: #f15847;
+  --color-accent-2: #f58d7b;
+  --color-accent-3: #fdd6cc;
+
+  --color-primary-1: #eabf17;
+  --color-primary-1-hover: #fab546;
+  --color-primary-2: #fad446;
+  --color-primary-3: #f8de8c;
+  --color-primary-4: #fff5dd;
+  --color-primary-5: #fffbf8;
+
+  --color-default-bg: #fffbf8;
+}

@@ -1,0 +1,7 @@
+/* 기본 스타일 리셋 및 전역 스타일 */
+
+@layer base {
+  body {
+    font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  }
+}
