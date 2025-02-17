@@ -1,0 +1,9 @@
+@layer base {
+  /* 폰트들 */
+  .pretendard {
+    font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  }
+  .courier {
+    font-family: 'Courier New', Courier, monospace;
+  }
+}
