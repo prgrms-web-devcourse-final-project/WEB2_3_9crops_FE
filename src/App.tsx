@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router';
 
+import useViewport from './hooks/useViewport';
 import Home from './pages/Home';
 import LetterBoardPage from './pages/LetterBoard';
 import LetterBoardDetailPage from './pages/LetterBoardDetail';
@@ -14,6 +15,8 @@ import RollingPaperPage from './pages/RollingPaper';
 import WritePage from './pages/Write';
 
 const App = () => {
+  useViewport();
+
   return (
     <Routes>
       <Route>

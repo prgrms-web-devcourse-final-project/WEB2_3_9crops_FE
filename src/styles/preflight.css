@@ -1,7 +1,26 @@
 /* 기본 스타일 리셋 및 전역 스타일 */
 
 @layer base {
+  :root {
+    --body-bg-color: var(--color-white);
+    --vh: 1vh;
+    --vw: 1vw;
+  }
+
   body {
     font-family: 'Pretendard Variable', Pretendard, sans-serif;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* 그라데이션 배경 들어가는 곳 */
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
+    min-height: calc(var(--vh, 1vh) * 100);
+    margin: 0 auto;
+    position: relative;
   }
 }
