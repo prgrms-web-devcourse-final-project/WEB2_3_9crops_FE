@@ -1,6 +1,14 @@
 /* https://tailwindcss.com/docs/theme */
 /* 테마 변수 정의 */
 
+@font-face {
+  font-family: 'HancomMalangMalang';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/HancomMalangMalang-Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 @theme {
   --color-black: #1c1b1a;
   --color-white: #fff;
@@ -30,4 +38,6 @@
   --color-primary-5: #fffbf8;
 
   --color-default-bg: #fffbf8;
+
+  --font-malang: 'HancomMalangMalang';
 }
