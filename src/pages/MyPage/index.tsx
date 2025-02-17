@@ -1,11 +1,26 @@
+import { useState } from 'react';
+
 import { AlarmIcon, ArrowLeftIcon, PersonIcon } from '@/assets/icons';
+import ConfirmModal from '@/components/ConfirmModal';
+
+const DUMMY_TEMP = 48.5;
+const DUMMY_ZIP_CODE = '235EA';
 
 const MyPage = () => {
-  const temperature = 48.5;
-  const zipCode = '235EA';
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
     <>
+      {isOpenModal && (
+        <ConfirmModal
+          title="정말 탈퇴하시겠어요?"
+          description="탈퇴하시면, 지금까지 나눈 따듯한 마음들이 사라져요"
+          cancelText="되돌아가기"
+          confirmText="탈퇴하기"
+          onCancel={() => setIsOpenModal(false)}
+          onConfirm={() => setIsOpenModal(false)}
+        />
+      )}
       <header className="sticky top-0 flex items-center justify-between p-5">
         <ArrowLeftIcon className="h-6 w-6 text-white" />
         <div className="flex items-center gap-3">
@@ -15,7 +30,7 @@ const MyPage = () => {
       </header>
       <main className="flex grow flex-col gap-12 px-5 pt-9 pb-6">
         <section className="h2-b mx-auto flex gap-1.5">
-          {zipCode.split('').map((code) => (
+          {DUMMY_ZIP_CODE.split('').map((code) => (
             <div className="flex h-13.5 w-10 items-center justify-center rounded-sm bg-white inset-shadow-[0_4px_4px_0] inset-shadow-black/10">
               {code}
             </div>
@@ -24,12 +39,12 @@ const MyPage = () => {
         <section>
           <div className="mb-2 flex justify-between">
             <p className="body-sb text-gray-60">따듯한 따숨님</p>
-            <p className="body-sb text-accent-1">{temperature}도</p>
+            <p className="body-sb text-accent-1">{DUMMY_TEMP}도</p>
           </div>
           <div className="h-4 w-full rounded-full bg-white">
             <div
               className="h-full w-[calc(${degree}%)] rounded-full bg-[#FFB5AC]"
-              style={{ width: `calc(${temperature}%)` }}
+              style={{ width: `calc(${DUMMY_TEMP}%)` }}
             />
           </div>
         </section>
@@ -54,7 +69,13 @@ const MyPage = () => {
             <p className="body-sb text-gray-100">로그아웃</p>
           </div>
         </section>
-        <button className="text-gray-60 body-m mt-auto self-start underline">탈퇴하기</button>
+        <button
+          type="button"
+          className="text-gray-60 body-m mt-auto self-start underline"
+          onClick={() => setIsOpenModal(true)}
+        >
+          탈퇴하기
+        </button>
       </main>
     </>
   );
