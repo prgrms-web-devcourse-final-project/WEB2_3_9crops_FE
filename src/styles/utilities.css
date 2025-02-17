@@ -1,4 +1,13 @@
 /* Tailwind에서 기본적으로 제공하지 않는 추가 유틀리티 클래스 정의 */
 
 @layer utilities {
+  /* 편지지 테마용 css */
+  .basic-theme {
+    background-attachment: local;
+    background-image:
+      linear-gradient(to right, white 10px, transparent 10px),
+      linear-gradient(to left, white 10px, transparent 10px),
+      repeating-linear-gradient(white, white 30px, #f8de8c 30px, #f8de8c 31px, white 31px);
+    line-height: 31px;
+  }
 }
