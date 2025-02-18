@@ -35,14 +35,14 @@ const ConfirmModal = ({
         <section className="flex items-center gap-6">
           <button
             type="button"
-            className="bg-primary-4 body-m h-10 flex-1 basis-1/2 rounded-lg text-gray-50"
+            className="body-m secondary-btn h-10 flex-1 basis-1/2"
             onClick={onCancel}
           >
             {cancelText}
           </button>
           <button
             type="button"
-            className="bg-primary-3 body-m h-10 flex-1 basis-1/2 rounded-lg text-black"
+            className="primary-btn body-m h-10 flex-1 basis-1/2"
             onClick={onConfirm}
           >
             {confirmText}
