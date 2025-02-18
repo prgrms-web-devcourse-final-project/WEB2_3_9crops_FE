@@ -7,6 +7,11 @@
     --vw: 1vw;
   }
 
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     font-family: 'Pretendard Variable', Pretendard, sans-serif;
     overflow-y: scroll;
@@ -32,5 +37,9 @@
     min-height: calc(var(--vh, 1vh) * 100);
     margin: 0 auto;
     position: relative;
+  }
+
+  button {
+    cursor: pointer;
   }
 }
