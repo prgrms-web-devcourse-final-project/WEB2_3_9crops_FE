@@ -30,7 +30,7 @@ const NotificationsPage = () => {
   return (
     <>
       <WarningModal isOpen={isOpenWarningModal} onClose={() => setIsOpenWarningModal(false)} />
-      <main className="flex grow flex-col items-center px-5 py-9">
+      <main className="flex grow flex-col items-center px-5 pt-4 pb-9">
         <h1 className="text-gray-60 body-b mb-10 w-fit rounded-full bg-white px-6 py-4">알림</h1>
         <button type="button" className="body-sb text-gray-60 place-self-end">
           모두 읽음

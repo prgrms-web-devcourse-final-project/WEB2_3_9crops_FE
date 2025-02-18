@@ -7,7 +7,7 @@ const Header = () => {
   // TODO: 스크롤 발생 시, 어떻게 보여져야 하는지
   return (
     <>
-      <header className="sticky top-0 flex items-center justify-between p-5">
+      <header className="sticky top-0 flex h-16 items-center justify-between p-5">
         <ArrowLeftIcon className="h-6 w-6 text-white" />
         <div className="flex items-center gap-3">
           <Link to="/mypage/notifications">
