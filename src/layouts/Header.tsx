@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router';
+import { Link, Outlet } from 'react-router';
 
 import { AlarmIcon, ArrowLeftIcon, PersonIcon } from '@/assets/icons';
 
@@ -10,7 +10,9 @@ const Header = () => {
       <header className="sticky top-0 flex items-center justify-between p-5">
         <ArrowLeftIcon className="h-6 w-6 text-white" />
         <div className="flex items-center gap-3">
-          <AlarmIcon className="h-6 w-6 text-white" />
+          <Link to="/mypage/notifications">
+            <AlarmIcon className="h-6 w-6 text-white" />
+          </Link>
           <PersonIcon className="h-6 w-6 text-white" />
         </div>
       </header>
