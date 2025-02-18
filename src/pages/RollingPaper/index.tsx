@@ -1,4 +1,5 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
+import { useState } from 'react';
 
 import EnvelopeImg from '@/assets/images/envelope.png';
 import BgItem from '@/assets/images/field-4.png';
@@ -6,25 +7,38 @@ import PageTitle from '@/components/PageTitle';
 import Header from '@/layouts/Header';
 
 import Message from './components/Message';
+import MessageDetailModal from './components/MessageDetailModal';
 
+const DUMMY_USER_ZIP_CODE = '12E12';
 const DUMMY_TITLE = '침수 피해를 복구중인 포스코 임직원 분들에게 응원의 메시지를 보내주세요!';
 const DUMMY_MESSAGE_COUNT = 20;
-
-const DUMMY_CONTENT_1 =
-  '편지 내용 어쩌구저쩌구 뾰로롱 편지 내용 어쩌구저쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 저쩌구 끝~!!';
-const DUMMY_CONTENT_2 = '구현해보고 정신없지 않은 범위 기준으로 자를까요?';
+const DUMMY_MESSAGE = {
+  content:
+    '편지 내용 어쩌구저쩌구 뾰로롱 편지 내용 어쩌구저쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 저쩌구 끝~!!',
+  sender: '12E12',
+};
+const DUMMY_MESSAGES = Array.from({ length: 10 }, () => ({ ...DUMMY_MESSAGE }));
 
 const RollingPaperPage = () => {
+  const [activeMessageIndex, setActiveMessageIndex] = useState<number | null>(null);
+
   return (
     <>
+      {activeMessageIndex !== null && (
+        <MessageDetailModal
+          message={DUMMY_MESSAGES[activeMessageIndex]}
+          isWriter={DUMMY_MESSAGES[activeMessageIndex].sender === DUMMY_USER_ZIP_CODE}
+          onClose={() => setActiveMessageIndex(null)}
+        />
+      )}
       <Header />
       <main className="flex grow flex-col items-center px-5 pt-4 pb-12">
         <PageTitle className="mb-18 max-w-73 text-center">{DUMMY_TITLE}</PageTitle>
         <p className="body-sb text-gray-60 w-full">등록된 편지 {DUMMY_MESSAGE_COUNT}</p>
         <section className="w-full">
           <MasonryInfiniteGrid column={2} align="stretch" gap={16}>
-            {Array.from({ length: DUMMY_MESSAGE_COUNT }).map((_, index) => (
-              <Message key={index} content={index % 3 === 0 ? DUMMY_CONTENT_1 : DUMMY_CONTENT_2} />
+            {DUMMY_MESSAGES.map((message, index) => (
+              <Message key={index} message={message} onClick={() => setActiveMessageIndex(index)} />
             ))}
           </MasonryInfiniteGrid>
         </section>
