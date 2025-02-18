@@ -3,18 +3,27 @@ import { useState } from 'react';
 import { AlarmIcon, ArrowLeftIcon, PersonIcon } from '@/assets/icons';
 import ConfirmModal from '@/components/ConfirmModal';
 
+import { TEMPERATURE_RANGE } from './constants';
+
 const DUMMY_TEMP = 48.5;
 const DUMMY_ZIP_CODE = '235EA';
 
 const MyPage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
+  const getDescriptionByTemperature = (temp: number) => {
+    const range = TEMPERATURE_RANGE.find((range) => temp >= range.min && temp < range.max);
+    return range?.description;
+  };
+
+  const description = getDescriptionByTemperature(DUMMY_TEMP);
+
   return (
     <>
       {isOpenModal && (
         <ConfirmModal
           title="정말 탈퇴하시겠어요?"
-          description="탈퇴하시면, 지금까지 나눈 따듯한 마음들이 사라져요"
+          description="탈퇴하시면, 지금까지 나눈 따뜻한 마음들이 사라져요"
           cancelText="되돌아가기"
           confirmText="탈퇴하기"
           onCancel={() => setIsOpenModal(false)}
@@ -41,7 +50,7 @@ const MyPage = () => {
         </section>
         <section>
           <div className="mb-2 flex justify-between">
-            <p className="body-sb text-gray-60">따듯한 따숨님</p>
+            <p className="body-sb text-gray-60">{description}</p>
             <p className="body-sb text-accent-1">{DUMMY_TEMP}도</p>
           </div>
           <div className="h-4 w-full rounded-full bg-white">
