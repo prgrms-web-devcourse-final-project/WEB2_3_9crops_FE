@@ -29,7 +29,7 @@ const MyPage = () => {
           onConfirm={() => setIsOpenModal(false)}
         />
       )}
-      <main className="flex grow flex-col gap-12 px-5 pt-9 pb-6">
+      <main className="flex grow flex-col gap-12 px-5 pt-4 pb-6">
         <h1 className="h2-b mx-auto flex gap-1.5">
           {DUMMY_ZIP_CODE.split('').map((code, index) => (
             <div
