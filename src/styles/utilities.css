@@ -1,13 +1,25 @@
 /* Tailwind에서 기본적으로 제공하지 않는 추가 유틀리티 클래스 정의 */
+/* import congratThemeFrame from '@/assets/images/congrat-theme-frame.png';
+import fieldThemeFrame from '@/assets/images/field-theme-frame.png';
+import skyThemeFrame from '@/assets/images/sky-theme-frame.png';
+import vintageThemeFrame from '@/assets/images/vintage-theme-frame.png'; */
 
 @layer utilities {
-  /* 편지지 테마용 css */
+  /* 편지지 줄 css */
   .basic-theme {
     background-attachment: local;
     background-image:
-      linear-gradient(to right, white 10px, transparent 10px),
-      linear-gradient(to left, white 10px, transparent 10px),
-      repeating-linear-gradient(white, white 30px, #f8de8c 30px, #f8de8c 31px, white 31px);
+      linear-gradient(to right, transparent 10px, transparent 10px),
+      linear-gradient(to left, transparent 10px, transparent 10px),
+      repeating-linear-gradient(
+        transparent,
+        transparent 30px,
+        #f8de8c 30px,
+        #f8de8c 31px,
+        transparent 31px
+      );
     line-height: 31px;
   }
+
+  /* 편지지 테마 css */
 }

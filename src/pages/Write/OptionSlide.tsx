@@ -1,25 +1,85 @@
-import { Component, useRef } from 'react';
-import FontOption from './FontOption';
-import PreviousLetterOption from './PreviousLetterOption';
-import WritePageButton from './components/WritePageButton';
+import { useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-function OptionSlide() {
-  const letterRef = useRef<Component>(null);
+import FontOption from './components/FontOption';
+import PreviousLetterOption from './components/PreviousLetterOption';
+import ThemeOption from './components/ThemeOption';
+import WritePageButton from './components/WritePageButton';
+import { T_option, T_prev_letter } from './write';
+
+function OptionSlide({ prevLetter }: { prevLetter: T_prev_letter }) {
+  const [clicked, setClicked] = useState<T_option>(null);
+  const [slideActive, setSlideActive] = useState<boolean>(false);
+  const buttonTitle = ['편지지', '글꼴', '이전 편지 내용'];
+
+  const headRef = useRef<HTMLDivElement>(null);
+
+  const slideStyle = twMerge(
+    `bg-primary-3 fixed bottom-0 left-[50%] flex w-full max-w-[600px] translate-x-[-50%] flex-col rounded-t-[20px] translate-y-[calc(100%-${headRef.current?.offsetHeight}px)] duration-300`,
+    `${slideActive && 'translate-y-[0]'}`,
+  );
+  // 슬라이드 계산부터 시작
+
   return (
-    <div className="bg-primary-3 absolute bottom-0 left-0 flex h-110 w-full flex-col rounded-t-[20px]">
-      <div className="border-primary-1 flex items-center justify-between border-b-2 px-4 pt-6 pb-4">
+    <div className={slideStyle}>
+      <div
+        className="border-primary-1 flex cursor-pointer items-center justify-between border-b-2 px-4 pt-6 pb-4"
+        ref={headRef}
+      >
         <div className="bg-primary-1 absolute top-3 left-[50%] h-[3px] w-7.5 translate-x-[-50%] translate-y-[-50%]"></div>
         <div className="flex gap-2">
-          <WritePageButton text="편지지" bgColor="white" rounded="lg" />
-          <WritePageButton text="글꼴" bgColor="white" rounded="lg" />
+          <WritePageButton
+            text={buttonTitle[0]}
+            bgColor="white"
+            rounded="lg"
+            clicked={clicked}
+            onClick={() => {
+              if (clicked !== buttonTitle[0]) {
+                setClicked('편지지');
+                setSlideActive(() => true);
+              } else {
+                setClicked(null);
+                setSlideActive(() => false);
+              }
+            }}
+          />
+          <WritePageButton
+            text={buttonTitle[1]}
+            bgColor="white"
+            rounded="lg"
+            clicked={clicked}
+            onClick={() => {
+              if (clicked !== buttonTitle[1]) {
+                setClicked('글꼴');
+                setSlideActive(() => true);
+              } else {
+                setClicked(null);
+                setSlideActive(() => false);
+              }
+            }}
+          />
         </div>
-        <WritePageButton text="이전 편지 내용" bgColor="white" rounded="lg" />
+        {prevLetter && (
+          <WritePageButton
+            text={buttonTitle[2]}
+            bgColor="white"
+            rounded="lg"
+            clicked={clicked}
+            onClick={() => {
+              if (clicked !== buttonTitle[2]) {
+                setClicked('이전 편지 내용');
+                setSlideActive(() => true);
+              } else {
+                setClicked(null);
+                setSlideActive(() => false);
+              }
+            }}
+          />
+        )}
       </div>
-      <div className="flex w-full flex-col gap-3 px-4 pt-3 pb-[30px]">
-        {/* <ThemeOption /> */}
-        {/* <FontOption /> */}
-        <PreviousLetterOption />
-      </div>
+      {clicked === '편지지' && <ThemeOption />}
+      {clicked === '글꼴' && <FontOption />}
+      {clicked === '이전 편지 내용' && <PreviousLetterOption prevLetter={prevLetter} />}
     </div>
   );
 }

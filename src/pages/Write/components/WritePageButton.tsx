@@ -1,19 +1,24 @@
 import { twMerge } from 'tailwind-merge';
 
+import { T_option } from '../write';
+
 function WritePageButton({
   text,
   onClick,
   bgColor = 'primary-3',
-  rounded = '[4px]',
+  clicked = '편지지',
+  rounded = 'sm',
 }: {
   text: string;
   onClick?: () => void;
   bgColor?: string;
+  clicked?: T_option;
   rounded?: string;
 }) {
   const buttonStyle = twMerge(
-    'caption-sb text-gray-60 cursor-pointer px-2 py-1',
+    'caption-sb text-gray-60 cursor-pointer rounded-sm px-2 py-1',
     `bg-${bgColor} rounded-${rounded}`,
+    `${clicked === text && 'bg-primary-1 text-white'}`,
   );
   return (
     <button className={buttonStyle} onClick={onClick}>
