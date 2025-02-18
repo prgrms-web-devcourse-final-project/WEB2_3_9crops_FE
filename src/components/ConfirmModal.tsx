@@ -1,3 +1,5 @@
+import ModalBg from '@/assets/images/yellow-modal.png';
+
 interface ConfirmModalProps {
   title: string;
   description: string;
@@ -18,10 +20,12 @@ const ConfirmModal = ({
   onConfirm,
 }: ConfirmModalProps) => {
   // TODO: 배경 이미지 삽입
+  // TODO: 전역 상태로 관리해야하는지 고민
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
       <div className="w-73">
-        <section className="bg-primary-3 mb-12 rounded-lg p-5">
+        <section className="relative mb-12 overflow-hidden rounded-lg p-5">
+          <img src={ModalBg} className="absolute inset-0 z-[-10] h-full w-full" />
           <div className="flex flex-col gap-1">
             <p className="body-m text-gray-80">{title}</p>
             <p className="caption-r text-black">{description}</p>

@@ -30,8 +30,11 @@ const MyPage = () => {
       </header>
       <main className="flex grow flex-col gap-12 px-5 pt-9 pb-6">
         <section className="h2-b mx-auto flex gap-1.5">
-          {DUMMY_ZIP_CODE.split('').map((code) => (
-            <div className="flex h-13.5 w-10 items-center justify-center rounded-sm bg-white inset-shadow-[0_4px_4px_0] inset-shadow-black/10">
+          {DUMMY_ZIP_CODE.split('').map((code, index) => (
+            <div
+              key={index}
+              className="flex h-13.5 w-10 items-center justify-center rounded-sm bg-white inset-shadow-[0_4px_4px_0] inset-shadow-black/10"
+            >
               {code}
             </div>
           ))}
