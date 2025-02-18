@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { AlarmIcon, ArrowLeftIcon, PersonIcon } from '@/assets/icons';
 import ConfirmModal from '@/components/ConfirmModal';
 
 import { TEMPERATURE_RANGE } from './constants';
@@ -30,13 +29,6 @@ const MyPage = () => {
           onConfirm={() => setIsOpenModal(false)}
         />
       )}
-      <header className="sticky top-0 flex items-center justify-between p-5">
-        <ArrowLeftIcon className="h-6 w-6 text-white" />
-        <div className="flex items-center gap-3">
-          <AlarmIcon className="h-6 w-6 text-white" />
-          <PersonIcon className="h-6 w-6 text-white" />
-        </div>
-      </header>
       <main className="flex grow flex-col gap-12 px-5 pt-9 pb-6">
         <h1 className="h2-b mx-auto flex gap-1.5">
           {DUMMY_ZIP_CODE.split('').map((code, index) => (
