@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import useWrite from '@/stores/writeStore';
+
 import CategorySelect from './CategorySelect';
+import { themeObj } from './constants';
 import LetterEditor from './LetterEditor';
 import { T_prev_letter, T_step } from './write';
 
@@ -22,9 +25,11 @@ const WritePage = () => {
   //   setPrevLetter(null);
   // });
 
+  const theme = useWrite((state) => state.theme);
+
   const wrapStyle = twMerge(
     'relative h-full min-h-screen w-full p-5',
-    `${step === 'edit' && 'bg-green-50'}`,
+    `${step === 'edit' && themeObj[theme]}`,
   );
   return (
     <div className={wrapStyle}>
