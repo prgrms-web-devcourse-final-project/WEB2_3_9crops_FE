@@ -8,4 +8,18 @@
   .secondary-btn {
     @apply bg-primary-4 rounded-lg text-gray-50;
   }
+
+  .alarm-default-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #ffb5ac 0%, #ffc1ba 28%, #ffd3ce 98.5%);
+    background-blend-mode: overlay, normal, normal;
+  }
+
+  .alarm-warning-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #fad446 0%, #f8de8c 28%, #ffeab8 98.5%);
+    background-blend-mode: overlay, normal, normal;
+  }
 }
