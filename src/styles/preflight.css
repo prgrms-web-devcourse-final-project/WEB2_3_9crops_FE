@@ -7,11 +7,26 @@
     --vw: 1vw;
   }
 
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     font-family: 'Pretendard Variable', Pretendard, sans-serif;
     overflow-y: scroll;
     overflow-x: hidden;
     /* 그라데이션 배경 들어가는 곳 */
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(
+        180deg,
+        rgba(234, 191, 23, 0.5) 2.83%,
+        rgba(255, 245, 221, 0.5) 35.47%,
+        rgba(255, 251, 248, 0.5) 55.48%
+      ),
+      #f2f2f2;
+    background-blend-mode: overlay, normal, normal;
   }
 
   #root {
@@ -22,5 +37,9 @@
     min-height: calc(var(--vh, 1vh) * 100);
     margin: 0 auto;
     position: relative;
+  }
+
+  button {
+    cursor: pointer;
   }
 }
