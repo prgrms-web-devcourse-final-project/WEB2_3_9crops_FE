@@ -21,7 +21,6 @@ const ConfirmModal = ({
   onCancel,
   onConfirm,
 }: ConfirmModalProps) => {
-  // TODO: 배경 이미지 삽입
   // TODO: 전역 상태로 관리해야하는지 고민
   return (
     <ModalOverlay>
