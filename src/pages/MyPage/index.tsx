@@ -38,7 +38,7 @@ const MyPage = () => {
         </div>
       </header>
       <main className="flex grow flex-col gap-12 px-5 pt-9 pb-6">
-        <section className="h2-b mx-auto flex gap-1.5">
+        <h1 className="h2-b mx-auto flex gap-1.5">
           {DUMMY_ZIP_CODE.split('').map((code, index) => (
             <div
               key={index}
@@ -47,12 +47,12 @@ const MyPage = () => {
               {code}
             </div>
           ))}
-        </section>
+        </h1>
         <section>
-          <div className="mb-2 flex justify-between">
+          <h2 className="mb-2 flex justify-between">
             <p className="body-sb text-gray-60">{description}</p>
             <p className="body-sb text-accent-1">{DUMMY_TEMP}도</p>
-          </div>
+          </h2>
           <div className="h-4 w-full rounded-full bg-white">
             <div
               className="h-full w-[calc(${degree}%)] rounded-full bg-[#FFB5AC]"
