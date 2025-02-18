@@ -1,4 +1,4 @@
-import ModalBg from '@/assets/images/yellow-modal.png';
+import ModalBg from '@/assets/images/modal-yellow.png';
 
 import ModalOverlay from './ModalOverlay';
 
