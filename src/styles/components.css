@@ -22,4 +22,8 @@
       linear-gradient(180deg, #fad446 0%, #f8de8c 28%, #ffeab8 98.5%);
     background-blend-mode: overlay, normal, normal;
   }
+
+  .message-header {
+    @apply text-gray-60 w-fit rounded-full bg-white px-6 py-4;
+  }
 }

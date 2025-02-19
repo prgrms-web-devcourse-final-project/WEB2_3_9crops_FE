@@ -63,4 +63,33 @@ import vintageThemeFrame from '@/assets/images/vintage-theme-frame.png'; */
     right: 8%; /* 수평 중앙 정렬 */
     transform: translateX(-50%);
   }
+
+  /* Onboarding */
+  .comment {
+    @apply bg-gray-10 rounded px-6 py-2;
+  }
+
+  .comment::after {
+    @apply border-t-gray-10 border border-t-10 border-r-6 border-b-10 border-l-6 border-r-white/0 border-b-white/0 border-l-white/0;
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid !important;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+
+  .animate-float {
+    animation: float 2s ease-in-out infinite;
+  }
 }
