@@ -7,7 +7,7 @@ interface ConfirmModalProps {
   description: string;
   cancelText: string;
   confirmText: string;
-  confirmDisabled: boolean;
+  confirmDisabled?: boolean;
   children?: React.ReactNode;
   onCancel: () => void;
   onConfirm: () => void;
