@@ -13,11 +13,12 @@ function OptionSlide({ prevLetter }: { prevLetter: PrevLetter }) {
 
   const headRef = useRef<HTMLDivElement>(null);
 
+  // 슬라이드 애니메이션을 줘야 하는데 마음데로 안되네에에엑
   const slideStyle = twMerge(
-    `bg-primary-3 fixed bottom-0 left-[50%] flex w-full max-w-[600px] translate-x-[-50%] flex-col rounded-t-[20px] translate-y-[calc(100%-${headRef.current?.offsetHeight}px)] duration-300`,
-    `${slideActive && 'translate-y-[0]'}`,
+    `bg-primary-3 fixed bottom-0 left-[50%] flex w-full max-w-[600px] translate-x-[-50%] flex-col rounded-t-[20px] duration-100`,
   );
   // 슬라이드 계산부터 시작
+  //
 
   return (
     <div className={slideStyle}>

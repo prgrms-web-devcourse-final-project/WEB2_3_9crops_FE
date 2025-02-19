@@ -5,6 +5,7 @@ import useWrite from '@/stores/writeStore';
 
 import CategoryList from './components/CategoryList';
 import ResultLetter from './components/ResultLetter';
+import ResultLetterAnimation from './components/ResultLetterAnimation';
 import WritePageButton from './components/WritePageButton';
 
 export default function CategorySelect({
@@ -44,8 +45,8 @@ export default function CategorySelect({
 
         {prevLetter && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetter stampName="답변자" />
-            <div className="flex flex-col items-center">
+            <ResultLetterAnimation />
+            <div className="animate-show-text flex flex-col items-center opacity-0">
               <span className="body-sb text-gray-60">작성하신 편지는</span>
               <span className="body-sb text-gray-60">
                 <span>{'00'}시간 </span>

@@ -21,7 +21,7 @@ export default function ResultLetter({
       <div className="flex justify-between gap-3">
         <div className="flex flex-col gap-2.5">
           <span className="caption-b text-gray-60">따숨이님께</span>
-          <span className="caption-r text-gray-80 line-clamp-3">{letterTitle}</span>
+          <span className="caption-r text-gray-80 line-clamp-3 break-all">{letterTitle}</span>
         </div>
         <img src={STAMPS[stampName]} alt="우표" />
       </div>
