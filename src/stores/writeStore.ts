@@ -1,20 +1,18 @@
 import { create } from 'zustand';
 
-import { T_stamp, T_theme } from '@/pages/Write/write';
-
-interface T_writeStore {
+interface WriteStore {
   letterTitle: string;
   setLetterTitle: (typing: string) => void;
   letterText: string;
   setLetterText: (typing: string) => void;
   font: string;
   setFont: (selectedFont: string) => void;
-  theme: T_theme;
-  setTheme: (selectedTheme: T_theme) => void;
-  stamp: T_stamp;
-  setStamp: (selectedStamp: T_stamp) => void;
+  theme: Theme;
+  setTheme: (selectedTheme: Theme) => void;
+  stamp: Stamp;
+  setStamp: (selectedStamp: Stamp) => void;
 }
-const useWrite = create<T_writeStore>((set) => ({
+const useWrite = create<WriteStore>((set) => ({
   letterTitle: '',
   setLetterTitle: (typing) => set(() => ({ letterTitle: typing })),
   letterText: '',

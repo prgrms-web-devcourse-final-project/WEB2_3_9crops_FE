@@ -5,10 +5,9 @@ import FontOption from './components/FontOption';
 import PreviousLetterOption from './components/PreviousLetterOption';
 import ThemeOption from './components/ThemeOption';
 import WritePageButton from './components/WritePageButton';
-import { T_option, T_prev_letter } from './write';
 
-function OptionSlide({ prevLetter }: { prevLetter: T_prev_letter }) {
-  const [clicked, setClicked] = useState<T_option>(null);
+function OptionSlide({ prevLetter }: { prevLetter: PrevLetter }) {
+  const [clicked, setClicked] = useState<Option>(null);
   const [slideActive, setSlideActive] = useState<boolean>(false);
   const buttonTitle = ['편지지', '글꼴', '이전 편지 내용'];
 

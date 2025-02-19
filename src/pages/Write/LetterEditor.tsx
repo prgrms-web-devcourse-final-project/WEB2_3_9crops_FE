@@ -5,14 +5,13 @@ import useWrite from '@/stores/writeStore';
 
 import WritePageButton from './components/WritePageButton';
 import OptionSlide from './OptionSlide';
-import { T_prev_letter, T_step } from './write';
 
 export default function LetterEditor({
   setStep,
   prevLetter,
 }: {
-  setStep: React.Dispatch<React.SetStateAction<T_step>>;
-  prevLetter: T_prev_letter;
+  setStep: React.Dispatch<React.SetStateAction<Step>>;
+  prevLetter: PrevLetter;
 }) {
   const titleRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);

@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { T_prev_letter } from '../write';
-
-export default function PreviousLetterOption({ prevLetter = [] }: { prevLetter: T_prev_letter }) {
+export default function PreviousLetterOption({ prevLetter = [] }: { prevLetter: PrevLetter }) {
   const [index, setIndex] = useState(0);
   return (
     <div className="flex w-full flex-col gap-3 px-4 pt-3 pb-[30px]">

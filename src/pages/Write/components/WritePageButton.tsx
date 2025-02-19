@@ -1,7 +1,5 @@
 import { twMerge } from 'tailwind-merge';
 
-import { T_option } from '../write';
-
 function WritePageButton({
   text,
   onClick,
@@ -12,7 +10,7 @@ function WritePageButton({
   text: string;
   onClick?: () => void;
   bgColor?: string;
-  clicked?: T_option;
+  clicked?: Option;
   rounded?: string;
 }) {
   const buttonStyle = twMerge(

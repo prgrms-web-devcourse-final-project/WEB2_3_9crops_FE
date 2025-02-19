@@ -6,14 +6,13 @@ import useWrite from '@/stores/writeStore';
 import CategoryList from './components/CategoryList';
 import ResultLetter from './components/ResultLetter';
 import WritePageButton from './components/WritePageButton';
-import { T_prev_letter, T_step } from './write';
 
 export default function CategorySelect({
   setStep,
   prevLetter,
 }: {
-  setStep: React.Dispatch<React.SetStateAction<T_step>>;
-  prevLetter: T_prev_letter;
+  setStep: React.Dispatch<React.SetStateAction<Step>>;
+  prevLetter: PrevLetter;
 }) {
   const [send, setSend] = useState<boolean>(false);
 

@@ -2,9 +2,7 @@ import { useState } from 'react';
 
 import useWrite from '@/stores/writeStore';
 
-import { T_stamp } from '../write';
-
-function CategoryStamp({ title, image }: { title: T_stamp; image: string }) {
+function CategoryStamp({ title, image }: { title: Stamp; image: string }) {
   const [hovered, setHovered] = useState(false);
 
   const stamp = useWrite((state) => state.stamp);

@@ -4,14 +4,13 @@ import { twMerge } from 'tailwind-merge';
 import useWrite from '@/stores/writeStore';
 
 import CategorySelect from './CategorySelect';
-import { themeObj } from './constants';
+import { THEME_OBJ } from './constants';
 import LetterEditor from './LetterEditor';
-import { T_prev_letter, T_step } from './write';
 
 const WritePage = () => {
-  const [step, setStep] = useState<T_step>('edit');
+  const [step, setStep] = useState<Step>('edit');
   // 대화가 답장일 경우 이전 편지가 여기 담김(배열로 받아질 것으로 예상)
-  const [prevLetter, setPrevLetter] = useState<T_prev_letter>([
+  const [prevLetter, setPrevLetter] = useState<PrevLetter>([
     {
       title: '안녕하세요 고민이 있어요',
       text: '이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민',
@@ -29,7 +28,7 @@ const WritePage = () => {
 
   const wrapStyle = twMerge(
     'relative h-full min-h-screen w-full p-5',
-    `${step === 'edit' && themeObj[theme]}`,
+    `${step === 'edit' && THEME_OBJ[theme]}`,
   );
   return (
     <div className={wrapStyle}>
