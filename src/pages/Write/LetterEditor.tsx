@@ -13,7 +13,6 @@ export default function LetterEditor({
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   prevLetter: PrevLetter;
 }) {
-  const titleRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const font = useWrite((state) => state.font);
@@ -24,10 +23,7 @@ export default function LetterEditor({
   const letterText = useWrite((state) => state.letterText);
   const setLetterText = useWrite((state) => state.setLetterText);
 
-  const editorStyle = twMerge(
-    `body-r basic-theme h-auto w-full px-6 focus:outline-none`,
-    `${font}`,
-  );
+  const editorStyle = twMerge(`body-r basic-theme w-full px-6 focus:outline-none`, `${font}`);
 
   const handleResizeHeight = () => {
     if (textareaRef.current !== null) {
@@ -65,18 +61,14 @@ export default function LetterEditor({
         )}
       </div>
       <div className="flex flex-col gap-3 px-6">
-        <div className="body-b mt-15 flex">
-          <span>TO. </span>
-          <span>{'12EE1'}</span>
-        </div>
+        <div className="body-b mt-15">TO. {'12EE1'}</div>
         <input
           type="text"
           placeholder="제목을 입력해주세요."
           className="body-sb placeholder:text-gray-40 placeholder:border-0 focus:outline-none"
-          onChange={() => {
-            setLetterTitle(titleRef.current!.value!);
+          onChange={(e) => {
+            setLetterTitle(e.target.value);
           }}
-          ref={titleRef}
           value={letterTitle}
         />
       </div>
@@ -85,11 +77,10 @@ export default function LetterEditor({
           rows={18}
           className={editorStyle}
           placeholder="클릭해서 내용을 작성하세요"
-          onChange={() => {
+          onChange={(e) => {
             handleResizeHeight();
-            setLetterText(textareaRef.current!.value!);
+            setLetterText(e.target.value);
           }}
-          ref={textareaRef}
           value={letterText}
         ></textarea>
       </div>

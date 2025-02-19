@@ -58,7 +58,7 @@ export default function CategorySelect({
 
         {send && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetter stampName={stamp!} />
+            <ResultLetter stampName={stamp} />
             <span className="body-sb text-gray-60">두근두근! 답장이 언제 올까요?</span>
           </div>
         )}
@@ -73,8 +73,7 @@ export default function CategorySelect({
             홈으로 돌아가기
           </Link>
         ) : (
-          <div
-            role="button"
+          <button
             className="bg-primary-3 body-m mt-auto flex h-10 w-[280px] cursor-pointer items-center justify-center rounded-lg"
             onClick={() => {
               if (stamp) {
@@ -85,7 +84,7 @@ export default function CategorySelect({
             }}
           >
             편지 전송
-          </div>
+          </button>
         )}
       </div>
     </>

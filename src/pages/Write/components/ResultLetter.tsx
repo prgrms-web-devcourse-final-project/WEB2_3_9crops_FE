@@ -1,5 +1,3 @@
-import { twMerge } from 'tailwind-merge';
-
 import letterPink from '@/assets/images/letter-pink.png';
 import useWrite from '@/stores/writeStore';
 
@@ -10,14 +8,16 @@ export default function ResultLetter({
 }: {
   stampName: '위로와 공감' | '축하와 응원' | '고민 상담' | '기타' | '답변자';
 }) {
-  const letterStyle = twMerge(`flex w-full flex-col gap-[35px] p-4`);
   const address = '1A3E2';
   const date = new Date();
   const today = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
   const letterTitle = useWrite((state) => state.letterTitle);
   return (
-    <div className={letterStyle} style={{ backgroundImage: `url(${letterPink})` }}>
+    <div
+      className="flex w-full flex-col gap-[35px] p-4"
+      style={{ backgroundImage: `url(${letterPink})` }}
+    >
       <div className="flex justify-between gap-3">
         <div className="flex flex-col gap-2.5">
           <span className="caption-b text-gray-60">따숨이님께</span>

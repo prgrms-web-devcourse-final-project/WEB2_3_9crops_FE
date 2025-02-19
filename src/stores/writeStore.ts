@@ -26,7 +26,7 @@ const useWrite = create<WriteStore>((set) => ({
     set(() => ({
       theme: selectedTheme,
     })),
-  stamp: null,
+  stamp: '위로와 공감',
   setStamp: (selectedStamp) => set(() => ({ stamp: selectedStamp })),
 }));
 
