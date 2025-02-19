@@ -1,0 +1,56 @@
+/* 편지 전송 완료 애니메이션 전용 */
+@theme {
+  --animate-down: down 2s ease-in-out forwards;
+  --animate-up: up 3s ease-in-out forwards;
+  --animate-show-text: showing 0.5s ease-in-out 6s forwards;
+  --animate-rotate-show: rotate-show 1s ease-in-out forwards;
+  --animate-blink: showing 0.3s forwards;
+
+  @keyframes down {
+    0% {
+      transform: translateY(-300%);
+    }
+    100% {
+      transform: translateY(60%);
+    }
+  }
+
+  @keyframes up {
+    0% {
+      transform: perspective(800px) rotateY(0deg) translateY(200px);
+      opacity: 0;
+    }
+    20% {
+      transform: perspective(800px) rotateY(0deg) translateY(200px);
+      opacity: 1;
+    }
+    66% {
+      transform: perspective(800px) rotateY(0deg) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: perspective(800px) rotateY(-90deg) translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes showing {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes rotate-show {
+    0% {
+      opacity: 0;
+      transform: perspective(800px) rotateY(90deg);
+    }
+    100% {
+      opacity: 1;
+      transform: perspective(800px) rotateY(0deg);
+    }
+  }
+}
