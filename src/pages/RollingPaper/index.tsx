@@ -1,7 +1,7 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
 import { ChangeEvent, useState } from 'react';
 
-import EnvelopeImg from '@/assets/images/envelope.png';
+import EnvelopeImg from '@/assets/images/closed-letter.png';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
