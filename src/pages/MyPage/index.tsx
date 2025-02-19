@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 import ConfirmModal from '@/components/ConfirmModal';
 
@@ -55,7 +56,9 @@ const MyPage = () => {
         <section className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">활동</h3>
-            <p className="body-sb text-gray-100">내가 올린 게시물</p>
+            <Link to="board">
+              <p className="body-sb text-gray-100">내가 올린 게시물</p>
+            </Link>
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">고객 센터</h3>
