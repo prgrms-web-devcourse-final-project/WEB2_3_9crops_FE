@@ -6,6 +6,7 @@ import LetterBoxItem from './components/LetterBoxItem';
 const DUMMY_COUNT = 200;
 
 const LetterBoxPage = () => {
+  // TODO: PageTitle 컴포넌트로 변경해야 함
   return (
     <main className="flex grow flex-col items-center px-5 pt-20">
       <p className="text-gray-60 body-b w-fit rounded-full bg-white px-6 py-4">내 편지함</p>
@@ -21,7 +22,7 @@ const LetterBoxPage = () => {
                   key={index}
                   zipCode="12E12"
                   letterCount={90}
-                  isSend={index % 2 === 0}
+                  isChecked={index % 2 === 0}
                 />
               )),
             ).map((row, index) => (

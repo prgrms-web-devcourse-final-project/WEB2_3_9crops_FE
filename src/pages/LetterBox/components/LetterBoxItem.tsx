@@ -4,14 +4,14 @@ import { twMerge } from 'tailwind-merge';
 interface LetterBoxItemProps {
   zipCode: string;
   letterCount: number;
-  isSend?: boolean;
+  isChecked?: boolean;
   isClosed?: boolean;
 }
 
 const LetterBoxItem = ({
   zipCode,
   letterCount,
-  isSend = false,
+  isChecked = false,
   isClosed = false,
 }: LetterBoxItemProps) => {
   return (
@@ -24,7 +24,7 @@ const LetterBoxItem = ({
               isClosed
                 ? 'bg-[repeating-linear-gradient(#D9D9D9,#D9D9D9_17px,#C2C2C2_17px,#C2C2C2_23px)]'
                 : 'bg-linear-to-b',
-              isSend ? 'to-[#FFF4F2]' : 'to-[#FFF5ED]',
+              isChecked ? 'to-[#FFF5ED]' : 'to-[#FFF4F2]',
             )}
           >
             {zipCode}
@@ -35,7 +35,7 @@ const LetterBoxItem = ({
             <div
               className={twMerge(
                 'flex grow flex-col bg-linear-to-b',
-                isSend ? 'from-[#FFF4F2] to-[#FFE6E3]' : 'from-[#FFF7E3] to-[#FFE197]',
+                isChecked ? 'from-[#FFF7E3] to-[#FFE197]' : 'from-[#FFF4F2] to-[#FFE6E3]',
               )}
             >
               <p className="body-r mt-auto mr-[1px] text-right">{letterCount}통</p>
