@@ -2,7 +2,7 @@ import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
 import { ChangeEvent, useState } from 'react';
 
 import EnvelopeImg from '@/assets/images/envelope.png';
-import BgItem from '@/assets/images/field-4.png';
+import BackgroundBottom from '@/components/BackgroundBottom';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
 import ReportModal from '@/components/ReportModal';
@@ -66,7 +66,7 @@ const RollingPaperPage = () => {
         </MessageModal>
       )}
       <Header />
-      <main className="flex grow flex-col items-center px-5 pt-4 pb-12">
+      <main className="flex grow flex-col items-center px-5 pt-20 pb-12">
         <PageTitle className="mb-18 max-w-73 text-center">{DUMMY_TITLE}</PageTitle>
         <p className="body-sb text-gray-60 mb-2 w-full">등록된 편지 {DUMMY_MESSAGE_COUNT}</p>
         <section className="w-full">
@@ -87,10 +87,7 @@ const RollingPaperPage = () => {
           </p>
         </button>
       </main>
-      <div
-        className="fixed bottom-[-40px] left-1/2 z-[-10] h-42 w-full -translate-x-1/2 bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center opacity-70"
-        style={{ '--bg-image': `url(${BgItem})` } as React.CSSProperties}
-      />
+      <BackgroundBottom />
     </>
   );
 };
