@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import closedLetter from '@/assets/images/closed-letter.png';
 import openedLetterFront from '@/assets/images/opened-letter-front.png';
 import openedLetter from '@/assets/images/opened-letter.png';
+import useWrite from '@/stores/writeStore';
 
-import ResultLetter from './ResultLetter';
+import ResultLetter from '../../../components/ResultLetter';
 
-export default function ResultLetterAnimation() {
+export default function ResultLetterAnimation({ stampName }: { stampName: Stamp }) {
   const [next, setNext] = useState('st');
+  const letterTitle = useWrite((state) => state.letterTitle);
+
   useEffect(() => {
     setTimeout(() => {
       setNext('nd');
@@ -20,7 +23,7 @@ export default function ResultLetterAnimation() {
     <>
       {next === 'rd' ? (
         <div className="animate-rotate-show w-full opacity-0">
-          <ResultLetter stampName="답변자" />
+          <ResultLetter stampName={stampName} title={letterTitle} />
         </div>
       ) : (
         <>

@@ -1,18 +1,18 @@
 import letterPink from '@/assets/images/letter-pink.png';
-import useWrite from '@/stores/writeStore';
 
-import { STAMPS } from '../constants';
+import { STAMPS } from '../pages/Write/constants';
 
 export default function ResultLetter({
   stampName = '위로와 공감',
+  title,
 }: {
-  stampName: '위로와 공감' | '축하와 응원' | '고민 상담' | '기타' | '답변자';
+  stampName: Stamp;
+  title: string;
 }) {
   const address = '1A3E2';
   const date = new Date();
   const today = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
-  const letterTitle = useWrite((state) => state.letterTitle);
   return (
     <div
       className="flex w-full flex-col gap-[35px] p-4"
@@ -21,7 +21,7 @@ export default function ResultLetter({
       <div className="flex justify-between gap-3">
         <div className="flex flex-col gap-2.5">
           <span className="caption-b text-gray-60">따숨이님께</span>
-          <span className="caption-r text-gray-80 line-clamp-3 break-all">{letterTitle}</span>
+          <span className="caption-r text-gray-80 line-clamp-3 break-all">{title}</span>
         </div>
         <img src={STAMPS[stampName]} alt="우표" />
       </div>

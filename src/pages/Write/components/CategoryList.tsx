@@ -9,7 +9,7 @@ function CategoryList() {
         return (
           <div className="w-[calc(50%-12px)]" key={idx}>
             <CategoryStamp title={stamp.title} image={stamp.image} />
-            <p className="body-m mt-2 flex items-center justify-center">위로와 공감</p>
+            <p className="body-m mt-2 flex items-center justify-center">{stamp.title}</p>
           </div>
         );
       })}

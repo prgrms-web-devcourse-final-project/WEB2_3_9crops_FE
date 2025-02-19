@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import useWrite from '@/stores/writeStore';
 
 import CategoryList from './components/CategoryList';
-import ResultLetter from './components/ResultLetter';
 import ResultLetterAnimation from './components/ResultLetterAnimation';
 import WritePageButton from './components/WritePageButton';
 
@@ -33,19 +32,16 @@ export default function CategorySelect({
           )}
         </div>
 
-        {send || prevLetter ? (
-          <span className="body-b text-gray-60 mt-15 rounded-full bg-white px-6 py-4">
-            편지 작성이 완료 되었어요!
-          </span>
-        ) : (
-          <span className="body-b text-gray-60 mt-15 rounded-full bg-white px-6 py-4">
-            어떤 답장을 받고 싶나요?
-          </span>
-        )}
+        <span className="body-b text-gray-60 mt-15 rounded-full bg-white px-6 py-4">
+          {send || prevLetter ? '편지 작성이 완료 되었어요!' : '어떤 답장을 받고 싶나요?'}
+        </span>
+
+        {/* 카테고리 선택 컴포넌트 */}
+        {!send && !prevLetter && <CategoryList />}
 
         {prevLetter && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetterAnimation />
+            <ResultLetterAnimation stampName="답변자" />
             <div className="animate-show-text flex flex-col items-center opacity-0">
               <span className="body-sb text-gray-60">작성하신 편지는</span>
               <span className="body-sb text-gray-60">
@@ -59,12 +55,12 @@ export default function CategorySelect({
 
         {send && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetter stampName={stamp} />
-            <span className="body-sb text-gray-60">두근두근! 답장이 언제 올까요?</span>
+            <ResultLetterAnimation stampName={stamp} />
+            <span className="animate-show-text body-sb text-gray-60 opacity-0">
+              두근두근! 답장이 언제 올까요?
+            </span>
           </div>
         )}
-
-        {!send && !prevLetter && <CategoryList />}
 
         {send || prevLetter ? (
           <Link

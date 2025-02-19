@@ -1,8 +1,10 @@
+/* 편지 전송 완료 애니메이션 전용 */
 @theme {
   --animate-down: down 2s ease-in-out forwards;
   --animate-up: up 3s ease-in-out forwards;
-  --animate-show-text: show-text 0.5s ease-in-out 5s forwards;
+  --animate-show-text: showing 0.5s ease-in-out 6s forwards;
   --animate-rotate-show: rotate-show 1s ease-in-out forwards;
+  --animate-blink: showing 0.3s forwards;
 
   @keyframes down {
     0% {
@@ -32,7 +34,7 @@
     }
   }
 
-  @keyframes show-text {
+  @keyframes showing {
     0% {
       opacity: 0;
     }
