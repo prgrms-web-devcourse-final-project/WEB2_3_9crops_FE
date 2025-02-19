@@ -64,4 +64,8 @@
     overflow: hidden;
     padding-right: var(--scrollbar-width, 0px);
   }
+
+  .background-image-filled {
+    @apply bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center;
+  }
 }

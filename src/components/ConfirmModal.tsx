@@ -28,7 +28,7 @@ const ConfirmModal = ({
     <ModalOverlay>
       <div className="w-73">
         <section
-          className="mb-12 rounded-lg bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center p-5"
+          className="background-image-filled mb-12 rounded-lg p-5"
           style={{ '--bg-image': `url(${ModalBg})` } as React.CSSProperties}
         >
           <div className="flex flex-col gap-1">

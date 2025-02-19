@@ -32,7 +32,7 @@ const MessageModal = ({
     <ModalOverlay>
       <p className="body-sb mb-4 text-white">{description}</p>
       <section
-        className="mb-12 w-78 rounded-lg bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center p-4"
+        className="background-image-filled mb-12 w-78 rounded-lg p-4"
         style={{ '--bg-image': `url(${ModalBg})` } as React.CSSProperties}
       >
         <TextareaField

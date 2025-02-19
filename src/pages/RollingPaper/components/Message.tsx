@@ -11,7 +11,7 @@ interface MessageProps {
 const Message = ({ message, onClick }: MessageProps) => {
   return (
     <article
-      className="flex min-h-20 cursor-pointer flex-col bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center p-4 text-black"
+      className="background-image-filled flex min-h-20 cursor-pointer flex-col p-4 text-black"
       style={{ '--bg-image': `url(${MessageBg})` } as React.CSSProperties}
       onClick={onClick}
     >

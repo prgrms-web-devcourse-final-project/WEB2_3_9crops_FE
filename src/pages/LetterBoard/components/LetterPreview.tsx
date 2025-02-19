@@ -13,7 +13,7 @@ const LetterPreview = ({ id, to, from, content }: LetterPreviewProps) => {
   return (
     <Link to={id}>
       <article
-        className="caption-r flex flex-col gap-2 rounded-sm bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center px-3 py-2"
+        className="caption-r background-image-filled flex flex-col gap-2 rounded-sm px-3 py-2"
         style={{ '--bg-image': `url(${PinkLetterBg})` } as React.CSSProperties}
       >
         <p>From.{from}</p>

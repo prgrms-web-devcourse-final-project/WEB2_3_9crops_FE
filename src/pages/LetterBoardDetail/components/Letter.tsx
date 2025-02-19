@@ -13,7 +13,7 @@ interface LetterProps {
 const Letter = ({ letter, isSender = false }: LetterProps) => {
   return (
     <article
-      className="flex flex-col gap-2 bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center p-4 text-black"
+      className="background-image-filled flex flex-col gap-2 p-4 text-black"
       style={
         { '--bg-image': `url(${isSender ? PinkMemoBg : YellowMemoBg})` } as React.CSSProperties
       }

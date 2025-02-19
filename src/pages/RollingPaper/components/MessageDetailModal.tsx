@@ -35,7 +35,7 @@ const MessageDetailModal = ({
           {isWriter ? '삭제하기' : '신고하기'}
         </button>
         <article
-          className="mt-1 flex max-h-1/2 w-78 flex-col gap-3 overflow-y-auto bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center px-5 py-4 text-black"
+          className="background-image-filled mt-1 flex max-h-1/2 w-78 flex-col gap-3 overflow-y-auto px-5 py-4 text-black"
           style={{ '--bg-image': `url(${ModalBg})` } as React.CSSProperties}
         >
           <p className="body-r leading-[26px]">{message.content}</p>
