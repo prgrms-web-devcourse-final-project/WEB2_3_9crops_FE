@@ -7,6 +7,7 @@ interface ConfirmModalProps {
   description: string;
   cancelText: string;
   confirmText: string;
+  confirmDisabled: boolean;
   children?: React.ReactNode;
   onCancel: () => void;
   onConfirm: () => void;
@@ -17,6 +18,7 @@ const ConfirmModal = ({
   description,
   cancelText,
   confirmText,
+  confirmDisabled,
   children,
   onCancel,
   onConfirm,
@@ -46,6 +48,7 @@ const ConfirmModal = ({
           <button
             type="button"
             className="primary-btn body-m h-10 flex-1 basis-1/2"
+            disabled={confirmDisabled}
             onClick={onConfirm}
           >
             {confirmText}

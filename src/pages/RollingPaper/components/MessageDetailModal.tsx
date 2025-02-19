@@ -8,13 +8,30 @@ interface MessageDetailModalProps {
   };
   isWriter: boolean;
   onClose: () => void;
+  onReport: () => void;
+  onDelete: () => void;
 }
 
-const MessageDetailModal = ({ message, isWriter, onClose }: MessageDetailModalProps) => {
+const MessageDetailModal = ({
+  message,
+  isWriter,
+  onClose,
+  onReport,
+  onDelete,
+}: MessageDetailModalProps) => {
+  const handleButtonClick = () => {
+    if (isWriter) {
+      // TODO: 삭제 로직
+      onDelete();
+    } else {
+      onReport();
+    }
+  };
+
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <>
-        <button type="button" className="body-b ml-auto text-white">
+        <button type="button" className="body-b ml-auto text-white" onClick={handleButtonClick}>
           {isWriter ? '삭제하기' : '신고하기'}
         </button>
         <article
