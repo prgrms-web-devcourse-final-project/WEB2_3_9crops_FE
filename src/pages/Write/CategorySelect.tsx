@@ -19,7 +19,7 @@ export default function CategorySelect({
   const stamp = useWrite((state) => state.stamp);
   return (
     <>
-      <div className="flex h-full min-h-[calc(100vh-40px)] w-full flex-col items-center">
+      <div className="flex w-full grow flex-col items-center">
         <div className="absolute right-5">
           {!send && !prevLetter && (
             <WritePageButton

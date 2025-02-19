@@ -11,17 +11,17 @@
       transform: translateY(-300%);
     }
     100% {
-      transform: translateY(60%);
+      transform: translateY(35%);
     }
   }
 
   @keyframes up {
     0% {
-      transform: perspective(800px) rotateY(0deg) translateY(200px);
+      transform: perspective(800px) rotateY(0deg) translateY(100px);
       opacity: 0;
     }
     20% {
-      transform: perspective(800px) rotateY(0deg) translateY(200px);
+      transform: perspective(800px) rotateY(0deg) translateY(100px);
       opacity: 1;
     }
     66% {

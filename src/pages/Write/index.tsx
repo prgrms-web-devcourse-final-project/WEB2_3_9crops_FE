@@ -20,14 +20,14 @@ const WritePage = () => {
       text: '요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민',
     },
   ]);
-  // useEffect(() => {
-  //   setPrevLetter(null);
-  // });
+  useEffect(() => {
+    setPrevLetter(null);
+  });
 
   const theme = useWrite((state) => state.theme);
 
   const wrapStyle = twMerge(
-    'relative h-full min-h-screen w-full p-5',
+    'relative p-5 w-full grow flex flex-col',
     `${step === 'edit' && THEME_OBJ[theme]}`,
   );
   return (
