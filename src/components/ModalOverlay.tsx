@@ -11,11 +11,9 @@ interface ModalOverlayProps {
 const ModalOverlay = ({ closeOnOutsideClick = false, children, onClose }: ModalOverlayProps) => {
   useEffect(() => {
     const scrollbarWidth = getScrollbarWidth();
-    const header = document.querySelector('header');
 
     document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
     document.body.classList.add('modal-open');
-    if (header) header.classList.add('modal-open');
 
     return () => {
       document.documentElement.style.setProperty('--scrollbar-width', '0px');
