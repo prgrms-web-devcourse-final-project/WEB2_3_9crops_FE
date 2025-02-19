@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 import {
   ArrowLeftIcon,
   DeleteIcon,
@@ -18,7 +20,9 @@ const Header = ({ likeCount, isLike, isWriter, onToggleLike, onOpenReportModal }
   return (
     <header className="fixed top-0 z-40 w-full max-w-150">
       <div className="flex h-16 items-center justify-between bg-white p-5">
-        <ArrowLeftIcon className="text-primary-1 h-6 w-6" />
+        <Link to="/board/letter">
+          <ArrowLeftIcon className="text-primary-1 h-6 w-6" />
+        </Link>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
             <button type="button" onClick={onToggleLike}>
