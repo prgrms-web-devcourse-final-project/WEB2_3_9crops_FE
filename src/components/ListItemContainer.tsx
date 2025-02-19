@@ -22,7 +22,7 @@ const ListItemContainer = ({
       )}
       onClick={onClick}
     >
-      <div className="z-10">{children}</div>
+      <div className="z-10 w-full">{children}</div>
       <div className="absolute inset-0 z-0 bg-white/50 blur-xl" />
     </article>
   );

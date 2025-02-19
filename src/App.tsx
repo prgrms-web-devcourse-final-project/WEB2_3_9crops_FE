@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import LetterBoardPage from './pages/LetterBoard';
 import LetterBoardDetailPage from './pages/LetterBoardDetail';
 import LetterBoxPage from './pages/LetterBox';
+import LetterBoxDetailPage from './pages/LetterBoxDetail';
 import LetterDetailPage from './pages/LetterDetail';
 import LoginPage from './pages/Login';
 import MyPage from './pages/MyPage';
@@ -25,8 +26,11 @@ const App = () => {
         <Route path="login" element={<LoginPage />} />
         <Route path="onboarding" element={<OnboardingPage />} />
         <Route path="letter">
-          <Route path="random" element={<RandomLettersPage />} />
-          <Route path="box" element={<LetterBoxPage />} />
+          <Route element={<Layout />}>
+            <Route path="random" element={<RandomLettersPage />} />
+            <Route path="box" element={<LetterBoxPage />} />
+            <Route path="box/:id" element={<LetterBoxDetailPage />} />
+          </Route>
           <Route path="write" element={<WritePage />} />
           <Route path=":id" element={<LetterDetailPage />} />
         </Route>
