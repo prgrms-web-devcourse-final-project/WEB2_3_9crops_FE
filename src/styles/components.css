@@ -22,4 +22,11 @@
       linear-gradient(180deg, #fad446 0%, #f8de8c 28%, #ffeab8 98.5%);
     background-blend-mode: overlay, normal, normal;
   }
+
+  .letter-box-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #ffedae 0%, #eec297 100%);
+    background-blend-mode: overlay, normal;
+  }
 }
