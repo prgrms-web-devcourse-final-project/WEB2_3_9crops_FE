@@ -1,8 +1,9 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import EnvelopeImg from '@/assets/images/envelope.png';
 import BgItem from '@/assets/images/field-4.png';
+import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
 import ReportModal from '@/components/ReportModal';
 import Header from '@/layouts/Header';
@@ -23,6 +24,8 @@ const DUMMY_MESSAGES = Array.from({ length: 10 }, () => ({ ...DUMMY_MESSAGE }));
 const RollingPaperPage = () => {
   const [activeMessageIndex, setActiveMessageIndex] = useState<number | null>(null);
   const [activeReportModal, setActiveReportModal] = useState(false);
+  const [activeMessageModal, setActiveMessageModal] = useState(false);
+  const [newMessage, setNewMessage] = useState('');
 
   const handleReport = () => {
     setActiveMessageIndex(null);
@@ -31,6 +34,10 @@ const RollingPaperPage = () => {
 
   const handleDelete = () => {
     setActiveMessageIndex(null);
+  };
+
+  const handleChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewMessage(e.target.value);
   };
 
   return (
@@ -45,6 +52,19 @@ const RollingPaperPage = () => {
         />
       )}
       {activeReportModal && <ReportModal onClose={() => setActiveReportModal(false)} />}
+      {activeMessageModal && (
+        <MessageModal
+          inputValue={newMessage}
+          placeholder="이곳을 눌러 메시지를 작성해주세요"
+          cancelText="취소하기"
+          completeText="편지 남기기"
+          onInputChange={handleChangeMessage}
+          onCancel={() => setActiveMessageModal(false)}
+          onComplete={() => setActiveMessageModal(false)}
+        >
+          <p className="body-r mt-5 text-end text-black">From. {DUMMY_USER_ZIP_CODE}</p>
+        </MessageModal>
+      )}
       <Header />
       <main className="flex grow flex-col items-center px-5 pt-4 pb-12">
         <PageTitle className="mb-18 max-w-73 text-center">{DUMMY_TITLE}</PageTitle>
@@ -56,7 +76,11 @@ const RollingPaperPage = () => {
             ))}
           </MasonryInfiniteGrid>
         </section>
-        <button type="button" className="fixed bottom-7.5 left-5 overflow-hidden rounded-sm">
+        <button
+          type="button"
+          className="fixed bottom-7.5 left-5 overflow-hidden rounded-sm"
+          onClick={() => setActiveMessageModal(true)}
+        >
           <img src={EnvelopeImg} alt="편지지 이미지" className="h-12 w-auto opacity-70" />
           <p className="caption-sb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-white">
             편지 쓰기

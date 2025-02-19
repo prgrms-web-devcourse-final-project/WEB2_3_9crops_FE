@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import ConfirmModal from './ConfirmModal';
+import TextareaField from './TextareaField';
 
 interface ReportModalProps {
   onClose: () => void;
@@ -46,10 +47,9 @@ const ReportModal = ({ onClose }: ReportModalProps) => {
           </button>
         ))}
       </section>
-      <textarea
+      <TextareaField
         rows={3}
         placeholder="이곳을 눌러 추가 사유를 작성해주세요"
-        className="body-m placeholder:text-gray-30 text-gray-80 w-full resize-none rounded-sm bg-white px-3 py-1.5"
         value={additionalReason}
         onChange={(e) => setAdditionalReason(e.target.value)}
       />
