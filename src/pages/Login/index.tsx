@@ -1,10 +1,11 @@
 import { GoogleIcon, KakaoIcon, NaverIcon, StampIcon } from '@/assets/icons';
-import MainImg from '@/assets/images/main-item-1.png';
+
+import Background from './components/Background';
 
 const LoginPage = () => {
   return (
     <>
-      <main className="flex grow flex-col items-center justify-between pt-[12%]">
+      <main className="mt-10 flex grow flex-col items-center justify-between">
         <section className="relative mt-10 text-center">
           <StampIcon className="absolute -top-2 -right-0.5 -translate-y-1/2 translate-x-1/2" />
           <h2 className="text-xl leading-[24px] font-medium tracking-[-1px]">마음이 맞닿는 온도</h2>
@@ -15,13 +16,7 @@ const LoginPage = () => {
             마음의 위안을 얻어보세요.
           </p>
         </section>
-        <div className="absolute bottom-0 z-[-20] flex w-screen justify-center overflow-hidden">
-          <img
-            src={MainImg}
-            alt="홈 이미지 1"
-            className="ml-[-65px] h-[397px] max-w-[759.5px] object-center not-visited:object-cover"
-          />
-        </div>
+        <Background />
         <section className="relative flex gap-4 pb-[5%]">
           <button type="button" className="rounded-full bg-[#03C75A] p-3.5">
             <NaverIcon />
@@ -34,7 +29,6 @@ const LoginPage = () => {
           </button>
         </section>
       </main>
-      <div className="absolute bottom-[-1px] left-1/2 z-[-10] h-50 w-screen -translate-x-1/2 bg-[url('/src/assets/images/landing-blur.png')] object-fill" />
     </>
   );
 };
