@@ -33,4 +33,5 @@
   .message-header {
     @apply text-gray-60 w-fit rounded-full bg-white px-6 py-4;
   }
+  
 }
