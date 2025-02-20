@@ -1,5 +1,3 @@
-// import { forwardRef, useState, useRef, useCallback, useImperativeHandle } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
 import { ELEMENTS } from '../constants/index';
 
@@ -70,7 +68,7 @@ const Spinner = ({ target, index }: SpinnerProps) => {
     >
       <div
         className="text-center transition-transform duration-100 ease-linear"
-        style={{ transform: `translateY(${position}px)`, transitionDuration: '1000ms' }}
+        style={{ transform: `translateY(${position}px)`, transitionDuration: '500ms' }}
       >
         {TARGET_ARR.map((item, index) => {
           return (

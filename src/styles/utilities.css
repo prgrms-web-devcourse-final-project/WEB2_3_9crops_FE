@@ -84,6 +84,7 @@
     border-style: solid !important;
   }
 
+  /* comment floating */
   @keyframes float {
     0%,
     100% {
@@ -96,5 +97,53 @@
 
   .animate-float {
     animation: float 2s ease-in-out infinite;
+  }
+
+  /* letter opening */
+  @keyframes openEnvelope {
+    0% {
+      transform: rotateX(90deg);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: rotateX(0deg);
+      transform-origin: bottom;
+    }
+  }
+
+  .animate-openEnvelope {
+    animation: openEnvelope 2s ease-in-out forwards;
+  }
+
+  /* letter coming out */
+  @keyframes expandScale {
+    0% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+      /* opacity: 0; */
+    }
+    100% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+      /* opacity: 1; */
+    }
+  }
+
+  .animate-expandScale {
+    animation: expandScale 2s ease-in-out forwards;
+  }
+
+  /* envelope out animation*/
+  @keyframes envelopeOut {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100vh);
+    }
+  }
+
+  .animate-envelopeOut {
+    animation: envelopeOut 2s ease-in-out forwards;
   }
 }

@@ -4,12 +4,18 @@ import envelopeTop from '@/assets/images/envelope-pink-back-top.png';
 
 import { useState, useRef, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { Link } from 'react-router';
 
 export default function UserInteraction() {
-  const [startAnimation, setStartAnimation] = useState<Boolean>(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgPos, setImgPos] = useState<{ top: number; width: number }>({ top: 0, width: 0 });
   const [imgToBottom, setImgToBottom] = useState<Boolean>(false);
+
+  const [startAnimation, setStartAnimation] = useState<Boolean>(false);
+  const [openAnimation, setOpenAnimation] = useState<Boolean>(false);
+  const [letterOutAnimation, setLetterOutAnimation] = useState<Boolean>(false);
+  const [envelopeOut, setEnvelopeOut] = useState<Boolean>(false);
+  const [finishAnimation, setFinishAnimation] = useState<Boolean>(false);
 
   const handleLetterClick = () => {
     if (imgRef.current) {
@@ -21,6 +27,38 @@ export default function UserInteraction() {
       setImgToBottom(true);
     }, 1000);
   };
+
+  useEffect(() => {
+    if (imgToBottom) {
+      setTimeout(() => {
+        setOpenAnimation(true);
+      }, 1000);
+    }
+  }, [imgToBottom]);
+
+  useEffect(() => {
+    if (openAnimation) {
+      setTimeout(() => {
+        setLetterOutAnimation(true);
+      }, 2000);
+    }
+  }, [openAnimation]);
+
+  useEffect(() => {
+    if (letterOutAnimation) {
+      setTimeout(() => {
+        setEnvelopeOut(true);
+      }, 2000);
+    }
+  }, [letterOutAnimation]);
+
+  useEffect(() => {
+    if (envelopeOut) {
+      setTimeout(() => {
+        setFinishAnimation(true);
+      }, 2000);
+    }
+  }, [envelopeOut]);
   if (startAnimation === false) {
     return (
       <>
@@ -47,29 +85,61 @@ export default function UserInteraction() {
           src={envelopeFront}
           alt="분홍색 편지지"
           className={twMerge(
-            `z-10 mx-10 h-auto rounded transition-transform duration-1000 ease-in-out`,
+            `z-30 mx-10 h-auto rounded transition-transform duration-1000 ease-in-out`,
             imgToBottom && 'translate-y-full',
+            envelopeOut && 'animate-envelopeOut',
           )}
-          style={{ top: `${imgPos.top}px`, position: 'absolute', width: `${imgPos.width}px` }}
+          style={{
+            top: `${imgPos.top}px`,
+            position: 'absolute',
+            width: `${imgPos.width}px`,
+          }}
         />
+        {letterOutAnimation && (
+          <div
+            className="animate-expandScale to-gray-5 z-20 max-w-[600px] rounded bg-linear-to-b from-white"
+            style={{
+              width: `${imgPos.width - imgPos.width * 0.1}px`,
+              bottom: `${imgPos.top - 0.7 * imgPos.top}px`,
+              top: `${imgPos.top - 0.5 * imgPos.top}px`,
+              position: 'absolute',
+            }}
+          ></div>
+        )}
+        {openAnimation && (
+          <img
+            src={envelopeTop}
+            alt=""
+            className={twMerge(
+              `z-10 mx-10 h-auto rounded transition-transform duration-1000 ease-in-out`,
+              imgToBottom && 'translate-y-full',
+              openAnimation && 'animate-openEnvelope',
+              envelopeOut && 'animate-envelopeOut',
+            )}
+            style={{
+              top: `${imgPos.top}px`,
+              position: 'absolute',
+              width: `${imgPos.width}px`,
+              transformOrigin: 'bottom',
+            }}
+          />
+        )}
         <img
           src={envelope}
           alt="분홍색 편지지"
           className={twMerge(
             `z-0 mx-10 h-auto rounded transition-transform duration-1000 ease-in-out`,
             imgToBottom && 'translate-y-full',
+            envelopeOut && 'animate-envelopeOut',
           )}
-          style={{ top: `${imgPos.top}px`, position: 'absolute', width: `${imgPos.width}px` }}
+          style={{
+            top: `${imgPos.top}px`,
+            position: 'absolute',
+            width: `${imgPos.width}px`,
+          }}
         />
-        {/* <img
-          src={envelopeTop}
-          alt="분홍색 편지지"
-          className={twMerge(
-            `z-30 mx-10 h-auto rounded transition-transform duration-1000 ease-in-out`,
-            imgToBottom && 'translate-y-full',
-          )}
-          style={{ top: `${imgPos.top}px`, position: 'absolute', width: `${imgPos.width}px` }}
-        /> */}
+        {/* TODO: 편지지 링크 */}
+        {finishAnimation && <Link to={'/'}></Link>}
       </>
     );
   }

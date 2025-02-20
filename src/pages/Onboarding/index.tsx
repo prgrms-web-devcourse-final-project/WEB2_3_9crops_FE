@@ -6,7 +6,7 @@ const OnboardingPage = () => {
   const [isZipCodeSet, setIsZipCodeSet] = useState<Boolean>(false);
 
   return (
-    <main className="mx-5 mt-20 mb-[1.875rem] flex grow flex-col items-center justify-between">
+    <main className="inset-0 mx-5 mt-20 mb-[1.875rem] flex grow flex-col items-center justify-between overflow-hidden">
       {isZipCodeSet === false ? (
         <SetZipCode setIsZipCodeSet={setIsZipCodeSet} />
       ) : (
