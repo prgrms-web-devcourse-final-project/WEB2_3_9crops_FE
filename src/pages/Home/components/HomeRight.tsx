@@ -10,7 +10,7 @@ const HomeRight = () => {
   let hasNewLetters = true;
 
   return (
-    <div className="relative flex h-screen w-full max-w-[800px] flex-shrink-0 grow snap-start flex-col justify-between overflow-x-hidden pt-5">
+    <div className="relative flex h-screen w-full max-w-[600px] flex-shrink-0 grow snap-start flex-col justify-between overflow-x-hidden pt-5">
       {hasNewLetters ? <FloatingLetters /> : null}
       <GoToLetterBox />
       <GoToLetterBoard />
