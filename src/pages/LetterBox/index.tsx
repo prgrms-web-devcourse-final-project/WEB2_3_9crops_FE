@@ -10,8 +10,8 @@ const LetterBoxPage = () => {
   return (
     <main className="flex grow flex-col items-center px-5 pt-20">
       <p className="text-gray-60 body-b w-fit rounded-full bg-white px-6 py-4">내 편지함</p>
-      <div className="w-full max-w-[375px]">
-        <p className="body-sb mt-16 mb-2 place-self-start text-gray-50">
+      <div className="w-full max-w-94">
+        <p className="body-sb mt-16 mb-[7px] place-self-start text-gray-50">
           나와 연락한 사람들 {DUMMY_COUNT}
         </p>
         <section className="letter-box-bg flex grow flex-col items-center px-4 pt-5">

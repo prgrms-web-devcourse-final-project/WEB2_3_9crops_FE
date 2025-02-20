@@ -24,7 +24,7 @@ const InformationTooltip = () => {
       </button>
       <article
         className={twMerge(
-          'bg-gray-10 absolute top-6 -right-1 z-20 w-75 rounded-sm p-4 drop-shadow-sm transition-opacity duration-200',
+          'bg-gray-5 absolute top-6 -right-1 z-20 w-75 rounded-md p-4 drop-shadow-sm transition-opacity duration-200',
           isShow ? 'opacity-100' : 'pointer-events-none opacity-0',
         )}
       >
