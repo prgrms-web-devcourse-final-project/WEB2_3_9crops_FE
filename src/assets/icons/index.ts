@@ -3,6 +3,7 @@ import ArrowLeftIcon from './arrow-left.svg?react';
 import BoardIcon from './board.svg?react';
 import DeleteIcon from './delete.svg?react';
 import EnvelopeIcon from './envelope.svg?react';
+import InformationIcon from './infromation.svg?react';
 import LikeFilledIcon from './like-filled.svg?react';
 import LikeOutlinedIcon from './like-outlined.svg?react';
 import NoticeIcon from './notice.svg?react';
@@ -14,6 +15,7 @@ export {
   AlarmIcon,
   PersonIcon,
   ArrowLeftIcon,
+  InformationIcon,
   SirenFilledIcon,
   SirenOutlinedIcon,
   EnvelopeIcon,

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import PageTitle from '@/components/PageTitle';
+
 import NotificationItem from './components/NotificationItem';
 import WarningModal from './components/WarningModal';
 
@@ -31,7 +33,7 @@ const NotificationsPage = () => {
     <>
       <WarningModal isOpen={isOpenWarningModal} onClose={() => setIsOpenWarningModal(false)} />
       <main className="flex grow flex-col items-center px-5 pt-20 pb-9">
-        <h1 className="text-gray-60 body-b mb-10 w-fit rounded-full bg-white px-6 py-4">알림</h1>
+        <PageTitle className="mb-10">알림</PageTitle>
         <button type="button" className="body-sb text-gray-60 place-self-end">
           모두 읽음
         </button>
