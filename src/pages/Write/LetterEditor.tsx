@@ -23,8 +23,6 @@ export default function LetterEditor({
   const letterText = useWrite((state) => state.letterText);
   const setLetterText = useWrite((state) => state.setLetterText);
 
-  const editorStyle = twMerge(`body-r basic-theme w-full px-6 focus:outline-none`, `${font}`);
-
   const handleResizeHeight = () => {
     if (textareaRef.current !== null) {
       textareaRef.current.style.height = 'auto'; //height 초기화
@@ -33,7 +31,7 @@ export default function LetterEditor({
   };
 
   return (
-    <div className="mb-12">
+    <div className="flex grow flex-col pb-15">
       <OptionSlide prevLetter={prevLetter} />
       <div className="absolute right-5">
         {prevLetter ? (
@@ -65,17 +63,16 @@ export default function LetterEditor({
         <input
           type="text"
           placeholder="제목을 입력해주세요."
-          className="body-sb placeholder:text-gray-40 placeholder:border-0 focus:outline-none"
+          className="body-sb placeholder:text-gray-40 placeholder:border-0"
           onChange={(e) => {
             setLetterTitle(e.target.value);
           }}
           value={letterTitle}
         />
       </div>
-      <div className="mt-9">
+      <div className="mt-9 flex grow">
         <textarea
-          rows={18}
-          className={editorStyle}
+          className={twMerge(`body-r basic-theme min-h-full w-full px-6`, `${font}`)}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
             handleResizeHeight();

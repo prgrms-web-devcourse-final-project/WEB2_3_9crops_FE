@@ -12,7 +12,7 @@ export default function ThemeOption() {
       {THEMES.map((target, idx) => {
         return (
           <button
-            className="flex w-[30%] min-w-[30%] cursor-pointer flex-col gap-1.5"
+            className="flex w-[30%] min-w-[30%] flex-col gap-1.5"
             key={idx}
             onClick={() => {
               setTheme(target.name);
