@@ -1,10 +1,10 @@
-import { BoardIcon, EnvelopeIcon, SirenIcon } from '@/assets/icons';
+import { BoardIcon, EnvelopeIcon, SirenFilledIcon } from '@/assets/icons';
 
 export const NOTIFICATION_ICON: Record<
   string,
   React.ComponentType<React.SVGProps<SVGSVGElement>>
 > = {
   letter: EnvelopeIcon,
-  warning: SirenIcon,
+  warning: SirenFilledIcon,
   board: BoardIcon,
 };
