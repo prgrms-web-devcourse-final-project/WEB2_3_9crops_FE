@@ -12,7 +12,6 @@ import PersonIcon from './person.svg?react';
 import restartIcon from './restart.svg';
 import SirenFilledIcon from './siren-filled.svg?react';
 import SirenOutlinedIcon from './siren-outlined.svg?react';
-import SirenIcon from './siren.svg?react';
 import SnowIcon from './snow.svg';
 import ThermostatIcon from './thermostat.svg';
 import WarmIcon from './warm.svg';
@@ -21,7 +20,6 @@ export {
   AlarmIcon,
   PersonIcon,
   ArrowLeftIcon,
-  SirenIcon,
   EnvelopeIcon,
   BoardIcon,
   restartIcon,
