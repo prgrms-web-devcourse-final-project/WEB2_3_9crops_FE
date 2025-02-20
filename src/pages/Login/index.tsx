@@ -17,7 +17,7 @@ const LoginPage = () => {
           </p>
         </section>
         <Background />
-        <section className="relative flex gap-4 pb-[5%]">
+        <section className="relative flex gap-4 pb-[4%]">
           <button type="button" className="rounded-full bg-[#03C75A] p-3.5">
             <NaverIcon />
           </button>

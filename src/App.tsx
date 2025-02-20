@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import Home from './pages/Home';
+import Landing from './pages/Landing';
 import LetterBoardPage from './pages/LetterBoard';
 import LetterBoardDetailPage from './pages/LetterBoardDetail';
 import LetterBoxPage from './pages/LetterBox';
@@ -24,6 +25,7 @@ const App = () => {
       <Route>
         <Route index element={<Home />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="landing" element={<Landing />} />
         <Route path="onboarding" element={<OnboardingPage />} />
         <Route path="letter">
           <Route element={<Layout />}>
