@@ -16,7 +16,7 @@ const DUMMY_SHARE_ACCESS = [
 
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
   return (
-    <ModalOverlay onClick={onClose}>
+    <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <div className="flex h-full flex-col items-center justify-center">
         <p className="body-sb mb-4 h-fit max-w-[170px] text-center text-white">
           공유 요청이 왔어요!

@@ -18,7 +18,7 @@ const DUMMY_DRAFT = [
 
 const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
   return (
-    <ModalOverlay onClick={onClose}>
+    <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <div className="flex h-full flex-col items-center justify-center">
         <p className="body-sb mb-4 h-fit max-w-[170px] text-center text-white">
           임시저장된 편지가 있어요!

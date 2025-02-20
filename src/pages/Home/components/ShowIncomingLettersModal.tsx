@@ -16,7 +16,7 @@ const DUMMY_INCOMING_LETTERS = [
 
 const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) => {
   return (
-    <ModalOverlay onClick={onClose}>
+    <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <div className="flex h-full flex-col items-center justify-center">
         <p className="body-sb mb-4 h-fit max-w-[170px] text-center text-white">
           따숨 배달부가 따숨이의 답장을 배달 중이에요!
