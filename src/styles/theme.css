@@ -30,16 +30,4 @@
   --color-primary-5: #fffbf8;
 
   --color-default-bg: #fffbf8;
-
-  --animate-marquee: marquee 10s linear infinite;
-
-  @keyframes marquee {
-    0% {
-      transform: translateX(10%);
-    }
-
-    100% {
-      transform: translateX(-100%);
-    }
-  }
 }
