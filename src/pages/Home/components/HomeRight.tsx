@@ -10,11 +10,11 @@ const HomeRight = () => {
   let hasNewLetters = true;
 
   return (
-    <div className="relative flex h-screen w-full max-w-[800px] flex-shrink-0 grow snap-start flex-col justify-between overflow-x-hidden pt-5">
-      {hasNewLetters ? <FloatingLetters /> : null}
+    <div className="relative flex h-screen w-full max-w-[600px] flex-shrink-0 grow snap-start flex-col justify-between overflow-x-hidden pt-5">
+      {hasNewLetters && <FloatingLetters />}
       <GoToLetterBox />
       <GoToLetterBoard />
-      {hasNewLetters ? <NewLetterModal /> : null}
+      {hasNewLetters && <NewLetterModal />}
       <img
         src={homeRightMountainBottom}
         alt="home right mountain bottom"
