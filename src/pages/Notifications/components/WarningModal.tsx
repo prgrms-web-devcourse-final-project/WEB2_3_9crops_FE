@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import ModalOverlay from '@/components/ModalOverlay';
@@ -9,26 +8,11 @@ interface WarningModalProps {
 }
 
 const WarningModal = ({ isOpen, onClose }: WarningModalProps) => {
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
-    };
-
-    if (isOpen) document.addEventListener('click', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, [isOpen, onClose]);
-
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay>
+    <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <article
-        ref={ref}
         className={twMerge(
           'relative w-77 overflow-hidden rounded-sm p-6',
           'bg-accent-1 bg-[url("/src/assets/images/background-overlay.png")] bg-repeat bg-blend-overlay',
