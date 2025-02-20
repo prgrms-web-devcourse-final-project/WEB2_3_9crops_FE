@@ -1,4 +1,5 @@
 import AlarmIcon from './alarm.svg?react';
+import ArrowDownIcon from './arrow-down.svg?react';
 import ArrowLeftIcon from './arrow-left.svg?react';
 import BoardIcon from './board.svg?react';
 import CloudIcon from './cloud.svg?react';
@@ -19,6 +20,7 @@ import WarmIcon from './warm.svg?react';
 
 export {
   AlarmIcon,
+  ArrowDownIcon,
   PersonIcon,
   ArrowLeftIcon,
   InformationIcon,
