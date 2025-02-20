@@ -5,8 +5,8 @@ const SpecialLetterBanner = () => {
     '11월 15일은 수능! 고생하는 수험생들을 위해 응원의 편지를 적어주세요!';
 
   return (
-    <div className="absolute top-[55px] right-5 left-5 flex justify-center">
-      <div className="body-sb text-gray-60 flex w-full items-center gap-[10px] overflow-hidden rounded-lg border border-[#F7E7A9] bg-gradient-to-r from-white/40 via-[#EEEEEE]/40 to-[#EEEEEE]/40 px-2 py-2 shadow-md">
+    <div className="absolute top-[55px] flex w-full max-w-[800px] justify-center">
+      <div className="body-sb text-gray-60 flex w-[80vw] items-center gap-[10px] overflow-hidden rounded-lg border border-[#F7E7A9] bg-gradient-to-r from-white/40 via-[#EEEEEE]/40 to-[#EEEEEE]/40 px-2 py-2 shadow-md">
         <div className="flex items-center justify-center">
           <CampaignOutlinedIcon />
         </div>

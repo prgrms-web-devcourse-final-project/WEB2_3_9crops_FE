@@ -26,7 +26,7 @@ const LetterActions = () => {
     },
   ];
   return (
-    <div className="absolute top-24 right-5 z-31 mt-3 flex justify-end">
+    <div className="fixed top-24 z-31 mt-3 flex w-full max-w-150 justify-end pr-5">
       <div className="flex flex-col gap-y-3">
         {arr.map((item, index) => (
           <button
