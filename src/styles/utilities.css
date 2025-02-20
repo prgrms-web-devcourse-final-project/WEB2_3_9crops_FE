@@ -1,8 +1,4 @@
 /* Tailwind에서 기본적으로 제공하지 않는 추가 유틀리티 클래스 정의 */
-/* import congratThemeFrame from '@/assets/images/congrat-theme-frame.png';
-import fieldThemeFrame from '@/assets/images/field-theme-frame.png';
-import skyThemeFrame from '@/assets/images/sky-theme-frame.png';
-import vintageThemeFrame from '@/assets/images/vintage-theme-frame.png'; */
 
 @layer utilities {
   /* 편지지 줄 css */
@@ -62,6 +58,15 @@ import vintageThemeFrame from '@/assets/images/vintage-theme-frame.png'; */
     top: 80px;
     right: 8%; /* 수평 중앙 정렬 */
     transform: translateX(-50%);
+  }
+
+  .modal-open {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+  }
+
+  .background-image-filled {
+    @apply bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center;
   }
 
   /* Onboarding */
