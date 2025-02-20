@@ -1,4 +1,4 @@
-import ListItemContainer from '@/components/ListItemContainer';
+import ListItemWrapper from '@/components/ListItemWrapper';
 
 import { NOTIFICATION_ICON } from '../constants';
 
@@ -18,13 +18,13 @@ const NotificationItem = ({ type, message, isRead, onClick }: NotificationItemPr
   };
 
   return (
-    <ListItemContainer isSender={type === 'warning'} onClick={handleClick}>
+    <ListItemWrapper isSender={type === 'warning'} onClick={handleClick}>
       <div className="flex items-center gap-3">
         {isRead && <div className="absolute inset-0 z-10 bg-white/60" />}
         <Icon className="z-0 h-6 w-6 text-white" />
         <p className="body-m text-gray-80 z-0">{message}</p>
       </div>
-    </ListItemContainer>
+    </ListItemWrapper>
   );
 };
 

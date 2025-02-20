@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import ListItemContainer from '@/components/ListItemContainer';
+import ListItemWrapper from '@/components/ListItemWrapper';
 
 interface LetterPreviewProps {
   id: number;
@@ -22,7 +22,7 @@ const LetterPreview = ({
 }: LetterPreviewProps) => {
   if (isShareMode)
     return (
-      <ListItemContainer isSender={isSend}>
+      <ListItemWrapper isSender={isSend}>
         <div className="mb-3 flex items-center justify-between">
           <p className="body-r text-gray-80">{date}</p>
           <label htmlFor={`${id}`} className="relative">
@@ -37,15 +37,15 @@ const LetterPreview = ({
           </label>
         </div>
         <p className="body-m text-gray-80 line-clamp-1 break-all">{title}</p>
-      </ListItemContainer>
+      </ListItemWrapper>
     );
 
   return (
     <Link to={`/letter/${id}`}>
-      <ListItemContainer isSender={isSend}>
+      <ListItemWrapper isSender={isSend}>
         <p className="body-r text-gray-80 mb-3">{date}</p>
         <p className="body-m text-gray-80 line-clamp-1 break-all">{title}</p>
-      </ListItemContainer>
+      </ListItemWrapper>
     </Link>
   );
 };

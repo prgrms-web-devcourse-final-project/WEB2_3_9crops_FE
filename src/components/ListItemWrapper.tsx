@@ -1,18 +1,18 @@
 import { twMerge } from 'tailwind-merge';
 
-interface ListItemContainerProps {
+interface ListItemWrapperProps {
   isSender?: boolean;
   className?: string;
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const ListItemContainer = ({
+const ListItemWrapper = ({
   isSender = false,
   className,
   children,
   onClick,
-}: ListItemContainerProps) => {
+}: ListItemWrapperProps) => {
   return (
     <article
       className={twMerge(
@@ -28,4 +28,4 @@ const ListItemContainer = ({
   );
 };
 
-export default ListItemContainer;
+export default ListItemWrapper;
