@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react';
 
 import ModalBg from '@/assets/images/modal-pink.png';
 
+import BackgroundImageWrapper from './BackgroundImageWrapper';
 import ModalOverlay from './ModalOverlay';
 import TextareaField from './TextareaField';
 
@@ -30,11 +31,8 @@ const MessageModal = ({
 }: MessageModalProps) => {
   return (
     <ModalOverlay>
-      <p className="body-sb mb-4 text-white">{description}</p>
-      <section
-        className="background-image-filled mb-12 w-78 rounded-lg p-4"
-        style={{ '--bg-image': `url(${ModalBg})` } as React.CSSProperties}
-      >
+      <p className="body-sb mb-4 text-center text-white">{description}</p>
+      <BackgroundImageWrapper as="section" className="mb-12 w-78 rounded-lg p-4" imageUrl={ModalBg}>
         <TextareaField
           rows={5}
           value={inputValue}
@@ -42,7 +40,7 @@ const MessageModal = ({
           onChange={onInputChange}
         />
         {children}
-      </section>
+      </BackgroundImageWrapper>
       <section className="flex items-center gap-6">
         <button
           type="button"
