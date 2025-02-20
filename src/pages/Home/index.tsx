@@ -7,7 +7,7 @@ import HomeButton from '@/components/HomeButton';
 
 const HomePage = () => {
   return (
-    <div className="flex h-screen w-screen grow snap-x snap-mandatory overflow-x-auto overflow-y-hidden bg-cover">
+    <div className="flex w-screen grow snap-x snap-mandatory overflow-x-auto overflow-y-hidden bg-cover">
       <NavBar />
       <SpecialLetterBanner />
       <LetterActions />
