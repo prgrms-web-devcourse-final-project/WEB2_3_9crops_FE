@@ -66,13 +66,13 @@ export default function CategorySelect({
         {send || prevLetter ? (
           <Link
             to={'/'}
-            className="bg-primary-3 body-m mt-auto flex h-10 w-[280px] items-center justify-center rounded-lg"
+            className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
           >
             홈으로 돌아가기
           </Link>
         ) : (
           <button
-            className="bg-primary-3 body-m mt-auto flex h-10 w-[280px] items-center justify-center rounded-lg"
+            className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
             onClick={() => {
               if (stamp) {
                 setSend(true);
