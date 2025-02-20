@@ -15,13 +15,16 @@ import OnboardingPage from './pages/Onboarding';
 import RandomLettersPage from './pages/RandomLetters';
 import RollingPaperPage from './pages/RollingPaper';
 import WritePage from './pages/Write';
+import AdminPage from './pages/Admin';
+import MobileLayout from './layouts/MobileLayout';
+import ReportManage from './pages/Admin/components/Report';
 
 const App = () => {
   useViewport();
 
   return (
     <Routes>
-      <Route>
+      <Route element={<MobileLayout></MobileLayout>}>
         <Route index element={<Home />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="onboarding" element={<OnboardingPage />} />
@@ -46,6 +49,9 @@ const App = () => {
           <Route path="board" element={<LetterBoardPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
         </Route>
+      </Route>
+      <Route path="admin" element={<AdminPage />}>
+        <Route path="report" element={<ReportManage />} />
       </Route>
     </Routes>
   );
