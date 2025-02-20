@@ -1,5 +1,6 @@
 import ModalBg from '@/assets/images/modal-yellow.png';
 
+import BackgroundImageWrapper from './BackgroundImageWrapper';
 import ModalOverlay from './ModalOverlay';
 
 interface ConfirmModalProps {
@@ -27,16 +28,13 @@ const ConfirmModal = ({
   return (
     <ModalOverlay>
       <div className="w-73">
-        <section
-          className="background-image-filled mb-12 rounded-lg p-5"
-          style={{ '--bg-image': `url(${ModalBg})` } as React.CSSProperties}
-        >
+        <BackgroundImageWrapper as="section" className="mb-12 rounded-lg p-5" imageUrl={ModalBg}>
           <div className="flex flex-col gap-1">
             <p className="body-m text-gray-80">{title}</p>
             <p className="caption-r text-black">{description}</p>
           </div>
           {children}
-        </section>
+        </BackgroundImageWrapper>
         <section className="flex items-center gap-6">
           <button
             type="button"
