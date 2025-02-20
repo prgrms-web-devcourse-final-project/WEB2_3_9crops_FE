@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 
 import ConfirmModal from '@/components/ConfirmModal';
 import MessageModal from '@/components/MessageModal';
+import PageTitle from '@/components/PageTitle';
 
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
@@ -42,7 +43,6 @@ const DUMMY_LETTER_LIST = [
 
 const LetterBoxDetailPage = () => {
   //const { id } = useParams();
-  // TODO: PageTitle 컴포넌트로 변경해야 함
   const [isShareMode, setShareMode] = useState(false);
   const [isOpenUnconnectModal, setIsOpenUnconnectModal] = useState(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
@@ -98,11 +98,11 @@ const LetterBoxDetailPage = () => {
         </MessageModal>
       )}
       <main className="flex grow flex-col px-5 pt-20 pb-10">
-        <p className="text-gray-60 body-b mx-auto w-fit rounded-full bg-white px-6 py-4">
+        <PageTitle className="mx-auto">
           {isShareMode
             ? '게시판에 올릴 편지를 선택해주세요'
             : `${DUMMY_ZIP_CODE}님과 주고 받은 편지`}
-        </p>
+        </PageTitle>
         <section className="text-gray-60 body-sb mt-18 mb-2 flex w-full justify-between">
           <p>주고 받은 편지 {DUMMY_LETTER_LIST.length}</p>
           <div className="flex items-center gap-0.5 underline">

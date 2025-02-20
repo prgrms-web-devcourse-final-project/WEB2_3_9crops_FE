@@ -1,4 +1,5 @@
 import DoorImg from '@/assets/images/door.png';
+import PageTitle from '@/components/PageTitle';
 import { chunkBox } from '@/utils/chunkBox';
 
 import LetterBoxItem from './components/LetterBoxItem';
@@ -6,10 +7,9 @@ import LetterBoxItem from './components/LetterBoxItem';
 const DUMMY_COUNT = 200;
 
 const LetterBoxPage = () => {
-  // TODO: PageTitle 컴포넌트로 변경해야 함
   return (
     <main className="flex grow flex-col items-center px-5 pt-20">
-      <p className="text-gray-60 body-b w-fit rounded-full bg-white px-6 py-4">내 편지함</p>
+      <PageTitle>내 편지함</PageTitle>
       <div className="w-full max-w-94">
         <p className="body-sb mt-16 mb-[7px] place-self-start text-gray-50">
           나와 연락한 사람들 {DUMMY_COUNT}
