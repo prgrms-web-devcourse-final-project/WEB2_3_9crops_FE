@@ -1,5 +1,12 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import letter1 from '@/assets/images/letter-1.png';
+import letter2 from '@/assets/images/letter-2.png';
+import letter3 from '@/assets/images/letter-3.png';
+import letter4 from '@/assets/images/letter-4.png';
+
+const images = [letter1, letter2, letter3, letter4];
+
 const FloatingLetters = () => {
   const lettersRef = useRef<HTMLImageElement[]>([]);
   useEffect(() => {
@@ -20,10 +27,10 @@ const FloatingLetters = () => {
   }, []);
   return (
     <>
-      {Array.from({ length: 4 }).map((_, index) => (
+      {images.map((src, index) => (
         <img
           key={index}
-          src={`/src/assets/letter_${index + 1}.png`}
+          src={src}
           ref={(el) => {
             if (el) lettersRef.current[index] = el;
           }}

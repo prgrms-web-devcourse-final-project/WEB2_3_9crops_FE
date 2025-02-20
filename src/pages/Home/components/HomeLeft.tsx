@@ -1,6 +1,7 @@
 import RandomCheer from './RandomCheer';
 import GoToWrite from './GoToWrite';
 import GoToRandomLetter from './GoToRandomLetter';
+import homeLeftMountain from '@/assets/images/home-left-mountain.png';
 
 const HomeLeft = () => {
   return (
@@ -13,7 +14,7 @@ const HomeLeft = () => {
           <GoToRandomLetter />
         </div>
         <img
-          src="/src/assets/home_left_mountain.png"
+          src={homeLeftMountain}
           alt="home left mountain"
           className="z-10 w-full max-w-[600px]"
         />

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { RANDOM_CHEER_LIST } from '../constants';
+import randomCheerBird from '@/assets/images/random-cheer-bird.png';
 
 const RandomCheer = () => {
   const getRandomCheer = (): string => {
@@ -19,7 +20,7 @@ const RandomCheer = () => {
         <div className="absolute right-2 bottom-[-15px] -translate-x-1/2 transform border-x-[10px] border-t-[15px] border-x-transparent border-t-white"></div>
       </div>
       <img
-        src="/src/assets/random_cheer_bird.png"
+        src={randomCheerBird}
         alt="random cheer bird"
         className="h-[26.5px] w-[21px] opacity-80"
       />

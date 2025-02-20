@@ -2,6 +2,8 @@ import FloatingLetters from './FloatingLetters';
 import GoToLetterBoard from './GoToLetterBoard';
 import GoToLetterBox from './GoToLetterBox';
 import NewLetterModal from './NewLetterModal';
+import homeRightMountainBottom from '@/assets/images/home-right-mountain-bottom.png';
+import homeRightMountainTop from '@/assets/images/home-right-mountain-top.png';
 
 const HomeRight = () => {
   //TODO : hasNewLetters 전역으로 상태 관리할지
@@ -14,12 +16,12 @@ const HomeRight = () => {
       <GoToLetterBoard />
       {hasNewLetters ? <NewLetterModal /> : null}
       <img
-        src="/src/assets/home_right_mountain_bottom.png"
+        src={homeRightMountainBottom}
         alt="home right mountain bottom"
         className="absolute bottom-0 z-10 w-full"
       />
       <img
-        src="/src/assets/home_right_mountain_top.png"
+        src={homeRightMountainTop}
         alt="home right mountain top"
         className="absolute bottom-0 w-full"
       />
