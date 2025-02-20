@@ -14,7 +14,7 @@ function WritePageButton({
   onClick?: () => void;
 }) {
   const buttonStyle = twMerge(
-    'caption-sb text-gray-60 cursor-pointer rounded-sm px-2 py-1',
+    'caption-sb text-gray-60 rounded-sm px-2 py-1',
     `bg-${bgColor} rounded-${rounded}`,
     `${clicked === text && 'bg-primary-1 text-white'}`,
   );

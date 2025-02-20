@@ -38,7 +38,7 @@ export default function FontOption() {
                 <p className="caption-m">{font.fontName}</p>
                 <button
                   className={twMerge(
-                    'caption-m flex-start flex w-full cursor-pointer items-center justify-between rounded-lg bg-white px-3 py-2',
+                    'caption-m flex-start flex w-full items-center justify-between rounded-lg bg-white px-3 py-2',
                     `${font.fontFamily}`,
                   )}
                   onClick={() => {

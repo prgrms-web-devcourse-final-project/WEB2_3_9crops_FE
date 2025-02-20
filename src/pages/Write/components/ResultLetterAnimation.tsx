@@ -28,7 +28,7 @@ export default function ResultLetterAnimation({ stampName }: { stampName: Stamp 
       ) : (
         <>
           {next === 'st' && (
-            <div className="relative h-[400px] w-full overflow-hidden">
+            <div className="relative h-[300px] w-full overflow-hidden">
               <img
                 src={openedLetter}
                 alt="열린 편지"
@@ -43,7 +43,7 @@ export default function ResultLetterAnimation({ stampName }: { stampName: Stamp 
             </div>
           )}
           {next === 'nd' && (
-            <div className="relative h-[400px] w-full">
+            <div className="relative h-[300px] w-full">
               <img
                 src={closedLetter}
                 alt="닫힌 편지"
