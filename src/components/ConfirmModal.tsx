@@ -1,4 +1,4 @@
-import ModalBg from '@/assets/images/yellow-modal.png';
+import ModalBg from '@/assets/images/modal-yellow.png';
 
 import ModalOverlay from './ModalOverlay';
 
@@ -7,6 +7,7 @@ interface ConfirmModalProps {
   description: string;
   cancelText: string;
   confirmText: string;
+  confirmDisabled?: boolean;
   children?: React.ReactNode;
   onCancel: () => void;
   onConfirm: () => void;
@@ -17,6 +18,7 @@ const ConfirmModal = ({
   description,
   cancelText,
   confirmText,
+  confirmDisabled,
   children,
   onCancel,
   onConfirm,
@@ -25,8 +27,10 @@ const ConfirmModal = ({
   return (
     <ModalOverlay>
       <div className="w-73">
-        <section className="relative mb-12 overflow-hidden rounded-lg p-5">
-          <img src={ModalBg} className="absolute inset-0 z-[-10] h-full w-full" />
+        <section
+          className="background-image-filled mb-12 rounded-lg p-5"
+          style={{ '--bg-image': `url(${ModalBg})` } as React.CSSProperties}
+        >
           <div className="flex flex-col gap-1">
             <p className="body-m text-gray-80">{title}</p>
             <p className="caption-r text-black">{description}</p>
@@ -44,6 +48,7 @@ const ConfirmModal = ({
           <button
             type="button"
             className="primary-btn body-m h-10 flex-1 basis-1/2"
+            disabled={confirmDisabled}
             onClick={onConfirm}
           >
             {confirmText}

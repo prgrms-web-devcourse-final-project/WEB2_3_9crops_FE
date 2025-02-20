@@ -2,7 +2,7 @@
 
 @layer components {
   .primary-btn {
-    @apply bg-primary-3 rounded-lg text-black;
+    @apply bg-primary-3 disabled:bg-gray-10 rounded-lg text-black disabled:text-white;
   }
 
   .secondary-btn {
