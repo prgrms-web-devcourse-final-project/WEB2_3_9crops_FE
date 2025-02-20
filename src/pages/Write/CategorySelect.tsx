@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 
+import PageTitle from '@/components/PageTitle';
 import useWrite from '@/stores/writeStore';
 
 import CategoryList from './components/CategoryList';
@@ -19,7 +20,7 @@ export default function CategorySelect({
   const stamp = useWrite((state) => state.stamp);
   return (
     <>
-      <div className="flex h-full min-h-[calc(100vh-40px)] w-full flex-col items-center">
+      <div className="flex w-full grow flex-col items-center">
         <div className="absolute right-5">
           {!send && !prevLetter && (
             <WritePageButton
@@ -32,9 +33,9 @@ export default function CategorySelect({
           )}
         </div>
 
-        <span className="body-b text-gray-60 mt-15 rounded-full bg-white px-6 py-4">
+        <PageTitle className="mt-20">
           {send || prevLetter ? '편지 작성이 완료 되었어요!' : '어떤 답장을 받고 싶나요?'}
-        </span>
+        </PageTitle>
 
         {/* 카테고리 선택 컴포넌트 */}
         {!send && !prevLetter && <CategoryList />}
@@ -65,13 +66,13 @@ export default function CategorySelect({
         {send || prevLetter ? (
           <Link
             to={'/'}
-            className="bg-primary-3 body-m mt-auto flex h-10 w-[280px] cursor-pointer items-center justify-center rounded-lg"
+            className="bg-primary-3 body-m mt-auto flex h-10 w-[280px] items-center justify-center rounded-lg"
           >
             홈으로 돌아가기
           </Link>
         ) : (
           <button
-            className="bg-primary-3 body-m mt-auto flex h-10 w-[280px] cursor-pointer items-center justify-center rounded-lg"
+            className="bg-primary-3 body-m mt-auto flex h-10 w-[280px] items-center justify-center rounded-lg"
             onClick={() => {
               if (stamp) {
                 setSend(true);

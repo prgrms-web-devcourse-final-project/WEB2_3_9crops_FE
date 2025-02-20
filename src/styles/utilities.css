@@ -68,4 +68,36 @@
   .background-image-filled {
     @apply bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center;
   }
+
+  /* Onboarding */
+  .comment {
+    @apply bg-gray-10 rounded px-6 py-2;
+  }
+
+  .comment::after {
+    @apply border-t-gray-10 border border-t-10 border-r-6 border-b-10 border-l-6 border-r-white/0 border-b-white/0 border-l-white/0;
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid !important;
+  }
+
+  .animate-float {
+    animation: float 2s ease-in-out infinite;
+  }
+
+  .animate-openEnvelope {
+    animation: openEnvelope 2s ease-in-out forwards;
+  }
+
+  .animate-expandScale {
+    animation: expandScale 2s ease-in-out forwards;
+  }
+
+  .animate-envelopeOut {
+    animation: envelopeOut 2s ease-in-out forwards;
+  }
+
 }
