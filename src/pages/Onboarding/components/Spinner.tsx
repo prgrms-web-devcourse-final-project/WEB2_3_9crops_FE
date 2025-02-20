@@ -15,16 +15,20 @@ const Spinner = ({ target, index }: SpinnerProps) => {
   let LETTER_HEIGHT = 40;
   const animationFrameRef = useRef<number | null>(null);
 
+  //TODO: 여러 기기에서 실효성 확인
+  // 웹에서는 없어도 될 것 같음
   // calculate full height of the cycle
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (containerRef.current) {
+      console.log(LETTER_HEIGHT);
       const letter = containerRef.current.querySelector('p');
       if (letter) {
         LETTER_HEIGHT = letter.getBoundingClientRect().height;
       }
     }
-  });
+    console.log(LETTER_HEIGHT);
+  }, []);
   const FULL_ROTATION = -TARGET_ARR.length * LETTER_HEIGHT;
 
   useEffect(() => {
@@ -67,8 +71,9 @@ const Spinner = ({ target, index }: SpinnerProps) => {
       style={{ willChange: 'transform' }}
     >
       <div
-        className="text-center transition-transform duration-100 ease-linear"
-        style={{ transform: `translateY(${position}px)`, transitionDuration: '500ms' }}
+        ref={containerRef}
+        className="text-center transition-transform duration-500 ease-linear"
+        style={{ transform: `translateY(${position}px)` }}
       >
         {TARGET_ARR.map((item, index) => {
           return (

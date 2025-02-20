@@ -53,4 +53,53 @@
       transform: perspective(800px) rotateY(0deg);
     }
   }
+
+  /* onBoarding */
+  /* comment floating */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+
+  /* onBoarding */
+  /* letter opening */
+  @keyframes openEnvelope {
+    0% {
+      transform: rotateX(90deg);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: rotateX(0deg);
+      transform-origin: bottom;
+    }
+  }
+
+  /* onBoarding */
+  /* letter coming out */
+  @keyframes expandScale {
+    0% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+  }
+
+  /* onBoarding */
+  /* envelope out animation*/
+  @keyframes envelopeOut {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100vh);
+    }
+  }
 }

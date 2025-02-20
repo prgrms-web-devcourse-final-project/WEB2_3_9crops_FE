@@ -1,5 +1,5 @@
-import envelope from '@/assets/images/envelope-pink.png';
-import envelopeFront from '@/assets/images/envelope-pink-front.png';
+import envelope from '@/assets/images/closed-letter.png';
+import envelopeFront from '@/assets/images/opened-letter-front.png';
 import envelopeTop from '@/assets/images/envelope-pink-back-top.png';
 
 import { useState, useRef, useEffect } from 'react';
@@ -97,7 +97,7 @@ export default function UserInteraction() {
         />
         {letterOutAnimation && (
           <div
-            className="animate-expandScale to-gray-5 z-20 max-w-[600px] rounded bg-linear-to-b from-white"
+            className="animate-expandScale to-gray-5 z-20 max-w-[600px] rounded-lg bg-linear-to-b from-white"
             style={{
               width: `${imgPos.width - imgPos.width * 0.1}px`,
               bottom: `${imgPos.top - 0.7 * imgPos.top}px`,
