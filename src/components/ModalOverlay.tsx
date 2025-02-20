@@ -1,10 +1,14 @@
 interface ModalOverlayProps {
   children: React.ReactElement;
+  onClick?: () => void;
 }
 
-const ModalOverlay = ({ children }: ModalOverlayProps) => {
+const ModalOverlay = ({ children, onClick }: ModalOverlayProps) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      onClick={onClick}
+    >
       {children}
     </div>
   );
