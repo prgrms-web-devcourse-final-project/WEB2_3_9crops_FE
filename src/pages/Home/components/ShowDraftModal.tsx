@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalBg from '@/assets/images/yellow-modal.png';
+import ModalBg from '@/assets/images/modal-yellow.png';
 import ModalOverlay from '@/components/ModalOverlay';
 
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
