@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router';
 
 import useViewport from './hooks/useViewport';
+import Layout from './layouts/Layout';
 import Home from './pages/Home';
 import LetterBoardPage from './pages/LetterBoard';
 import LetterBoardDetailPage from './pages/LetterBoardDetail';
@@ -30,12 +31,15 @@ const App = () => {
           <Route path=":id" element={<LetterDetailPage />} />
         </Route>
         <Route path="board">
-          <Route path="letter" element={<LetterBoardPage />} />
+          <Route element={<Layout />}>
+            <Route path="rolling/:id" element={<RollingPaperPage />} />
+            <Route path="letter" element={<LetterBoardPage />} />
+          </Route>
           <Route path="letter/:id" element={<LetterBoardDetailPage />} />
-          <Route path="rolling/:id" element={<RollingPaperPage />} />
         </Route>
-        <Route path="mypage">
+        <Route path="mypage" element={<Layout />}>
           <Route index element={<MyPage />} />
+          <Route path="board" element={<LetterBoardPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
         </Route>
       </Route>

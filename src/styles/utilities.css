@@ -1,4 +1,71 @@
 /* Tailwind에서 기본적으로 제공하지 않는 추가 유틀리티 클래스 정의 */
 
 @layer utilities {
+  /* 편지지 줄 css */
+  .basic-theme {
+    background-attachment: local;
+    background-image:
+      linear-gradient(to right, transparent 10px, transparent 10px),
+      linear-gradient(to left, transparent 10px, transparent 10px),
+      repeating-linear-gradient(
+        transparent,
+        transparent 30px,
+        #f8de8c 30px,
+        #f8de8c 31px,
+        transparent 31px
+      );
+    line-height: 31px;
+  }
+
+  /* 편지지 테마 css */
+  .basic {
+    background: #ffffff;
+  }
+  .sky {
+    background:
+      url('../assets/images/sky-theme-asset-clouds.png'),
+      linear-gradient(to bottom, #ffffff, #cbe1ff);
+    background-size: 100%;
+    background-repeat: repeat-y;
+  }
+  .celebrate {
+    background:
+      url('../assets/images/celebration-theme-asset-side.png') repeat-y,
+      url('../assets/images/celebration-theme-asset-bottom.png') no-repeat bottom,
+      #ffffff;
+    background-size: 100%;
+  }
+  .vintage {
+    background: url('../assets/images/vintage-theme-asset-bg.png') repeat-y;
+    background-size: 100%;
+  }
+  .vintage {
+    background: url('../assets/images/vintage-theme-asset-bg.png') repeat-y;
+    background-size: 100%;
+  }
+  .field {
+    background:
+      url('../assets/images/field-theme-asset-bottom.png') no-repeat bottom,
+      #ffffff;
+    background-size: 100%;
+  }
+  .field::after {
+    content: '';
+    background: url('../assets/images/field-theme-asset-bird.png') no-repeat;
+    width: 30px; /* bird 이미지의 원본 너비 */
+    height: 30px; /* bird 이미지의 원본 높이 */
+    position: absolute;
+    top: 80px;
+    right: 8%; /* 수평 중앙 정렬 */
+    transform: translateX(-50%);
+  }
+
+  .modal-open {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+  }
+
+  .background-image-filled {
+    @apply bg-[image:var(--bg-image)] bg-[length:100%_100%] bg-center;
+  }
 }
