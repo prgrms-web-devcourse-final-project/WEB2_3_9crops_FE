@@ -23,7 +23,7 @@ function MatchingSelectModal({
         </div>
         <div className="mt-12.5 flex w-[300px] gap-4">
           <button
-            className="bg-primary-4 body-m h-10 w-[calc(50%-8px)] rounded-lg text-gray-50"
+            className="bg-primary-4 body-m h-10 flex-1 basis-1/2 rounded-lg text-gray-50"
             onClick={() => {
               setOpenModal(false);
             }}
@@ -31,7 +31,7 @@ function MatchingSelectModal({
             거부하기
           </button>
           <button
-            className="bg-primary-3 body-m h-10 w-[calc(50%-8px)] rounded-lg"
+            className="bg-primary-3 body-m h-10 flex-1 basis-1/2 rounded-lg"
             onClick={() => {
               setOpenModal(false);
               navigate(`/letter/${1}`);

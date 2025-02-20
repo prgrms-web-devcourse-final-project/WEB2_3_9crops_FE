@@ -9,7 +9,7 @@ import LetterEditor from './LetterEditor';
 
 const WritePage = () => {
   const [step, setStep] = useState<Step>('edit');
-  // 대화가 답장일 경우 이전 편지가 여기 담김(배열로 받아질 것으로 예상)
+  // 대화가 답장일 경우 이전 편지가 여기 담김(배열로 받아질 것으로 예상) - 1개만 받을지? 1개 이상 받을지? 정해야함(백엔드분들이 api를 2개 만들어주신다 하셨음)
   const [prevLetter, setPrevLetter] = useState<PrevLetter>([
     {
       title: '안녕하세요 고민이 있어요',
@@ -20,9 +20,9 @@ const WritePage = () => {
       text: '요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민',
     },
   ]);
-  useEffect(() => {
-    setPrevLetter(null);
-  });
+  // useEffect(() => {
+  //   setPrevLetter(null);
+  // });
 
   const theme = useWrite((state) => state.theme);
 

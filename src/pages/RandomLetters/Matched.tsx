@@ -11,10 +11,7 @@ export default function Matched() {
         <div className="mt-2 w-75">
           <ResultLetter stampName="기타" title="테스트용가리" />
         </div>
-        <button
-          className="bg-primary-3 body-m mt-12.5 w-full cursor-pointer rounded-lg py-2"
-          onClick={() => {}}
-        >
+        <button className="bg-primary-3 body-m mt-12.5 w-full rounded-lg py-2" onClick={() => {}}>
           매칭 취소하기
         </button>
       </div>

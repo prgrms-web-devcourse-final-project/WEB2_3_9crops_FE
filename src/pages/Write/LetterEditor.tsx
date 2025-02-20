@@ -63,7 +63,7 @@ export default function LetterEditor({
         <input
           type="text"
           placeholder="제목을 입력해주세요."
-          className="body-sb placeholder:text-gray-40 placeholder:border-0 focus:outline-none"
+          className="body-sb placeholder:text-gray-40 placeholder:border-0"
           onChange={(e) => {
             setLetterTitle(e.target.value);
           }}
@@ -72,10 +72,7 @@ export default function LetterEditor({
       </div>
       <div className="mt-9 flex grow">
         <textarea
-          className={twMerge(
-            `body-r basic-theme min-h-full w-full px-6 focus:outline-none`,
-            `${font}`,
-          )}
+          className={twMerge(`body-r basic-theme min-h-full w-full px-6`, `${font}`)}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
             handleResizeHeight();

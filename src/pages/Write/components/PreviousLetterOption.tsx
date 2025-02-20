@@ -13,7 +13,7 @@ export default function PreviousLetterOption({ prevLetter = [] }: { prevLetter: 
               return (
                 <button
                   className={twMerge(
-                    `flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white`,
+                    `flex h-5 w-5 items-center justify-center rounded-full bg-white`,
                     idx === index && 'bg-primary-1',
                   )}
                   onClick={() => setIndex(idx)}

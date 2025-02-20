@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 
 import 'swiper/swiper-bundle.css';
 
-import { restartIcon } from '@/assets/icons';
+import { RestartIcon } from '@/assets/icons';
 import ResultLetter from '@/components/ResultLetter';
 
 export default function MatchingSelect({
@@ -39,7 +39,7 @@ export default function MatchingSelect({
     <>
       <div className="mt-25 flex flex-col items-start justify-center">
         <button className="flex gap-1">
-          <img src={restartIcon} alt="재시작 아이콘" />
+          <img src={RestartIcon} alt="재시작 아이콘" />
           <span className="caption-sb text-gray-30" onClick={() => {}}>
             리스트 새로고침
           </span>
