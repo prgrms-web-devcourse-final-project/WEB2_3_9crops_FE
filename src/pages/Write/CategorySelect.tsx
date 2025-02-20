@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 
+import PageTitle from '@/components/PageTitle';
 import useWrite from '@/stores/writeStore';
 
 import CategoryList from './components/CategoryList';
@@ -32,9 +33,9 @@ export default function CategorySelect({
           )}
         </div>
 
-        <span className="body-b text-gray-60 mt-15 rounded-full bg-white px-6 py-4">
+        <PageTitle className="mt-20">
           {send || prevLetter ? '편지 작성이 완료 되었어요!' : '어떤 답장을 받고 싶나요?'}
-        </span>
+        </PageTitle>
 
         {/* 카테고리 선택 컴포넌트 */}
         {!send && !prevLetter && <CategoryList />}

@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router';
+
 import ModalOverlay from '@/components/ModalOverlay';
 import ResultLetter from '@/components/ResultLetter';
 
@@ -8,6 +10,7 @@ function MatchingSelectModal({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   selectedLetter: SelectedLetter;
 }) {
+  const navigate = useNavigate();
   return (
     <ModalOverlay>
       <div className="flex-col items-center justify-center">
@@ -31,6 +34,7 @@ function MatchingSelectModal({
             className="bg-primary-3 body-m h-10 w-[calc(50%-8px)] rounded-lg"
             onClick={() => {
               setOpenModal(false);
+              navigate(`/letter/${1}`);
             }}
           >
             승인하기
