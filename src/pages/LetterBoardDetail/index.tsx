@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router';
+
 import { twMerge } from 'tailwind-merge';
 
 import ReportModal from '@/components/ReportModal';
@@ -6,6 +8,7 @@ import ReportModal from '@/components/ReportModal';
 import Header from './components/Header';
 import Letter from './components/Letter';
 
+import BlurImg from '@/assets/images/landing-blur.png';
 const DUMMY_LETTER = {
   receiver: '12E21',
   content:
@@ -13,7 +16,18 @@ const DUMMY_LETTER = {
   sender: '12345',
 };
 
-const LetterBoardDetailPage = () => {
+interface ShareLetterPreviewProps {
+  confirmDisabled?: boolean;
+  children?: React.ReactNode;
+  onCancel?: () => void;
+  onConfirm?: () => void;
+}
+
+const LetterBoardDetailPage = ({
+  confirmDisabled,
+  onCancel,
+  onConfirm,
+}: ShareLetterPreviewProps) => {
   const [likeCount, setLikeCount] = useState(122);
   const [isLike, setIsLike] = useState(false);
   const isWriter = false;
@@ -23,6 +37,11 @@ const LetterBoardDetailPage = () => {
     setLikeCount((prev) => prev + (isLike ? -1 : 1));
     setIsLike((prev) => !prev);
   };
+
+  const location = useLocation();
+
+  const isShareLetterPreview = location.state?.isShareLetterPreview || false; // state가 없다면 false로 기본값 설정
+  console.log(location);
 
   return (
     <>
@@ -34,6 +53,7 @@ const LetterBoardDetailPage = () => {
           isWriter={isWriter}
           onToggleLike={handleToggleLike}
           onOpenReportModal={() => setActiveReportModal(true)}
+          isShareLetterPreview={isShareLetterPreview}
         />
         <main className="px-5 pt-18 pb-3">
           <p className="body-b mb-6 px-5">FROM. 12E31</p>
@@ -56,6 +76,29 @@ const LetterBoardDetailPage = () => {
             <Letter letter={DUMMY_LETTER} isSender />
             <Letter letter={DUMMY_LETTER} />
           </section>
+
+          {isShareLetterPreview && (
+            <>
+              <img src={BlurImg} alt="landing blur" className="fixed bottom-0 w-screen" />
+              <section className="fixed bottom-[30px] left-1/2 flex w-73 translate-x-[-50%] gap-6">
+                <button
+                  type="button"
+                  className="body-m secondary-btn h-10 flex-1 basis-1/2"
+                  onClick={onCancel}
+                >
+                  거부하기
+                </button>
+                <button
+                  type="button"
+                  className="primary-btn body-m h-10 flex-1 basis-1/2"
+                  disabled={confirmDisabled}
+                  onClick={onConfirm}
+                >
+                  승인하기
+                </button>
+              </section>
+            </>
+          )}
         </main>
       </div>
     </>
