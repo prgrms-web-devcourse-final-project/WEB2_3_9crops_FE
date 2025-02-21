@@ -1,6 +1,7 @@
 import React from 'react';
 import ModalBg from '@/assets/images/modal-yellow.png';
 import ModalOverlay from '@/components/ModalOverlay';
+import { useNavigate } from 'react-router';
 
 interface ShowShareAccessModalProps {
   children?: React.ReactNode;
@@ -15,6 +16,13 @@ const DUMMY_SHARE_ACCESS = [
 ];
 
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (accessId: number) => {
+    navigate(`/board/letter/${accessId}`, {
+      state: { isShareLetterPreview: true },
+    });
+  };
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <div className="flex h-full flex-col items-center justify-center">
@@ -33,13 +41,13 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
             </div>
             <div className="mt-6 flex w-[251px] flex-col gap-[10px]">
               {DUMMY_SHARE_ACCESS.map((access) => (
-                <div
+                <button
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
-                  // onClick={openLetterPreview}
                   key={access.id}
+                  onClick={() => handleNavigation(access.id)}
                 >
                   <p>{access.zip_code}님의 공유 요청</p>
-                </div>
+                </button>
               ))}
             </div>
           </section>
