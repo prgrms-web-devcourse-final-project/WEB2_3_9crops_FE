@@ -5,6 +5,8 @@
   --animate-show-text: showing 0.5s ease-in-out 6s forwards;
   --animate-rotate-show: rotate-show 1s ease-in-out forwards;
   --animate-blink: showing 0.3s forwards;
+  --animate-login-move-up-down: move-up-down 3s ease-in-out infinite;
+  --animate-marquee: marquee 10s linear infinite;
 
   @keyframes down {
     0% {
@@ -54,9 +56,18 @@
     }
   }
 
-  /* SpecialLetterBanner 애니메이션 */
-  --animate-marquee: marquee 10s linear infinite;
+  /* login */
+  @keyframes move-up-down {
+    0%,
+    100% {
+      transform: translateY(10px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
 
+  /* SpecialLetterBanner 애니메이션 */
   @keyframes marquee {
     0% {
       transform: translateX(10%);

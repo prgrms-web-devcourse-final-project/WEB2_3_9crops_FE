@@ -2,7 +2,6 @@
 
 @layer base {
   :root {
-    --body-bg-color: var(--color-white);
     --vh: 1vh;
     --vw: 1vw;
   }
