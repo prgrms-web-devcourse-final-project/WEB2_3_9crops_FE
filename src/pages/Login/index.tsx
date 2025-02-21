@@ -18,13 +18,25 @@ const LoginPage = () => {
         </section>
         <Background />
         <section className="relative flex gap-4 pb-[4%]">
-          <button type="button" className="rounded-full bg-[#03C75A] p-3.5">
+          <button
+            type="button"
+            className="rounded-full bg-[#03C75A] p-3.5"
+            aria-label="네이버 로그인"
+          >
             <NaverIcon />
           </button>
-          <button type="button" className="rounded-full bg-[#FEE500] p-3.5">
+          <button
+            type="button"
+            className="rounded-full bg-[#FEE500] p-3.5"
+            aria-label="카카오 로그인"
+          >
             <KakaoIcon />
           </button>
-          <button type="button" className="border-gray-5 rounded-full border bg-white p-3.5">
+          <button
+            type="button"
+            className="border-gray-5 rounded-full border bg-white p-3.5"
+            aria-label="구글 로그인"
+          >
             <GoogleIcon />
           </button>
         </section>
