@@ -1,39 +1,48 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
 import { ChangeEvent, useState } from 'react';
+import { useParams } from 'react-router';
 
+import { getRollingPaperDetail } from '@/apis/rolling';
 import EnvelopeImg from '@/assets/images/closed-letter.png';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
 import ReportModal from '@/components/ReportModal';
+import { useFetchQuery } from '@/hooks/useFetchQuery';
 import Header from '@/layouts/Header';
 
-import Message from './components/Message';
-import MessageDetailModal from './components/MessageDetailModal';
+import Comment from './components/Comment';
+import CommentDetailModal from './components/CommentDetailModal';
 
-const DUMMY_USER_ZIP_CODE = '22E12';
-const DUMMY_TITLE = '침수 피해를 복구중인 포스코 임직원 분들에게 응원의 메시지를 보내주세요!';
+// TODO: 더미 완전히 제거
+const DUMMY_USER_ZIP_CODE = '1DR41';
 const DUMMY_MESSAGE_COUNT = 20;
-const DUMMY_MESSAGE = {
+const DUMMY_MESSAGE: RollingPaperComment = {
+  commentId: 1,
   content:
     '편지 내용 어쩌구저쩌구 뾰로롱 편지 내용 어쩌구저쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 저쩌구 끝~!!',
-  sender: '12E12',
+  zipCode: '12E12',
 };
-const DUMMY_MESSAGES = Array.from({ length: 10 }, () => ({ ...DUMMY_MESSAGE }));
+const DUMMY_COMMENT = Array.from({ length: 10 }, () => ({ ...DUMMY_MESSAGE }));
 
 const RollingPaperPage = () => {
-  const [activeMessageIndex, setActiveMessageIndex] = useState<number | null>(null);
+  const [activeComment, setActiveComment] = useState<RollingPaperComment | null>(null);
   const [activeReportModal, setActiveReportModal] = useState(false);
   const [activeMessageModal, setActiveMessageModal] = useState(false);
   const [newMessage, setNewMessage] = useState('');
+  const id = useParams().id ?? '';
+  const { data } = useFetchQuery({
+    queryKey: ['rolling-paper', id],
+    queryFn: () => getRollingPaperDetail(id),
+  });
 
   const handleReport = () => {
-    setActiveMessageIndex(null);
+    setActiveComment(null);
     setActiveReportModal(true);
   };
 
   const handleDelete = () => {
-    setActiveMessageIndex(null);
+    setActiveComment(null);
   };
 
   const handleChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,11 +51,11 @@ const RollingPaperPage = () => {
 
   return (
     <>
-      {activeMessageIndex !== null && (
-        <MessageDetailModal
-          message={DUMMY_MESSAGES[activeMessageIndex]}
-          isWriter={DUMMY_MESSAGES[activeMessageIndex].sender === DUMMY_USER_ZIP_CODE}
-          onClose={() => setActiveMessageIndex(null)}
+      {activeComment !== null && (
+        <CommentDetailModal
+          comment={activeComment}
+          isWriter={activeComment.zipCode === DUMMY_USER_ZIP_CODE}
+          onClose={() => setActiveComment(null)}
           onReport={handleReport}
           onDelete={handleDelete}
         />
@@ -67,12 +76,20 @@ const RollingPaperPage = () => {
       )}
       <Header />
       <main className="flex grow flex-col items-center px-5 pt-20 pb-12">
-        <PageTitle className="mb-18 max-w-73 text-center">{DUMMY_TITLE}</PageTitle>
+        <PageTitle className="mb-18 max-w-73 text-center">{data?.title}</PageTitle>
         <p className="body-sb text-gray-60 mb-2 w-full">등록된 편지 {DUMMY_MESSAGE_COUNT}</p>
         <section className="w-full">
           <MasonryInfiniteGrid column={2} align="stretch" gap={16}>
-            {DUMMY_MESSAGES.map((message, index) => (
-              <Message key={index} message={message} onClick={() => setActiveMessageIndex(index)} />
+            {data &&
+              data.eventPostComments.map((comment) => (
+                <Comment
+                  key={comment.commentId}
+                  comment={comment}
+                  onClick={() => setActiveComment(comment)}
+                />
+              ))}
+            {DUMMY_COMMENT.map((comment, index) => (
+              <Comment key={index} comment={comment} onClick={() => setActiveComment(comment)} />
             ))}
           </MasonryInfiniteGrid>
         </section>

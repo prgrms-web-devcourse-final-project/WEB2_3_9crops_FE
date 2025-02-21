@@ -5,6 +5,7 @@ import { getCurrentRollingPaper } from '@/apis/rolling';
 import { NoticeIcon } from '@/assets/icons';
 import { useFetchQuery } from '@/hooks/useFetchQuery';
 
+// TODO: 더미 완전히 제거
 const DUMMY = '11월 15일은 수능! 고생하는 수험생들을 위해 응원의 편지를 적어주세요!';
 
 const NoticeRollingPaper = () => {
