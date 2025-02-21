@@ -1,11 +1,12 @@
-import { AlarmIcon, ArrowDownIcon } from '@/assets/icons';
 import { Outlet } from 'react-router';
+
+import { AlarmIcon, ArrowDownIcon } from '@/assets/icons';
 
 const AdminPage = () => {
   return (
-    <main className="flex h-screen w-full">
-      <section className="bg-accent-1 flex flex-1 grow basis-1/5 flex-col">
-        <div className="bg-accent-3 flex h-24 w-full items-center justify-center border-b py-5">
+    <main className="flex h-full min-h-screen w-full">
+      <section className="bg-primary-3 flex flex-1 grow basis-1/6 flex-col">
+        <div className="bg-primary-3 flex h-24 w-full items-center justify-center border-b py-5">
           로고
         </div>
         <div className="flex flex-col gap-2.5 border-b px-7 py-5">
@@ -68,7 +69,7 @@ const AdminPage = () => {
           </button>
         </div>
       </section>
-      <section className="flex flex-1 grow basis-4/5 flex-col bg-amber-200">
+      <section className="flex flex-1 grow basis-5/6 flex-col bg-amber-200">
         <div className="h2-l w-full border-b border-[#D6D6D6] bg-white py-5 pl-10.5">
           사용자 목록
         </div>

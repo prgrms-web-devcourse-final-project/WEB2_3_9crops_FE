@@ -2,6 +2,9 @@ import { Route, Routes } from 'react-router';
 
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
+import MobileLayout from './layouts/MobileLayout';
+import AdminPage from './pages/Admin';
+import ReportManage from './pages/Admin/Report';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import LetterBoardPage from './pages/LetterBoard';
@@ -16,16 +19,13 @@ import OnboardingPage from './pages/Onboarding';
 import RandomLettersPage from './pages/RandomLetters';
 import RollingPaperPage from './pages/RollingPaper';
 import WritePage from './pages/Write';
-import AdminPage from './pages/Admin';
-import MobileLayout from './layouts/MobileLayout';
-import ReportManage from './pages/Admin/components/Report';
 
 const App = () => {
   useViewport();
 
   return (
     <Routes>
-      <Route element={<MobileLayout></MobileLayout>}>
+      <Route element={<MobileLayout />}>
         <Route index element={<Home />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="landing" element={<Landing />} />
