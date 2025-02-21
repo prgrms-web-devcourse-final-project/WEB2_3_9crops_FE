@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { CloudIcon, ColorSirenIcon, SnowIcon, ThermostatIcon, WarmIcon } from '@/assets/icons';
+import { CloudIcon, SirenOutlinedIcon, SnowIcon, ThermostatIcon, WarmIcon } from '@/assets/icons';
 import ReportModal from '@/components/ReportModal';
 
 const LetterDetailPage = () => {
@@ -54,7 +54,7 @@ const LetterDetailPage = () => {
               setReportModalOpen(true);
             }}
           >
-            <ColorSirenIcon className="h-6 w-6" />
+            <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
           </button>
           {degreeModalOpen && (
             <div className="caption-b text-primary-1 bg-primary-5 absolute top-7 z-40 flex flex-col gap-1 p-2 shadow">
