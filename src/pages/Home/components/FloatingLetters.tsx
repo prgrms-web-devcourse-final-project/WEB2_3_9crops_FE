@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { useEffect, useRef } from 'react';
+
 import letter1 from '@/assets/images/letter-1.png';
 import letter2 from '@/assets/images/letter-2.png';
 import letter3 from '@/assets/images/letter-3.png';

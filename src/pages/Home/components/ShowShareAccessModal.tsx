@@ -1,7 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
+
 import ModalBg from '@/assets/images/modal-yellow.png';
 import ModalOverlay from '@/components/ModalOverlay';
-import { useNavigate } from 'react-router';
 
 interface ShowShareAccessModalProps {
   children?: React.ReactNode;

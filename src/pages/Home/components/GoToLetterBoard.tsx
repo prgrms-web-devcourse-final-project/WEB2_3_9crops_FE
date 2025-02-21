@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+
 import goToLetterBoard from '@/assets/images/go-to-letter-board.png';
 
 const GoToLetterBoard = () => {

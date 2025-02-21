@@ -1,8 +1,8 @@
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import React from 'react';
+
 import ModalBg from '@/assets/images/modal-yellow.png';
 import ModalOverlay from '@/components/ModalOverlay';
-
-import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 
 interface ShowDraftModalProps {
   children?: React.ReactNode;

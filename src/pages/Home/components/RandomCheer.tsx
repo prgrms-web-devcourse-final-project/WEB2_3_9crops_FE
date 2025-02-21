@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { RANDOM_CHEER_LIST } from '../constants';
+
 import randomCheerBird from '@/assets/images/random-cheer-bird.png';
+
+import { RANDOM_CHEER_LIST } from '../constants';
 
 const RandomCheer = () => {
   const getRandomCheer = (): string => {

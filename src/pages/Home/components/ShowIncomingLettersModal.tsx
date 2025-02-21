@@ -1,7 +1,7 @@
 import React from 'react';
+
 import ModalBg from '@/assets/images/modal-yellow.png';
 import ModalOverlay from '@/components/ModalOverlay';
-
 interface ShowIncomingLettersModalProps {
   children?: React.ReactNode;
   onClose: () => void;

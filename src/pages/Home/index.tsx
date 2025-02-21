@@ -1,13 +1,14 @@
-import HomeLeft from './components/HomeLeft';
-import HomeRight from './components/HomeRight';
-import HomeHeader from './components/HomeHeader';
-import SpecialLetterBanner from './components/SpecialLetterBanner';
-import LetterActions from './components/LetterActions';
 import HomeButton from '@/components/HomeButton';
+import useViewport from '@/hooks/useViewport';
+
 import HomeBackgroundLeft from './components/HomeBackgroundLeft';
 import HomeBackgroundRightBottom from './components/HomeBackgroundRightBottom';
 import HomeBackgroundRightTop from './components/HomeBackgroundRightTop';
-import useViewport from '@/hooks/useViewport';
+import HomeHeader from './components/HomeHeader';
+import HomeLeft from './components/HomeLeft';
+import HomeRight from './components/HomeRight';
+import LetterActions from './components/LetterActions';
+import SpecialLetterBanner from './components/SpecialLetterBanner';
 
 const HomePage = () => {
   useViewport();

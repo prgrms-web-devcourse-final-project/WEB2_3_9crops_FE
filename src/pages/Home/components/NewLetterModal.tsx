@@ -1,7 +1,8 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const NewLetterModal = () => {
-  const [newLetterCount, setNewLetterCount] = useState(0);
+  // const [newLetterCount, setNewLetterCount] = useState(0);
+  const newLetterCount = 3;
 
   return (
     <p className="text-gray-60 body-b absolute top-30 mb-10 w-fit animate-pulse rounded-full bg-white px-6 py-4">
