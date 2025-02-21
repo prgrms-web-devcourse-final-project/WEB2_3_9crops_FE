@@ -1,23 +1,18 @@
 import { twMerge } from 'tailwind-merge';
 
-interface ListItemWrapperProps {
+interface LetterWrapperProps {
   isSender?: boolean;
   className?: string;
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const ListItemWrapper = ({
-  isSender = false,
-  className,
-  children,
-  onClick,
-}: ListItemWrapperProps) => {
+const LetterWrapper = ({ isSender = false, className, children, onClick }: LetterWrapperProps) => {
   return (
     <article
       className={twMerge(
         'relative flex overflow-hidden rounded-sm p-4',
-        isSender ? 'list-sender-bg' : 'list-receiver-bg',
+        isSender ? 'letter-sender-bg' : 'letter-receiver-bg',
         className,
       )}
       onClick={onClick}
@@ -28,4 +23,4 @@ const ListItemWrapper = ({
   );
 };
 
-export default ListItemWrapper;
+export default LetterWrapper;
