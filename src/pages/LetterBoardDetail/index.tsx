@@ -8,8 +8,7 @@ import ReportModal from '@/components/ReportModal';
 import Header from './components/Header';
 import Letter from './components/Letter';
 
-import landingBlur from '@/assets/images/landing_blur.png';
-
+import BlurImg from '@/assets/images/landing-blur.png';
 const DUMMY_LETTER = {
   receiver: '12E21',
   content:
@@ -80,7 +79,7 @@ const LetterBoardDetailPage = ({
 
           {isShareLetterPreview && (
             <>
-              <img src={landingBlur} alt="landing blur" className="fixed bottom-0 w-screen" />
+              <img src={BlurImg} alt="landing blur" className="fixed bottom-0 w-screen" />
               <section className="fixed bottom-[30px] left-1/2 flex w-73 translate-x-[-50%] gap-6">
                 <button
                   type="button"
