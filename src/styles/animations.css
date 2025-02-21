@@ -64,7 +64,9 @@
 
     100% {
       transform: translateX(-100%);
-      
+    }
+  }
+
   /* onBoarding */
   /* comment floating */
   @keyframes float {
