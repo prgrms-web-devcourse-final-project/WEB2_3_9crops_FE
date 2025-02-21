@@ -12,15 +12,12 @@ const Landing = () => {
   if (step === 3) return <Navigate to="/login" />;
 
   return (
-    <main
-      className="relative flex grow justify-center overflow-hidden"
-      onClick={() => setStep((prev) => prev + 1)}
-    >
+    <main className="relative flex grow justify-center" onClick={() => setStep((prev) => prev + 1)}>
       <img
         src={LandingImg}
         alt="서비스 소개 이미지"
         className={twMerge(
-          'absolute bottom-0 h-70 w-auto max-w-none -translate-x-1/2 transition-all duration-200',
+          'fixed bottom-0 h-70 w-auto max-w-none -translate-x-1/2 transition-all duration-200',
           STYLE_CLASS[step].imagePosition,
         )}
       />

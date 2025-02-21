@@ -1,8 +1,8 @@
 export const STYLE_CLASS = [
   {
     imagePosition: 'left-[calc(50%-200px)]',
-    mask: 'bottom-27 left-[calc(50%+65px)]',
-    circle: 'h-40 w-40',
+    mask: 'bottom-26 left-[calc(50%+65px)]',
+    circle: 'h-41 w-41',
     textPosition: '-top-20 left-[calc(50%-30px)] text-right',
     description:
       '따뜻한 편지 사례들을 모아 볼 수 있어요.\n응원이 필요한 사람들에게\n단체로 롤링페이퍼를 쓸 수도 있습니다.',
@@ -10,7 +10,7 @@ export const STYLE_CLASS = [
   {
     imagePosition: 'left-[calc(50%-200px)]',
     mask: 'bottom-5 left-[calc(50%-75px)]',
-    circle: 'h-40 w-40',
+    circle: 'h-42 w-42',
     textPosition: '-top-14 left-[calc(50%+40px)] text-left',
     description: '주고받은 편지 내역을 확인해 보세요.\n보는 것 만으로도 마음이 따뜻해집니다.',
   },
