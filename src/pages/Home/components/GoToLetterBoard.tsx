@@ -6,7 +6,7 @@ const GoToLetterBoard = () => {
     <div className="absolute bottom-48 left-[calc(var(--vh)*36)] z-9 flex w-full">
       <div className="text-left">
         <p className="text-gray-60 body-r mb-1 ml-2">게시판</p>
-        <Link to="/letter/board">
+        <Link to="/board/letter">
           <img src={goToLetterBoard} alt="go to letter board" className="w-[177px]" />
         </Link>
       </div>
