@@ -2,24 +2,21 @@ import ModalBg from '@/assets/images/memo-pink.png';
 import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
-interface MessageDetailModalProps {
-  message: {
-    content: string;
-    sender: string;
-  };
+interface CommentDetailModalProps {
+  comment: RollingPaperComment;
   isWriter: boolean;
   onClose: () => void;
   onReport: () => void;
   onDelete: () => void;
 }
 
-const MessageDetailModal = ({
-  message,
+const CommentDetailModal = ({
+  comment,
   isWriter,
   onClose,
   onReport,
   onDelete,
-}: MessageDetailModalProps) => {
+}: CommentDetailModalProps) => {
   const handleButtonClick = () => {
     if (isWriter) {
       // TODO: 삭제 로직
@@ -40,12 +37,12 @@ const MessageDetailModal = ({
           className="mt-1 flex max-h-1/2 w-78 flex-col gap-3 overflow-y-auto px-5 py-4 text-black"
           imageUrl={ModalBg}
         >
-          <p className="body-r leading-[26px]">{message.content}</p>
-          <p className="body-m place-self-end">From. {message.sender}</p>
+          <p className="body-r leading-[26px]">{comment.content}</p>
+          <p className="body-m place-self-end">From. {comment.zipCode}</p>
         </BackgroundImageWrapper>
       </>
     </ModalOverlay>
   );
 };
 
-export default MessageDetailModal;
+export default CommentDetailModal;
