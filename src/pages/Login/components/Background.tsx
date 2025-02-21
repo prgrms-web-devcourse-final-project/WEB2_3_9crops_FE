@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import FieldImg from '@/assets/images/field-1.png';
+import FieldImg from '@/assets/images/home-left-mountain.png';
 import BlurImg from '@/assets/images/landing-blur.png';
 import EnvelopeImg from '@/assets/images/postoffice-letter.png';
 import PostofficeImg from '@/assets/images/postoffice.png';
