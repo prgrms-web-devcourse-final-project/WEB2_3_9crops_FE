@@ -23,6 +23,13 @@
     background-blend-mode: overlay, normal, normal;
   }
 
+  .memo-sender-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #ffe89f 0%, #ffe8a1 28%, #fff2d4 98.5%);
+    background-blend-mode: overlay, normal, normal;
+  }
+
   .letter-box-bg {
     background:
       url('/src/assets/images/background-overlay.png') repeat,
