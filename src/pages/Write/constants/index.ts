@@ -13,35 +13,65 @@ import respondentStamp from '@/assets/images/respondent-stamp.png';
 import skyTheme from '@/assets/images/sky-theme.png';
 import vintageTheme from '@/assets/images/vintage-theme.png';
 
-const THEMES: ThemeInfo[] = [
-  { name: '기본', src: basicTheme },
-  { name: '축하', src: congratTheme },
-  { name: '위로', src: skyTheme },
-  { name: '빈티지', src: vintageTheme },
-  { name: '들판', src: fieldTheme },
-];
-
-const THEME_OBJ: ThemeObj = {
-  기본: 'basic',
-  축하: 'celebrate',
-  위로: 'sky',
-  빈티지: 'vintage',
-  들판: 'field',
+const PAPER_TYPE_OBJ: PaperTypeObj = {
+  BASIC: 'basic',
+  CELEBRATE: 'celebrate',
+  COMFORT: 'sky',
+  PAPER: 'vintage',
+  FIELD: 'field',
 };
 
-const STAMPS: Stamps = {
-  '축하와 응원': celebrationStamp,
-  '위로와 공감': consolationStamp,
-  '고민 상담': consultStamp,
-  기타: etcStamp,
+const FONTS = {
+  DEFAULT: 'pretendard',
+  GYEONGGI: 'batang',
+  KYOBO: 'kobyo',
+  HIMCHAN: 'himchan',
+};
+
+const FONT_LIST: Fonts[] = [
+  {
+    fontType: 'DEFAULT',
+    fontName: '기본',
+    fontFamily: 'pretendard',
+  },
+  {
+    fontType: 'GYEONGGI',
+    fontName: 'KoPub바탕',
+    fontFamily: 'batang',
+  },
+  {
+    fontType: 'KYOBO',
+    fontName: '교보손글씨 2020 박도연',
+    fontFamily: 'kobyo',
+  },
+  {
+    fontType: 'HIMCHAN',
+    fontName: '인천 교육 힘찬',
+    fontFamily: 'himchan',
+  },
+];
+
+const CATEGORYS: Categorys = {
+  CONSOLATION: consolationStamp,
+  CELEBRATION: celebrationStamp,
+  CONSULT: consultStamp,
+  ETC: etcStamp,
   답변자: respondentStamp,
 };
 
-const CATEGORY_STAMPS: CategoryStamps[] = [
-  { title: '위로와 공감', image: consolation },
-  { title: '축하와 응원', image: celebration },
-  { title: '고민 상담', image: cunsult },
-  { title: '기타', image: etc },
+const CATEGORY_LIST: CategoryList[] = [
+  { paperType: 'BASIC', name: '기본', src: basicTheme },
+  { paperType: 'CELEBRATE', name: '축하', src: congratTheme },
+  { paperType: 'COMFORT', name: '위로', src: skyTheme },
+  { paperType: 'PAPER', name: '빈티지', src: vintageTheme },
+  { paperType: 'FIELD', name: '들판', src: fieldTheme },
 ];
 
-export { THEMES, THEME_OBJ, STAMPS, CATEGORY_STAMPS };
+const CATEGORY_STAMPS: CategoryStamps[] = [
+  { category: 'CONSOLATION', title: '위로와 공감', image: consolation },
+  { category: 'CELEBRATION', title: '축하와 응원', image: celebration },
+  { category: 'CONSULT', title: '고민 상담', image: cunsult },
+  { category: 'ETC', title: '기타', image: etc },
+];
+
+export { CATEGORY_LIST, PAPER_TYPE_OBJ, CATEGORYS, CATEGORY_STAMPS, FONT_LIST, FONTS };

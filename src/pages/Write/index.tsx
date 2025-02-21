@@ -1,34 +1,50 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
+import { getPrevLetter } from '@/apis/write';
 import useWrite from '@/stores/writeStore';
 
 import CategorySelect from './CategorySelect';
-import { THEME_OBJ } from './constants';
+import { PAPER_TYPE_OBJ } from './constants';
 import LetterEditor from './LetterEditor';
 
 const WritePage = () => {
-  const [step, setStep] = useState<Step>('edit');
-  // 대화가 답장일 경우 이전 편지가 여기 담김(배열로 받아질 것으로 예상) - 1개만 받을지? 1개 이상 받을지? 정해야함(백엔드분들이 api를 2개 만들어주신다 하셨음)
-  const [prevLetter, setPrevLetter] = useState<PrevLetter>([
-    {
-      title: '안녕하세요 고민이 있어요',
-      text: '이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민이런저런요론 고민',
-    },
-    {
-      title: '안녕하세요 다른 고민이 하나 있어요',
-      text: '요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민요롷고그런그런 고민',
-    },
-  ]);
-  // useEffect(() => {
-  //   setPrevLetter(null);
-  // });
+  const [searchParams] = useSearchParams();
 
-  const theme = useWrite((state) => state.theme);
+  const [step, setStep] = useState<Step>('edit');
+  const [prevLetter, setPrevLetter] = useState<PrevLetter[]>([]);
+
+  const paperType = useWrite((state) => state.paperType);
+  const resetWrite = useWrite((state) => state.resetWrite);
+
+  // 답글 작성 과정에서 데이터 정제 + 답글작성시 api연결 해야함(백서버가 꺼져서 내일 진행2025.02.21)
+
+  // const LETTER_REQUEST: LetterRequest = {
+  //   receiver: null,
+  //   parentLetterId: null,
+  //   title: letterTitle,
+  //   content: letterText,
+  //   category: searchParams,
+  //   paperType: paperType,
+  //   fontType: fontType,
+  // };
+
+  useEffect(() => {
+    if (searchParams.get('letterId')) {
+      getPrevLetter(setPrevLetter, searchParams);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    return () => {
+      resetWrite();
+    };
+  }, [resetWrite]);
 
   const wrapStyle = twMerge(
     'relative p-5 w-full grow flex flex-col',
-    `${step === 'edit' && THEME_OBJ[theme]}`,
+    `${step === 'edit' && PAPER_TYPE_OBJ[paperType]}`,
   );
   return (
     <div className={wrapStyle}>

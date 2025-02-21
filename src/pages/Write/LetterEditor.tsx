@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import useWrite from '@/stores/writeStore';
 
 import WritePageButton from './components/WritePageButton';
+import { FONTS } from './constants';
 import OptionSlide from './OptionSlide';
 
 export default function LetterEditor({
@@ -11,11 +12,11 @@ export default function LetterEditor({
   prevLetter,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
-  prevLetter: PrevLetter;
+  prevLetter: PrevLetter[];
 }) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const font = useWrite((state) => state.font);
+  const fontType = useWrite((state) => state.fontType);
 
   const letterTitle = useWrite((state) => state.letterTitle);
   const setLetterTitle = useWrite((state) => state.setLetterTitle);
@@ -34,7 +35,7 @@ export default function LetterEditor({
     <div className="flex grow flex-col pb-15">
       <OptionSlide prevLetter={prevLetter} />
       <div className="absolute right-5">
-        {prevLetter ? (
+        {prevLetter.length > 0 ? (
           <WritePageButton
             text="답장 전송"
             onClick={() => {
@@ -72,7 +73,7 @@ export default function LetterEditor({
       </div>
       <div className="mt-9 flex grow">
         <textarea
-          className={twMerge(`body-r basic-theme min-h-full w-full px-6`, `${font}`)}
+          className={twMerge(`body-r basic-theme min-h-full w-full px-6`, `${FONTS[fontType]}`)}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
             handleResizeHeight();

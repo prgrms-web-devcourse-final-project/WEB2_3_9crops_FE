@@ -2,12 +2,14 @@ import AlarmIcon from './alarm.svg?react';
 import ArrowDownIcon from './arrow-down.svg?react';
 import ArrowLeftIcon from './arrow-left.svg?react';
 import BoardIcon from './board.svg?react';
+import CheckIcon from './check.svg?react';
 import CloudIcon from './cloud.svg?react';
 import DeleteIcon from './delete.svg?react';
 import EnvelopeIcon from './envelope.svg?react';
 import GoogleIcon from './google.svg?react';
 import InformationIcon from './information.svg?react';
 import KakaoIcon from './kakao.svg?react';
+import KebobMenuIcon from './kebob-menu.svg?react';
 import LikeFilledIcon from './like-filled.svg?react';
 import LikeOutlinedIcon from './like-outlined.svg?react';
 import NaverIcon from './naver.svg?react';
@@ -27,10 +29,12 @@ export {
   GoogleIcon,
   StampIcon,
   AlarmIcon,
+  CheckIcon,
   ArrowDownIcon,
   PersonIcon,
   ArrowLeftIcon,
   InformationIcon,
+  KebobMenuIcon,
   EnvelopeIcon,
   BoardIcon,
   RestartIcon,

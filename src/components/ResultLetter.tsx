@@ -1,12 +1,12 @@
 import letterPink from '@/assets/images/letter-pink.png';
 
-import { STAMPS } from '../pages/Write/constants';
+import { CATEGORYS } from '../pages/Write/constants';
 
 export default function ResultLetter({
-  stampName = '위로와 공감',
+  categoryName = 'CONSOLATION',
   title,
 }: {
-  stampName: Stamp;
+  categoryName: Category;
   title: string;
 }) {
   const address = '1A3E2';
@@ -23,7 +23,7 @@ export default function ResultLetter({
           <span className="caption-b text-gray-60">따숨이님께</span>
           <span className="caption-r text-gray-80 line-clamp-3 break-all">{title}</span>
         </div>
-        <img src={STAMPS[stampName]} alt="우표" />
+        <img src={CATEGORYS[categoryName]} alt="우표" />
       </div>
       <div className="flex flex-col gap-[5px]">
         <span className="caption-sb text-gray-60">{today}</span>
