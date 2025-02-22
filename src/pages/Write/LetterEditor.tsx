@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import useWrite from '@/stores/writeStore';
 
 import WritePageButton from './components/WritePageButton';
-import { FONTS } from './constants';
+import { FONT_TYPE_OBJ } from './constants';
 import OptionSlide from './OptionSlide';
 
 export default function LetterEditor({
@@ -73,7 +73,10 @@ export default function LetterEditor({
       </div>
       <div className="mt-9 flex grow">
         <textarea
-          className={twMerge(`body-r basic-theme min-h-full w-full px-6`, `${FONTS[fontType]}`)}
+          className={twMerge(
+            `body-r basic-theme min-h-full w-full px-6`,
+            `${FONT_TYPE_OBJ[fontType]}`,
+          )}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
             handleResizeHeight();

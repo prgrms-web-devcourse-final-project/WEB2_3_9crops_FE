@@ -21,7 +21,7 @@ const PAPER_TYPE_OBJ: PaperTypeObj = {
   FIELD: 'field',
 };
 
-const FONTS = {
+const FONT_TYPE_OBJ = {
   DEFAULT: 'pretendard',
   GYEONGGI: 'batang',
   KYOBO: 'kobyo',
@@ -74,4 +74,4 @@ const CATEGORY_STAMPS: CategoryStamps[] = [
   { category: 'ETC', title: '기타', image: etc },
 ];
 
-export { CATEGORY_LIST, PAPER_TYPE_OBJ, CATEGORYS, CATEGORY_STAMPS, FONT_LIST, FONTS };
+export { CATEGORY_LIST, PAPER_TYPE_OBJ, CATEGORYS, CATEGORY_STAMPS, FONT_LIST, FONT_TYPE_OBJ };

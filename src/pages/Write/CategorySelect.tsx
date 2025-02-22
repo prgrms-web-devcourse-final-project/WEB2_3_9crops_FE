@@ -94,6 +94,7 @@ export default function CategorySelect({
             onClick={() => {
               if (category) {
                 postLetter(LETTER_REQUEST, setSend);
+                // setSend(true);
               } else {
                 alert('우표 선택을 해주세요');
               }
