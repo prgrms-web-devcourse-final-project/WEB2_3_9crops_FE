@@ -1,12 +1,12 @@
 import { client } from './client';
 
-const postLetterApi = async (
+const postLetter = async (
   data: LetterRequest,
-  setState: React.Dispatch<React.SetStateAction<boolean>>,
+  setState?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   try {
     const res = await client.post('/api/letters', data);
-    setState(true);
+    if (setState) setState(true);
     console.log(res);
   } catch (error) {
     console.error(error);
@@ -26,4 +26,4 @@ const getPrevLetter = async (
   }
 };
 
-export { postLetterApi, getPrevLetter };
+export { postLetter, getPrevLetter };

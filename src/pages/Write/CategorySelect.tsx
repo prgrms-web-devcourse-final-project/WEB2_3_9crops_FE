@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 
-import { postLetterApi } from '@/apis/write';
+import { postLetter } from '@/apis/write';
 import PageTitle from '@/components/PageTitle';
 import useWrite from '@/stores/writeStore';
 
@@ -93,7 +93,7 @@ export default function CategorySelect({
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
             onClick={() => {
               if (category) {
-                postLetterApi(LETTER_REQUEST, setSend);
+                postLetter(LETTER_REQUEST, setSend);
               } else {
                 alert('우표 선택을 해주세요');
               }
