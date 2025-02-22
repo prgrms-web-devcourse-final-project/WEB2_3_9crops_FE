@@ -1,4 +1,5 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
+import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router';
 
@@ -8,7 +9,6 @@ import BackgroundBottom from '@/components/BackgroundBottom';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
 import ReportModal from '@/components/ReportModal';
-import { useFetchQuery } from '@/hooks/useFetchQuery';
 import Header from '@/layouts/Header';
 
 import Comment from './components/Comment';
@@ -31,7 +31,7 @@ const RollingPaperPage = () => {
   const [activeMessageModal, setActiveMessageModal] = useState(false);
   const [newMessage, setNewMessage] = useState('');
   const id = useParams().id ?? '';
-  const { data } = useFetchQuery({
+  const { data } = useQuery({
     queryKey: ['rolling-paper', id],
     queryFn: () => getRollingPaperDetail(id),
   });
