@@ -18,7 +18,6 @@ const CommentDetailModal = ({
 }: CommentDetailModalProps) => {
   const handleButtonClick = () => {
     if (isWriter) {
-      // TODO: 삭제 로직
       onDelete();
     } else {
       onReport();

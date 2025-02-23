@@ -1,18 +1,18 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
-import { useQuery } from '@tanstack/react-query';
-import { ChangeEvent, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useParams } from 'react-router';
 
-import { getRollingPaperDetail } from '@/apis/rolling';
-import EnvelopeImg from '@/assets/images/closed-letter.png';
+import { deleteRollingPaperComment, getRollingPaperDetail } from '@/apis/rolling';
 import BackgroundBottom from '@/components/BackgroundBottom';
-import MessageModal from '@/components/MessageModal';
+import ConfirmModal from '@/components/ConfirmModal';
 import PageTitle from '@/components/PageTitle';
 import ReportModal from '@/components/ReportModal';
 import Header from '@/layouts/Header';
 
 import Comment from './components/Comment';
 import CommentDetailModal from './components/CommentDetailModal';
+import WriteCommentButton from './components/WriteCommentButton';
 
 // TODO: 더미 완전히 제거
 const DUMMY_USER_ZIP_CODE = '1DR41';
@@ -26,14 +26,38 @@ const DUMMY_MESSAGE: RollingPaperComment = {
 const DUMMY_COMMENT = Array.from({ length: 10 }, () => ({ ...DUMMY_MESSAGE }));
 
 const RollingPaperPage = () => {
-  const [activeComment, setActiveComment] = useState<RollingPaperComment | null>(null);
-  const [activeReportModal, setActiveReportModal] = useState(false);
-  const [activeMessageModal, setActiveMessageModal] = useState(false);
-  const [newMessage, setNewMessage] = useState('');
   const id = useParams().id ?? '';
+  const [activeComment, setActiveComment] = useState<RollingPaperComment | null>(null);
+  const [activeDetailModal, setActiveDetailModal] = useState(false);
+  const [activeReportModal, setActiveReportModal] = useState(false);
+  const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+  const queryClient = useQueryClient();
+
   const { data } = useQuery({
     queryKey: ['rolling-paper', id],
     queryFn: () => getRollingPaperDetail(id),
+  });
+
+  const { mutate: deleteComment } = useMutation({
+    mutationFn: (rollingPaperId: number | string) => deleteRollingPaperComment(rollingPaperId),
+    onSuccess: (data) => {
+      queryClient.setQueryData(['rolling-paper', id], (oldData: RollingPaper) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          eventPostComments: oldData.eventPostComments.filter(
+            (comment: RollingPaperComment) => comment.commentId !== data.commentId,
+          ),
+        };
+      });
+
+      setActiveDeleteModal(false);
+      setActiveComment(null);
+    },
+    onError: (err) => {
+      console.error(err);
+    },
   });
 
   const handleReport = () => {
@@ -41,38 +65,38 @@ const RollingPaperPage = () => {
     setActiveReportModal(true);
   };
 
-  const handleDelete = () => {
-    setActiveComment(null);
-  };
-
-  const handleChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setNewMessage(e.target.value);
-  };
-
   return (
     <>
-      {activeComment !== null && (
+      {activeDetailModal && activeComment && (
         <CommentDetailModal
           comment={activeComment}
           isWriter={activeComment.zipCode === DUMMY_USER_ZIP_CODE}
-          onClose={() => setActiveComment(null)}
+          onClose={() => {
+            setActiveDetailModal(false);
+            setActiveComment(null);
+          }}
           onReport={handleReport}
-          onDelete={handleDelete}
+          onDelete={() => {
+            setActiveDetailModal(false);
+            setActiveDeleteModal(true);
+          }}
         />
       )}
       {activeReportModal && <ReportModal onClose={() => setActiveReportModal(false)} />}
-      {activeMessageModal && (
-        <MessageModal
-          inputValue={newMessage}
-          placeholder="이곳을 눌러 메시지를 작성해주세요"
-          cancelText="취소하기"
-          completeText="편지 남기기"
-          onInputChange={handleChangeMessage}
-          onCancel={() => setActiveMessageModal(false)}
-          onComplete={() => setActiveMessageModal(false)}
-        >
-          <p className="body-r mt-5 text-end text-black">From. {DUMMY_USER_ZIP_CODE}</p>
-        </MessageModal>
+      {activeDeleteModal && (
+        <ConfirmModal
+          title="정말 편지를 삭제하시겠어요?"
+          description="편지를 삭제하는 경우 복구가 불가능합니다!"
+          cancelText="되돌아가기"
+          confirmText="삭제하기"
+          onCancel={() => {
+            setActiveComment(null);
+            setActiveDeleteModal(false);
+          }}
+          onConfirm={() => {
+            if (activeComment) deleteComment(activeComment.commentId);
+          }}
+        />
       )}
       <Header />
       <main className="flex grow flex-col items-center px-5 pt-20 pb-12">
@@ -85,7 +109,10 @@ const RollingPaperPage = () => {
                 <Comment
                   key={comment.commentId}
                   comment={comment}
-                  onClick={() => setActiveComment(comment)}
+                  onClick={() => {
+                    setActiveDetailModal(true);
+                    setActiveComment(comment);
+                  }}
                 />
               ))}
             {DUMMY_COMMENT.map((comment, index) => (
@@ -93,16 +120,7 @@ const RollingPaperPage = () => {
             ))}
           </MasonryInfiniteGrid>
         </section>
-        <button
-          type="button"
-          className="fixed bottom-7.5 left-5 overflow-hidden rounded-sm"
-          onClick={() => setActiveMessageModal(true)}
-        >
-          <img src={EnvelopeImg} alt="편지지 이미지" className="h-12 w-auto opacity-70" />
-          <p className="caption-sb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-white">
-            편지 쓰기
-          </p>
-        </button>
+        <WriteCommentButton rollingPaperId={id} />
       </main>
       <BackgroundBottom />
     </>
