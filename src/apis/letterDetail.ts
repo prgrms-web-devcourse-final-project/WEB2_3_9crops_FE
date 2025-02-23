@@ -13,4 +13,14 @@ const getLetter = async (
   }
 };
 
-export { getLetter };
+const deleteLetter = async (letterId: string) => {
+  try {
+    console.log(`/api/letters/${letterId}`);
+    const res = await client.delete(`/api/letters/${letterId}`);
+    console.log(res);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { getLetter, deleteLetter };

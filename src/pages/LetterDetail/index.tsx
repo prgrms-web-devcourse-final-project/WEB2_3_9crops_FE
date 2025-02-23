@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { getLetter } from '@/apis/letterDetail';
+import { deleteLetter, getLetter } from '@/apis/letterDetail';
 import { CloudIcon, SirenOutlinedIcon, SnowIcon, ThermostatIcon, WarmIcon } from '@/assets/icons';
 import ReportModal from '@/components/ReportModal';
-import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '../Write/constants';
+import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
 
 const LetterDetailPage = () => {
   const params = useParams();
@@ -33,6 +33,8 @@ const LetterDetailPage = () => {
     document.body.addEventListener('click', handleOutsideClick);
     if (params.id) {
       getLetter(params.id, setLetterDetail);
+      // 편지 삭제 요청 테스트(내일 삭제 버튼 만들어서 여기다 추가하긔)
+      deleteLetter(params.id);
     }
 
     return () => {
