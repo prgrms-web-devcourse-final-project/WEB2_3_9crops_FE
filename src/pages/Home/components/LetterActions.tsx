@@ -27,17 +27,19 @@ const LetterActions = () => {
     },
   ];
   return (
-    <div className="fixed top-24 z-31 mt-3 flex w-full max-w-150 justify-end pr-5">
-      <div className="flex flex-col gap-y-3">
-        {arr.map((item, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveModal(item.title)}
-            className="flex h-12 w-12 items-center justify-center gap-[10px] rounded-full bg-white/40 text-gray-50 shadow-[inset_0_-2px_2px_0_rgba(208,169,14,0.30),_0_0px_4px_0_rgba(199,164,29,0.30)]"
-          >
-            {item.icon}
-          </button>
-        ))}
+    <>
+      <div className="fixed top-24 z-26 mt-3 flex w-full max-w-150 justify-end pr-5">
+        <div className="z-42 flex flex-col gap-y-3">
+          {arr.map((item, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveModal(item.title)}
+              className="flex h-12 w-12 items-center justify-center gap-[10px] rounded-full bg-white/40 text-gray-50 shadow-[inset_0_-2px_2px_0_rgba(208,169,14,0.30),_0_0px_4px_0_rgba(199,164,29,0.30)]"
+            >
+              {item.icon}
+            </button>
+          ))}
+        </div>
       </div>
       {activeModal === 'incomingLetters' && (
         <ShowIncomingLettersModal onClose={() => setActiveModal(null)} />
@@ -46,7 +48,7 @@ const LetterActions = () => {
       {activeModal === 'shareAccess' && (
         <ShowShareAccessModal onClose={() => setActiveModal(null)} />
       )}
-    </div>
+    </>
   );
 };
 

@@ -13,7 +13,7 @@ const RandomCheer = () => {
   const [randomCheer, setRandomCheer] = useState(getRandomCheer());
 
   return (
-    <div className="z-30 flex flex-col items-end pr-20">
+    <div className="z-26 mr-20 flex flex-col items-end">
       <div
         className="relative mb-3 w-fit rounded-lg border-1 border-white bg-white px-6 py-[7px] text-center"
         onClick={() => setRandomCheer(getRandomCheer())}

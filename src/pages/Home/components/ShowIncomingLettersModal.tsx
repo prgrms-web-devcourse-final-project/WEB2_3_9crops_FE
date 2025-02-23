@@ -38,7 +38,7 @@ const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) =>
               <p className="body-sb text-gray-80">오고 있는 편지</p>
               <p className="caption-r text-black">시간은 실제 시간을 기반으로 책정됩니다.</p>
             </div>
-            <div className="mt-6 flex max-h-30 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+            <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
               {data.map((letter) => (
                 <div
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
