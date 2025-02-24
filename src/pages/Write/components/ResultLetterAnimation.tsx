@@ -7,7 +7,7 @@ import useWrite from '@/stores/writeStore';
 
 import ResultLetter from '../../../components/ResultLetter';
 
-export default function ResultLetterAnimation({ stampName }: { stampName: Stamp }) {
+export default function ResultLetterAnimation({ categoryName }: { categoryName: Category }) {
   const [next, setNext] = useState('st');
   const letterTitle = useWrite((state) => state.letterTitle);
 
@@ -23,7 +23,7 @@ export default function ResultLetterAnimation({ stampName }: { stampName: Stamp 
     <>
       {next === 'rd' ? (
         <div className="animate-rotate-show w-full opacity-0">
-          <ResultLetter stampName={stampName} title={letterTitle} />
+          <ResultLetter categoryName={categoryName} title={letterTitle} />
         </div>
       ) : (
         <>
