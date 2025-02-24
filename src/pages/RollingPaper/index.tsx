@@ -7,7 +7,6 @@ import { deleteRollingPaperComment, getRollingPaperDetail } from '@/apis/rolling
 import BackgroundBottom from '@/components/BackgroundBottom';
 import ConfirmModal from '@/components/ConfirmModal';
 import PageTitle from '@/components/PageTitle';
-import ReportModal from '@/components/ReportModal';
 import Header from '@/layouts/Header';
 
 import Comment from './components/Comment';
@@ -22,7 +21,6 @@ const RollingPaperPage = () => {
   const id = useParams().id ?? '';
   const [activeComment, setActiveComment] = useState<RollingPaperComment | null>(null);
   const [activeDetailModal, setActiveDetailModal] = useState(false);
-  const [activeReportModal, setActiveReportModal] = useState(false);
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const queryClient = useQueryClient();
 
@@ -59,11 +57,6 @@ const RollingPaperPage = () => {
     },
   });
 
-  const handleReport = () => {
-    setActiveComment(null);
-    setActiveReportModal(true);
-  };
-
   return (
     <>
       {activeDetailModal && activeComment && (
@@ -74,14 +67,12 @@ const RollingPaperPage = () => {
             setActiveDetailModal(false);
             setActiveComment(null);
           }}
-          onReport={handleReport}
           onDelete={() => {
             setActiveDetailModal(false);
             setActiveDeleteModal(true);
           }}
         />
       )}
-      {activeReportModal && <ReportModal onClose={() => setActiveReportModal(false)} />}
       {activeDeleteModal && (
         <ConfirmModal
           title="정말 편지를 삭제하시겠어요?"
