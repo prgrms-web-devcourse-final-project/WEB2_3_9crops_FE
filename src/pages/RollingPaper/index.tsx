@@ -13,7 +13,7 @@ import Comment from './components/Comment';
 import CommentDetailModal from './components/CommentDetailModal';
 import WriteCommentButton from './components/WriteCommentButton';
 
-// TODO: 더미 완전히 제거
+// TODO: 로그인 구현 완료 시, 더미 완전히 제거
 const DUMMY_USER_ZIP_CODE = '1DR41';
 const DUMMY_MESSAGE_COUNT = 20;
 
