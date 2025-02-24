@@ -1,5 +1,8 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 
+import { getMailboxDetail, postMailboxDisconnect } from '@/apis/letterBoxAPI';
+import { postShareProposals } from '@/apis/shareAPI';
 import ConfirmModal from '@/components/ConfirmModal';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
@@ -7,47 +10,42 @@ import PageTitle from '@/components/PageTitle';
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
 
-const DUMMY_ZIP_CODE = '12E12';
-const DUMMY_LETTER_LIST = [
-  {
-    id: 1,
-    date: '2025.01.01',
-    title: '이건 받은 편지 입니다.이건 받은 편지 입니다.이건 받은 편지 입니다.',
-    isSend: false,
-  },
-  {
-    id: 2,
-    date: '2025.01.01',
-    title: '이건 보낸 편지입니다.',
-    isSend: true,
-  },
-  {
-    id: 3,
-    date: '2025.01.01',
-    title: '이건 받은 편지 입니다.이건 받은 편지 입니다.이건 받은 편지 입니다.',
-    isSend: false,
-  },
-  {
-    id: 4,
-    date: '2025.01.01',
-    title: '이건 받은 편지 입니다.이건 받은 편지 입니다.이건 받은 편지 입니다.',
-    isSend: false,
-  },
-  {
-    id: 5,
-    date: '2025.01.01',
-    title: '이건 보낸 편지입니다.',
-    isSend: true,
-  },
-];
-
 const LetterBoxDetailPage = () => {
-  //const { id } = useParams();
+  interface MailBoxDetailProps {
+    letterId: number;
+    title: string;
+    myLetter: boolean;
+    active: boolean;
+    // createdAt: date;
+  }
+
+  const location = useLocation();
+  const userInfo = { ...location.state };
+
+  const [mailLists, setMailLists] = useState<MailBoxDetailProps[] | []>([]);
+
   const [isShareMode, setShareMode] = useState(false);
-  const [isOpenUnconnectModal, setIsOpenUnconnectModal] = useState(false);
+  const [isOpenDisConnectModal, setIsOpenDisConnectModal] = useState(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
   const [shareComment, setShareComment] = useState('');
+
+  const navigate = useNavigate();
+
+  const fetchData = async () => {
+    try {
+      const response = await getMailboxDetail(userInfo.id || '');
+      if (!response) throw new Error('LetterBoxDetailPage, fetchData error');
+      setMailLists(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const toggleShareMode = () => {
     if (isShareMode) {
@@ -68,16 +66,41 @@ const LetterBoxDetailPage = () => {
     setShareComment(e.target.value);
   };
 
+  const handleDisconnect = async () => {
+    try {
+      const response = await postMailboxDisconnect(userInfo.id);
+      if (!response) throw new Error('letterBoxDetail, disconnecting failed');
+      console.log(response);
+      navigate(-1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      // TODO: myId -> 전역객체에서 가져오기
+      const response = await postShareProposals(selected, 1, userInfo.id, shareComment);
+      if (!response) throw new Error(response);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-      {isOpenUnconnectModal && (
+      {isOpenDisConnectModal && (
         <ConfirmModal
-          title={`정말 ${DUMMY_ZIP_CODE}님과 편지를 그만하시겠어요?`}
+          title={`정말 ${userInfo.zipCode}님과 편지를 그만하시겠어요?`}
           description="한 번 연결을 끊으면 다시 연결할 수 없어요!"
           cancelText="되돌아가기"
           confirmText="편지 그만하기"
-          onCancel={() => setIsOpenUnconnectModal(false)}
-          onConfirm={() => setIsOpenUnconnectModal(false)}
+          onCancel={() => setIsOpenDisConnectModal(false)}
+          onConfirm={() => {
+            setIsOpenDisConnectModal(false);
+            handleDisconnect();
+          }}
         />
       )}
       {isOpenShareModal && (
@@ -88,10 +111,15 @@ const LetterBoxDetailPage = () => {
           completeText="동의 요청 보내기"
           inputValue={shareComment}
           onInputChange={handleChangeComment}
-          onCancel={() => setIsOpenShareModal(false)}
+          onCancel={() => {
+            setIsOpenShareModal(false);
+            setShareComment('');
+          }}
           onComplete={() => {
             setIsOpenShareModal(false);
+            handleShare();
             toggleShareMode();
+            setShareComment('');
           }}
         >
           <p className="text-gray-70 body-m mt-1">상대방 동의 후에 게시글이 업로드 됩니다.</p>
@@ -101,36 +129,40 @@ const LetterBoxDetailPage = () => {
         <PageTitle className="mx-auto">
           {isShareMode
             ? '게시판에 올릴 편지를 선택해주세요'
-            : `${DUMMY_ZIP_CODE}님과 주고 받은 편지`}
+            : `${userInfo.zipCode}님과 주고 받은 편지`}
         </PageTitle>
         <section className="text-gray-60 body-sb mt-18 mb-2 flex w-full justify-between">
-          <p>주고 받은 편지 {DUMMY_LETTER_LIST.length}</p>
+          <p>주고 받은 편지 {mailLists.length}</p>
           <div className="flex items-center gap-0.5 underline">
-            <button type="button" onClick={toggleShareMode}>
-              {isShareMode ? '취소하기' : '편지 공유하기'}
-            </button>
-            {!isShareMode && <InformationTooltip />}
+            {!userInfo.isClosed && (
+              <button type="button" onClick={toggleShareMode}>
+                {isShareMode ? '취소하기' : '편지 공유하기'}
+              </button>
+            )}
+            {!isShareMode && !userInfo.isClosed && <InformationTooltip />}
           </div>
         </section>
         <section className="mb-5 flex flex-col gap-4">
-          {DUMMY_LETTER_LIST.map((letter) => (
+          {mailLists.map((letter) => (
             <LetterPreview
-              key={letter.id}
-              id={letter.id}
-              date={letter.date}
+              key={letter.letterId}
+              id={letter.letterId}
+              date={'2025.01.01'}
               title={letter.title}
-              isSend={letter.isSend}
-              checked={selected.includes(letter.id)}
+              isSend={letter.myLetter}
+              checked={selected.includes(letter.letterId)}
               isShareMode={isShareMode}
-              onToggle={() => toggleSelected(letter.id)}
+              isClosed={userInfo.isClosed}
+              onToggle={() => toggleSelected(letter.letterId)}
+              zipCode={userInfo.zipCode}
             />
           ))}
         </section>
-        {!isShareMode && (
+        {!isShareMode && !userInfo.isClosed && (
           <button
             type="button"
             className="body-sb text-gray-60 mt-auto text-left underline"
-            onClick={() => setIsOpenUnconnectModal(true)}
+            onClick={() => setIsOpenDisConnectModal(true)}
           >
             더 이상 편지하지 않을래요
           </button>
