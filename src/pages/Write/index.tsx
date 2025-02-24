@@ -12,28 +12,17 @@ import LetterEditor from './LetterEditor';
 const WritePage = () => {
   const [searchParams] = useSearchParams();
 
+  const [send, setSend] = useState<boolean>(false);
   const [step, setStep] = useState<Step>('edit');
   const [prevLetter, setPrevLetter] = useState<PrevLetter[]>([]);
 
   const paperType = useWrite((state) => state.paperType);
   const resetWrite = useWrite((state) => state.resetWrite);
 
-  // 답글 작성 과정에서 데이터 정제 + 답글작성시 api연결 해야함(백서버가 꺼져서 내일 진행2025.02.21)
-
-  // const LETTER_REQUEST: LetterRequest = {
-  //   receiver: null,
-  //   parentLetterId: null,
-  //   title: letterTitle,
-  //   content: letterText,
-  //   category: searchParams,
-  //   paperType: paperType,
-  //   fontType: fontType,
-  // };
-
   useEffect(() => {
     const letterId = searchParams.get('letterId');
     if (letterId) {
-      getPrevLetter(setPrevLetter, letterId);
+      getPrevLetter(letterId, setPrevLetter);
     }
   }, [searchParams]);
 
@@ -60,8 +49,17 @@ const WritePage = () => {
   );
   return (
     <div className={wrapStyle}>
-      {step === 'edit' && <LetterEditor setStep={setStep} prevLetter={prevLetter} />}
-      {step === 'category' && <CategorySelect setStep={setStep} prevLetter={prevLetter} />}
+      {step === 'edit' && (
+        <LetterEditor
+          setStep={setStep}
+          prevLetter={prevLetter}
+          setSend={setSend}
+          searchParams={searchParams}
+        />
+      )}
+      {step === 'category' && (
+        <CategorySelect setStep={setStep} prevLetter={prevLetter} send={send} setSend={setSend} />
+      )}
     </div>
   );
 };

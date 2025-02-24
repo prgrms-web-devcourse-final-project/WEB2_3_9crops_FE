@@ -1,6 +1,6 @@
-import { useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import { postLetter } from '@/apis/write';
 import BackButton from '@/components/BackButton';
 import WritePageButton from '@/pages/Write/components/WritePageButton';
 import { FONT_TYPE_OBJ } from '@/pages/Write/constants';
@@ -10,13 +10,16 @@ import useWrite from '@/stores/writeStore';
 export default function LetterEditor({
   setStep,
   prevLetter,
+  setSend,
+  searchParams,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   prevLetter: PrevLetter[];
+  setSend: React.Dispatch<React.SetStateAction<boolean>>;
+  searchParams: URLSearchParams;
 }) {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
   const fontType = useWrite((state) => state.fontType);
+  const paperType = useWrite((state) => state.paperType);
 
   const letterTitle = useWrite((state) => state.letterTitle);
   const setLetterTitle = useWrite((state) => state.setLetterTitle);
@@ -24,11 +27,14 @@ export default function LetterEditor({
   const letterText = useWrite((state) => state.letterText);
   const setLetterText = useWrite((state) => state.setLetterText);
 
-  const handleResizeHeight = () => {
-    if (textareaRef.current !== null) {
-      textareaRef.current.style.height = 'auto'; //height 초기화
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
+  const LETTER_REQUEST: LetterRequest = {
+    receiverId: prevLetter.length > 0 ? prevLetter[0].memberId : null,
+    parentLetterId: Number(searchParams.get('letterId')),
+    title: letterTitle,
+    content: letterText,
+    category: prevLetter.length > 0 ? prevLetter[0].category : 'ETC',
+    paperType: paperType,
+    fontType: fontType,
   };
 
   return (
@@ -41,7 +47,12 @@ export default function LetterEditor({
             text="답장 전송"
             onClick={() => {
               if (letterTitle.trim() !== '' && letterText.trim() !== '') {
-                setStep('category');
+                postLetter(LETTER_REQUEST, () => {
+                  console.log(LETTER_REQUEST);
+                  console.log(prevLetter);
+                  setSend(true);
+                  setStep('category');
+                });
               } else {
                 alert('편지 제목, 내용이 작성되었는지 확인해주세요');
               }
@@ -80,7 +91,7 @@ export default function LetterEditor({
           )}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
-            handleResizeHeight();
+            // handleResizeHeight();
             setLetterText(e.target.value);
           }}
           value={letterText}

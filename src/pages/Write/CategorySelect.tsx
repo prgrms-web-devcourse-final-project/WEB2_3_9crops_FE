@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router';
 
 import { postLetter } from '@/apis/write';
@@ -13,9 +12,13 @@ import WritePageButton from './components/WritePageButton';
 export default function CategorySelect({
   setStep,
   prevLetter,
+  send,
+  setSend,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   prevLetter: PrevLetter[];
+  send: boolean;
+  setSend: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const letterTitle = useWrite((state) => state.letterTitle);
   const letterText = useWrite((state) => state.letterText);
@@ -23,10 +26,8 @@ export default function CategorySelect({
   const paperType = useWrite((state) => state.paperType);
   const fontType = useWrite((state) => state.fontType);
 
-  const [send, setSend] = useState<boolean>(false);
-
   const LETTER_REQUEST: LetterRequest = {
-    receiver: null,
+    receiverId: null,
     parentLetterId: null,
     title: letterTitle,
     content: letterText,
@@ -60,7 +61,7 @@ export default function CategorySelect({
         {/* 카테고리 선택 컴포넌트 */}
         {!send && prevLetter.length <= 0 && <CategoryList />}
 
-        {prevLetter.length > 0 && (
+        {send && prevLetter.length > 0 && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
             <ResultLetterAnimation categoryName="답변자" />
             <div className="animate-show-text flex flex-col items-center opacity-0">
@@ -74,7 +75,7 @@ export default function CategorySelect({
           </div>
         )}
 
-        {send && (
+        {send && prevLetter.length <= 0 && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
             <ResultLetterAnimation categoryName={category} />
             <span className="animate-show-text body-sb text-gray-60 opacity-0">
@@ -95,7 +96,9 @@ export default function CategorySelect({
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
             onClick={() => {
               if (category) {
-                postLetter(LETTER_REQUEST, setSend);
+                postLetter(LETTER_REQUEST, () => {
+                  setSend(true);
+                });
                 // setSend(true);
               } else {
                 alert('우표 선택을 해주세요');
