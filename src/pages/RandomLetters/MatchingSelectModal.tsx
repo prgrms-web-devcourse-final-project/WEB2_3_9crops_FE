@@ -19,7 +19,7 @@ function MatchingSelectModal({
           <span>수락한 편지는 5분이 지나면 취소할 수 없습니다.</span>
         </div>
         <div className="mt-4 w-full">
-          <ResultLetter stampName={selectedLetter.stampName} title={selectedLetter.title} />
+          <ResultLetter categoryName={selectedLetter.categoryName} title={selectedLetter.title} />
         </div>
         <div className="mt-12.5 flex w-[300px] gap-4">
           <button

@@ -80,7 +80,7 @@ export default function ReportManage() {
       },
     },
   ];
-  const [allReports, setAllReports] = useState();
+  // const [allReports, setAllReports] = useState();
   useEffect(() => {
     const getAllReports = async () => {
       const res = await client.get('/api/reports');

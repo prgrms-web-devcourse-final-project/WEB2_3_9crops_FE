@@ -15,7 +15,7 @@ export default function ResultLetter({
 
   return (
     <div
-      className="flex w-full flex-col gap-[35px] p-4"
+      className="flex w-full max-w-[300px] flex-col gap-[35px] p-4"
       style={{ backgroundImage: `url(${letterPink})` }}
     >
       <div className="flex justify-between gap-3">
