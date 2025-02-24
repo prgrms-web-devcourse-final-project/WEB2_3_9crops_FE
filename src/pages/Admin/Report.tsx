@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { client } from '@/apis/client';
+import client from '@/apis/client';
 import { AlarmIcon } from '@/assets/icons';
 
 import DetailFrame from './components/DetailFrame';

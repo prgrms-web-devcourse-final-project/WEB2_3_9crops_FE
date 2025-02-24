@@ -7,7 +7,7 @@ export const postShareProposals = async (
   message: string,
 ) => {
   try {
-    const response = client.post('/api/share-proposals', {
+    const response = await client.post('/api/share-proposals', {
       letterIds: letterIds,
       requesterId: requesterId,
       recipientId: recipientId,
