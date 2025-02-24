@@ -51,10 +51,12 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
       console.log('API 응답 데이터:', data);
       console.log(data.message);
 
-      const updatedLetters = data.data.map((letter: IncomingLetters) => ({
-        ...letter,
-        remainingTime: calculatingRemainingTime(letter.deliveryCompletedAt),
-      }));
+      const updatedLetters = data.data
+        .map((letter: IncomingLetters) => ({
+          ...letter,
+          remainingTime: calculatingRemainingTime(letter.deliveryCompletedAt),
+        }))
+        .filter((letter: IncomingLetters) => letter.remainingTime !== '00:00:00');
 
       set({
         data: updatedLetters,
