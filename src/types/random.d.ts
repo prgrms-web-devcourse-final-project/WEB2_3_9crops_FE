@@ -1,4 +1,4 @@
 interface SelectedLetter {
-  stampName: Stamp;
+  categoryName: Category;
   title: string;
 }

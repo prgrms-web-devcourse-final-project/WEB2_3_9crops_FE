@@ -1,4 +1,4 @@
-import { client } from './client';
+import client from './client';
 
 export const getCurrentRollingPaper = async (): Promise<RollingPaperInformation> => {
   const {
@@ -12,14 +12,14 @@ export const getRollingPaperDetail = async (
 ): Promise<RollingPaper> => {
   const {
     data: { data },
-  } = await client.get(`/event-posts/${rollingPaperId}`);
+  } = await client.get(`/api/event-posts/${rollingPaperId}`);
   return data;
 };
 
 export const postRollingPaperComment = async (rollingPaperId: string | number, content: string) => {
   const {
     data: { data },
-  } = await client.post(`/event-posts/${rollingPaperId}/comments`, {
+  } = await client.post(`/api/event-posts/${rollingPaperId}/comments`, {
     content,
   });
   return data;
@@ -29,7 +29,7 @@ export const deleteRollingPaperComment = async (commentId: string | number) => {
   try {
     const {
       data: { data },
-    } = await client.delete(`/event-posts/comments/${commentId}`);
+    } = await client.delete(`/api/event-posts/comments/${commentId}`);
     return data;
   } catch (error) {
     console.error(error);

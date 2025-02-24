@@ -5,29 +5,43 @@ interface WriteStore {
   setLetterTitle: (typing: string) => void;
   letterText: string;
   setLetterText: (typing: string) => void;
-  font: string;
-  setFont: (selectedFont: string) => void;
-  theme: Theme;
-  setTheme: (selectedTheme: Theme) => void;
-  stamp: Stamp;
-  setStamp: (selectedStamp: Stamp) => void;
+  fontType: FontType;
+  setFontType: (selectedFontType: FontType) => void;
+  paperType: PaperType;
+  setPaperType: (selectedPaperType: PaperType) => void;
+  category: Category;
+  setCategory: (selectedCategory: Category) => void;
+  resetWrite: () => void;
 }
 const useWrite = create<WriteStore>((set) => ({
   letterTitle: '',
   setLetterTitle: (typing) => set(() => ({ letterTitle: typing })),
+
   letterText: '',
   setLetterText: (typing) => set(() => ({ letterText: typing })),
-  font: 'pretendard',
-  setFont: (selectedFont) => {
-    set(() => ({ font: selectedFont }));
+
+  fontType: 'DEFAULT',
+  setFontType: (selectedFontType) => {
+    set(() => ({ fontType: selectedFontType }));
   },
-  theme: '기본',
-  setTheme: (selectedTheme) =>
+
+  paperType: 'BASIC',
+  setPaperType: (selectedPaperType) =>
     set(() => ({
-      theme: selectedTheme,
+      paperType: selectedPaperType,
     })),
-  stamp: '위로와 공감',
-  setStamp: (selectedStamp) => set(() => ({ stamp: selectedStamp })),
+
+  category: 'CONSOLATION',
+  setCategory: (selectedCategory) => set(() => ({ category: selectedCategory })),
+
+  resetWrite: () =>
+    set(() => ({
+      letterTitle: '',
+      letterText: '',
+      fontType: 'DEFAULT',
+      paperType: 'BASIC',
+      category: 'CONSOLATION',
+    })),
 }));
 
 export default useWrite;

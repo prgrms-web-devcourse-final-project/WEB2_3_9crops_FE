@@ -18,18 +18,18 @@ export default function MatchingSelect({
   const [selectedCategory, setSelectedCategory] = useState('전체');
 
   const CATEGORY_LIST = ['전체', '위로와 공감', '축하와 응원', '고민 상담', '기타'];
-  const DUMMY_LIST: { stampName: Stamp; title: string }[] = [
-    { stampName: '위로와 공감', title: '위로가 필요해요' },
-    { stampName: '축하와 응원', title: '저에게 미움받을 용기를 주세요' },
-    { stampName: '고민 상담', title: '삶이 무료해서 고민이에요' },
-    { stampName: '기타', title: '어제 꾼 꿈이 신기했어요' },
-    { stampName: '고민 상담', title: '삶이 유료해서 고민이에요' },
-    { stampName: '축하와 응원', title: '어제 취업했어요!!!!' },
-    { stampName: '축하와 응원', title: '어제 게임 신기록 세웠어요!!!!!' },
-    { stampName: '기타', title: '기타는 핑거스타일이 멋있는거 같아요' },
-    { stampName: '위로와 공감', title: '10년지기 친구가 이사를 가요' },
+  const DUMMY_LIST: { categoryName: Category; title: string }[] = [
+    { categoryName: 'CONSOLATION', title: '위로가 필요해요' },
+    { categoryName: 'CELEBRATION', title: '저에게 미움받을 용기를 주세요' },
+    { categoryName: 'CONSULT', title: '삶이 무료해서 고민이에요' },
+    { categoryName: 'ETC', title: '어제 꾼 꿈이 신기했어요' },
+    { categoryName: 'CONSULT', title: '삶이 유료해서 고민이에요' },
+    { categoryName: 'CELEBRATION', title: '어제 취업했어요!!!!' },
+    { categoryName: 'CELEBRATION', title: '어제 게임 신기록 세웠어요!!!!!' },
+    { categoryName: 'ETC', title: '기타는 핑거스타일이 멋있는거 같아요' },
+    { categoryName: 'CONSOLATION', title: '10년지기 친구가 이사를 가요' },
     {
-      stampName: '기타',
+      categoryName: 'ETC',
       title:
         '햄부기햄북 햄북어 햄북스딱스 함부르크햄부가우가 햄비기햄부거 햄부가티햄부기온앤 온 을 차려오거라.',
     },
@@ -53,10 +53,13 @@ export default function MatchingSelect({
                     className="w-full cursor-pointer"
                     onClick={() => {
                       setOpenModal(true);
-                      setSelectedLetter(() => ({ stampName: list.stampName, title: list.title }));
+                      setSelectedLetter(() => ({
+                        categoryName: list.categoryName,
+                        title: list.title,
+                      }));
                     }}
                   >
-                    <ResultLetter stampName={list.stampName} title={list.title} />
+                    <ResultLetter categoryName={list.categoryName} title={list.title} />
                   </div>
                 </SwiperSlide>
               );

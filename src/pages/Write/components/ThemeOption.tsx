@@ -2,20 +2,20 @@ import { twMerge } from 'tailwind-merge';
 
 import useWrite from '@/stores/writeStore';
 
-import { THEMES } from '../constants';
+import { CATEGORY_LIST } from '../constants';
 
 export default function ThemeOption() {
-  const theme = useWrite((state) => state.theme);
-  const setTheme = useWrite((state) => state.setTheme);
+  const paperType = useWrite((state) => state.paperType);
+  const setPaperType = useWrite((state) => state.setPaperType);
   return (
     <div className="flex w-full gap-3 overflow-x-scroll px-4 pt-3 pb-[30px]">
-      {THEMES.map((target, idx) => {
+      {CATEGORY_LIST.map((target, idx) => {
         return (
           <button
             className="flex w-[30%] min-w-[30%] flex-col gap-1.5"
             key={idx}
             onClick={() => {
-              setTheme(target.name);
+              setPaperType(target.paperType);
             }}
           >
             <span className="caption-m">{target.name}</span>
@@ -24,7 +24,7 @@ export default function ThemeOption() {
               alt="테마 이미지"
               className={twMerge(
                 'w-full',
-                theme === target.name && 'border-primary-1-hover border-2',
+                paperType === target.paperType && 'border-primary-1-hover border-2',
               )}
             />
           </button>

@@ -9,7 +9,7 @@ export default function Matched() {
           {'00'} : {'00'} : {'00'}
         </p>
         <div className="mt-2 w-75">
-          <ResultLetter stampName="기타" title="테스트용가리" />
+          <ResultLetter categoryName="ETC" title="테스트용가리" />
         </div>
         <button className="bg-primary-3 body-m mt-12.5 w-full rounded-lg py-2" onClick={() => {}}>
           매칭 취소하기

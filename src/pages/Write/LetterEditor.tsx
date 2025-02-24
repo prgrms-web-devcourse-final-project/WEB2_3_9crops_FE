@@ -1,21 +1,22 @@
 import { useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import BackButton from '@/components/BackButton';
+import WritePageButton from '@/pages/Write/components/WritePageButton';
+import { FONT_TYPE_OBJ } from '@/pages/Write/constants';
+import OptionSlide from '@/pages/Write/OptionSlide';
 import useWrite from '@/stores/writeStore';
-
-import WritePageButton from './components/WritePageButton';
-import OptionSlide from './OptionSlide';
 
 export default function LetterEditor({
   setStep,
   prevLetter,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
-  prevLetter: PrevLetter;
+  prevLetter: PrevLetter[];
 }) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const font = useWrite((state) => state.font);
+  const fontType = useWrite((state) => state.fontType);
 
   const letterTitle = useWrite((state) => state.letterTitle);
   const setLetterTitle = useWrite((state) => state.setLetterTitle);
@@ -33,8 +34,9 @@ export default function LetterEditor({
   return (
     <div className="flex grow flex-col pb-15">
       <OptionSlide prevLetter={prevLetter} />
-      <div className="absolute right-5">
-        {prevLetter ? (
+      <div className="absolute left-0 flex w-full items-center justify-between px-5">
+        <BackButton />
+        {prevLetter.length > 0 ? (
           <WritePageButton
             text="답장 전송"
             onClick={() => {
@@ -72,7 +74,10 @@ export default function LetterEditor({
       </div>
       <div className="mt-9 flex grow">
         <textarea
-          className={twMerge(`body-r basic-theme min-h-full w-full px-6`, `${font}`)}
+          className={twMerge(
+            `body-r basic-theme min-h-full w-full px-6`,
+            `${FONT_TYPE_OBJ[fontType]}`,
+          )}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
             handleResizeHeight();
