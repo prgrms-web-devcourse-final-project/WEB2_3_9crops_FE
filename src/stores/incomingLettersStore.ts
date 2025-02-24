@@ -12,6 +12,7 @@ interface IncomingLetters {
 
 interface IncomingLettersStore {
   data: IncomingLetters[];
+  arrivedCount: number;
   message: string;
   timestamp: string;
   fetchIncomingLetters: () => void;
@@ -35,6 +36,7 @@ const calculatingRemainingTime = (deliveryCompletedAt: string): string => {
 
 export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
   data: [],
+  arrivedCount: 0,
   message: '',
   timestamp: '',
   fetchIncomingLetters: async () => {
@@ -42,15 +44,20 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
       const token = localStorage.getItem('token') || '';
       const data = await fetchIncomingLettersApi(token);
 
-      const updatedLetters = data.data
-        .map((letter: IncomingLetters) => ({
-          ...letter,
-          remainingTime: calculatingRemainingTime(letter.deliveryCompletedAt),
-        }))
-        .filter((letter: IncomingLetters) => letter.remainingTime !== '00:00:00');
+      let arrivedCount = 0;
+      const updatedLetters = data.data.map((letter: IncomingLetters) => {
+        const remainingTime = calculatingRemainingTime(letter.deliveryCompletedAt);
+        if (remainingTime === '00:00:00') arrivedCount += 1; // 도착한 편지 카운트
 
+        return { ...letter, remainingTime };
+      });
+
+      const inProgressLetters = updatedLetters.filter(
+        (letter: IncomingLetters) => letter.remainingTime !== '00:00:00',
+      );
       set({
-        data: updatedLetters,
+        data: inProgressLetters,
+        arrivedCount,
         message: data.message,
         timestamp: data.timestamp,
       });
