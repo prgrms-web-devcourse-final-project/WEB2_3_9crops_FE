@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { client } from '@/apis/client';
+import { fetchIncomingLettersApi } from '@/apis/incomingLetters';
 
 interface IncomingLetters {
   letterId: number;
@@ -23,9 +23,7 @@ function formatTime(time: number): string {
 
 function calculatingRemainingTime(deliveryCompletedAt: string): string {
   const completedAt = new Date(deliveryCompletedAt).getTime();
-
   const now = new Date().getTime();
-
   const diff = completedAt - now;
 
   if (diff <= 0) return '00:00:00';
@@ -43,13 +41,8 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
   timestamp: '',
   fetchIncomingLetters: async () => {
     try {
-      const { data } = await client.get('/api/letters?status=delivery', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      console.log('API 응답 데이터:', data);
-      console.log(data.message);
+      const token = localStorage.getItem('token') || '';
+      const data = await fetchIncomingLettersApi(token);
 
       const updatedLetters = data.data
         .map((letter: IncomingLetters) => ({
