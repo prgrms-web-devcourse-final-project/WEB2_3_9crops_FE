@@ -42,6 +42,17 @@ const WritePage = () => {
     };
   }, [resetWrite]);
 
+  useEffect(() => {
+    const navigationGuard = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener('beforeunload', navigationGuard);
+
+    return () => {
+      window.removeEventListener('beforeunload', navigationGuard);
+    };
+  }, []);
+
   const wrapStyle = twMerge(
     'relative p-5 w-full grow flex flex-col',
     `${step === 'edit' && PAPER_TYPE_OBJ[paperType]}`,
