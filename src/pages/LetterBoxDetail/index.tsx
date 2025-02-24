@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
-import { getMailboxDetail, postMailboxDisconnect } from '@/apis/letterBoxAPI';
-import { postShareProposals } from '@/apis/shareAPI';
+import { getMailboxDetail, postMailboxDisconnect } from '@/apis/mailBox';
+import { postShareProposals } from '@/apis/share';
 import ConfirmModal from '@/components/ConfirmModal';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
@@ -147,6 +147,7 @@ const LetterBoxDetailPage = () => {
             <LetterPreview
               key={letter.letterId}
               id={letter.letterId}
+              // TODO: createdAt 추가해주시면 수정
               date={'2025.01.01'}
               title={letter.title}
               isSend={letter.myLetter}

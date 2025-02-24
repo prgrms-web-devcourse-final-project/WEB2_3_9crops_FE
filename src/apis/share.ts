@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from './api';
+import client from './client';
 
 export const postShareProposals = async (
   letterIds: number[],
@@ -7,7 +7,7 @@ export const postShareProposals = async (
   message: string,
 ) => {
   try {
-    const response = postRequest('/api/share-proposals', {
+    const response = client.post('/api/share-proposals', {
       letterIds: letterIds,
       requesterId: requesterId,
       recipientId: recipientId,

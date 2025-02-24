@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router';
+// import { useLocation } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import { deleteLetter, getLetter } from '@/apis/letterDetail';
@@ -17,8 +17,8 @@ import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
 
 const LetterDetailPage = () => {
   // isClosed인 경우 편지보내기 disable
-  const location = useLocation();
-  const { id, zipCode, isClosed } = location.state;
+  // const location = useLocation();
+  // const { id, zipCode, isClosed } = location.state;
 
   const DUMMY = {
     title: '나에게 햄버거 햄부기우기우가 햄북스따스 함부르크 햄버거링고를 대령하거라 ',

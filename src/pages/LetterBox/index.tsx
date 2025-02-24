@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getMailbox } from '@/apis/letterBoxAPI';
+import { getMailbox } from '@/apis/mailBox';
 import DoorImg from '@/assets/images/door.png';
 import ClosedWindowImg from '@/assets/images/window-disabled.png';
 import PageTitle from '@/components/PageTitle';
