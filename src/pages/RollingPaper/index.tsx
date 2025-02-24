@@ -1,6 +1,6 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router';
 
 import { deleteRollingPaperComment, getRollingPaperDetail } from '@/apis/rolling';
@@ -28,12 +28,6 @@ const RollingPaperPage = () => {
     queryKey: ['rolling-paper', id],
     queryFn: () => getRollingPaperDetail(id),
   });
-
-  //
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-  //
 
   const { mutate: deleteComment } = useMutation({
     mutationFn: (rollingPaperId: number | string) => deleteRollingPaperComment(rollingPaperId),
