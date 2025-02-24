@@ -15,10 +15,10 @@ const postLetter = async (
 
 const getPrevLetter = async (
   setPrevLetterState: React.Dispatch<React.SetStateAction<PrevLetter[]>>,
-  searchParams: URLSearchParams,
+  letterId: string,
 ) => {
   try {
-    const res = await client.get(`/api/letters/${searchParams.get('letterId')}/previous`);
+    const res = await client.get(`/api/letters/${letterId}/previous`);
     setPrevLetterState(res.data.data);
     console.log(res);
   } catch (error) {

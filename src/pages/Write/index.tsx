@@ -31,8 +31,9 @@ const WritePage = () => {
   // };
 
   useEffect(() => {
-    if (searchParams.get('letterId')) {
-      getPrevLetter(setPrevLetter, searchParams);
+    const letterId = searchParams.get('letterId');
+    if (letterId) {
+      getPrevLetter(setPrevLetter, letterId);
     }
   }, [searchParams]);
 
