@@ -14,6 +14,7 @@ import LetterBoxDetailPage from './pages/LetterBoxDetail';
 import LetterDetailPage from './pages/LetterDetail';
 import LoginPage from './pages/Login';
 import MyPage from './pages/MyPage';
+import NotFoundPage from './pages/NotFound';
 import NotificationsPage from './pages/Notifications';
 import OnboardingPage from './pages/Onboarding';
 import RandomLettersPage from './pages/RandomLetters';
@@ -51,7 +52,9 @@ const App = () => {
           <Route path="board" element={<LetterBoardPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
       </Route>
+
       <Route path="admin" element={<AdminPage />}>
         <Route path="report" element={<ReportManage />} />
       </Route>
