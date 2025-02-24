@@ -3,7 +3,7 @@ import client from './client';
 export const getCurrentRollingPaper = async (): Promise<RollingPaperInformation> => {
   const {
     data: { data },
-  } = await client.get('/event-posts');
+  } = await client.get('/api/event-posts');
   return data;
 };
 
