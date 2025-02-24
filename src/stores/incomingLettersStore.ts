@@ -17,11 +17,9 @@ interface IncomingLettersStore {
   fetchIncomingLetters: () => void;
 }
 
-function formatTime(time: number): string {
-  return time < 10 ? `0${time}` : `${time}`;
-}
+const formatTime = (time: number): string => (time < 10 ? `0${time}` : `${time}`);
 
-function calculatingRemainingTime(deliveryCompletedAt: string): string {
+const calculatingRemainingTime = (deliveryCompletedAt: string): string => {
   const completedAt = new Date(deliveryCompletedAt).getTime();
   const now = new Date().getTime();
   const diff = completedAt - now;
@@ -33,7 +31,7 @@ function calculatingRemainingTime(deliveryCompletedAt: string): string {
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
   return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
-}
+};
 
 export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
   data: [],
