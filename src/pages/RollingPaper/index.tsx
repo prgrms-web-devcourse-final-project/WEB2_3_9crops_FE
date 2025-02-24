@@ -1,6 +1,6 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { deleteRollingPaperComment, getRollingPaperDetail } from '@/apis/rolling';
@@ -17,13 +17,6 @@ import WriteCommentButton from './components/WriteCommentButton';
 // TODO: 더미 완전히 제거
 const DUMMY_USER_ZIP_CODE = '1DR41';
 const DUMMY_MESSAGE_COUNT = 20;
-const DUMMY_MESSAGE: RollingPaperComment = {
-  commentId: 1,
-  content:
-    '편지 내용 어쩌구저쩌구 뾰로롱 편지 내용 어쩌구저쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 뾰로롱편지 내용 어쩌구 저쩌구 끝~!!',
-  zipCode: '12E12',
-};
-const DUMMY_COMMENT = Array.from({ length: 10 }, () => ({ ...DUMMY_MESSAGE }));
 
 const RollingPaperPage = () => {
   const id = useParams().id ?? '';
@@ -37,6 +30,12 @@ const RollingPaperPage = () => {
     queryKey: ['rolling-paper', id],
     queryFn: () => getRollingPaperDetail(id),
   });
+
+  //
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+  //
 
   const { mutate: deleteComment } = useMutation({
     mutationFn: (rollingPaperId: number | string) => deleteRollingPaperComment(rollingPaperId),
@@ -115,9 +114,6 @@ const RollingPaperPage = () => {
                   }}
                 />
               ))}
-            {DUMMY_COMMENT.map((comment, index) => (
-              <Comment key={index} comment={comment} onClick={() => setActiveComment(comment)} />
-            ))}
           </MasonryInfiniteGrid>
         </section>
         <WriteCommentButton rollingPaperId={id} />
