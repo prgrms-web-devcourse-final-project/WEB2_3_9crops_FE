@@ -8,7 +8,7 @@ function CategoryList() {
       {CATEGORY_STAMPS.map((stamp, idx) => {
         return (
           <div className="w-[calc(50%-12px)]" key={idx}>
-            <CategoryStamp title={stamp.title} image={stamp.image} />
+            <CategoryStamp categoryName={stamp.category} image={stamp.image} />
             <p className="body-m mt-2 flex items-center justify-center">{stamp.title}</p>
           </div>
         );
