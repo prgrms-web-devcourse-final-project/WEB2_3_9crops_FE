@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 
 import { postLetter } from '@/apis/write';
+import BackButton from '@/components/BackButton';
 import PageTitle from '@/components/PageTitle';
+import CategoryList from '@/pages/Write/components/CategoryList';
 import useWrite from '@/stores/writeStore';
 
-import CategoryList from './components/CategoryList';
 import ResultLetterAnimation from './components/ResultLetterAnimation';
 import WritePageButton from './components/WritePageButton';
 
@@ -37,7 +38,8 @@ export default function CategorySelect({
   return (
     <>
       <div className="flex w-full grow flex-col items-center">
-        <div className="absolute right-5">
+        <div className="absolute left-0 flex w-full items-center justify-between px-5">
+          <BackButton />
           {!send && prevLetter.length <= 0 && (
             <WritePageButton
               text="이전 단계"

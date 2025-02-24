@@ -3,7 +3,15 @@ import { useNavigate, useParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import { deleteLetter, getLetter } from '@/apis/letterDetail';
-import { CloudIcon, SirenOutlinedIcon, SnowIcon, ThermostatIcon, WarmIcon } from '@/assets/icons';
+import {
+  CloudIcon,
+  DeleteIcon,
+  SirenOutlinedIcon,
+  SnowIcon,
+  ThermostatIcon,
+  WarmIcon,
+} from '@/assets/icons';
+import BackButton from '@/components/BackButton';
 import ReportModal from '@/components/ReportModal';
 import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
 
@@ -34,7 +42,6 @@ const LetterDetailPage = () => {
     if (params.id) {
       getLetter(params.id, setLetterDetail);
       // 편지 삭제 요청 테스트(내일 삭제 버튼 만들어서 여기다 추가하긔)
-      deleteLetter(params.id);
     }
 
     return () => {
@@ -50,42 +57,52 @@ const LetterDetailPage = () => {
           letterDetail && PAPER_TYPE_OBJ[letterDetail.paperType],
         )}
       >
-        <div className="absolute top-5 right-5 flex gap-3">
-          <button
-            ref={degreeButtonRef}
-            className="flex items-center justify-center gap-1"
-            onClick={() => {
-              setDegreeModalOpen((cur) => !cur);
-            }}
-          >
-            <ThermostatIcon className="h-6 w-6" />
-            <span className="caption-b text-primary-1">편지 온도</span>
-          </button>
-          <button
-            onClick={() => {
-              setReportModalOpen(true);
-            }}
-          >
-            <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
-          </button>
-          {degreeModalOpen && (
-            <div className="caption-b text-primary-1 bg-primary-5 absolute top-7 z-40 flex flex-col gap-1 p-2 shadow">
-              {DEGREES.map((degree, idx) => {
-                return (
-                  <button
-                    key={idx}
-                    className="flex items-center justify-start gap-1"
-                    onClick={() => {
-                      console.log(idx);
-                    }}
-                  >
-                    {degree.icon}
-                    {degree.title}
-                  </button>
-                );
-              })}
-            </div>
-          )}
+        <div className="absolute top-5 left-0 flex w-full justify-between px-5">
+          <BackButton />
+          <div className="flex gap-2">
+            <button
+              ref={degreeButtonRef}
+              className="flex items-center justify-center gap-1"
+              onClick={() => {
+                setDegreeModalOpen((cur) => !cur);
+              }}
+            >
+              <ThermostatIcon className="h-6 w-6" />
+              <span className="caption-b text-primary-1">편지 온도</span>
+            </button>
+            <button
+              onClick={() => {
+                if (params.id) deleteLetter(params.id);
+              }}
+            >
+              <DeleteIcon className="text-primary-1 h-6 w-6" />
+            </button>
+            <button
+              onClick={() => {
+                setReportModalOpen(true);
+              }}
+            >
+              <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
+            </button>
+            {degreeModalOpen && (
+              <div className="caption-b text-primary-1 bg-primary-5 absolute top-7 z-40 flex flex-col gap-1 p-2 shadow">
+                {DEGREES.map((degree, idx) => {
+                  return (
+                    <button
+                      key={idx}
+                      className="flex items-center justify-start gap-1"
+                      onClick={() => {
+                        console.log(idx);
+                      }}
+                    >
+                      {degree.icon}
+                      {degree.title}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex flex-col gap-3 px-5">
           <span className="body-b mt-[55px]">TO. 따숨이</span>
