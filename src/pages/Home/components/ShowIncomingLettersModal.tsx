@@ -15,7 +15,7 @@ const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) =>
 
   const handleNavigation = (incomingId: number) => {
     navigate(`/board/letter/${incomingId}`, {
-      state: { isShareLetterPreview: true },
+      state: { isShareLetterPreview: false },
     });
   };
 
