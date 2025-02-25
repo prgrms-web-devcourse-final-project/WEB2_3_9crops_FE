@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+
 import goToRandomLetter from '@/assets/images/go-to-random-letter.png';
 
 const GoToRandomLetter = () => {

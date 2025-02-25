@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 
 import ConfirmModal from '@/components/ConfirmModal';
+import useMyPageStore from '@/stores/myPageStore';
 
 import { TEMPERATURE_RANGE } from './constants';
 
-const DUMMY_TEMP = 48.5;
-const DUMMY_ZIP_CODE = '235EA';
-
 const MyPage = () => {
+  useEffect(() => {
+    fetchMyPageInfo();
+  }, []);
+
+  const { data, fetchMyPageInfo } = useMyPageStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const getDescriptionByTemperature = (temp: number) => {
@@ -16,7 +19,7 @@ const MyPage = () => {
     return range?.description;
   };
 
-  const description = getDescriptionByTemperature(DUMMY_TEMP);
+  const description = getDescriptionByTemperature(Number(data.temperature));
 
   return (
     <>
@@ -32,7 +35,7 @@ const MyPage = () => {
       )}
       <main className="flex grow flex-col gap-12 px-5 pt-20 pb-6">
         <h1 className="h2-b mx-auto flex gap-1.5">
-          {DUMMY_ZIP_CODE.split('').map((code, index) => (
+          {data.zipCode.split('').map((code, index) => (
             <div
               key={index}
               className="flex h-13.5 w-10 items-center justify-center rounded-sm bg-white inset-shadow-[0_4px_4px_0] inset-shadow-black/10"
@@ -44,12 +47,12 @@ const MyPage = () => {
         <section>
           <h2 className="mb-2 flex justify-between">
             <p className="body-sb text-gray-60">{description}</p>
-            <p className="body-sb text-accent-1">{DUMMY_TEMP}도</p>
+            <p className="body-sb text-accent-1">{data.temperature}도</p>
           </h2>
           <div className="h-4 w-full rounded-full bg-white">
             <div
               className="h-full w-[calc(${degree}%)] rounded-full bg-[#FFB5AC]"
-              style={{ width: `calc(${DUMMY_TEMP}%)` }}
+              style={{ width: `calc(${data.temperature}%)` }}
             />
           </div>
         </section>
@@ -69,8 +72,8 @@ const MyPage = () => {
             <div className="flex justify-between">
               <p className="body-sb text-gray-100">로그인 정보</p>
               <p className="body-r text-gray-60">
-                <span className="mr-2">카카오</span>
-                <span>kakaoAccount@kakao.com</span>
+                <span className="mr-2">{data.social}</span>
+                <span>{data.email}</span>
               </p>
             </div>
             <p className="body-sb text-gray-100">로그아웃</p>

@@ -1,8 +1,8 @@
-import React from 'react';
-import ModalBg from '@/assets/images/modal-yellow.png';
-import ModalOverlay from '@/components/ModalOverlay';
-
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import React from 'react';
+
+import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
+import ModalOverlay from '@/components/ModalOverlay';
 
 interface ShowDraftModalProps {
   children?: React.ReactNode;
@@ -24,8 +24,7 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
           임시저장된 편지가 있어요!
         </p>
         <div className="flex w-73 justify-center">
-          <section className="relative overflow-hidden rounded-lg p-5">
-            <img src={ModalBg} className="absolute inset-0 z-[-10] h-full w-full" />
+          <ModalBackgroundWrapper className="relative overflow-hidden rounded-lg p-5">
             <div className="flex flex-col gap-1">
               <p className="body-sb text-gray-80">임시저장 편지</p>
               <p className="caption-r text-black">로그아웃 시 임시 저장된 편지는 사라집니다</p>
@@ -43,7 +42,7 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
                 </div>
               ))}
             </div>
-          </section>
+          </ModalBackgroundWrapper>
         </div>
       </div>
     </ModalOverlay>
