@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-
-import ModalBg from '@/assets/images/modal-yellow.png';
+import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 import { useIncomingLettersStore } from '@/stores/incomingLettersStore';
 
@@ -32,8 +31,7 @@ const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) =>
           따숨 배달부가 따숨이의 답장을 배달 중이에요!
         </p>
         <div className="flex w-73 justify-center">
-          <section className="relative overflow-hidden rounded-lg p-5">
-            <img src={ModalBg} className="absolute inset-0 z-[-10] h-full w-full" />
+          <ModalBackgroundWrapper className="relative overflow-hidden rounded-lg p-5">
             <div className="flex flex-col gap-1">
               <p className="body-sb text-gray-80">오고 있는 편지</p>
               <p className="caption-r text-black">시간은 실제 시간을 기반으로 책정됩니다.</p>
@@ -50,7 +48,7 @@ const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) =>
                 </div>
               ))}
             </div>
-          </section>
+          </ModalBackgroundWrapper>
         </div>
       </div>
     </ModalOverlay>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 
-import ModalBg from '@/assets/images/modal-yellow.png';
+import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
 interface ShowShareAccessModalProps {
@@ -31,8 +31,7 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
           공유 요청이 왔어요!
         </p>
         <div className="flex w-73 justify-center">
-          <section className="relative overflow-hidden rounded-lg p-5">
-            <img src={ModalBg} className="absolute inset-0 z-[-10] h-full w-full" />
+          <ModalBackgroundWrapper className="relative overflow-hidden rounded-lg p-5">
             <div className="flex flex-col gap-1">
               <p className="body-sb text-gray-80">게시판 공유 승인하기</p>
               <p className="caption-r text-black">
@@ -51,7 +50,7 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
                 </button>
               ))}
             </div>
-          </section>
+          </ModalBackgroundWrapper>
         </div>
       </div>
     </ModalOverlay>

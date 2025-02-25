@@ -1,4 +1,5 @@
 import HomeButton from '@/components/HomeButton';
+import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import useViewport from '@/hooks/useViewport';
 
 import HomeBackgroundLeft from './components/HomeBackgroundLeft';
@@ -8,14 +9,15 @@ import HomeHeader from './components/HomeHeader';
 import HomeLeft from './components/HomeLeft';
 import HomeRight from './components/HomeRight';
 import LetterActions from './components/LetterActions';
-import SpecialLetterBanner from './components/SpecialLetterBanner';
 
 const HomePage = () => {
   useViewport();
   return (
     <div className="relative h-[calc(var(--vh)*100)] w-full overflow-hidden">
       <HomeHeader />
-      <SpecialLetterBanner />
+      <div className="absolute top-[55px] z-1 w-full px-5">
+        <NoticeRollingPaper />
+      </div>
       <LetterActions />
 
       <div className="flex h-full w-screen snap-x snap-mandatory flex-nowrap overflow-x-auto overflow-y-hidden bg-cover">
