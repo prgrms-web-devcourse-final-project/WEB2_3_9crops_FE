@@ -1,5 +1,5 @@
-import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
 import homeRightMountainTop from '@/assets/images/home-right-mountain-top.png';
+import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
 const HomeBackgroundRightTop = () => {
   return (
     <BackgroundImageWrapper
