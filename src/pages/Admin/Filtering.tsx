@@ -7,7 +7,7 @@ import AddInputButton from './components/AddInputButton';
 import WrapperFrame from './components/WrapperFrame';
 import WrapperTitle from './components/WrapperTitle';
 
-export default function Filtering() {
+export default function FilteringManage() {
   const [badWords, setBadWords] = useState<BadWords[]>([]);
   const [addInputShow, setAddInputShow] = useState<boolean>(false);
 

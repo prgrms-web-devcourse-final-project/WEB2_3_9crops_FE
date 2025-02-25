@@ -5,10 +5,10 @@ import ListHeaderFrame from './components/ListHeaderFrame';
 import WrapperFrame from './components/WrapperFrame';
 import WrapperTitle from './components/WrapperTitle';
 
-export default function FilteredLetter() {
+export default function FilteredLetterManage() {
   const arr = new Array(10).fill(null);
   return (
-    <WrapperFrame className="mt-7">
+    <WrapperFrame>
       <WrapperTitle title="필터링 단어로 차단된 편지 목록" Icon={AlarmIcon} />
       <section className="mt-5 flex flex-col">
         <ListHeaderFrame>
