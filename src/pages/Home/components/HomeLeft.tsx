@@ -1,6 +1,6 @@
-import RandomCheer from './RandomCheer';
-import GoToWrite from './GoToWrite';
 import GoToRandomLetter from './GoToRandomLetter';
+import GoToWrite from './GoToWrite';
+import RandomCheer from './RandomCheer';
 
 const HomeLeft = () => {
   return (

@@ -1,8 +1,5 @@
 import { ChangeEvent } from 'react';
 
-import ModalBg from '@/assets/images/modal-pink.png';
-
-import BackgroundImageWrapper from './BackgroundImageWrapper';
 import ModalOverlay from './ModalOverlay';
 import TextareaField from './TextareaField';
 
@@ -32,15 +29,16 @@ const MessageModal = ({
   return (
     <ModalOverlay>
       <p className="body-sb mb-4 text-center text-white">{description}</p>
-      <BackgroundImageWrapper as="section" className="mb-12 w-78 rounded-lg p-4" imageUrl={ModalBg}>
+      <section className="relative mb-12 w-78 overflow-hidden rounded-lg bg-[#FFD3CE] p-4">
         <TextareaField
           rows={5}
           value={inputValue}
           placeholder={placeholder}
           onChange={onInputChange}
         />
-        {children}
-      </BackgroundImageWrapper>
+        <div className="relative z-1">{children}</div>
+        <div className="absolute inset-0 z-0 bg-white/60 blur-xl" />
+      </section>
       <section className="flex items-center gap-6">
         <button
           type="button"
