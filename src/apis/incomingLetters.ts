@@ -1,4 +1,4 @@
-import { client } from '@/apis/client';
+import client from './client';
 
 export const fetchIncomingLettersApi = async (token: string) => {
   try {
