@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 
 import BackgroundBottom from '@/components/BackgroundBottom';
-import NoticeRolling from '@/components/NoticeRolling';
+import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import PageTitle from '@/components/PageTitle';
 
 import LetterPreview from './components/LetterPreview';
@@ -11,19 +11,14 @@ const LetterBoardPage = () => {
 
   return (
     <>
-      <main
-        className={twMerge(
-          'flex grow flex-col items-center px-5 pt-20 pb-10',
-          !isMyBoard && 'mt-[-25px]',
-        )}
-      >
+      <main className={twMerge('flex grow flex-col px-5 pt-20 pb-10', !isMyBoard && 'mt-[-25px]')}>
         {isMyBoard ? (
-          <PageTitle className="mb-11">내가 올린 게시물</PageTitle>
+          <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
         ) : (
           <>
-            <NoticeRolling />
-            <PageTitle className="mt-4">게시판</PageTitle>
-            <p className="text-gray-60 caption-m mt-4.5">
+            <NoticeRollingPaper />
+            <PageTitle className="mx-auto mt-4">게시판</PageTitle>
+            <p className="text-gray-60 caption-m mt-4.5 text-center">
               따숨이에게 힘이 되었던 다양한 편지들을 모아두었어요
             </p>
           </>
