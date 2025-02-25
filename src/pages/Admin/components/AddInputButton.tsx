@@ -1,31 +1,37 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
+import { postBadWords } from '@/apis/admin';
 import { AddIcon } from '@/assets/icons';
 
 export default function AddInputButton({
   setAddInputShow,
+  setBadWords,
 }: {
   setAddInputShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setBadWords: React.Dispatch<React.SetStateAction<BadWords[]>>;
 }) {
+  const [inputText, setInputText] = useState<BadWords>({ word: '' });
   const inputRef = useRef<HTMLInputElement>(null);
-  const handleInputWidth = (event: Event) => {
+
+  const handleInputWidth = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
     target.style.width = '50px';
     target.style.width = `${target.scrollWidth}px`;
   };
 
+  const handlePostBadWords = () => {
+    if (inputText.word === '') return setAddInputShow(false);
+    postBadWords(inputText, () => {
+      setBadWords((cur) => [...cur, inputText]);
+      setAddInputShow(false);
+    });
+  };
+
   useEffect(() => {
     const inputElement = inputRef.current;
     if (inputElement) {
-      inputElement.addEventListener('input', handleInputWidth);
       inputElement.focus();
     }
-
-    return () => {
-      if (inputElement) {
-        inputElement.removeEventListener('input', handleInputWidth);
-      }
-    };
   }, []);
 
   return (
@@ -34,15 +40,21 @@ export default function AddInputButton({
         ref={inputRef}
         type="text"
         className="w-10 min-w-10"
+        onInput={(e) => {
+          handleInputWidth(e);
+        }}
+        onChange={(e) => {
+          setInputText(() => ({ word: e.target.value }));
+        }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            setAddInputShow(false);
+            handlePostBadWords();
           }
         }}
       />
       <button
         onClick={() => {
-          setAddInputShow(false);
+          handlePostBadWords();
         }}
       >
         <AddIcon className="h-4 w-4" />
