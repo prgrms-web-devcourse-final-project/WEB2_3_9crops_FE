@@ -1,4 +1,4 @@
-import { client } from './client';
+import client from './client';
 
 const getRandomLetters = async (
   setRandomLettersState: React.Dispatch<React.SetStateAction<RandomLetters[]>>,
