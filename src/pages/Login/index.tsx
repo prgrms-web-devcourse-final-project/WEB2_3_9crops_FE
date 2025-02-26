@@ -1,8 +1,14 @@
+import { socialLogin } from '@/apis/auth';
 import { GoogleIcon, KakaoIcon, NaverIcon, StampIcon } from '@/assets/icons';
 
 import Background from './components/Background';
 
 const LoginPage = () => {
+  type LoginType = 'kakao' | 'naver' | 'google';
+
+  const handleLogin = (loginType: LoginType) => {
+    socialLogin(loginType);
+  };
   return (
     <>
       <main className="mt-10 flex grow flex-col items-center justify-between">
@@ -22,6 +28,7 @@ const LoginPage = () => {
             type="button"
             className="rounded-full bg-[#03C75A] p-3.5"
             aria-label="네이버 로그인"
+            onClick={() => handleLogin('naver')}
           >
             <NaverIcon />
           </button>
@@ -29,6 +36,7 @@ const LoginPage = () => {
             type="button"
             className="rounded-full bg-[#FEE500] p-3.5"
             aria-label="카카오 로그인"
+            onClick={() => handleLogin('kakao')}
           >
             <KakaoIcon />
           </button>
@@ -36,6 +44,7 @@ const LoginPage = () => {
             type="button"
             className="border-gray-5 rounded-full border bg-white p-3.5"
             aria-label="구글 로그인"
+            onClick={() => handleLogin('google')}
           >
             <GoogleIcon />
           </button>
