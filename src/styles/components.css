@@ -43,4 +43,13 @@
   .message-header {
     @apply text-gray-60 w-fit rounded-full bg-white px-6 py-4;
   }
+
+  .admin-list-set {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
 }
