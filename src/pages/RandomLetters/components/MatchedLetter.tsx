@@ -9,7 +9,7 @@ import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
 const MatchedLetter = ({ selectedLetter }: { selectedLetter: RandomLetters }) => {
   const navigate = useNavigate();
   // 상대방의 우편번호도 데이터에 포함되어야 할 거 같음!!!
-  const [letterDetail, setLetterDetail] = useState<LetterDetail | null>(null);
+  const [letterDetail] = useState<LetterDetail | null>(null);
 
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
 
@@ -41,7 +41,9 @@ const MatchedLetter = ({ selectedLetter }: { selectedLetter: RandomLetters }) =>
         <button
           className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
           onClick={() => {
-            navigate(`/letter/write/?letterId=${selectedLetter?.letterId}`);
+            navigate(`/letter/write?letterId=${selectedLetter?.letterId}`, {
+              state: { randomMatched: true },
+            });
           }}
         >
           편지 작성하기
