@@ -12,7 +12,7 @@ import MatchingSelectModal from './components/MatchingSelectModal';
 const RandomLettersPage = () => {
   const [openSelectModal, setOpenSelectModal] = useState<boolean>(false);
   const [openSelectedDetailModal, setOpenSelectedDetailModal] = useState<boolean>(false);
-  const [matched] = useState<boolean>(false); //setMatched 임시 제거
+  const [matched] = useState<boolean>(true); //setMatched 임시 제거
   const [coolTime] = useState<boolean>(false);
   const [selectedLetter, setSelectedLetter] = useState<RandomLetters>({
     letterId: 0,
