@@ -24,21 +24,20 @@ export default function ResultLetter({
           </div>
           <img src={CATEGORYS[categoryName]} alt="우표" />
         </div>
-        <img src={CATEGORYS[categoryName]} alt="우표" />
-      </div>
-      <div className="flex flex-col gap-[5px]">
-        <span className="caption-sb text-gray-60">{today}</span>
-        <div className="flex gap-1">
-          {zipCode.split('').map((spell, idx) => {
-            return (
-              <span
-                className="caption-r flex h-6 w-6 items-center justify-center rounded-sm bg-white/40"
-                key={idx}
-              >
-                {spell}
-              </span>
-            );
-          })}
+        <div className="flex flex-col gap-[5px]">
+          <span className="caption-sb text-gray-60">{today}</span>
+          <div className="flex gap-1">
+            {zipCode.split('').map((spell, idx) => {
+              return (
+                <span
+                  className="caption-r flex h-6 w-6 items-center justify-center rounded-sm bg-white/40"
+                  key={idx}
+                >
+                  {spell}
+                </span>
+              );
+            })}
+          </div>
         </div>
       </div>
     </LetterWrapper>

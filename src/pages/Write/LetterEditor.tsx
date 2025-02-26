@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import { postLetter } from '@/apis/write';
@@ -18,6 +20,9 @@ export default function LetterEditor({
   setSend: React.Dispatch<React.SetStateAction<boolean>>;
   searchParams: URLSearchParams;
 }) {
+  const location = useLocation();
+  const [randomMatched, setRandomMatched] = useState<boolean>(false);
+
   const fontType = useWrite((state) => state.fontType);
   const paperType = useWrite((state) => state.paperType);
 
@@ -37,6 +42,12 @@ export default function LetterEditor({
     fontType: fontType,
   };
 
+  useEffect(() => {
+    if (location.state?.randomMatched) {
+      setRandomMatched(true);
+    }
+  }, [location.state?.randomMatched]);
+
   return (
     <div className="flex grow flex-col pb-15">
       <OptionSlide prevLetter={prevLetter} />
@@ -47,12 +58,16 @@ export default function LetterEditor({
             text="답장 전송"
             onClick={() => {
               if (letterTitle.trim() !== '' && letterText.trim() !== '') {
-                postLetter(LETTER_REQUEST, () => {
-                  console.log(LETTER_REQUEST);
-                  console.log(prevLetter);
-                  setSend(true);
-                  setStep('category');
-                });
+                if (randomMatched) {
+                  console.log('랜덤편지 답장 전송용API');
+                } else {
+                  postLetter(LETTER_REQUEST, () => {
+                    console.log(LETTER_REQUEST);
+                    console.log(prevLetter);
+                    setSend(true);
+                    setStep('category');
+                  });
+                }
               } else {
                 alert('편지 제목, 내용이 작성되었는지 확인해주세요');
               }
