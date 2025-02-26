@@ -1,21 +1,21 @@
-import envelope from '@/assets/images/closed-letter.png';
-import envelopeFront from '@/assets/images/opened-letter-front.png';
-import envelopeTop from '@/assets/images/envelope-pink-back-top.png';
-
 import { useState, useRef, useEffect } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { Link } from 'react-router';
+import { twMerge } from 'tailwind-merge';
+
+import envelope from '@/assets/images/closed-letter.png';
+import envelopeTop from '@/assets/images/envelope-pink-back-top.png';
+import envelopeFront from '@/assets/images/opened-letter-front.png';
 
 export default function UserInteraction() {
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgPos, setImgPos] = useState<{ top: number; width: number }>({ top: 0, width: 0 });
-  const [imgToBottom, setImgToBottom] = useState<Boolean>(false);
+  const [imgToBottom, setImgToBottom] = useState<boolean>(false);
 
-  const [startAnimation, setStartAnimation] = useState<Boolean>(false);
-  const [openAnimation, setOpenAnimation] = useState<Boolean>(false);
-  const [letterOutAnimation, setLetterOutAnimation] = useState<Boolean>(false);
-  const [envelopeOut, setEnvelopeOut] = useState<Boolean>(false);
-  const [finishAnimation, setFinishAnimation] = useState<Boolean>(false);
+  const [startAnimation, setStartAnimation] = useState<boolean>(false);
+  const [openAnimation, setOpenAnimation] = useState<boolean>(false);
+  const [letterOutAnimation, setLetterOutAnimation] = useState<boolean>(false);
+  const [envelopeOut, setEnvelopeOut] = useState<boolean>(false);
+  const [finishAnimation, setFinishAnimation] = useState<boolean>(false);
 
   const handleLetterClick = () => {
     if (imgRef.current) {

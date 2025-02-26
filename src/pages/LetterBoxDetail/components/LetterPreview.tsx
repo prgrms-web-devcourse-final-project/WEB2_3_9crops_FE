@@ -1,6 +1,6 @@
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
-import ListItemWrapper from '@/components/ListItemWrapper';
+import LetterWrapper from '@/components/LetterWrapper';
 
 interface LetterPreviewProps {
   id: number;
@@ -10,6 +10,8 @@ interface LetterPreviewProps {
   checked: boolean;
   isShareMode?: boolean;
   onToggle: () => void;
+  isClosed: boolean;
+  zipCode: string;
 }
 const LetterPreview = ({
   id,
@@ -19,10 +21,25 @@ const LetterPreview = ({
   checked,
   isShareMode = false,
   onToggle,
+  isClosed,
+  zipCode,
 }: LetterPreviewProps) => {
+  // 차단된 편지인경우 편지 보내기 disable
+  const navigate = useNavigate();
+
+  const handleItemClick = (id: number) => {
+    navigate(`/letter/${id}`, {
+      state: {
+        id,
+        isClosed,
+        zipCode,
+      },
+    });
+  };
+
   if (isShareMode)
     return (
-      <ListItemWrapper isSender={isSend}>
+      <LetterWrapper isSender={isSend}>
         <div className="mb-3 flex items-center justify-between">
           <p className="body-r text-gray-80">{date}</p>
           <label htmlFor={`${id}`} className="relative">
@@ -37,16 +54,14 @@ const LetterPreview = ({
           </label>
         </div>
         <p className="body-m text-gray-80 line-clamp-1 break-all">{title}</p>
-      </ListItemWrapper>
+      </LetterWrapper>
     );
 
   return (
-    <Link to={`/letter/${id}`}>
-      <ListItemWrapper isSender={isSend}>
-        <p className="body-r text-gray-80 mb-3">{date}</p>
-        <p className="body-m text-gray-80 line-clamp-1 break-all">{title}</p>
-      </ListItemWrapper>
-    </Link>
+    <LetterWrapper isSender={isSend} onClick={() => handleItemClick(id)}>
+      <p className="body-r text-gray-80 mb-3">{date}</p>
+      <p className="body-m text-gray-80 line-clamp-1 break-all">{title}</p>
+    </LetterWrapper>
   );
 };
 

@@ -1,10 +1,9 @@
-import React from 'react';
 import Spinner from './components/Spinner';
 
 const SetZipCode = ({
   setIsZipCodeSet,
 }: {
-  setIsZipCodeSet: React.Dispatch<React.SetStateAction<Boolean>>;
+  setIsZipCodeSet: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const DUMMY_ZIPCODE = '122A2';
 
