@@ -84,19 +84,7 @@
     border-style: solid !important;
   }
 
-  .animate-float {
-    animation: float 2s ease-in-out infinite;
-  }
-
-  .animate-openEnvelope {
-    animation: openEnvelope 2s ease-in-out forwards;
-  }
-
-  .animate-expandScale {
-    animation: expandScale 2s ease-in-out forwards;
-  }
-
-  .animate-envelopeOut {
-    animation: envelopeOut 2s ease-in-out forwards;
+  .letter-gradient {
+    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
   }
 }
