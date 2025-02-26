@@ -12,8 +12,8 @@ import MatchingSelectModal from './components/MatchingSelectModal';
 const RandomLettersPage = () => {
   const [openSelectModal, setOpenSelectModal] = useState<boolean>(false);
   const [openSelectedDetailModal, setOpenSelectedDetailModal] = useState<boolean>(false);
-  const [matched] = useState<boolean>(true); //setMatched 임시 제거
-  const [coolTime] = useState<boolean>(false);
+  const [matched, setMatched] = useState<boolean>(true); //setMatched 임시 제거
+  const [coolTime, setCoolTime] = useState<boolean>(false);
   const [selectedLetter, setSelectedLetter] = useState<RandomLetters>({
     letterId: 0,
     category: 'ETC',
@@ -37,14 +37,14 @@ const RandomLettersPage = () => {
                   : '이미 답장 중인 편지가 있어요!'}
             </PageTitle>
             {coolTime ? (
-              <CoolTime />
+              <CoolTime setCoolTime={setCoolTime} />
             ) : !matched ? (
               <MatchingSelect
                 setOpenModal={setOpenSelectModal}
                 setSelectedLetter={setSelectedLetter}
               />
             ) : (
-              <Matched />
+              <Matched setMatched={setMatched} setCoolTime={setCoolTime} />
             )}
 
             {openSelectModal && (
