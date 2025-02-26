@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { ELEMENTS } from '../constants/index';
 
 interface SpinnerProps {
@@ -12,23 +13,9 @@ const Spinner = ({ target, index }: SpinnerProps) => {
   const SPEED = 100 + 10 * index;
   const [position, setPosition] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-  let LETTER_HEIGHT = 40;
+  const LETTER_HEIGHT = 45;
   const animationFrameRef = useRef<number | null>(null);
 
-  //TODO: 여러 기기에서 실효성 확인
-  // 웹에서는 없어도 될 것 같음
-  // calculate full height of the cycle
-  const containerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (containerRef.current) {
-      console.log(LETTER_HEIGHT);
-      const letter = containerRef.current.querySelector('p');
-      if (letter) {
-        LETTER_HEIGHT = letter.getBoundingClientRect().height;
-      }
-    }
-    console.log(LETTER_HEIGHT);
-  }, []);
   const FULL_ROTATION = -TARGET_ARR.length * LETTER_HEIGHT;
 
   useEffect(() => {
@@ -71,7 +58,6 @@ const Spinner = ({ target, index }: SpinnerProps) => {
       style={{ willChange: 'transform' }}
     >
       <div
-        ref={containerRef}
         className="text-center transition-transform duration-500 ease-linear"
         style={{ transform: `translateY(${position}px)` }}
       >

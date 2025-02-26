@@ -1,13 +1,20 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+
 import Spinner from './components/Spinner';
 
 const SetZipCode = ({
   setIsZipCodeSet,
 }: {
-  setIsZipCodeSet: React.Dispatch<React.SetStateAction<Boolean>>;
+  setIsZipCodeSet: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const DUMMY_ZIPCODE = '122A2';
+  const [isBtnActive, setIsBtnActive] = useState<boolean>(false);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsBtnActive(true);
+    }, 6300);
+  }, []);
   return (
     <>
       <header className="flex flex-col items-center">
@@ -17,13 +24,16 @@ const SetZipCode = ({
       </header>
       <section className="flex gap-2">
         {DUMMY_ZIPCODE.split('').map((char, index) => (
-          <Spinner key={index} target={`${char}`} index={index}></Spinner>
+          <Spinner key={index} target={char} index={index}></Spinner>
         ))}
       </section>
       <button
         type="button"
+        disabled={!isBtnActive}
         className="primary-btn body-m w-full py-2"
-        onClick={() => setIsZipCodeSet(true)}
+        onClick={() => {
+          setIsZipCodeSet(true);
+        }}
       >
         다음으로
       </button>

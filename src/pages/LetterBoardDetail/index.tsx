@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router';
-
 import { twMerge } from 'tailwind-merge';
 
+import BlurImg from '@/assets/images/landing-blur.png';
 import ReportModal from '@/components/ReportModal';
 
 import Header from './components/Header';
 import Letter from './components/Letter';
 
-import BlurImg from '@/assets/images/landing-blur.png';
 const DUMMY_LETTER = {
   receiver: '12E21',
   content:

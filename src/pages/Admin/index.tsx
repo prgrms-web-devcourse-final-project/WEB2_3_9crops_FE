@@ -1,8 +1,9 @@
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 
 import { AlarmIcon, ArrowDownIcon } from '@/assets/icons';
 
 const AdminPage = () => {
+  const navigate = useNavigate();
   return (
     <main className="flex h-full min-h-screen w-full">
       <section className="bg-primary-3 flex flex-1 grow basis-1/6 flex-col">
@@ -52,13 +53,22 @@ const AdminPage = () => {
                 <ArrowDownIcon className="ml-auto h-6 w-6" />
               </button>
               <div className="flex flex-col">
-                <button className="flex w-full items-center gap-5 py-2 pl-19 hover:bg-amber-100">
+                <button
+                  className="flex w-full items-center gap-5 py-2 pl-19 hover:bg-amber-100"
+                  onClick={() => navigate('/admin/report')}
+                >
                   신고 편지 목록
                 </button>
-                <button className="flex w-full items-center gap-5 py-2 pl-19 hover:bg-amber-100">
+                <button
+                  className="flex w-full items-center gap-5 py-2 pl-19 hover:bg-amber-100"
+                  onClick={() => navigate('/admin/badwords')}
+                >
                   필터링 단어 설정
                 </button>
-                <button className="flex w-full items-center gap-5 py-2 pl-19 hover:bg-amber-100">
+                <button
+                  className="flex w-full items-center gap-5 py-2 pl-19 hover:bg-amber-100"
+                  onClick={() => navigate('/admin/filtered-letter')}
+                >
                   차단된 편지 목록
                 </button>
               </div>

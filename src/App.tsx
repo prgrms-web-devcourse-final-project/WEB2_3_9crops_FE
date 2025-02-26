@@ -4,6 +4,8 @@ import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
 import AdminPage from './pages/Admin';
+import FilteredLetterManage from './pages/Admin/FilteredLetter';
+import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
@@ -14,6 +16,7 @@ import LetterBoxDetailPage from './pages/LetterBoxDetail';
 import LetterDetailPage from './pages/LetterDetail';
 import LoginPage from './pages/Login';
 import MyPage from './pages/MyPage';
+import NotFoundPage from './pages/NotFound';
 import NotificationsPage from './pages/Notifications';
 import OnboardingPage from './pages/Onboarding';
 import RandomLettersPage from './pages/RandomLetters';
@@ -51,9 +54,13 @@ const App = () => {
           <Route path="board" element={<LetterBoardPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
       </Route>
+
       <Route path="admin" element={<AdminPage />}>
         <Route path="report" element={<ReportManage />} />
+        <Route path="badwords" element={<FilteringManage />} />
+        <Route path="filtered-letter" element={<FilteredLetterManage />} />
       </Route>
     </Routes>
   );
