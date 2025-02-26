@@ -35,9 +35,10 @@ export const getUserToken = async (stateToken: string) => {
   }
 };
 
-export const getZipCode = async () => {
+export const postZipCode = async () => {
   try {
     const response = await client.post(`/api/members/zipCode`);
+    if(!response) throw new Error('fail to post ZipCode')
     return response;
   } catch (error) {
     console.error(error);
@@ -66,8 +67,20 @@ export const getMydata = async () => {
 
 export const deleteUserInfo = async () => {
   try {
-    const response = await client.delete('/api/members/me');
+    const response = await client.delete('/api/members/me', {
+      withCredentials: true,
+    });
     if (!response) throw new Error('deleteUserInfo: no response');
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const postLogout = async () => {
+  try {
+    const response = await client.post('/api/logout', { withCredentials: true });
+    if (!response) throw new Error('postLogout: failed to logout');
     return response;
   } catch (error) {
     console.error(error);
