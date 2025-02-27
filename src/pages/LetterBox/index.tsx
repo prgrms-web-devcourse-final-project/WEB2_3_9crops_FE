@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 
 import { getMailbox } from '@/apis/mailBox';
 import DoorImg from '@/assets/images/door.png';
@@ -13,25 +14,34 @@ interface LetterBoxData {
   oppositeZipCode: string;
   active: boolean;
   oppositeRead: boolean;
-  // totalLetters: number;
+  letterCount: number;
 }
-const LetterBoxPage = () => {
-  const [letterBox, setLetterBox] = useState<LetterBoxData[]>([]);
 
-  const fetchMailLists = async () => {
-    try {
-      const response = await getMailbox();
-      if (!response) throw new Error();
-      const data: LetterBoxData[] = response.data;
-      // 정렬?
-      setLetterBox(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchMailLists();
-  }, []);
+const fetchMailLists = async () => {
+  const response = await getMailbox();
+  if (!response) throw new Error();
+  const data: LetterBoxData[] = response.data;
+  // 정렬?
+  return data;
+};
+
+const LetterBoxPage = () => {
+  const {
+    data: letterBox = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['mailbox'],
+    queryFn: fetchMailLists,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+  });
+
+  const navigate = useNavigate();
+
+  if (isError) {
+    navigate('/NotFound');
+  }
 
   return (
     <main className="flex grow flex-col items-center px-5 pt-20">
@@ -42,7 +52,9 @@ const LetterBoxPage = () => {
         </p>
         <section className="letter-box-bg flex grow flex-col items-center px-4 pt-5">
           <div className="flex w-full flex-col gap-5">
-            {letterBox.length > 0 ? (
+            {isLoading ? (
+              <p className="body-m text-gray-60 text-center">로딩중..</p>
+            ) : letterBox.length > 0 ? (
               chunkBox(
                 letterBox.map((data: LetterBoxData, index) => (
                   <LetterBoxItem

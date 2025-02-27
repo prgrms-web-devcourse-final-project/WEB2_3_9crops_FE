@@ -87,4 +87,25 @@
   .letter-gradient {
     background: linear-gradient(to bottom, #ffffff, #f2f2f2);
   }
+
+  /* letter-box */
+  .window-bg {
+    background: linear-gradient(to bottom, #d5b695, #b3895d);
+  }
+
+  .window-top-checked {
+    background: linear-gradient(to bottom, #ffffff, #fff5ed);
+  }
+
+  .window-top-unChecked {
+    background: linear-gradient(to bottom, #ffffff, #fff4f2);
+  }
+
+  .window-bottom-checked {
+    background: linear-gradient(to bottom, #FFF7E3, #FFE197);
+  }
+
+  .window-bottom-unChecked {
+    background: linear-gradient(to bottom, #FFF4F2, #FFE6E3);
+  }
 }
