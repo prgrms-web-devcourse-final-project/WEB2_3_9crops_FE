@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { getSharePostList } from '@/apis/share';
+import { getSharePostDetail, getSharePostList } from '@/apis/share';
 import { SharePostResponse } from '@/apis/share';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
@@ -30,11 +30,16 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
     fetchPosts();
   }, []);
 
-
-  const handleNavigation = (accessId: number) => {
-    navigate(`/board/letter/${accessId}`, {
-      state: { isShareLetterPreview: true },
-    });
+  const handleNavigation = async (sharePostId: number) => {
+    try {
+      const postDetail = await getSharePostDetail(sharePostId);
+      navigate(`/board/letter/${sharePostId}`, {
+        state: { postDetail, isShareLetterPreview: true },
+      });
+    } catch (error) {
+      console.error('❌ 게시글 상세 페이지로 이동하는 데에 실패했습니다.', error);
+    }
+  };
 
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
