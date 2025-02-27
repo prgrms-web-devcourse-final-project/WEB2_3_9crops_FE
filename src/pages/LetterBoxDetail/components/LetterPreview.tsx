@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import LetterWrapper from '@/components/LetterWrapper';
+import formatDate from '@/utils/formatDate';
 
 interface LetterPreviewProps {
   id: number;
@@ -41,7 +42,7 @@ const LetterPreview = ({
     return (
       <LetterWrapper isSender={isSend}>
         <div className="mb-3 flex items-center justify-between">
-          <p className="body-r text-gray-80">{date}</p>
+          <p className="body-r text-gray-80">{formatDate(date)}</p>
           <label htmlFor={`${id}`} className="relative">
             <input
               id={`${id}`}

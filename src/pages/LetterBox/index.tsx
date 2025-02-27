@@ -61,7 +61,7 @@ const LetterBoxPage = () => {
                     boxId={data.letterMatchingId}
                     key={index}
                     zipCode={data.oppositeZipCode}
-                    letterCount={90}
+                    letterCount={data.letterCount}
                     isChecked={data.oppositeRead}
                     isClosed={data.active}
                   />
