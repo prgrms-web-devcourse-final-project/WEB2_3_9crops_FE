@@ -7,9 +7,10 @@ import useWrite from '@/stores/writeStore';
 
 import ResultLetter from '../../../components/ResultLetter';
 
-export default function ResultLetterAnimation({ categoryName }: { categoryName: Category }) {
+export default function ResultLetterAnimation() {
   const [next, setNext] = useState('st');
-  const letterTitle = useWrite((state) => state.letterTitle);
+
+  const letterRequest = useWrite((state) => state.letterRequest);
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,7 +24,7 @@ export default function ResultLetterAnimation({ categoryName }: { categoryName: 
     <>
       {next === 'rd' ? (
         <div className="animate-rotate-show w-full opacity-0">
-          <ResultLetter categoryName={categoryName} title={letterTitle} />
+          <ResultLetter categoryName={letterRequest.category} title={letterRequest.title} />
         </div>
       ) : (
         <>

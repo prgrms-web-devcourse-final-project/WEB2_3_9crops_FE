@@ -19,11 +19,11 @@ interface Fonts {
 }
 
 interface PrevLetter {
-  letterId: number;
+  letterId: string;
   title: string;
   content: string;
-  paperType: PaperType;
-  fontType: FontType;
+  category: Category;
+  memberId: number;
 }
 
 interface Categorys {
@@ -48,7 +48,7 @@ interface CategoryStamps {
 
 // API 타입
 interface LetterRequest {
-  receiver: number | null;
+  receiverId: number | null;
   parentLetterId: number | null;
   title: string;
   content: string;

@@ -1,6 +1,8 @@
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
+import { postLetter } from '@/apis/write';
 import BackButton from '@/components/BackButton';
 import WritePageButton from '@/pages/Write/components/WritePageButton';
 import { FONT_TYPE_OBJ } from '@/pages/Write/constants';
@@ -10,26 +12,35 @@ import useWrite from '@/stores/writeStore';
 export default function LetterEditor({
   setStep,
   prevLetter,
+  setSend,
+  searchParams,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   prevLetter: PrevLetter[];
+  setSend: React.Dispatch<React.SetStateAction<boolean>>;
+  searchParams: URLSearchParams;
 }) {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const location = useLocation();
+  const [randomMatched, setRandomMatched] = useState<boolean>(false);
 
-  const fontType = useWrite((state) => state.fontType);
+  const letterRequest = useWrite((state) => state.letterRequest);
+  const setLetterRequest = useWrite((state) => state.setLetterRequest);
 
-  const letterTitle = useWrite((state) => state.letterTitle);
-  const setLetterTitle = useWrite((state) => state.setLetterTitle);
-
-  const letterText = useWrite((state) => state.letterText);
-  const setLetterText = useWrite((state) => state.setLetterText);
-
-  const handleResizeHeight = () => {
-    if (textareaRef.current !== null) {
-      textareaRef.current.style.height = 'auto'; //height 초기화
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+  useEffect(() => {
+    if (location.state?.randomMatched) {
+      setRandomMatched(true);
     }
-  };
+  }, [location.state?.randomMatched]);
+
+  useEffect(() => {
+    if (prevLetter.length > 0) {
+      setLetterRequest({
+        receiverId: prevLetter[0].memberId,
+        parentLetterId: Number(searchParams.get('letterId')),
+        category: prevLetter[0].category,
+      });
+    }
+  }, [prevLetter, searchParams, setLetterRequest]);
 
   return (
     <div className="flex grow flex-col pb-15">
@@ -40,8 +51,17 @@ export default function LetterEditor({
           <WritePageButton
             text="답장 전송"
             onClick={() => {
-              if (letterTitle.trim() !== '' && letterText.trim() !== '') {
-                setStep('category');
+              if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
+                if (randomMatched) {
+                  console.log('랜덤편지 답장 전송용API');
+                } else {
+                  postLetter(letterRequest, () => {
+                    console.log(letterRequest);
+                    console.log(prevLetter);
+                    setSend(true);
+                    setStep('category');
+                  });
+                }
               } else {
                 alert('편지 제목, 내용이 작성되었는지 확인해주세요');
               }
@@ -51,7 +71,7 @@ export default function LetterEditor({
           <WritePageButton
             text="다음 단계"
             onClick={() => {
-              if (letterTitle.trim() !== '' && letterText.trim() !== '') {
+              if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                 setStep('category');
               } else {
                 alert('편지 제목, 내용이 작성되었는지 확인해주세요');
@@ -67,23 +87,22 @@ export default function LetterEditor({
           placeholder="제목을 입력해주세요."
           className="body-sb placeholder:text-gray-40 placeholder:border-0"
           onChange={(e) => {
-            setLetterTitle(e.target.value);
+            setLetterRequest({ title: e.target.value });
           }}
-          value={letterTitle}
+          value={letterRequest.title}
         />
       </div>
       <div className="mt-9 flex grow">
         <textarea
           className={twMerge(
             `body-r basic-theme min-h-full w-full px-6`,
-            `${FONT_TYPE_OBJ[fontType]}`,
+            `${FONT_TYPE_OBJ[letterRequest.fontType]}`,
           )}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
-            handleResizeHeight();
-            setLetterText(e.target.value);
+            setLetterRequest({ ...letterRequest, content: e.target.value });
           }}
-          value={letterText}
+          value={letterRequest.content}
         ></textarea>
       </div>
     </div>
