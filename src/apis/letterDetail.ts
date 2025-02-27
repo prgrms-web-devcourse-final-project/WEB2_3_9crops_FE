@@ -7,6 +7,7 @@ const getLetter = async (
 ) => {
   try {
     const res = await client.get(`/api/letters/${letterId}`);
+    if (!res) throw new Error('편지 데이터를 가져오는 도중 에러가 발생했습니다.');
     setLetterState(res.data.data);
     if (callBack) callBack();
     console.log(res);
@@ -19,6 +20,7 @@ const deleteLetter = async (letterId: string, callBack?: () => void) => {
   try {
     console.log(`/api/letters/${letterId}`);
     const res = await client.delete(`/api/letters/${letterId}`);
+    if (!res) throw new Error('편지 삭제 요청 도중 에러가 발생했습니다.');
     if (callBack) callBack();
     console.log(res);
   } catch (error) {

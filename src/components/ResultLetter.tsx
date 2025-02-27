@@ -5,7 +5,7 @@ import LetterWrapper from './LetterWrapper';
 export default function ResultLetter({
   categoryName = 'CONSOLATION',
   title,
-  zipCode = 'error',
+  zipCode = 'ERROR',
 }: {
   categoryName: Category;
   title: string;
