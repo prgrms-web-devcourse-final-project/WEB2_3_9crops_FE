@@ -34,7 +34,6 @@ export default function LetterEditor({
 
   useEffect(() => {
     if (prevLetter.length > 0) {
-      console.log('d');
       setLetterRequest({
         receiverId: prevLetter[0].memberId,
         parentLetterId: Number(searchParams.get('letterId')),

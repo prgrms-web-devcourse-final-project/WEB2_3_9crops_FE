@@ -14,7 +14,7 @@ const WritePage = () => {
 
   const [send, setSend] = useState<boolean>(false);
   const [step, setStep] = useState<Step>('edit');
-  // prevLetter를 받았을때, 데이터 중에 receiverId가 전역변수의 memberId와 일치하는지 판단해 일치하지 않으면 메인페이지로 리다이렉션 하는 로직 만들어야함(그런데 아직 prevLetter데이터에 receiverId값이 없음 진영님께 부탁해야함!)
+  // TODO : prevLetter를 받았을때, 데이터 중에 receiverId가 전역변수의 memberId와 일치하는지 판단해 일치하지 않으면 메인페이지로 리다이렉션 하는 로직 만들어야함(그런데 아직 prevLetter데이터에 receiverId값이 없음 진영님께 부탁해야함!)
   const [prevLetter, setPrevLetter] = useState<PrevLetter[]>([]);
 
   const letterRequest = useWrite((state) => state.letterRequest);
