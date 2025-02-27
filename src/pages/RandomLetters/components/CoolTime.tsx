@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import LetterWrapper from '@/components/LetterWrapper';
+import { formatNumber } from '@/utils/formatNumber';
 
 // import letterPink from '@/assets/images/letter-pink.png';
 
@@ -28,10 +29,6 @@ export default function CoolTime({
     minutes: Math.floor((endTime / (1000 * 60)) % 60),
     seconds: Math.floor((endTime / 1000) % 60),
   });
-
-  const formatNumber = (num: number) => {
-    return num.toString().padStart(2, '0');
-  };
 
   useEffect(() => {
     if (endTimes.hours < 0 || endTimes.minutes < 0 || endTimes.seconds < 0) {

@@ -60,7 +60,9 @@ export default function MatchingSelect({
           }}
         >
           <img src={RestartIcon} alt="재시작 아이콘" />
-          <span className="caption-sb text-gray-30">리스트 새로고침</span>
+          <span className="caption-sb text-gray-30" aria-label="리스트 새로고침 버튼">
+            리스트 새로고침
+          </span>
         </button>
         <div className="w-full max-w-[300px]">
           <Swiper effect={'cards'} grabCursor={true} modules={[EffectCards]} className="mySwiper">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import ResultLetter from '@/components/ResultLetter';
+import { formatNumber } from '@/utils/formatNumber';
 
 export default function Matched({
   setMatched,
@@ -36,10 +37,6 @@ export default function Matched({
     minutes: Math.floor((graceTime / (1000 * 60)) % 60),
     seconds: Math.floor((graceTime / 1000) % 60),
   });
-
-  const formatNumber = (num: number) => {
-    return num.toString().padStart(2, '0');
-  };
 
   useEffect(() => {
     if (endTimes.hours < 0 || endTimes.minutes < 0 || endTimes.seconds < 0) {
@@ -130,6 +127,7 @@ export default function Matched({
             console.log('취소');
           }}
           disabled={isDisabled}
+          aria-label="취소버튼"
         >
           {isDisabled
             ? '취소 시간이 지났습니다.'
