@@ -19,21 +19,7 @@ export default function CategorySelect({
   send: boolean;
   setSend: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const letterTitle = useWrite((state) => state.letterTitle);
-  const letterText = useWrite((state) => state.letterText);
-  const category = useWrite((state) => state.category);
-  const paperType = useWrite((state) => state.paperType);
-  const fontType = useWrite((state) => state.fontType);
-
-  const LETTER_REQUEST: LetterRequest = {
-    receiverId: null,
-    parentLetterId: null,
-    title: letterTitle,
-    content: letterText,
-    category: category,
-    paperType: paperType,
-    fontType: fontType,
-  };
+  const letterRequest = useWrite((state) => state.letterRequest);
 
   return (
     <>
@@ -61,7 +47,7 @@ export default function CategorySelect({
 
         {send && prevLetter.length > 0 && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetterAnimation categoryName="답변자" />
+            <ResultLetterAnimation />
             <div className="animate-show-text flex flex-col items-center opacity-0">
               <span className="body-sb text-gray-60">작성하신 편지는</span>
               <span className="body-sb text-gray-60">
@@ -75,7 +61,7 @@ export default function CategorySelect({
 
         {send && prevLetter.length <= 0 && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetterAnimation categoryName={category} />
+            <ResultLetterAnimation />
             <span className="animate-show-text body-sb text-gray-60 opacity-0">
               두근두근! 답장이 언제 올까요?
             </span>
@@ -93,8 +79,9 @@ export default function CategorySelect({
           <button
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
             onClick={() => {
-              if (category) {
-                postLetter(LETTER_REQUEST, () => {
+              if (letterRequest.category) {
+                postLetter(letterRequest, () => {
+                  console.log(letterRequest);
                   setSend(true);
                 });
                 // setSend(true);

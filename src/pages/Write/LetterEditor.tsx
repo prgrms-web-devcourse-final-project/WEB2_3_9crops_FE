@@ -23,30 +23,25 @@ export default function LetterEditor({
   const location = useLocation();
   const [randomMatched, setRandomMatched] = useState<boolean>(false);
 
-  const fontType = useWrite((state) => state.fontType);
-  const paperType = useWrite((state) => state.paperType);
-
-  const letterTitle = useWrite((state) => state.letterTitle);
-  const setLetterTitle = useWrite((state) => state.setLetterTitle);
-
-  const letterText = useWrite((state) => state.letterText);
-  const setLetterText = useWrite((state) => state.setLetterText);
-
-  const LETTER_REQUEST: LetterRequest = {
-    receiverId: prevLetter.length > 0 ? prevLetter[0].memberId : null,
-    parentLetterId: Number(searchParams.get('letterId')),
-    title: letterTitle,
-    content: letterText,
-    category: prevLetter.length > 0 ? prevLetter[0].category : 'ETC',
-    paperType: paperType,
-    fontType: fontType,
-  };
+  const letterRequest = useWrite((state) => state.letterRequest);
+  const setLetterRequest = useWrite((state) => state.setLetterRequest);
 
   useEffect(() => {
     if (location.state?.randomMatched) {
       setRandomMatched(true);
     }
   }, [location.state?.randomMatched]);
+
+  useEffect(() => {
+    if (prevLetter.length > 0) {
+      console.log('d');
+      setLetterRequest({
+        receiverId: prevLetter[0].memberId,
+        parentLetterId: Number(searchParams.get('letterId')),
+        category: prevLetter[0].category,
+      });
+    }
+  }, [prevLetter, searchParams, setLetterRequest]);
 
   return (
     <div className="flex grow flex-col pb-15">
@@ -57,12 +52,12 @@ export default function LetterEditor({
           <WritePageButton
             text="답장 전송"
             onClick={() => {
-              if (letterTitle.trim() !== '' && letterText.trim() !== '') {
+              if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                 if (randomMatched) {
                   console.log('랜덤편지 답장 전송용API');
                 } else {
-                  postLetter(LETTER_REQUEST, () => {
-                    console.log(LETTER_REQUEST);
+                  postLetter(letterRequest, () => {
+                    console.log(letterRequest);
                     console.log(prevLetter);
                     setSend(true);
                     setStep('category');
@@ -77,7 +72,7 @@ export default function LetterEditor({
           <WritePageButton
             text="다음 단계"
             onClick={() => {
-              if (letterTitle.trim() !== '' && letterText.trim() !== '') {
+              if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                 setStep('category');
               } else {
                 alert('편지 제목, 내용이 작성되었는지 확인해주세요');
@@ -93,23 +88,22 @@ export default function LetterEditor({
           placeholder="제목을 입력해주세요."
           className="body-sb placeholder:text-gray-40 placeholder:border-0"
           onChange={(e) => {
-            setLetterTitle(e.target.value);
+            setLetterRequest({ title: e.target.value });
           }}
-          value={letterTitle}
+          value={letterRequest.title}
         />
       </div>
       <div className="mt-9 flex grow">
         <textarea
           className={twMerge(
             `body-r basic-theme min-h-full w-full px-6`,
-            `${FONT_TYPE_OBJ[fontType]}`,
+            `${FONT_TYPE_OBJ[letterRequest.fontType]}`,
           )}
           placeholder="클릭해서 내용을 작성하세요"
           onChange={(e) => {
-            // handleResizeHeight();
-            setLetterText(e.target.value);
+            setLetterRequest({ ...letterRequest, content: e.target.value });
           }}
-          value={letterText}
+          value={letterRequest.content}
         ></textarea>
       </div>
     </div>

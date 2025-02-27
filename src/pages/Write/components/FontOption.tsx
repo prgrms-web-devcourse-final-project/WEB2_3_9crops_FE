@@ -6,9 +6,8 @@ import useWrite from '@/stores/writeStore';
 import { FONT_LIST } from '../constants';
 
 export default function FontOption() {
-  const setFontType = useWrite((state) => state.setFontType);
-  const fontType = useWrite((state) => state.fontType);
-
+  const letterRequest = useWrite((state) => state.letterRequest);
+  const setLetterRequest = useWrite((state) => state.setLetterRequest);
   return (
     <div className="flex w-full flex-col gap-3 px-4 pt-3 pb-[30px]">
       <div className="flex h-[330px] flex-col gap-3 overflow-y-scroll">
@@ -23,13 +22,13 @@ export default function FontOption() {
                     `${font.fontFamily}`,
                   )}
                   onClick={() => {
-                    setFontType(font.fontType);
+                    setLetterRequest({ fontType: font.fontType });
                   }}
                 >
                   안녕! 나는 따수미야! 0123456789{' '}
                   <CheckIcon
                     className={twMerge(
-                      `h-5 w-5 ${fontType === font.fontType ? 'text-primary-1-hover' : 'text-black'}`,
+                      `h-5 w-5 ${letterRequest.fontType === font.fontType ? 'text-primary-1-hover' : 'text-black'}`,
                     )}
                   />
                 </button>
