@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router';
 
+import { useAxiosIntercepter } from './apis/client';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
@@ -7,6 +8,7 @@ import AdminPage from './pages/Admin';
 import FilteredLetterManage from './pages/Admin/FilteredLetter';
 import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
+import AuthCallbackPage from './pages/Auth';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import LetterBoardPage from './pages/LetterBoard';
@@ -25,6 +27,7 @@ import WritePage from './pages/Write';
 
 const App = () => {
   useViewport();
+  useAxiosIntercepter();
 
   return (
     <Routes>
@@ -54,7 +57,8 @@ const App = () => {
           <Route path="board" element={<LetterBoardPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
         </Route>
-        <Route path="*" element={<NotFoundPage />}></Route>
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="auth-callback" element={<AuthCallbackPage />} />
       </Route>
 
       <Route path="admin" element={<AdminPage />}>
