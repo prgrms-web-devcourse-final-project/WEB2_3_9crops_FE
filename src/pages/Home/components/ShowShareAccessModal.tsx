@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { getSharePostList } from '@/apis/share';
+import { SharePostResponse } from '@/apis/share';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
@@ -9,21 +11,31 @@ interface ShowShareAccessModalProps {
   onClose: () => void;
 }
 
-const DUMMY_SHARE_ACCESS = [
-  { id: 1, zip_code: '235EA' },
-  { id: 2, zip_code: '711PO' },
-  { id: 3, zip_code: '105CF' },
-  { id: 4, zip_code: '299EB' },
-];
-
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
   const navigate = useNavigate();
+
+  const [sharePosts, setSharePosts] = useState<SharePostResponse>();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const data = await getSharePostList(1, 10);
+        setSharePosts(data);
+        // console.log(data);
+      } catch (error) {
+        console.error('❌ 게시글 목록을 불러오는 데 실패했습니다.', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
 
   const handleNavigation = (accessId: number) => {
     navigate(`/board/letter/${accessId}`, {
       state: { isShareLetterPreview: true },
     });
-  };
+
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <div className="flex h-full flex-col items-center justify-center">
@@ -40,13 +52,13 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
               </p>
             </div>
             <div className="mt-6 flex w-[251px] flex-col gap-[10px]">
-              {DUMMY_SHARE_ACCESS.map((access) => (
+              {sharePosts?.content.map((post) => (
                 <button
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
-                  key={access.id}
-                  onClick={() => handleNavigation(access.id)}
+                  key={post.sharePostId}
+                  onClick={() => handleNavigation(post.sharePostId)}
                 >
-                  <p>{access.zip_code}님의 공유 요청</p>
+                  <p>{post.writerZipCode}님의 공유 요청</p>
                 </button>
               ))}
             </div>
