@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import { getUserToken } from '@/apis/auth';
@@ -6,8 +6,9 @@ import useAuthStore from '@/stores/authStore';
 
 const AuthCallbackPage = () => {
   const stateToken = new URLSearchParams(window.location.search).get('state');
-  const { setUserId, setZipCode, setAccessToken, zipCode } = useAuthStore.getState();
-  const [role, setRole] = useState<string>('');
+  const redirectURL = new URLSearchParams(window.location.search).get('redirect');
+
+  const { setUserId, setZipCode, setAccessToken, zipCode } = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -18,9 +19,7 @@ const AuthCallbackPage = () => {
 
       const accessToken = userInfo.match(/Bearer\s+(\S+)/);
       if (accessToken) setAccessToken(accessToken[1]);
-
-      const role = userInfo.match(/Role=([\w-]+)/);
-      if (role) setRole(role);
+      console.log('token', accessToken);
 
       const userId = userInfo.match(/UserId=(\d+)/);
       if (userId) setUserId(userId[1]);
@@ -32,19 +31,18 @@ const AuthCallbackPage = () => {
     }
   };
 
-  const redirection = () => {
-    if (role === 'admin') navigate('/report');
-    else {
-      if (!zipCode) navigate('/onboarding');
-      else navigate('/');
-    }
-  };
+  // const redirection = () => {
+  //   if(redirectURL === 'onboarding') navigate('/onboarding');
+  //   else if(redirectURL === 'home') navigate('/');
+  //   else navigate('/notFound');
+  // };
 
   useEffect(() => {
     if (stateToken) {
       setUserInfo(stateToken as string);
-      redirection();
-    } else navigate('/notFound');
+      // redirection();
+    }
+    // else navigate('/notFound');
   }, []);
   return <div></div>;
 };

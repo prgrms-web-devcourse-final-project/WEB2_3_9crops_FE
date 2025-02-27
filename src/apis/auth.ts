@@ -1,16 +1,15 @@
 import useAuthStore from '@/stores/authStore';
+
 import client from './client';
 
 type LoginType = 'kakao' | 'naver' | 'google';
 export const socialLogin = (loginType: LoginType) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // const { setUserId, setZipCode, login } = useAuthStore.getState();
-
   window.location.href = `http://13.209.132.150:8081/oauth2/authorization/${loginType}`;
 };
 
 export const logout = async () => {
   const { accessToken } = useAuthStore.getState();
+
   try {
     const response = await client.post(`/api/logout`, {
       Authorization: { token: `Bearer ${accessToken}` },
@@ -23,13 +22,11 @@ export const logout = async () => {
   }
 };
 
-//임시 코드
 export const getUserToken = async (stateToken: string) => {
   try {
     const response = await client.get(`/api/auth/token?state=${stateToken}`);
     if (!response) throw new Error('getUserToken: Error while fetching user token');
-    const userInfo = response.headers['authorization'];
-
+    const userInfo = response.data;
     if (userInfo) {
       return userInfo;
     }
@@ -38,7 +35,9 @@ export const getUserToken = async (stateToken: string) => {
   }
 };
 
-export const getZipCode = async (accessToken: string) => {
+export const getZipCode = async () => {
+  const { accessToken, userId, zipCode, isLoggedIn } = useAuthStore.getState();
+
   try {
     const response = await client.get(`/members/zipCode`, {
       headers: {
@@ -47,6 +46,7 @@ export const getZipCode = async (accessToken: string) => {
     });
     if (!response) throw new Error('getZipCode: no response data');
     console.log(response);
+    console.log('UserInfo', 'Id:', userId, 'isLoggedIn:', isLoggedIn, 'zipCode', zipCode);
     return response;
   } catch (error) {
     console.error(error);
