@@ -36,17 +36,8 @@ export const getUserToken = async (stateToken: string) => {
 };
 
 export const getZipCode = async () => {
-  const { accessToken, userId, zipCode, isLoggedIn } = useAuthStore.getState();
-
   try {
-    const response = await client.get(`/members/zipCode`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    if (!response) throw new Error('getZipCode: no response data');
-    console.log(response);
-    console.log('UserInfo', 'Id:', userId, 'isLoggedIn:', isLoggedIn, 'zipCode', zipCode);
+    const response = await client.post(`/api/members/zipCode`);
     return response;
   } catch (error) {
     console.error(error);
@@ -56,7 +47,27 @@ export const getZipCode = async () => {
 export const getNewToken = async () => {
   try {
     const response = await client.get('/api/reissue', { withCredentials: true });
+    if (!response) throw new Error('getNewToken: no response data');
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getMydata = async () => {
+  try {
+    const response = await client.get('/api/members/me');
     if (!response) throw new Error('getNewTOken: no response data');
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteUserInfo = async () => {
+  try {
+    const response = await client.delete('/api/members/me');
+    if (!response) throw new Error('deleteUserInfo: no response');
     return response;
   } catch (error) {
     console.error(error);

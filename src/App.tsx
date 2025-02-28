@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router';
 
-import { useAxiosIntercepter } from './apis/client';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
@@ -27,7 +26,6 @@ import WritePage from './pages/Write';
 
 const App = () => {
   useViewport();
-  useAxiosIntercepter();
 
   return (
     <Routes>

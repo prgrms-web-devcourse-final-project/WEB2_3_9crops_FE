@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { getZipCode } from '@/apis/auth';
 import useAuthStore from '@/stores/authStore';
 
 import Spinner from './components/Spinner';
@@ -10,22 +9,10 @@ const SetZipCode = ({
 }: {
   setIsZipCodeSet: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [zipCode, setZipCode] = useState<string>('');
   const [isBtnActive, setIsBtnActive] = useState<boolean>(false);
-  const { accessToken } = useAuthStore.getState();
+  const { zipCode } = useAuthStore.getState();
 
-  const fetchZipCode = async () => {
-    try {
-      const response = await getZipCode(accessToken as string);
-      if (!response) throw new Error('fetchZipCode: no response');
-      console.log(response.data.zipCode);
-      setZipCode(response.data.zipCode);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
-    fetchZipCode();
     setTimeout(() => {
       setIsBtnActive(true);
     }, 6300);

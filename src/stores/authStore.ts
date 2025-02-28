@@ -3,12 +3,10 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface AuthStore {
   isLoggedIn: boolean;
-  userId: number | null;
   zipCode: string;
   accessToken: string;
   login: () => void;
   logout: () => void;
-  setUserId: (userId: number) => void;
   setZipCode: (zipCode: string) => void;
   setAccessToken: (accessToken: string) => void;
 }
@@ -17,11 +15,9 @@ const useAuthStore = create(
     (set) => ({
       isLoggedIn: false,
       accessToken: '',
-      userId: null,
       zipCode: '',
       login: () => set({ isLoggedIn: true }),
-      logout: () => set({ isLoggedIn: false, userId: null, zipCode: '' }),
-      setUserId: (userId) => set({ userId: userId }),
+      logout: () => set({ isLoggedIn: false, zipCode: '', accessToken: '' }),
       setZipCode: (zipCode) => set({ zipCode: zipCode }),
       setAccessToken: (accessToken) => set({ accessToken: accessToken }),
     }),

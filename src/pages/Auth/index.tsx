@@ -1,39 +1,62 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { getUserToken } from '@/apis/auth';
+import { getUserToken, getMydata, deleteUserInfo, getZipCode } from '@/apis/auth';
 import useAuthStore from '@/stores/authStore';
 
 const AuthCallbackPage = () => {
   const stateToken = new URLSearchParams(window.location.search).get('state');
   const redirectURL = new URLSearchParams(window.location.search).get('redirect');
 
-  const { setUserId, setZipCode, setAccessToken, zipCode } = useAuthStore();
+  const { setZipCode, setAccessToken, login } = useAuthStore();
 
   const navigate = useNavigate();
 
   const setUserInfo = async (stateToken: string) => {
     try {
-      const userInfo = await getUserToken(stateToken);
-      if (!userInfo) throw new Error('Error Fetching userInfo');
+      const response = await getUserToken(stateToken);
+      if (!response) throw new Error('Error Fetching userInfo');
 
-      const accessToken = userInfo.match(/Bearer\s+(\S+)/);
-      if (accessToken) setAccessToken(accessToken[1]);
-      console.log('token', accessToken);
+      const userInfo = response.data;
+      if (userInfo) {
+        login();
+        userInfo.accessToken && setAccessToken(userInfo.accessToken);
 
-      const userId = userInfo.match(/UserId=(\d+)/);
-      if (userId) setUserId(userId[1]);
+        if (redirectURL == 'home') {
+          const zipCodeResponse = await getMydata();
+          if (!zipCodeResponse) throw new Error('Error Fetching userInfo');
+          const zipCode = zipCodeResponse.data.data.zipCode;
+          zipCode && setZipCode(zipCode);
 
-      const zipCode = userInfo.match(/ZipCode=([A-Za-z0-9]+)/);
-      if (zipCode) setZipCode(zipCode[1]);
+          console.log(
+            'isLoggedIn',
+            useAuthStore.getState().isLoggedIn,
+            'access',
+            useAuthStore.getState().accessToken,
+            'zipCode',
+            useAuthStore.getState().zipCode,
+          );
+        } else if (redirectURL === 'onboarding') {
+          const createZipCodeResponse = await getZipCode();
+          if (!createZipCodeResponse) throw new Error('Error creating ZipCode');
+          const zipCode = createZipCodeResponse.data.data.zipCode;
+          const newAccessToken = createZipCodeResponse.headers['authorizazion'];
+          
+          setZipCode(zipCode);
+          setAccessToken(newAccessToken);
+        }
+      } else {
+        navigate('/login');
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
   // const redirection = () => {
-  //   if(redirectURL === 'onboarding') navigate('/onboarding');
-  //   else if(redirectURL === 'home') navigate('/');
+  //   if (redirectURL === 'onboarding') navigate('/onboarding');
+  //   else if (redirectURL === 'home') navigate('/');
   //   else navigate('/notFound');
   // };
 
@@ -44,7 +67,16 @@ const AuthCallbackPage = () => {
     }
     // else navigate('/notFound');
   }, []);
-  return <div></div>;
+
+  const handleLeave = async () => {
+    try {
+      const response = await deleteUserInfo();
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return <button onClick={() => handleLeave()}>탈퇴</button>;
 };
 
 export default AuthCallbackPage;
