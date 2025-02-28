@@ -13,8 +13,11 @@ const client = axios.create({
 client.interceptors.request.use(
   (config) => {
     const { accessToken } = useAuthStore.getState();
+    // console.log('intercepter', accessToken);
+    console.log(config.url);
     if (config.url !== '/auth/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
+      console.log('intercepter', config.headers);
     }
     return config;
   },
