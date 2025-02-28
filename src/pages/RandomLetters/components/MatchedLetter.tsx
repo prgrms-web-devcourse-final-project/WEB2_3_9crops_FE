@@ -42,7 +42,7 @@ const MatchedLetter = ({ selectedLetter }: { selectedLetter: RandomLetters }) =>
           className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
           onClick={() => {
             navigate(`/letter/write?letterId=${selectedLetter?.letterId}`, {
-              state: { randomMatched: true },
+              state: { randomMatched: true, selectedLetter: selectedLetter },
             });
           }}
           aria-label="편지 작성 버튼"

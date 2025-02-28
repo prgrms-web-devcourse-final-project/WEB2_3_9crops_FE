@@ -3,15 +3,63 @@ import client from './client';
 const getRandomLetters = async (
   setRandomLettersState: React.Dispatch<React.SetStateAction<RandomLetters[]>>,
   category: string | null,
+  callBack?: () => void,
 ) => {
   try {
-    const res = await client.get(`/api/random/${category}`);
+    const res = await client.get(`/api/random-letters/${category}`);
     if (!res) throw new Error('랜덤 편지 데이터를 가져오는 도중 에러가 발생했습니다.');
     setRandomLettersState(res.data.data);
+    if (callBack) callBack();
     console.log(res);
   } catch (error) {
     console.error(error);
   }
 };
 
-export { getRandomLetters };
+interface ApproveRequest {
+  letterId: string;
+  writerId: string;
+}
+const postRandomLettersApprove = async (approveRequest: ApproveRequest, callBack?: () => void) => {
+  try {
+    console.log('엔드포인트 : /api/random-letters/approve');
+    console.log('request', approveRequest);
+    const res = await client.post('/api/random-letters/approve', approveRequest);
+    if (!res) throw new Error('랜덤편지 매칭수락 도중 에러가 발생했습니다.');
+    if (callBack) callBack();
+    console.log(res);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getRandomLettersValidTable = async (callBack?: () => void) => {
+  try {
+    const res = await client.get('/api/random-letters/valid-table');
+    if (!res)
+      throw new Error('랜덤 편지 최종 매칭 시간 검증 데이터를 가자오는 도중 에러가 발생했습니다.');
+    if (callBack) callBack();
+    console.log(res);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getRandomLettersValid = async (callBack?: () => void) => {
+  try {
+    const res = await client.get('/api/random-letters/valid');
+    if (!res)
+      throw new Error('랜덤 편지 최종 매칭 시간 검증 데이터를 가자오는 도중 에러가 발생했습니다.');
+    if (callBack) callBack();
+    console.log(res);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export {
+  getRandomLetters,
+  postRandomLettersApprove,
+  getRandomLettersValid,
+  getRandomLettersValidTable,
+};

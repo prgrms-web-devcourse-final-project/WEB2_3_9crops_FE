@@ -1,5 +1,6 @@
 // import { useNavigate } from 'react-router';
 
+import { postRandomLettersApprove } from '@/apis/randomLetter';
 import ModalOverlay from '@/components/ModalOverlay';
 import ResultLetter from '@/components/ResultLetter';
 
@@ -39,9 +40,14 @@ function MatchingSelectModal({
           <button
             className="bg-primary-3 body-m h-10 flex-1 basis-1/2 rounded-lg"
             onClick={() => {
-              setOpenModal(false);
-              setOpenSelectedDetailModal(true);
-              // navigate(`/letter/${selectedLetter.letterId}`);
+              postRandomLettersApprove(
+                // MEMO 여기서 writerId는 나의 ID인가?
+                { letterId: `${selectedLetter.letterId}`, writerId: '1' },
+                () => {
+                  setOpenModal(false);
+                  setOpenSelectedDetailModal(true);
+                },
+              );
             }}
           >
             승인하기

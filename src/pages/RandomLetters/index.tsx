@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { getRandomLettersValid } from '@/apis/randomLetter';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import PageTitle from '@/components/PageTitle';
 
@@ -19,9 +20,14 @@ const RandomLettersPage = () => {
     category: 'ETC',
     title: 'error',
     zipCode: 'error',
+    paperType: 'BASIC',
+    fontType: 'DEFAULT',
     createdAt: new Date(),
   });
 
+  useEffect(() => {
+    getRandomLettersValid();
+  }, []);
   return (
     <>
       {openSelectedDetailModal ? (

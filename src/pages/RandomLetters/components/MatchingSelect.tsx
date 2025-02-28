@@ -21,33 +21,32 @@ export default function MatchingSelect({
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [randomLetters, setRandomLetters] = useState<RandomLetters[]>([]);
 
-  const DUMMY_LIST: RandomLetters[] = [
-    {
-      letterId: 1,
-      title: '위로가 필요해요',
-      zipCode: '1aq23',
-      category: 'CONSOLATION',
-      createdAt: new Date(),
-    },
-    {
-      letterId: 2,
-      title: '아래로가 필요해요',
-      zipCode: '23w7q',
-      category: 'CELEBRATION',
-      createdAt: new Date(),
-    },
-    {
-      letterId: 3,
-      title: '안녕하세요',
-      zipCode: '9a5g7',
-      category: 'ETC',
-      createdAt: new Date(),
-    },
-  ];
+  // const DUMMY_LIST: RandomLetters[] = [
+  //   {
+  //     letterId: 1,
+  //     title: '위로가 필요해요',
+  //     zipCode: '1aq23',
+  //     category: 'CONSOLATION',
+  //     createdAt: new Date(),
+  //   },
+  //   {
+  //     letterId: 2,
+  //     title: '아래로가 필요해요',
+  //     zipCode: '23w7q',
+  //     category: 'CELEBRATION',
+  //     createdAt: new Date(),
+  //   },
+  //   {
+  //     letterId: 3,
+  //     title: '안녕하세요',
+  //     zipCode: '9a5g7',
+  //     category: 'ETC',
+  //     createdAt: new Date(),
+  //   },
+  // ];
 
   useEffect(() => {
     getRandomLetters(setRandomLetters, selectedCategory);
-    console.log(randomLetters);
   }, [selectedCategory]);
 
   return (
@@ -66,7 +65,7 @@ export default function MatchingSelect({
         </button>
         <div className="w-full max-w-[300px]">
           <Swiper effect={'cards'} grabCursor={true} modules={[EffectCards]} className="mySwiper">
-            {DUMMY_LIST.map((list, idx) => {
+            {randomLetters.map((list, idx) => {
               return (
                 <SwiperSlide key={idx} className="max-w-full">
                   <div
