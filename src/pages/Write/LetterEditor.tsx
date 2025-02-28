@@ -2,23 +2,26 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { postLetter } from '@/apis/write';
+import { postFirstReply, postLetter } from '@/apis/write';
 import BackButton from '@/components/BackButton';
 import WritePageButton from '@/pages/Write/components/WritePageButton';
 import { FONT_TYPE_OBJ } from '@/pages/Write/constants';
 import OptionSlide from '@/pages/Write/OptionSlide';
 import useWrite from '@/stores/writeStore';
+import { removeProperty } from '@/utils/removeProperty';
 
 export default function LetterEditor({
   setStep,
   prevLetter,
   setSend,
   searchParams,
+  isReply,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   prevLetter: PrevLetter[];
   setSend: React.Dispatch<React.SetStateAction<boolean>>;
   searchParams: URLSearchParams;
+  isReply: boolean;
 }) {
   const location = useLocation();
   const [randomMatched, setRandomMatched] = useState<boolean>(false);
@@ -33,27 +36,33 @@ export default function LetterEditor({
   }, [location.state?.randomMatched]);
 
   useEffect(() => {
-    if (prevLetter.length > 0) {
+    if (isReply) {
       setLetterRequest({
         receiverId: prevLetter[0].memberId,
         parentLetterId: Number(searchParams.get('letterId')),
         category: prevLetter[0].category,
+        matchingId: prevLetter[0].matchingId,
       });
     }
-  }, [prevLetter, searchParams, setLetterRequest]);
+  }, [prevLetter, searchParams, setLetterRequest, isReply]);
 
   return (
     <div className="flex grow flex-col pb-15">
       <OptionSlide prevLetter={prevLetter} />
       <div className="absolute left-0 flex w-full items-center justify-between px-5">
         <BackButton />
-        {prevLetter.length > 0 ? (
+        {isReply ? (
           <WritePageButton
             text="답장 전송"
             onClick={() => {
               if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                 if (randomMatched) {
-                  console.log('랜덤편지 답장 전송용API');
+                  const firstReplyRequest = removeProperty(letterRequest, 'matchingId');
+                  console.log(firstReplyRequest);
+                  postFirstReply(firstReplyRequest, () => {
+                    setSend(true);
+                    setStep('category');
+                  });
                 } else {
                   postLetter(letterRequest, () => {
                     console.log(letterRequest);
