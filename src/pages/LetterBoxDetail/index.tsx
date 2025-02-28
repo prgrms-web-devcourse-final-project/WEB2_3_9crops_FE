@@ -1,5 +1,6 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { ChangeEvent, useState } from 'react';
+import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { useLocation, useNavigate } from 'react-router';
 
 import { getMailboxDetail, postMailboxDisconnect } from '@/apis/mailBox';
@@ -10,8 +11,6 @@ import PageTitle from '@/components/PageTitle';
 
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
-
-// import useAuthStore from '@/stores/authStore';
 interface MailBoxDetailProps {
   letterId: number;
   title: string;
@@ -23,7 +22,6 @@ interface MailBoxDetailProps {
 const LetterBoxDetailPage = () => {
   const location = useLocation();
   const userInfo = { ...location.state };
-  // const {userId} = useAuthStore.getState();
 
   const [isShareMode, setShareMode] = useState(false);
   const [isOpenDisConnectModal, setIsOpenDisConnectModal] = useState(false);
@@ -33,45 +31,33 @@ const LetterBoxDetailPage = () => {
 
   const navigate = useNavigate();
 
-  // const {
-  //   data: mailLists = [],
-  //   isLoading,
-  //   isError,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetchingNextPage,
-  // } = useInfiniteQuery({
-  //   queryKey: ['mailBoxDetail', userInfo.id],
-  //   queryFn: async ({ pageParam }) => {
-  //     const response = await getMailboxDetail(userInfo.id, pageParam);
-  //     console.log(response.data);
-  //     return response.data as MailBoxDetailProps[];
-  //   },
-  //   enabled: !!userInfo.id,
-  //   initialPageParam: 0,
-  //   getNextPageParam: (lastPage, allPages) => {
-  //     return lastPage?.length == 0 || !lastPage || lastPage?.length < 20
-  //       ? undefined
-  //       : allPages.length + 1;
-  //   },
-  //   staleTime: 1000 * 60 * 5,
-  //   gcTime: 1000 * 60 * 10,
-  // });
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['mailBoxDetail', userInfo.id],
+      queryFn: async ({ pageParam }) => {
+        console.log(`Fetching page: ${pageParam}`); // 디버깅용
+        const response = await getMailboxDetail(userInfo.id, pageParam);
+        console.log(response.data);
+        return response.data;
+      },
+      enabled: !!userInfo.id,
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.currentPage >= lastPage.totalPages ? undefined : allPages.length + 1;
+      },
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
+    });
 
-  const {
-    data: mailLists = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['mailBoxDetail', userInfo.id],
-    queryFn: async () => {
-      const response = await getMailboxDetail(userInfo.id);
-      console.log(response.data);
-      return response.data as MailBoxDetailProps[];
-    },
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-  });
+  const mailLists: MailBoxDetailProps[] = data?.pages.flatMap((page) => page.content) || [];
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const disconnectMutation = useMutation({
     mutationFn: async () => await postMailboxDisconnect(userInfo.id),
@@ -119,7 +105,7 @@ const LetterBoxDetailPage = () => {
   };
 
   if (isError) {
-    navigate('/NotFound');
+    navigate('/notFound');
   }
 
   return (
@@ -179,7 +165,7 @@ const LetterBoxDetailPage = () => {
             //TODO: skeleton
             <div>Loading</div>
           ) : (
-            mailLists.map((letter) => (
+            mailLists.map((letter, index) => (
               <LetterPreview
                 key={letter.letterId}
                 id={letter.letterId}
@@ -191,6 +177,7 @@ const LetterBoxDetailPage = () => {
                 isClosed={userInfo.isClosed}
                 onToggle={() => toggleSelected(letter.letterId)}
                 zipCode={userInfo.zipCode}
+                ref={index === mailLists.length - 1 ? ref : null}
               />
             ))
           )}
