@@ -27,7 +27,7 @@ const MyPage = () => {
   const handleLeave = async () => {
     try {
       const response = await deleteUserInfo();
-      if (!response) throw new Error('deletion failed');
+      if (!response) throw new Error('deletiongi failed');
       console.log(response);
     } catch (error) {
       console.error(error);
