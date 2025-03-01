@@ -83,7 +83,7 @@ const AuthCallbackPage = () => {
       console.error(error);
     }
   };
-  return <button onClick={() => handleLeave()}>탈퇴</button>;
+  return <button onClick={handleLeave}>탈퇴</button>;
 };
 
 export default AuthCallbackPage;
