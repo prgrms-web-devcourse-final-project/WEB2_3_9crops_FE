@@ -10,7 +10,7 @@ export default function Sidebar() {
 
   return (
     <section className="border-gray-10 flex w-65 shrink-0 flex-col border-r">
-      <h1 className="bg-primary-2 flex h-14 w-full items-center justify-center gap-2">
+      <h1 className="bg-primary-3 flex h-14 w-full items-center justify-center gap-2">
         <span className="pt-1 text-base font-medium tracking-[-1px]">마음이 맞닿는 온도</span>
         <span className="font-malang text-2xl text-[#F15847]">36.5</span>
       </h1>
@@ -27,7 +27,7 @@ export default function Sidebar() {
               to={menu.path || '#'}
               className={twMerge(
                 'flex w-full items-center gap-3 py-3 pr-3 pl-5 hover:bg-amber-100',
-                location.pathname === menu.path && 'bg-primary-2',
+                location.pathname === menu.path && 'bg-primary-2/50',
               )}
             >
               <AlarmIcon className="text-gray-80 h-5 w-5" />
@@ -42,7 +42,7 @@ export default function Sidebar() {
                     key={subMenu.title}
                     className={twMerge(
                       'py-3 pl-16 text-left hover:bg-amber-100',
-                      location.pathname === subMenu.path && 'bg-amber-200',
+                      location.pathname === subMenu.path && 'bg-primary-2/50',
                     )}
                   >
                     {subMenu.title}

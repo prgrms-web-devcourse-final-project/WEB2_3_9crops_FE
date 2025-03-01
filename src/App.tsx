@@ -7,6 +7,7 @@ import AdminPage from './pages/Admin';
 import FilteredLetterManage from './pages/Admin/FilteredLetter';
 import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
+import AdminRollingPaper from './pages/Admin/RollingPaper';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import LetterBoardPage from './pages/LetterBoard';
@@ -61,6 +62,7 @@ const App = () => {
         <Route path="report" element={<ReportManage />} />
         <Route path="badwords" element={<FilteringManage />} />
         <Route path="filtered-letter" element={<FilteredLetterManage />} />
+        <Route path="rolling-paper" element={<AdminRollingPaper />} />
       </Route>
     </Routes>
   );

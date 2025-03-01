@@ -10,7 +10,7 @@ export const ADMIN_MENU_LIST = [
       },
       {
         title: '롤링 페이퍼 설정',
-        path: undefined,
+        path: '/admin/rolling-paper',
       },
     ],
   },

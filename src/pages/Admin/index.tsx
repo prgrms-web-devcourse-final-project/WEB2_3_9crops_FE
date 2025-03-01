@@ -6,7 +6,7 @@ const AdminPage = () => {
   return (
     <main className="flex h-full min-h-screen w-full">
       <Sidebar />
-      <section className="bg-gray-5 flex w-full flex-col">
+      <section className="bg-gray-5/50 flex w-full flex-col">
         <Outlet />
       </section>
     </main>
