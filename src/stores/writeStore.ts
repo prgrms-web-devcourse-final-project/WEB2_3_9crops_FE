@@ -1,47 +1,38 @@
 import { create } from 'zustand';
 
 interface WriteStore {
-  letterTitle: string;
-  setLetterTitle: (typing: string) => void;
-  letterText: string;
-  setLetterText: (typing: string) => void;
-  fontType: FontType;
-  setFontType: (selectedFontType: FontType) => void;
-  paperType: PaperType;
-  setPaperType: (selectedPaperType: PaperType) => void;
-  category: Category;
-  setCategory: (selectedCategory: Category) => void;
-  resetWrite: () => void;
+  letterRequest: LetterRequest;
+  setLetterRequest: (newLetterRequest: Partial<LetterRequest>) => void;
+  resetLetterRequest: () => void;
 }
 const useWrite = create<WriteStore>((set) => ({
-  letterTitle: '',
-  setLetterTitle: (typing) => set(() => ({ letterTitle: typing })),
-
-  letterText: '',
-  setLetterText: (typing) => set(() => ({ letterText: typing })),
-
-  fontType: 'DEFAULT',
-  setFontType: (selectedFontType) => {
-    set(() => ({ fontType: selectedFontType }));
+  letterRequest: {
+    receiverId: null,
+    parentLetterId: null,
+    title: '',
+    content: '',
+    category: 'CONSOLATION',
+    paperType: 'BASIC',
+    fontType: 'DEFAULT',
   },
-
-  paperType: 'BASIC',
-  setPaperType: (selectedPaperType) =>
-    set(() => ({
-      paperType: selectedPaperType,
+  setLetterRequest: (updateRequest) =>
+    set((state) => ({
+      letterRequest: { ...state.letterRequest, ...updateRequest },
     })),
 
-  category: 'CONSOLATION',
-  setCategory: (selectedCategory) => set(() => ({ category: selectedCategory })),
-
-  resetWrite: () =>
+  resetLetterRequest: () => {
     set(() => ({
-      letterTitle: '',
-      letterText: '',
-      fontType: 'DEFAULT',
-      paperType: 'BASIC',
-      category: 'CONSOLATION',
-    })),
+      letterRequest: {
+        receiverId: null,
+        parentLetterId: null,
+        title: '',
+        content: '',
+        category: 'CONSOLATION',
+        paperType: 'BASIC',
+        fontType: 'DEFAULT',
+      },
+    }));
+  },
 }));
 
 export default useWrite;

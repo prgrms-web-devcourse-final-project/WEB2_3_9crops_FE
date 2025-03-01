@@ -1,4 +1,6 @@
+import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { useLocation, useNavigate } from 'react-router';
 
 import { getMailboxDetail, postMailboxDisconnect } from '@/apis/mailBox';
@@ -9,20 +11,17 @@ import PageTitle from '@/components/PageTitle';
 
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
+interface MailBoxDetailProps {
+  letterId: number;
+  title: string;
+  myLetter: boolean;
+  active: boolean;
+  createdAt: string;
+}
 
 const LetterBoxDetailPage = () => {
-  interface MailBoxDetailProps {
-    letterId: number;
-    title: string;
-    myLetter: boolean;
-    active: boolean;
-    // createdAt: date;
-  }
-
   const location = useLocation();
   const userInfo = { ...location.state };
-
-  const [mailLists, setMailLists] = useState<MailBoxDetailProps[] | []>([]);
 
   const [isShareMode, setShareMode] = useState(false);
   const [isOpenDisConnectModal, setIsOpenDisConnectModal] = useState(false);
@@ -32,20 +31,59 @@ const LetterBoxDetailPage = () => {
 
   const navigate = useNavigate();
 
-  const fetchData = async () => {
-    try {
-      const response = await getMailboxDetail(userInfo.id || '');
-      if (!response) throw new Error('LetterBoxDetailPage, fetchData error');
-      setMailLists(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['mailBoxDetail', userInfo.id],
+      queryFn: async ({ pageParam }) => {
+        console.log(`Fetching page: ${pageParam}`); // 디버깅용
+        const response = await getMailboxDetail(userInfo.id, pageParam);
+        console.log(response.data);
+        return response.data;
+      },
+      enabled: !!userInfo.id,
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.currentPage >= lastPage.totalPages ? undefined : allPages.length + 1;
+      },
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
+    });
+
+  const mailLists: MailBoxDetailProps[] = data?.pages.flatMap((page) => page.content) || [];
+
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const disconnectMutation = useMutation({
+    mutationFn: async () => await postMailboxDisconnect(userInfo.id),
+    onSuccess: () => {
+      navigate(-1);
+    },
+    onError: (error) => {
+      // TODO: 차단 실패 toastUI 띄워주기
+      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      console.error(error);
+    },
+  });
+
+  const shareMutation = useMutation({
+    // Todo : useAuthStore -> myId 대체
+    mutationFn: () => postShareProposals(selected, 1, userInfo.id, shareComment),
+    onSuccess: () => {
+      toggleShareMode();
+      setShareComment('');
+    },
+    onError: (error) => {
+      // TODO: 차단 실패 toastUI 띄워주기
+      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      console.error(error);
+    },
+  });
 
   const toggleShareMode = () => {
     if (isShareMode) {
@@ -66,27 +104,9 @@ const LetterBoxDetailPage = () => {
     setShareComment(e.target.value);
   };
 
-  const handleDisconnect = async () => {
-    try {
-      const response = await postMailboxDisconnect(userInfo.id);
-      if (!response) throw new Error('letterBoxDetail, disconnecting failed');
-      console.log(response);
-      navigate(-1);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleShare = async () => {
-    try {
-      // TODO: myId -> 전역객체에서 가져오기
-      const response = await postShareProposals(selected, 1, userInfo.id, shareComment);
-      if (!response) throw new Error(response);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  if (isError) {
+    navigate('/notFound');
+  }
 
   return (
     <>
@@ -99,7 +119,7 @@ const LetterBoxDetailPage = () => {
           onCancel={() => setIsOpenDisConnectModal(false)}
           onConfirm={() => {
             setIsOpenDisConnectModal(false);
-            handleDisconnect();
+            disconnectMutation.mutate();
           }}
         />
       )}
@@ -117,9 +137,7 @@ const LetterBoxDetailPage = () => {
           }}
           onComplete={() => {
             setIsOpenShareModal(false);
-            handleShare();
-            toggleShareMode();
-            setShareComment('');
+            shareMutation.mutate();
           }}
         >
           <p className="text-gray-70 body-m mt-1">상대방 동의 후에 게시글이 업로드 됩니다.</p>
@@ -136,30 +154,35 @@ const LetterBoxDetailPage = () => {
           <div className="flex items-center gap-0.5 underline">
             {!userInfo.isClosed && (
               <button type="button" onClick={toggleShareMode}>
-                {isShareMode ? '취소하기' : '편지 공유하기'}
+                {isLoading ? '' : isShareMode ? '취소하기' : '편지 공유하기'}
               </button>
             )}
-            {!isShareMode && !userInfo.isClosed && <InformationTooltip />}
+            {!isShareMode && !userInfo.isClosed && !isLoading && <InformationTooltip />}
           </div>
         </section>
         <section className="mb-5 flex flex-col gap-4">
-          {mailLists.map((letter) => (
-            <LetterPreview
-              key={letter.letterId}
-              id={letter.letterId}
-              // TODO: createdAt 추가해주시면 수정
-              date={'2025.01.01'}
-              title={letter.title}
-              isSend={letter.myLetter}
-              checked={selected.includes(letter.letterId)}
-              isShareMode={isShareMode}
-              isClosed={userInfo.isClosed}
-              onToggle={() => toggleSelected(letter.letterId)}
-              zipCode={userInfo.zipCode}
-            />
-          ))}
+          {isLoading ? (
+            //TODO: skeleton
+            <div>Loading</div>
+          ) : (
+            mailLists.map((letter, index) => (
+              <LetterPreview
+                key={letter.letterId}
+                id={letter.letterId}
+                date={letter.createdAt}
+                title={letter.title}
+                isSend={letter.myLetter}
+                checked={selected.includes(letter.letterId)}
+                isShareMode={isShareMode}
+                isClosed={userInfo.isClosed}
+                onToggle={() => toggleSelected(letter.letterId)}
+                zipCode={userInfo.zipCode}
+                ref={index === mailLists.length - 1 ? ref : null}
+              />
+            ))
+          )}
         </section>
-        {!isShareMode && !userInfo.isClosed && (
+        {!isShareMode && !userInfo.isClosed && !isLoading && (
           <button
             type="button"
             className="body-sb text-gray-60 mt-auto text-left underline"
