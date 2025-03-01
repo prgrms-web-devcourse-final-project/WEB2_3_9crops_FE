@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getRandomLettersValid } from '@/apis/randomLetter';
+import { getRandomLettersValid, getRandomLettersValidTable } from '@/apis/randomLetter';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import PageTitle from '@/components/PageTitle';
 
@@ -26,7 +26,9 @@ const RandomLettersPage = () => {
   });
 
   useEffect(() => {
+    // MEMO : 임시매칭완료 여부(validTable), 매칭완료 여부(valid) api 연결되면 res값 받아서 matched, coolTime에 값 넣어주기
     getRandomLettersValid();
+    getRandomLettersValidTable();
   }, []);
   return (
     <>

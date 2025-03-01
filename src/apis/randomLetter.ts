@@ -35,11 +35,12 @@ const postRandomLettersApprove = async (approveRequest: ApproveRequest, callBack
 
 const getRandomLettersValidTable = async (callBack?: () => void) => {
   try {
-    const res = await client.get('/api/random-letters/valid-table');
+    const res = await client.post('/api/random-letters/valid-table');
     if (!res)
       throw new Error('랜덤 편지 최종 매칭 시간 검증 데이터를 가자오는 도중 에러가 발생했습니다.');
     if (callBack) callBack();
     console.log(res);
+    return res.data;
   } catch (error) {
     console.error(error);
   }
@@ -47,13 +48,25 @@ const getRandomLettersValidTable = async (callBack?: () => void) => {
 
 const getRandomLettersValid = async (callBack?: () => void) => {
   try {
-    const res = await client.get('/api/random-letters/valid');
+    const res = await client.post('/api/random-letters/valid');
     if (!res)
       throw new Error('랜덤 편지 최종 매칭 시간 검증 데이터를 가자오는 도중 에러가 발생했습니다.');
     if (callBack) callBack();
     console.log(res);
+    return res.data;
   } catch (error) {
     console.error(error);
+  }
+};
+
+const deleteRandomLetterMatching = async () => {
+  try {
+    const res = await client.delete('/api/random-letters/matching/cancel');
+    if (!res) throw new Error('매칭 취소 도중 에러가 발생했습니다.');
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -62,4 +75,5 @@ export {
   postRandomLettersApprove,
   getRandomLettersValid,
   getRandomLettersValidTable,
+  deleteRandomLetterMatching,
 };
