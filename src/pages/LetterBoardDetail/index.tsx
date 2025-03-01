@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { getSharePostDetail, SharePost } from '@/apis/share';
+import { getSharePostDetail, postShareProposalApproval, SharePost } from '@/apis/share';
 import BlurImg from '@/assets/images/landing-blur.png';
 import ReportModal from '@/components/ReportModal';
 
@@ -12,15 +12,9 @@ import Letter from './components/Letter';
 interface ShareLetterPreviewProps {
   confirmDisabled?: boolean;
   children?: React.ReactNode;
-  onCancel?: () => void;
-  onConfirm?: () => void;
 }
 
-const LetterBoardDetailPage = ({
-  confirmDisabled,
-  onCancel,
-  onConfirm,
-}: ShareLetterPreviewProps) => {
+const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => {
   const [likeCount, setLikeCount] = useState(122);
   const [isLike, setIsLike] = useState(false);
   const isWriter = false;
@@ -32,15 +26,20 @@ const LetterBoardDetailPage = ({
   };
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isShareLetterPreview = location.state?.isShareLetterPreview || false;
   const [postDetail, setPostDetail] = useState<SharePost>();
 
   useEffect(() => {
     const fetchPostDetail = async () => {
+      console.log('location.state:', location.state);
+
       try {
         if (location.state?.postDetail) {
           const { sharePostId } = location.state.postDetail;
+
+          console.log('sharePostId:', sharePostId);
 
           const data = await getSharePostDetail(sharePostId);
 
@@ -55,6 +54,20 @@ const LetterBoardDetailPage = ({
 
     fetchPostDetail();
   }, [location.state]);
+
+  const handleProposalApproval = async (
+    action: 'approve' | 'reject',
+    shareProposalId: number = location.state?.postDetail?.sharePostId,
+  ) => {
+    try {
+      const result = await postShareProposalApproval(shareProposalId, action);
+      console.log(`✅ 편지 공유 ${action === 'approve' ? '수락' : '거절'}됨:`, result);
+
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -95,15 +108,16 @@ const LetterBoardDetailPage = ({
                 <button
                   type="button"
                   className="body-m secondary-btn h-10 flex-1 basis-1/2"
-                  onClick={onCancel}
+                  onClick={() => handleProposalApproval('reject', postDetail?.sharePostId)}
                 >
                   거부하기
                 </button>
+
                 <button
                   type="button"
                   className="primary-btn body-m h-10 flex-1 basis-1/2"
                   disabled={confirmDisabled}
-                  onClick={onConfirm}
+                  onClick={() => handleProposalApproval('approve', postDetail?.sharePostId)}
                 >
                   승인하기
                 </button>
