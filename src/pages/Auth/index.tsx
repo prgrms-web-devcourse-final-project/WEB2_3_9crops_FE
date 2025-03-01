@@ -2,14 +2,16 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { getUserToken, getMydata, deleteUserInfo, postZipCode } from '@/apis/auth';
+import { getUserToken, getMydata, postZipCode } from '@/apis/auth';
 import useAuthStore from '@/stores/authStore';
 
 const AuthCallbackPage = () => {
   const stateToken = new URLSearchParams(window.location.search).get('state');
   const redirectURL = new URLSearchParams(window.location.search).get('redirect');
 
-  const { setZipCode, setAccessToken, login } = useAuthStore();
+  const login = useAuthStore((state) => state.login);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const setZipCode = useAuthStore((state) => state.setZipCode);
 
   const navigate = useNavigate();
 
@@ -74,16 +76,7 @@ const AuthCallbackPage = () => {
       redirection();
     } else navigate('/notFound');
   }, []);
-
-  const handleLeave = async () => {
-    try {
-      const response = await deleteUserInfo();
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  return <button onClick={handleLeave}>탈퇴</button>;
+  return <></>;
 };
 
 export default AuthCallbackPage;

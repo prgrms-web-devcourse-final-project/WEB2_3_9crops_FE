@@ -4,8 +4,6 @@ import { GoogleIcon, KakaoIcon, NaverIcon, StampIcon } from '@/assets/icons';
 import Background from './components/Background';
 
 const LoginPage = () => {
-  type LoginType = 'kakao' | 'naver' | 'google';
-
   const handleLogin = (loginType: LoginType) => {
     socialLogin(loginType);
   };

@@ -10,7 +10,7 @@ const SetZipCode = ({
   setIsZipCodeSet: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isBtnActive, setIsBtnActive] = useState<boolean>(false);
-  const { zipCode } = useAuthStore.getState();
+  const zipCode = useAuthStore((state) => state.zipCode);
 
   useEffect(() => {
     setTimeout(() => {

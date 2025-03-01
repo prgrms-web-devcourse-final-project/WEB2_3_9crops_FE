@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 
+import { deleteUserInfo } from '@/apis/auth';
 import ConfirmModal from '@/components/ConfirmModal';
 import useAuthStore from '@/stores/authStore';
 import useMyPageStore from '@/stores/myPageStore';
@@ -14,7 +15,7 @@ const MyPage = () => {
 
   const { data, fetchMyPageInfo } = useMyPageStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { logout } = useAuthStore();
+  const logout = useAuthStore((state) => state.logout);
 
   const getDescriptionByTemperature = (temp: number) => {
     const range = TEMPERATURE_RANGE.find((range) => temp >= range.min && temp < range.max);
@@ -22,6 +23,16 @@ const MyPage = () => {
   };
 
   const description = getDescriptionByTemperature(Number(data.temperature));
+
+  const handleLeave = async () => {
+    try {
+      const response = await deleteUserInfo();
+      if (!response) throw new Error('deletion failed');
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -32,7 +43,10 @@ const MyPage = () => {
           cancelText="되돌아가기"
           confirmText="탈퇴하기"
           onCancel={() => setIsOpenModal(false)}
-          onConfirm={() => setIsOpenModal(false)}
+          onConfirm={() => {
+            handleLeave();
+            setIsOpenModal(false);
+          }}
         />
       )}
       <main className="flex grow flex-col gap-12 px-5 pt-20 pb-6">
@@ -78,9 +92,9 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
-            <p className="body-sb text-gray-100 hover:cursor-pointer" onClick={() => logout()}>
+            <button className="body-sb text-gray-100" onClick={logout}>
               로그아웃
-            </p>
+            </button>
           </div>
         </section>
         <button

@@ -10,18 +10,17 @@ const client = axios.create({
 
 client.interceptors.request.use(
   (config) => {
-    const { accessToken } = useAuthStore.getState();
+    const accessToken = useAuthStore((state) => state.accessToken);
     console.log(config.url);
     console.log(accessToken);
     if (config.url !== '/auth/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
       console.log('intercepter', config.headers);
     }
-    return config
-    ;
+    return config;
   },
   (error) => {
-    const { logout } = useAuthStore.getState();
+    const logout = useAuthStore((state) => state.logout);
     logout();
     window.location.replace('/login');
     return Promise.reject(error);
@@ -31,7 +30,9 @@ client.interceptors.request.use(
 client.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const { setAccessToken, logout } = useAuthStore.getState();
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
+    const logout = useAuthStore((state) => state.logout);
+
     const originalRequest = error.config;
 
     if (!originalRequest) {

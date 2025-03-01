@@ -1,25 +1,7 @@
-import useAuthStore from '@/stores/authStore';
-
 import client from './client';
 
-type LoginType = 'kakao' | 'naver' | 'google';
 export const socialLogin = (loginType: LoginType) => {
-  window.location.href = `http://13.209.132.150:8081/oauth2/authorization/${loginType}`;
-};
-
-export const logout = async () => {
-  const { accessToken } = useAuthStore.getState();
-
-  try {
-    const response = await client.post(`/api/logout`, {
-      Authorization: { token: `Bearer ${accessToken}` },
-      withCredentials: true,
-    });
-    if (!response) throw new Error('logout fail');
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
+  window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/${loginType}`;
 };
 
 export const getUserToken = async (stateToken: string) => {
@@ -38,7 +20,7 @@ export const getUserToken = async (stateToken: string) => {
 export const postZipCode = async () => {
   try {
     const response = await client.post(`/api/members/zipCode`);
-    if(!response) throw new Error('fail to post ZipCode')
+    if (!response) throw new Error('fail to post ZipCode');
     return response;
   } catch (error) {
     console.error(error);
