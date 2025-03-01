@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 
 import ConfirmModal from '@/components/ConfirmModal';
+import useAuthStore from '@/stores/authStore';
 import useMyPageStore from '@/stores/myPageStore';
 
 import { TEMPERATURE_RANGE } from './constants';
@@ -13,6 +14,7 @@ const MyPage = () => {
 
   const { data, fetchMyPageInfo } = useMyPageStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { logout } = useAuthStore();
 
   const getDescriptionByTemperature = (temp: number) => {
     const range = TEMPERATURE_RANGE.find((range) => temp >= range.min && temp < range.max);
@@ -76,7 +78,9 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
-            <p className="body-sb text-gray-100">로그아웃</p>
+            <p className="body-sb text-gray-100 hover:cursor-pointer" onClick={() => logout()}>
+              로그아웃
+            </p>
           </div>
         </section>
         <button
