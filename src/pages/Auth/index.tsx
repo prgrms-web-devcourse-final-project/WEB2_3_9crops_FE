@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { getUserToken, getMydata, deleteUserInfo, getZipCode } from '@/apis/auth';
+import { getUserToken, getMydata, deleteUserInfo, postZipCode } from '@/apis/auth';
 import useAuthStore from '@/stores/authStore';
 
 const AuthCallbackPage = () => {
@@ -38,12 +38,21 @@ const AuthCallbackPage = () => {
             useAuthStore.getState().zipCode,
           );
         } else if (redirectURL === 'onboarding') {
-          const createZipCodeResponse = await getZipCode();
+          const createZipCodeResponse = await postZipCode();
           if (!createZipCodeResponse) throw new Error('Error creating ZipCode');
           const zipCode = createZipCodeResponse.data.data.zipCode;
-          const newAccessToken = createZipCodeResponse.headers['authorizazion'];
+          console.log(createZipCodeResponse);
+          const newAccessToken = createZipCodeResponse.headers['Authorization'];
           setZipCode(zipCode);
           setAccessToken(newAccessToken);
+          console.log(
+            'isLoggedIn',
+            useAuthStore.getState().isLoggedIn,
+            'access',
+            useAuthStore.getState().accessToken,
+            'zipCode',
+            useAuthStore.getState().zipCode,
+          );
         }
       } else {
         navigate('/login');
@@ -53,18 +62,17 @@ const AuthCallbackPage = () => {
     }
   };
 
-  // const redirection = () => {
-  //   if (redirectURL === 'onboarding') navigate('/onboarding');
-  //   else if (redirectURL === 'home') navigate('/');
-  //   else navigate('/notFound');
-  // };
+  const redirection = () => {
+    if (redirectURL === 'onboarding') navigate('/onboarding');
+    else if (redirectURL === 'home') navigate('/');
+    else navigate('/notFound');
+  };
 
   useEffect(() => {
     if (stateToken) {
       setUserInfo(stateToken as string);
-      // redirection();
-    }
-    // else navigate('/notFound');
+      redirection();
+    } else navigate('/notFound');
   }, []);
 
   const handleLeave = async () => {
