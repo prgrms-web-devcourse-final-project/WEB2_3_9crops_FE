@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { getSharePostDetail, getSharePostList } from '@/apis/share';
+import { SharePostResponse } from '@/apis/share';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
@@ -9,21 +11,35 @@ interface ShowShareAccessModalProps {
   onClose: () => void;
 }
 
-const DUMMY_SHARE_ACCESS = [
-  { id: 1, zip_code: '235EA' },
-  { id: 2, zip_code: '711PO' },
-  { id: 3, zip_code: '105CF' },
-  { id: 4, zip_code: '299EB' },
-];
-
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
   const navigate = useNavigate();
 
-  const handleNavigation = (accessId: number) => {
-    navigate(`/board/letter/${accessId}`, {
-      state: { isShareLetterPreview: true },
-    });
+  const [sharePosts, setSharePosts] = useState<SharePostResponse>();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const data = await getSharePostList(1, 10);
+        setSharePosts(data);
+      } catch (error) {
+        console.error('❌ 게시글 목록을 불러오는 데 실패했습니다.', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  const handleNavigation = async (sharePostId: number) => {
+    try {
+      const postDetail = await getSharePostDetail(sharePostId);
+      navigate(`/board/letter/${sharePostId}`, {
+        state: { postDetail, isShareLetterPreview: true },
+      });
+    } catch (error) {
+      console.error('❌ 게시글 상세 페이지로 이동하는 데에 실패했습니다.', error);
+    }
   };
+
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <div className="flex h-full flex-col items-center justify-center">
@@ -39,14 +55,14 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
                 허락 여부를 체크해주세요!
               </p>
             </div>
-            <div className="mt-6 flex w-[251px] flex-col gap-[10px]">
-              {DUMMY_SHARE_ACCESS.map((access) => (
+            <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+              {sharePosts?.content.map((post) => (
                 <button
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
-                  key={access.id}
-                  onClick={() => handleNavigation(access.id)}
+                  key={post.sharePostId}
+                  onClick={() => handleNavigation(post.sharePostId)}
                 >
-                  <p>{access.zip_code}님의 공유 요청</p>
+                  <p>{post.writerZipCode}님의 공유 요청</p>
                 </button>
               ))}
             </div>

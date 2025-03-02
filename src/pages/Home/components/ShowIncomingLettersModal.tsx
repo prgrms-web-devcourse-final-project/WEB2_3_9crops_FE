@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 import { useIncomingLettersStore } from '@/stores/incomingLettersStore';
@@ -22,7 +23,7 @@ const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) =>
 
   useEffect(() => {
     fetchIncomingLetters();
-  });
+  }, []);
 
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
