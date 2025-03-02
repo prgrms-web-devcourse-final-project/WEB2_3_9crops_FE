@@ -1,7 +1,7 @@
 import client from './client';
 
 //공유 게시글 상세 페이지 편지
-interface Letter {
+interface ShareLetter {
   id: number;
   content: string;
   writerZipCode: string;
@@ -17,7 +17,7 @@ export interface SharePost {
   active: boolean;
   sharePostId: number;
   sharePostContent: string;
-  letters: Letter[];
+  letters: ShareLetter[];
 }
 
 // 페이징 포함
