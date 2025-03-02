@@ -39,16 +39,38 @@ const LetterDetailPage = () => {
     }
     setDegreeModalOpen(false);
   };
+
+  const handleDeleteLetter = async (letterId: string) => {
+    const res = await deleteLetter(letterId);
+    if (res?.status === 200) {
+      navigate(-1);
+    } else {
+      alert('편지 삭제 도중 오류 발생(임시)');
+    }
+  };
+
   useEffect(() => {
     document.body.addEventListener('click', handleOutsideClick);
+
+    const handleGetLetter = async (letterId: string) => {
+      const res = await getLetter(letterId);
+      if (res?.status === 200) {
+        setLetterDetail(res.data.data);
+      } else {
+        alert(
+          '에러가 발생했거나 존재하지 않거나 따숨님의 편지가 아니에요(임시) - 이거 에러코드 따른 처리 달리해야할듯',
+        );
+        navigate(-1);
+      }
+    };
     if (params.id) {
-      getLetter(params.id, setLetterDetail);
+      handleGetLetter(params.id);
     }
 
     return () => {
       document.body.removeEventListener('click', handleOutsideClick);
     };
-  }, [params.id]);
+  }, [params.id, navigate]);
   return (
     <>
       {reportModalOpen && <ReportModal onClose={() => setReportModalOpen(false)} />}
@@ -137,7 +159,7 @@ const LetterDetailPage = () => {
               setDeleteModalOpen(false);
             }}
             onConfirm={() => {
-              if (params.id) deleteLetter(params.id);
+              if (params.id) handleDeleteLetter(params.id);
               navigate(-1);
             }}
           />

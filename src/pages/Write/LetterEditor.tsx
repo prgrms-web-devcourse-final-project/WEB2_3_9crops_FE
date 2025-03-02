@@ -29,6 +29,29 @@ export default function LetterEditor({
   const letterRequest = useWrite((state) => state.letterRequest);
   const setLetterRequest = useWrite((state) => state.setLetterRequest);
 
+  const handlePostFirstReply = async (firstReplyRequest: Omit<LetterRequest, 'matchingId'>) => {
+    const res = await postFirstReply(firstReplyRequest);
+    if (res?.status === 200) {
+      setSend(true);
+      setStep('category');
+    } else {
+      alert('전송오류 발생(임시)');
+    }
+  };
+
+  // MEMO : 답장 전송 matchingId가 undefined로 나오는데 뭐 때문인지 내일 찾아보자 ㅎ
+  const handlePostReply = async (letterRequest: LetterRequest) => {
+    const res = await postLetter(letterRequest);
+    if (res?.status === 200) {
+      console.log(letterRequest);
+      console.log(prevLetter);
+      setSend(true);
+      setStep('category');
+    } else {
+      alert('전송오류(임시)');
+    }
+  };
+
   useEffect(() => {
     if (location.state?.randomMatched) {
       setRandomMatched(true);
@@ -59,17 +82,9 @@ export default function LetterEditor({
                 if (randomMatched) {
                   const firstReplyRequest = removeProperty(letterRequest, 'matchingId');
                   console.log(firstReplyRequest);
-                  postFirstReply(firstReplyRequest, () => {
-                    setSend(true);
-                    setStep('category');
-                  });
+                  handlePostFirstReply(firstReplyRequest);
                 } else {
-                  postLetter(letterRequest, () => {
-                    console.log(letterRequest);
-                    console.log(prevLetter);
-                    setSend(true);
-                    setStep('category');
-                  });
+                  handlePostReply(letterRequest);
                 }
               } else {
                 alert('편지 제목, 내용이 작성되었는지 확인해주세요');

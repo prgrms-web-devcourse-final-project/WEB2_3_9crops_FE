@@ -21,6 +21,16 @@ export default function CategorySelect({
 }) {
   const letterRequest = useWrite((state) => state.letterRequest);
 
+  const handlePostLetter = async (letterRequest: LetterRequest) => {
+    const res = await postLetter(letterRequest);
+    if (res?.status === 200) {
+      console.log(letterRequest);
+      setSend(true);
+    } else {
+      alert('전송오류(임시)');
+    }
+  };
+
   return (
     <>
       <div className="flex w-full grow flex-col items-center">
@@ -78,10 +88,7 @@ export default function CategorySelect({
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
             onClick={() => {
               if (letterRequest.category) {
-                postLetter(letterRequest, () => {
-                  console.log(letterRequest);
-                  setSend(true);
-                });
+                handlePostLetter(letterRequest);
                 // setSend(true);
               } else {
                 alert('우표 선택을 해주세요');
