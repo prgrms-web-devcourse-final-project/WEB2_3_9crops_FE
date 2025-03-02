@@ -29,7 +29,7 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
               <p className="body-sb text-gray-80">임시저장 편지</p>
               <p className="caption-r text-black">로그아웃 시 임시 저장된 편지는 사라집니다</p>
             </div>
-            <div className="mt-6 flex w-[251px] flex-col gap-[10px]">
+            <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
               {DUMMY_DRAFT.map((draft) => (
                 <div
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
