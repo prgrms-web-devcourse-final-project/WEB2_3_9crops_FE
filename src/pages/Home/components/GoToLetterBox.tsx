@@ -5,7 +5,7 @@ import goToLetterBox from '@/assets/images/go-to-letter-box.png';
 import { useIncomingLettersStore } from '@/stores/incomingLettersStore';
 
 const GoToLetterBox = () => {
-  const { arrivedCount } = useIncomingLettersStore();
+  const arrivedCount = useIncomingLettersStore((state) => state.arrivedCount);
 
   return (
     <div className="absolute bottom-15 left-5 z-9 flex">
