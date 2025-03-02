@@ -21,7 +21,13 @@ function WritePageButton({
     `${target === text && slideActive && 'bg-primary-1 text-white'}`,
   );
   return (
-    <button className={buttonStyle} onClick={onClick}>
+    <button
+      className={buttonStyle}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (onClick) onClick();
+      }}
+    >
       {text}
     </button>
   );

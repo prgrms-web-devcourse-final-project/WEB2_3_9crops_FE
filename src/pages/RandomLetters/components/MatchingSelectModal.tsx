@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 
 import ModalOverlay from '@/components/ModalOverlay';
 import ResultLetter from '@/components/ResultLetter';
@@ -6,11 +6,13 @@ import ResultLetter from '@/components/ResultLetter';
 function MatchingSelectModal({
   setOpenModal,
   selectedLetter,
+  setOpenSelectedDetailModal,
 }: {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedLetter: SelectedLetter;
+  selectedLetter: RandomLetters;
+  setOpenSelectedDetailModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <ModalOverlay>
       <div className="flex-col items-center justify-center">
@@ -19,7 +21,11 @@ function MatchingSelectModal({
           <span>수락한 편지는 5분이 지나면 취소할 수 없습니다.</span>
         </div>
         <div className="mt-4 w-full">
-          <ResultLetter categoryName={selectedLetter.categoryName} title={selectedLetter.title} />
+          <ResultLetter
+            categoryName={selectedLetter.category}
+            title={selectedLetter.title}
+            zipCode={selectedLetter.zipCode}
+          />
         </div>
         <div className="mt-12.5 flex w-[300px] gap-4">
           <button
@@ -34,7 +40,8 @@ function MatchingSelectModal({
             className="bg-primary-3 body-m h-10 flex-1 basis-1/2 rounded-lg"
             onClick={() => {
               setOpenModal(false);
-              navigate(`/letter/${1}`);
+              setOpenSelectedDetailModal(true);
+              // navigate(`/letter/${selectedLetter.letterId}`);
             }}
           >
             승인하기

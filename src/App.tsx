@@ -4,6 +4,8 @@ import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
 import AdminPage from './pages/Admin';
+import FilteredLetterManage from './pages/Admin/FilteredLetter';
+import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
@@ -57,6 +59,8 @@ const App = () => {
 
       <Route path="admin" element={<AdminPage />}>
         <Route path="report" element={<ReportManage />} />
+        <Route path="badwords" element={<FilteringManage />} />
+        <Route path="filtered-letter" element={<FilteredLetterManage />} />
       </Route>
     </Routes>
   );
