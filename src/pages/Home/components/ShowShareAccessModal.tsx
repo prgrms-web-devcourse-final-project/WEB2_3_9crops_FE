@@ -56,7 +56,7 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
                 허락 여부를 체크해주세요!
               </p>
             </div>
-            <div className="mt-6 flex w-[251px] flex-col gap-[10px]">
+            <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
               {sharePosts?.content.map((post) => (
                 <button
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
