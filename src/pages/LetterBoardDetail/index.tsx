@@ -99,20 +99,6 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
                 isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
               />
             ))}
-            {postDetail?.letters.map((letter, index) => (
-              <Letter
-                key={index}
-                letter={letter}
-                isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
-              />
-            ))}
-            {postDetail?.letters.map((letter, index) => (
-              <Letter
-                key={index}
-                letter={letter}
-                isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
-              />
-            ))}
           </section>
 
           {isShareLetterPreview && (
