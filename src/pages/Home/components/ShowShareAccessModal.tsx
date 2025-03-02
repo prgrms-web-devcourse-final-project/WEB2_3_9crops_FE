@@ -21,7 +21,6 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
       try {
         const data = await getSharePostList(1, 10);
         setSharePosts(data);
-        // console.log(data);
       } catch (error) {
         console.error('❌ 게시글 목록을 불러오는 데 실패했습니다.', error);
       }
