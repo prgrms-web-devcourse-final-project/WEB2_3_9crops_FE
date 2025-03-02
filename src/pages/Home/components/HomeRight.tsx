@@ -11,7 +11,7 @@ const HomeRight = () => {
   const { arrivedCount, fetchIncomingLetters } = useIncomingLettersStore();
   useEffect(() => {
     fetchIncomingLetters();
-  }, []);
+  }, [fetchIncomingLetters]);
 
   return (
     <div className="flex h-screen w-full max-w-150 min-w-[300px] flex-shrink-0 grow snap-start flex-col items-center overflow-x-hidden pt-5">
