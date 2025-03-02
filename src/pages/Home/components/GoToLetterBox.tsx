@@ -8,7 +8,7 @@ const GoToLetterBox = () => {
   const { arrivedCount } = useIncomingLettersStore();
 
   return (
-    <div className="absolute bottom-10 left-5 z-9 flex w-fit">
+    <div className="absolute bottom-15 left-5 z-9 flex">
       <div className="text-left">
         <p className="text-gray-60 body-r mb-1 ml-2">내 편지함</p>
         <Link to="/letter/box">
