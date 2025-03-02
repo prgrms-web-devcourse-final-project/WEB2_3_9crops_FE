@@ -5,4 +5,5 @@ interface LetterDetail {
   category: 'CONSOLATION' | 'CELEBRATION' | 'CONSULT' | 'ETC';
   paperType: PaperType;
   fontType: FontType;
+  matched: boolean;
 }

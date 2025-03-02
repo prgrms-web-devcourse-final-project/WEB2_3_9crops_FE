@@ -12,6 +12,7 @@ import {
   WarmIcon,
 } from '@/assets/icons';
 import BackButton from '@/components/BackButton';
+import ConfirmModal from '@/components/ConfirmModal';
 import ReportModal from '@/components/ReportModal';
 import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
 
@@ -28,6 +29,7 @@ const LetterDetailPage = () => {
   ];
   const [degreeModalOpen, setDegreeModalOpen] = useState<boolean>(false);
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
 
   const degreeButtonRef = useRef<HTMLButtonElement>(null);
   const handleOutsideClick = (event: MouseEvent) => {
@@ -41,7 +43,6 @@ const LetterDetailPage = () => {
     document.body.addEventListener('click', handleOutsideClick);
     if (params.id) {
       getLetter(params.id, setLetterDetail);
-      // 편지 삭제 요청 테스트(내일 삭제 버튼 만들어서 여기다 추가하긔)
     }
 
     return () => {
@@ -72,7 +73,7 @@ const LetterDetailPage = () => {
             </button>
             <button
               onClick={() => {
-                if (params.id) deleteLetter(params.id);
+                setDeleteModalOpen(true);
               }}
             >
               <DeleteIcon className="text-primary-1 h-6 w-6" />
@@ -118,13 +119,29 @@ const LetterDetailPage = () => {
         ></textarea>
         <span className="body-sb mt-10 flex justify-end">FROM. {'12E12'}</span>
         <button
-          className="bg-primary-3 body-m mt-3 w-full rounded-lg py-2"
+          className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
           onClick={() => {
             navigate(`/letter/write/?letterId=${letterDetail?.letterId}`);
           }}
+          disabled={!letterDetail?.matched}
         >
-          편지 작성하기
+          {letterDetail?.matched ? '편지 작성하기' : '대화가 종료된 편지입니다.'}
         </button>
+        {deleteModalOpen && (
+          <ConfirmModal
+            title="편지를 삭제하시겠습니까?"
+            description="삭제된 편지는 복구할 수 없습니다."
+            cancelText="취소"
+            confirmText="삭제"
+            onCancel={() => {
+              setDeleteModalOpen(false);
+            }}
+            onConfirm={() => {
+              if (params.id) deleteLetter(params.id);
+              navigate(-1);
+            }}
+          />
+        )}
       </div>
     </>
   );

@@ -1,12 +1,9 @@
 import client from './client';
 
-const postLetter = async (
-  data: LetterRequest,
-  setState?: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+const postLetter = async (data: LetterRequest, callBack?: () => void) => {
   try {
     const res = await client.post('/api/letters', data);
-    if (setState) setState(true);
+    if (callBack) callBack();
     console.log(res);
   } catch (error) {
     console.error(error);
@@ -14,12 +11,14 @@ const postLetter = async (
 };
 
 const getPrevLetter = async (
-  setPrevLetterState: React.Dispatch<React.SetStateAction<PrevLetter[]>>,
   letterId: string,
+  setPrevLetterState: React.Dispatch<React.SetStateAction<PrevLetter[]>>,
+  callBack?: () => void,
 ) => {
   try {
     const res = await client.get(`/api/letters/${letterId}/previous`);
     setPrevLetterState(res.data.data);
+    if (callBack) callBack();
     console.log(res);
   } catch (error) {
     console.error(error);
