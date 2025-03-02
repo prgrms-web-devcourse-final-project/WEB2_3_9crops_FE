@@ -99,12 +99,26 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
                 isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
               />
             ))}
+            {postDetail?.letters.map((letter, index) => (
+              <Letter
+                key={index}
+                letter={letter}
+                isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
+              />
+            ))}
+            {postDetail?.letters.map((letter, index) => (
+              <Letter
+                key={index}
+                letter={letter}
+                isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
+              />
+            ))}
           </section>
 
           {isShareLetterPreview && (
             <>
-              <img src={BlurImg} alt="landing blur" className="fixed bottom-0 w-screen" />
-              <section className="fixed bottom-[30px] left-1/2 flex w-73 translate-x-[-50%] gap-6">
+              <img src={BlurImg} alt="landing blur" className="fixed bottom-0 z-10 w-screen" />
+              <section className="fixed bottom-[30px] left-1/2 z-20 flex w-73 translate-x-[-50%] gap-6">
                 <button
                   type="button"
                   className="body-m secondary-btn h-10 flex-1 basis-1/2"
