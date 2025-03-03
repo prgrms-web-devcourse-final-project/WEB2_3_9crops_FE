@@ -1,15 +1,19 @@
 import client from './client';
 
-const getReports = async (
-  setReports: React.Dispatch<React.SetStateAction<Report[]>>,
-  queryString: string = '',
-  callBack?: () => void,
-) => {
+const getReports = async (reportQueryString: ReportQueryString) => {
   try {
-    const res = await client.get(`/api/reports${queryString}`);
-    setReports(res.data.data);
-    if (callBack) callBack();
-    console.log(res.data.data);
+    const queryParams = new URLSearchParams();
+    if (reportQueryString.reportType !== null)
+      queryParams.append('reportType', reportQueryString.reportType);
+    if (reportQueryString.status !== null) queryParams.append('status', reportQueryString.status);
+    if (reportQueryString.page !== null) queryParams.append('page', reportQueryString.page);
+    if (reportQueryString.size !== null) queryParams.append('size', reportQueryString.size);
+
+    const queryStrings = queryParams.toString();
+    const res = await client.get(`/api/reports?${queryStrings}`);
+    if (!res) throw new Error('신고 목록 데이터 조회 도중 에러가 발생했습니다.');
+    console.log(res);
+    return res;
   } catch (error) {
     console.error(error);
   }

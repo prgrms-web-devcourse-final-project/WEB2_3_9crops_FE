@@ -1,6 +1,18 @@
 type Status = 'PENDING' | 'RESOLVED' | 'REJECTED';
-type reportType = 'LETTER' | 'POST' | 'COMMENT';
+type ReportType = 'LETTER' | 'POST' | 'COMMENT';
 type Reason = 'ABUSE' | 'DEFAMATION' | 'HARASSMENT' | 'THREATS' | 'ETC';
+
+interface ReportQueryString {
+  reportType: ReportType | null;
+  status: Status | null;
+  page: string | null;
+  size: string | null;
+}
+
+interface ReportPages {
+  currentPage: string;
+  totalPages: string;
+}
 
 interface Report {
   id: number;
@@ -10,7 +22,7 @@ interface Report {
   letterId: number | null;
   comment: string | null;
   sharePostId: number | null;
-  reportType: reportType;
+  reportType: ReportType;
   reason: Reason;
   reasonDetail: string | null;
   status: Status;
