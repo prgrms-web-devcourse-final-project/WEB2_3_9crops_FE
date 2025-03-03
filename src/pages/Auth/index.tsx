@@ -44,7 +44,7 @@ const AuthCallbackPage = () => {
           if (!createZipCodeResponse) throw new Error('Error creating ZipCode');
           const zipCode = createZipCodeResponse.data.data.zipCode;
           console.log(createZipCodeResponse);
-          const newAccessToken = createZipCodeResponse.headers['Authorization'];
+          const newAccessToken = createZipCodeResponse.headers['authorization'].split(' ')[1];
           setZipCode(zipCode);
           setAccessToken(newAccessToken);
           console.log(
@@ -61,6 +61,7 @@ const AuthCallbackPage = () => {
       }
     } catch (error) {
       console.error(error);
+      navigate('/login');
     }
   };
 

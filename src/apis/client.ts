@@ -6,63 +6,98 @@ import { getNewToken } from './auth';
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
+  headers: { 'Content-Type': 'application/json' },
 });
+
+type FailedRequest = {
+  resolve: (token: string) => void;
+  reject: (error: unknown) => void;
+};
+
+let isRefreshing = false;
+let failedQueue: FailedRequest[] = [];
+
+const processQueue = (error: unknown, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      if(token){
+        prom.resolve(token);
+      }
+    }
+  });
+
+  failedQueue = [];
+};
 
 client.interceptors.request.use(
   (config) => {
-    const accessToken = useAuthStore((state) => state.accessToken);
-    console.log(config.url);
-    console.log(accessToken);
+    const accessToken = useAuthStore.getState().accessToken;
+
     if (config.url !== '/auth/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-      console.log('intercepter', config.headers);
     }
+
     return config;
   },
-  (error) => {
-    const logout = useAuthStore((state) => state.logout);
-    logout();
-    window.location.replace('/login');
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
 client.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const setAccessToken = useAuthStore((state) => state.setAccessToken);
-    const logout = useAuthStore((state) => state.logout);
-
+    const setAccessToken = useAuthStore.getState().setAccessToken;
+    const logout = useAuthStore.getState().logout;
     const originalRequest = error.config;
 
-    if (!originalRequest) {
+    if (!originalRequest) return Promise.reject(error);
+
+    if (originalRequest.url === '/auth/reissue') {
       return Promise.reject(error);
     }
 
     if (
-      (error.response.status === 401 ||
-        error.response.status === 403 ||
-        error.response.data.message === 'Unauthorized') &&
+      (error.response?.status === 401 || error.response?.status === 403) &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
+
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve: (token: string) => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(client(originalRequest));
+            },
+            reject: (err: unknown) => reject(err),
+          });
+        });
+      }
+
+      isRefreshing = true;
 
       try {
         const response = await getNewToken();
         const newToken = response?.data.accessToken;
 
-        if (!newToken) throw new Error('Failed to Refresh Token');
+        if (!newToken) throw new Error('Failed to refresh token');
 
         setAccessToken(newToken);
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        processQueue(null, newToken);
 
+        isRefreshing = false;
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return client(originalRequest);
       } catch (e) {
+        processQueue(e, null);
+        isRefreshing = false;
         logout();
         window.location.replace('/login');
         return Promise.reject(e);
       }
     }
+
     return Promise.reject(error);
   },
 );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
-import { deleteUserInfo } from '@/apis/auth';
+import { deleteUserInfo, getNewToken } from '@/apis/auth';
 import ConfirmModal from '@/components/ConfirmModal';
 import useAuthStore from '@/stores/authStore';
 import useMyPageStore from '@/stores/myPageStore';
@@ -16,6 +16,7 @@ const MyPage = () => {
   const { data, fetchMyPageInfo } = useMyPageStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
 
   const getDescriptionByTemperature = (temp: number) => {
     const range = TEMPERATURE_RANGE.find((range) => temp >= range.min && temp < range.max);
@@ -27,7 +28,17 @@ const MyPage = () => {
   const handleLeave = async () => {
     try {
       const response = await deleteUserInfo();
-      if (!response) throw new Error('deletiongi failed');
+      if (!response) throw new Error('deletioning failed');
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const reissue = async () => {
+    try {
+      const response = await getNewToken();
+      if (!response) throw new Error('reissue failed');
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -92,7 +103,13 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
-            <button className="body-sb text-gray-100" onClick={logout}>
+            <button
+              className="body-sb self-start text-gray-100"
+              onClick={() => {
+                navigate('/login');
+                logout();
+              }}
+            >
               로그아웃
             </button>
           </div>
@@ -100,10 +117,18 @@ const MyPage = () => {
         <button
           type="button"
           className="text-gray-60 body-m mt-auto self-start underline"
-          onClick={() => setIsOpenModal(true)}
+          onClick={async () => {
+            setIsOpenModal(true);
+            deleteUserInfo()
+              .then(() => {
+                navigate('/login');
+              })
+              .catch();
+          }}
         >
           탈퇴하기
         </button>
+        <button onClick={reissue}>reissue</button>
       </main>
     </>
   );
