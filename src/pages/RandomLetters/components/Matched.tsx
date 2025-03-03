@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { deleteRandomLetterMatching } from '@/apis/randomLetter';
 import ResultLetter from '@/components/ResultLetter';
@@ -14,9 +15,11 @@ export default function Matched({
   setIsMatched: React.Dispatch<React.SetStateAction<boolean>>;
   setIsCoolTime: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const navigate = useNavigate();
+
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  const TIME_STAMP = selectedLetter.createdAt;
+  const TIME_STAMP = '2025-03-03T19:35:05';
 
   const MATCHED_DATE = new Date(TIME_STAMP);
 
@@ -36,6 +39,14 @@ export default function Matched({
 
   const FormatedEndTimes = timeFormatter(endTimeSeconds);
   const FormatedGraceTimes = timeFormatter(graceTimeSeconds);
+
+  const handleDeleteRandomLetterMatching = async () => {
+    const res = await deleteRandomLetterMatching();
+    if (res?.status === 200) {
+      alert('매칭이 취소되었습니다.');
+      navigate(-1);
+    }
+  };
 
   useEffect(() => {
     if (endTime <= 0) {
@@ -89,8 +100,7 @@ export default function Matched({
         <button
           className="bg-primary-3 body-m disabled:bg-gray-30 mt-12.5 w-full rounded-lg py-2"
           onClick={() => {
-            console.log('취소');
-            deleteRandomLetterMatching();
+            handleDeleteRandomLetterMatching();
           }}
           disabled={isDisabled}
           aria-label="취소버튼"
