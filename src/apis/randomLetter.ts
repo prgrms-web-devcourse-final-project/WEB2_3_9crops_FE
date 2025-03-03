@@ -59,7 +59,7 @@ const deleteRandomLetterMatching = async () => {
     const res = await client.delete('/api/random-letters/matching/cancel');
     if (!res) throw new Error('매칭 취소 도중 에러가 발생했습니다.');
     console.log(res);
-    return res.data;
+    return res;
   } catch (error) {
     console.log(error);
   }

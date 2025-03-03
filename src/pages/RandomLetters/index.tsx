@@ -24,6 +24,17 @@ const RandomLettersPage = () => {
     fontType: 'DEFAULT',
     createdAt: new Date(),
   });
+  const [matchedLetter, setMatchedLetter] = useState<MatchedLetter>({
+    letterId: 0,
+    category: 'ETC',
+    title: 'error',
+    zipCode: 'error',
+    paperType: 'BASIC',
+    fontType: 'DEFAULT',
+    createdAt: new Date(),
+    replyDeadLine: new Date(),
+    temporary: false,
+  });
   const [coolTime, setCoolTime] = useState<CoolTime>({
     lastMatchedAt: new Date(),
   });
@@ -31,10 +42,10 @@ const RandomLettersPage = () => {
   const handleGetRandomLetterMatched = async () => {
     const res = await getRandomLetterMatched();
     if (res?.status === 200) {
-      const data: MatchedData = res.data.data;
+      const data: MatchedLetter = res.data.data;
       if (data?.temporary === true) {
         setIsMatched(true);
-        setSelectedLetter({
+        setMatchedLetter({
           letterId: data.letterId,
           category: data.category,
           title: data.title,
@@ -42,6 +53,19 @@ const RandomLettersPage = () => {
           paperType: data.paperType,
           fontType: data.fontType,
           createdAt: data.createdAt,
+          replyDeadLine: data.replyDeadLine,
+          temporary: data.temporary,
+        });
+        console.log({
+          letterId: data.letterId,
+          category: data.category,
+          title: data.title,
+          zipCode: data.zipCode,
+          paperType: data.paperType,
+          fontType: data.fontType,
+          createdAt: data.createdAt,
+          replyDeadLine: data.replyDeadLine,
+          temporary: data.temporary,
         });
       }
     }
@@ -52,6 +76,7 @@ const RandomLettersPage = () => {
     console.log(res);
     if (res?.status === 200) {
       const data: CoolTimeData = res.data.data;
+      console.log('쿨타임 데이터', data);
       if (data?.canSend === false) {
         setIsCoolTime(true);
         setCoolTime({ lastMatchedAt: data.lastMatchedAt });
@@ -89,6 +114,7 @@ const RandomLettersPage = () => {
               />
             ) : (
               <Matched
+                // MEMO : 여기 selectedLetter가 아니라 MatchedLetter 들어가야함
                 selectedLetter={selectedLetter}
                 setIsMatched={setIsMatched}
                 setIsCoolTime={setIsCoolTime}

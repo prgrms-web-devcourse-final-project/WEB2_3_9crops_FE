@@ -8,7 +8,8 @@ interface RandomLetters {
   createdAt: Date;
 }
 
-interface MatchedData extends RandomLetters {
+interface MatchedLetter extends RandomLetters {
+  replyDeadLine: Date;
   temporary: boolean;
 }
 
