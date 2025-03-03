@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import SetZipCode from './SetZipCode';
 import UserInteraction from './UserInteraction';
-import WelcomeLetter from './welcomeLetter';
+import WelcomeLetter from './WelcomeLetter';
 
 const OnboardingPage = () => {
   const [isZipCodeSet, setIsZipCodeSet] = useState<boolean>(false);
