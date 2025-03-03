@@ -8,13 +8,17 @@ import { timeFormatter } from '@/utils/timeFormatter';
 // import letterPink from '@/assets/images/letter-pink.png';
 
 export default function CoolTime({
-  setCoolTime,
+  setIsCoolTime,
+  coolTime,
 }: {
-  setCoolTime: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsCoolTime: React.Dispatch<React.SetStateAction<boolean>>;
+  coolTime: CoolTime;
 }) {
   const navigate = useNavigate();
 
-  const TIME_STAMP = '2025-03-01T21:15:25.262045608';
+  const TIME_STAMP = coolTime?.lastMatchedAt
+    ? coolTime.lastMatchedAt
+    : '2025-03-01T21:15:25.262045608';
 
   const COMPLETED_DATE = new Date(TIME_STAMP);
 
@@ -37,7 +41,7 @@ export default function CoolTime({
       const newEndTimeSeconds = Math.max(0, Math.floor((endTargetTime - now) / 1000));
 
       if (endTimeSeconds <= 0) {
-        setCoolTime(false);
+        setIsCoolTime(false);
       }
 
       setEndTimeSeconds(newEndTimeSeconds);

@@ -24,7 +24,12 @@ export default function ResultLetterAnimation() {
     <>
       {next === 'rd' ? (
         <div className="animate-rotate-show w-full opacity-0">
-          <ResultLetter categoryName={letterRequest.category} title={letterRequest.title} />
+          {/* MEMO : 여기엔 로그인된 유저의 zipCode가 들어가야함! */}
+          <ResultLetter
+            categoryName={letterRequest.category}
+            title={letterRequest.title}
+            zipCode="유저거넣기"
+          />
         </div>
       ) : (
         <>

@@ -6,15 +6,17 @@ import { formatNumber } from '@/utils/formatNumber';
 import { timeFormatter } from '@/utils/timeFormatter';
 
 export default function Matched({
-  setMatched,
-  setCoolTime,
+  selectedLetter,
+  setIsMatched,
+  setIsCoolTime,
 }: {
-  setMatched: React.Dispatch<React.SetStateAction<boolean>>;
-  setCoolTime: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedLetter: RandomLetters;
+  setIsMatched: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsCoolTime: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  const TIME_STAMP = '2025-02-28T22:35:25.262045608';
+  const TIME_STAMP = selectedLetter.createdAt;
 
   const MATCHED_DATE = new Date(TIME_STAMP);
 
@@ -37,8 +39,8 @@ export default function Matched({
 
   useEffect(() => {
     if (endTime <= 0) {
-      setMatched(false);
-      setCoolTime(true);
+      setIsMatched(false);
+      setIsCoolTime(true);
     }
     if (graceTime <= 0) {
       setIsDisabled(true);
@@ -53,8 +55,8 @@ export default function Matched({
       const newGraceTimeSeconds = Math.max(0, Math.floor((graceTargetTime - now) / 1000));
 
       if (newEndTimeSeconds <= 0) {
-        setMatched(false);
-        setCoolTime(true);
+        setIsMatched(false);
+        setIsCoolTime(true);
       }
       if (newGraceTimeSeconds <= 0) {
         setIsDisabled(true);
@@ -67,7 +69,7 @@ export default function Matched({
     return () => {
       clearInterval(counting);
     };
-  }, [endTime, graceTime, setMatched, setCoolTime]);
+  }, [endTime, graceTime, setIsMatched, setIsCoolTime]);
 
   return (
     <div className="mt-20 flex flex-col items-center justify-center">
@@ -78,7 +80,11 @@ export default function Matched({
           {formatNumber(FormatedEndTimes.seconds)}
         </p>
         <div className="mt-2 w-75">
-          <ResultLetter categoryName="ETC" title="테스트용가리" />
+          <ResultLetter
+            categoryName={selectedLetter.category}
+            title={selectedLetter.title}
+            zipCode={selectedLetter.zipCode}
+          />
         </div>
         <button
           className="bg-primary-3 body-m disabled:bg-gray-30 mt-12.5 w-full rounded-lg py-2"

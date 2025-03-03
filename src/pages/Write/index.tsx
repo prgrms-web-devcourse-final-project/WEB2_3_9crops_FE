@@ -28,10 +28,19 @@ const WritePage = () => {
     `${step === 'edit' && PAPER_TYPE_OBJ[letterRequest.paperType]}`,
   );
 
+  const handleGetPrevLetter = async (letterId: string) => {
+    const res = await getPrevLetter(letterId);
+    if (res?.status === 200) {
+      setPrevLetter(res.data.data);
+    } else {
+      alert('이전 편지 데이터를 받아오는 도중 오류가 발생했습니다(임시)');
+    }
+  };
+
   useEffect(() => {
     // MEMO : letterId는 쿼리파라미터를 통해 얻을수 있음 => 최초답장, 답장만 prevLetter을 받는 로직을 실행함
     if (!letterId) return;
-    getPrevLetter(letterId, setPrevLetter);
+    handleGetPrevLetter(letterId);
     // MEMO : 진영님이 prevLetter 받아오는 과정에서 매칭되지 않은 유저에 대한 예외처리 에러값을 담아 보내주시면 여기 선에서 잘못된 접근에 대한 리다이렉트를 걸 수 있게됨
     // MEMO : 단, 최초 답장의 경우에 아직 매칭이 되지 않은 상태기 때문에 반드시 에러값을 반환하게 될 걸로 보임 => 에러를 받았을때 분기를 나눠 location.state가 있는지를 확인해봐야함(location은 url조작을 통해 얻을 수 있는 값이 아님)
   }, [letterId]);

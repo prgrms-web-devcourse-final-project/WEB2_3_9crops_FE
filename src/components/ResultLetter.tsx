@@ -9,7 +9,7 @@ export default function ResultLetter({
 }: {
   categoryName: Category;
   title: string;
-  zipCode?: string;
+  zipCode: string;
 }) {
   const date = new Date();
   const today = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;

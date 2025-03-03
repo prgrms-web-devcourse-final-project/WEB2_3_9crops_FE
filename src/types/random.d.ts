@@ -7,3 +7,15 @@ interface RandomLetters {
   fontType: FontType;
   createdAt: Date;
 }
+
+interface MatchedData extends RandomLetters {
+  temporary: boolean;
+}
+
+interface CoolTime {
+  lastMatchedAt: Date;
+}
+
+interface CoolTimeData extends CoolTime {
+  canSend: boolean;
+}

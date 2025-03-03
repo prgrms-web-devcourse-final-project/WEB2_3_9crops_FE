@@ -24,16 +24,11 @@ const postFirstReply = async (data: FirstReplyRequest) => {
   }
 };
 
-const getPrevLetter = async (
-  letterId: string,
-  setPrevLetterState: React.Dispatch<React.SetStateAction<PrevLetter[]>>,
-  callBack?: () => void,
-) => {
+const getPrevLetter = async (letterId: string) => {
   try {
     const res = await client.get(`/api/letters/${letterId}/previous`);
-    setPrevLetterState(res.data.data);
-    if (callBack) callBack();
     console.log(res);
+    return res;
   } catch (error) {
     console.error(error);
   }

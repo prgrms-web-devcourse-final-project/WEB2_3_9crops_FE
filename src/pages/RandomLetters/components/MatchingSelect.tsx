@@ -18,7 +18,7 @@ export default function MatchingSelect({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedLetter: React.Dispatch<React.SetStateAction<RandomLetters>>;
 }) {
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category>('CONSOLATION');
   const [randomLetters, setRandomLetters] = useState<RandomLetters[]>([]);
 
   // const DUMMY_LIST: RandomLetters[] = [
@@ -45,8 +45,17 @@ export default function MatchingSelect({
   //   },
   // ];
 
+  const handleGetRandomLetters = async (selectedCategory: Category) => {
+    const res = await getRandomLetters(selectedCategory);
+    if (res?.status === 200) {
+      setRandomLetters(res.data.data);
+    } else {
+      alert('랜덤편지 데이터를 가져오는중에 오류가 발생했습니다.');
+    }
+  };
+
   useEffect(() => {
-    getRandomLetters(setRandomLetters, selectedCategory);
+    handleGetRandomLetters(selectedCategory);
   }, [selectedCategory]);
 
   return (
@@ -55,7 +64,7 @@ export default function MatchingSelect({
         <button
           className="flex gap-1"
           onClick={() => {
-            getRandomLetters(setRandomLetters, selectedCategory);
+            handleGetRandomLetters(selectedCategory);
           }}
         >
           <img src={RestartIcon} alt="재시작 아이콘" />
@@ -93,7 +102,9 @@ export default function MatchingSelect({
           return (
             <button
               onClick={() => {
-                setSelectedCategory(category.category);
+                if (category.category) {
+                  setSelectedCategory(category.category);
+                }
               }}
               className={twMerge(
                 `body-b text-gray-60 rounded-full bg-white px-3 py-1.5`,

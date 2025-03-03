@@ -10,12 +10,9 @@ const client = axios.create({
 
 client.interceptors.request.use(
   (config) => {
-    const accessToken = useAuthStore((state) => state.accessToken);
-    console.log(config.url);
-    console.log(accessToken);
+    const accessToken = useAuthStore.getState().accessToken;
     if (config.url !== '/auth/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-      console.log('intercepter', config.headers);
     }
     return config;
   },
@@ -27,44 +24,44 @@ client.interceptors.request.use(
   },
 );
 
-client.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const setAccessToken = useAuthStore((state) => state.setAccessToken);
-    const logout = useAuthStore((state) => state.logout);
+// client.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const setAccessToken = useAuthStore.getState().setAccessToken;
+//     const logout = useAuthStore.getState().logout;
 
-    const originalRequest = error.config;
+//     const originalRequest = error.config;
 
-    if (!originalRequest) {
-      return Promise.reject(error);
-    }
+//     if (!originalRequest) {
+//       return Promise.reject(error);
+//     }
 
-    if (
-      (error.response.status === 401 ||
-        error.response.status === 403 ||
-        error.response.data.message === 'Unauthorized') &&
-      !originalRequest._retry
-    ) {
-      originalRequest._retry = true;
+//     if (
+//       (error.response.status === 401 ||
+//         error.response.status === 403 ||
+//         error.response.data.message === 'Unauthorized') &&
+//       !originalRequest._retry
+//     ) {
+//       originalRequest._retry = true;
 
-      try {
-        const response = await getNewToken();
-        const newToken = response?.data.accessToken;
+//       try {
+//         const response = await getNewToken();
+//         const newToken = response?.data.accessToken;
 
-        if (!newToken) throw new Error('Failed to Refresh Token');
+//         if (!newToken) throw new Error('Failed to Refresh Token');
 
-        setAccessToken(newToken);
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+//         setAccessToken(newToken);
+//         originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
-        return client(originalRequest);
-      } catch (e) {
-        logout();
-        window.location.replace('/login');
-        return Promise.reject(e);
-      }
-    }
-    return Promise.reject(error);
-  },
-);
+//         return client(originalRequest);
+//       } catch (e) {
+//         logout();
+//         window.location.replace('/login');
+//         return Promise.reject(e);
+//       }
+//     }
+//     return Promise.reject(error);
+//   },
+// );
 
 export default client;

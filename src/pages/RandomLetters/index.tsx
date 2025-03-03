@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getRandomLettersValid, getRandomLettersValidTable } from '@/apis/randomLetter';
+import { getRandomLetterCoolTime, getRandomLetterMatched } from '@/apis/randomLetter';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import PageTitle from '@/components/PageTitle';
 
@@ -13,8 +13,8 @@ import MatchingSelectModal from './components/MatchingSelectModal';
 const RandomLettersPage = () => {
   const [openSelectModal, setOpenSelectModal] = useState<boolean>(false);
   const [openSelectedDetailModal, setOpenSelectedDetailModal] = useState<boolean>(false);
-  const [matched, setMatched] = useState<boolean>(true); //setMatched 임시 제거
-  const [coolTime, setCoolTime] = useState<boolean>(false);
+  const [isMatched, setIsMatched] = useState<boolean>(false); //setMatched 임시 제거
+  const [isCoolTime, setIsCoolTime] = useState<boolean>(false);
   const [selectedLetter, setSelectedLetter] = useState<RandomLetters>({
     letterId: 0,
     category: 'ETC',
@@ -24,11 +24,47 @@ const RandomLettersPage = () => {
     fontType: 'DEFAULT',
     createdAt: new Date(),
   });
+  const [coolTime, setCoolTime] = useState<CoolTime>({
+    lastMatchedAt: new Date(),
+  });
+
+  const handleGetRandomLetterMatched = async () => {
+    const res = await getRandomLetterMatched();
+    if (res?.status === 200) {
+      const data: MatchedData = res.data.data;
+      if (data?.temporary === true) {
+        setIsMatched(true);
+        setSelectedLetter({
+          letterId: data.letterId,
+          category: data.category,
+          title: data.title,
+          zipCode: data.zipCode,
+          paperType: data.paperType,
+          fontType: data.fontType,
+          createdAt: data.createdAt,
+        });
+      }
+    }
+  };
+
+  const handleGetRandomLetterCoolTime = async () => {
+    const res = await getRandomLetterCoolTime();
+    console.log(res);
+    if (res?.status === 200) {
+      const data: CoolTimeData = res.data.data;
+      if (data?.canSend === false) {
+        setIsCoolTime(true);
+        setCoolTime({ lastMatchedAt: data.lastMatchedAt });
+      }
+    } else {
+      console.log('?');
+    }
+  };
 
   useEffect(() => {
     // MEMO : 임시매칭완료 여부(validTable), 매칭완료 여부(valid) api 연결되면 res값 받아서 matched, coolTime에 값 넣어주기
-    getRandomLettersValid();
-    getRandomLettersValidTable();
+    handleGetRandomLetterMatched();
+    handleGetRandomLetterCoolTime();
   }, []);
   return (
     <>
@@ -38,21 +74,25 @@ const RandomLettersPage = () => {
         <>
           <div className="z-10 flex grow flex-col items-center overflow-hidden">
             <PageTitle className="mt-20">
-              {coolTime
+              {isCoolTime
                 ? '조금 뒤에 편지 매칭이 가능해요!'
-                : !matched
+                : !isMatched
                   ? '답장하고 싶은 편지를 선택해주세요!'
                   : '이미 답장 중인 편지가 있어요!'}
             </PageTitle>
-            {coolTime ? (
-              <CoolTime setCoolTime={setCoolTime} />
-            ) : !matched ? (
+            {isCoolTime ? (
+              <CoolTime setIsCoolTime={setIsCoolTime} coolTime={coolTime} />
+            ) : !isMatched ? (
               <MatchingSelect
                 setOpenModal={setOpenSelectModal}
                 setSelectedLetter={setSelectedLetter}
               />
             ) : (
-              <Matched setMatched={setMatched} setCoolTime={setCoolTime} />
+              <Matched
+                selectedLetter={selectedLetter}
+                setIsMatched={setIsMatched}
+                setIsCoolTime={setIsCoolTime}
+              />
             )}
 
             {openSelectModal && (
