@@ -12,8 +12,10 @@ export const getUserToken = async (stateToken: string) => {
     if (userInfo) {
       return userInfo;
     }
+    return response;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 

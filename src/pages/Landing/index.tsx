@@ -1,13 +1,20 @@
-import { useState } from 'react';
-import { Navigate } from 'react-router';
+import { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import LandingImg from '@/assets/images/landing.png';
+import useAuthStore from '@/stores/authStore';
 
 import { STYLE_CLASS } from './constants';
 
 const Landing = () => {
   const [step, setStep] = useState(0);
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) navigate('/');
+  }, [isLoggedIn, navigate]);
 
   if (step === 3) return <Navigate to="/login" />;
 

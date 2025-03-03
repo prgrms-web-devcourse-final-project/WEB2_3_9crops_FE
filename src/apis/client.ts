@@ -22,7 +22,7 @@ const processQueue = (error: unknown, token: string | null = null) => {
     if (error) {
       prom.reject(error);
     } else {
-      if(token){
+      if (token) {
         prom.resolve(token);
       }
     }
@@ -53,7 +53,10 @@ client.interceptors.response.use(
 
     if (!originalRequest) return Promise.reject(error);
 
-    if (originalRequest.url === '/auth/reissue') {
+    if (
+      originalRequest.url === '/auth/reissue' ||
+      originalRequest.url.includes('/api/auth/token?state=')
+    ) {
       return Promise.reject(error);
     }
 
@@ -64,15 +67,19 @@ client.interceptors.response.use(
       originalRequest._retry = true;
 
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({
-            resolve: (token: string) => {
-              originalRequest.headers.Authorization = `Bearer ${token}`;
-              resolve(client(originalRequest));
-            },
-            reject: (err: unknown) => reject(err),
+        try {
+          return new Promise((resolve, reject) => {
+            failedQueue.push({
+              resolve: (token: string) => {
+                originalRequest.headers.Authorization = `Bearer ${token}`;
+                resolve(client(originalRequest));
+              },
+              reject: (err: unknown) => reject(err),
+            });
           });
-        });
+        } catch (e) {
+          return Promise.reject(e);
+        }
       }
 
       isRefreshing = true;
@@ -93,11 +100,9 @@ client.interceptors.response.use(
         processQueue(e, null);
         isRefreshing = false;
         logout();
-        window.location.replace('/login');
         return Promise.reject(e);
       }
     }
-
     return Promise.reject(error);
   },
 );

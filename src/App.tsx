@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
+import PrivateRoute from './layouts/PrivateRoute';
 import AdminPage from './pages/Admin';
 import FilteredLetterManage from './pages/Admin/FilteredLetter';
 import FilteringManage from './pages/Admin/Filtering';
@@ -30,39 +31,44 @@ const App = () => {
   return (
     <Routes>
       <Route element={<MobileLayout />}>
-        <Route index element={<Home />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="landing" element={<Landing />} />
-        <Route path="onboarding" element={<OnboardingPage />} />
-        <Route path="letter">
-          <Route element={<Layout />}>
-            <Route path="random" element={<RandomLettersPage />} />
-            <Route path="box" element={<LetterBoxPage />} />
-            <Route path="box/:id" element={<LetterBoxDetailPage />} />
-          </Route>
-          <Route path="write" element={<WritePage />} />
-          <Route path=":id" element={<LetterDetailPage />} />
-        </Route>
-        <Route path="board">
-          <Route element={<Layout />}>
-            <Route path="rolling/:id" element={<RollingPaperPage />} />
-            <Route path="letter" element={<LetterBoardPage />} />
-          </Route>
-          <Route path="letter/:id" element={<LetterBoardDetailPage />} />
-        </Route>
-        <Route path="mypage" element={<Layout />}>
-          <Route index element={<MyPage />} />
-          <Route path="board" element={<LetterBoardPage />} />
-          <Route path="notifications" element={<NotificationsPage />} />
-        </Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="auth-callback" element={<AuthCallbackPage />} />
+        <Route index element={<Home />} />
+        <Route path="onboarding" element={<OnboardingPage />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path="letter">
+            <Route element={<Layout />}>
+              <Route path="random" element={<RandomLettersPage />} />
+              <Route path="box" element={<LetterBoxPage />} />
+              <Route path="box/:id" element={<LetterBoxDetailPage />} />
+            </Route>
+            <Route path="write" element={<WritePage />} />
+            <Route path=":id" element={<LetterDetailPage />} />
+          </Route>
+          <Route path="board">
+            <Route element={<Layout />}>
+              <Route path="rolling/:id" element={<RollingPaperPage />} />
+              <Route path="letter" element={<LetterBoardPage />} />
+            </Route>
+            <Route path="letter/:id" element={<LetterBoardDetailPage />} />
+          </Route>
+          <Route path="mypage" element={<Layout />}>
+            <Route index element={<MyPage />} />
+            <Route path="board" element={<LetterBoardPage />} />
+            <Route path="notifications" element={<NotificationsPage />} />
+          </Route>
+        </Route>
       </Route>
 
-      <Route path="admin" element={<AdminPage />}>
-        <Route path="report" element={<ReportManage />} />
-        <Route path="badwords" element={<FilteringManage />} />
-        <Route path="filtered-letter" element={<FilteredLetterManage />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="admin" element={<AdminPage />}>
+          <Route path="report" element={<ReportManage />} />
+          <Route path="badwords" element={<FilteringManage />} />
+          <Route path="filtered-letter" element={<FilteredLetterManage />} />
+        </Route>
       </Route>
     </Routes>
   );
