@@ -29,7 +29,7 @@ export const postZipCode = async () => {
 
 export const getNewToken = async () => {
   try {
-    const response = await client.get('/api/reissue', { withCredentials: true });
+    const response = await client.post('/api/reissue', {}, { withCredentials: true });
     if (!response) throw new Error('getNewToken: no response data');
     return response;
   } catch (error) {
@@ -40,7 +40,7 @@ export const getNewToken = async () => {
 export const getMydata = async () => {
   try {
     const response = await client.get('/api/members/me');
-    if (!response) throw new Error('getNewTOken: no response data');
+    if (!response) throw new Error('getNewToken: no response data');
     return response;
   } catch (error) {
     console.error(error);
