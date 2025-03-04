@@ -21,30 +21,6 @@ export default function MatchingSelect({
   const [selectedCategory, setSelectedCategory] = useState<Category>('CONSOLATION');
   const [randomLetters, setRandomLetters] = useState<RandomLetters[]>([]);
 
-  // const DUMMY_LIST: RandomLetters[] = [
-  //   {
-  //     letterId: 1,
-  //     title: '위로가 필요해요',
-  //     zipCode: '1aq23',
-  //     category: 'CONSOLATION',
-  //     createdAt: new Date(),
-  //   },
-  //   {
-  //     letterId: 2,
-  //     title: '아래로가 필요해요',
-  //     zipCode: '23w7q',
-  //     category: 'CELEBRATION',
-  //     createdAt: new Date(),
-  //   },
-  //   {
-  //     letterId: 3,
-  //     title: '안녕하세요',
-  //     zipCode: '9a5g7',
-  //     category: 'ETC',
-  //     createdAt: new Date(),
-  //   },
-  // ];
-
   const handleGetRandomLetters = async (selectedCategory: Category) => {
     const res = await getRandomLetters(selectedCategory);
     if (res?.status === 200) {
