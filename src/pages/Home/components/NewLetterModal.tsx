@@ -1,8 +1,21 @@
-import { useIncomingLettersStore } from '@/stores/incomingLettersStore';
+import { useEffect, useState } from 'react';
 
-//TODO: 내 편지함 상세 조회에서 해당 편지를 조회하면 arrivedCount가 1 감소하도록
+import { getUnreadLettersCount } from '@/apis/unreadLetters';
+
 const NewLetterModal = () => {
-  const arrivedCount = useIncomingLettersStore((state) => state.arrivedCount);
+  const [arrivedCount, setArrivedCount] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const result = await getUnreadLettersCount();
+        setArrivedCount(result.data);
+      } catch (error) {
+        console.error('❌ 안 읽은 편지 개수를 불러오는 데 실패했습니다:', error);
+      }
+    };
+    fetchUnreadCount();
+  }, []);
 
   return (
     <p className="text-gray-60 body-b absolute top-30 mb-10 w-fit animate-pulse rounded-full bg-white px-6 py-4">
