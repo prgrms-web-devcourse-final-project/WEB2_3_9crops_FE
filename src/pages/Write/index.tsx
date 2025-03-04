@@ -31,7 +31,7 @@ const WritePage = () => {
   useEffect(() => {
     // MEMO : letterId는 쿼리파라미터를 통해 얻을수 있음 => 최초답장, 답장만 prevLetter을 받는 로직을 실행함
     if (!letterId) return;
-    if (location.state && location.state?.randomMatched) {
+    if (location.state?.randomMatched) {
       console.log('MatchedLetter 담긴 데이터로 prevLetter 생성');
       const matchedLetter: MatchedLetter = location.state?.matchedLetter;
       const matchedPrevLetter: PrevLetter = {
