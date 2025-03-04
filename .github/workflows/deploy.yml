@@ -37,6 +37,11 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm store prune
 
+      - name: Set up .env file
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL_TEMP }}" > .env.production
+          echo "HTTPS=true" >> .env.production
+
       - name: Build
         run: pnpm run build
 
