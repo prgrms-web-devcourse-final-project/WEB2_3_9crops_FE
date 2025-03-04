@@ -2,29 +2,55 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { postLetter } from '@/apis/write';
+import { postFirstReply, postLetter } from '@/apis/write';
 import BackButton from '@/components/BackButton';
 import WritePageButton from '@/pages/Write/components/WritePageButton';
 import { FONT_TYPE_OBJ } from '@/pages/Write/constants';
 import OptionSlide from '@/pages/Write/OptionSlide';
 import useWrite from '@/stores/writeStore';
+import { removeProperty } from '@/utils/removeProperty';
 
 export default function LetterEditor({
   setStep,
   prevLetter,
   setSend,
   searchParams,
+  isReply,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   prevLetter: PrevLetter[];
   setSend: React.Dispatch<React.SetStateAction<boolean>>;
   searchParams: URLSearchParams;
+  isReply: boolean;
 }) {
   const location = useLocation();
   const [randomMatched, setRandomMatched] = useState<boolean>(false);
 
   const letterRequest = useWrite((state) => state.letterRequest);
   const setLetterRequest = useWrite((state) => state.setLetterRequest);
+
+  const handlePostFirstReply = async (firstReplyRequest: Omit<LetterRequest, 'matchingId'>) => {
+    const res = await postFirstReply(firstReplyRequest);
+    if (res?.status === 200) {
+      setSend(true);
+      setStep('category');
+    } else {
+      alert('전송오류 발생(임시)');
+    }
+  };
+
+  // MEMO : 답장 전송 matchingId가 undefined로 나오는데 뭐 때문인지 내일 찾아보자 ㅎ
+  const handlePostReply = async (letterRequest: LetterRequest) => {
+    const res = await postLetter(letterRequest);
+    if (res?.status === 200) {
+      console.log(letterRequest);
+      console.log(prevLetter);
+      setSend(true);
+      setStep('category');
+    } else {
+      alert('전송오류(임시)');
+    }
+  };
 
   useEffect(() => {
     if (location.state?.randomMatched) {
@@ -33,34 +59,33 @@ export default function LetterEditor({
   }, [location.state?.randomMatched]);
 
   useEffect(() => {
-    if (prevLetter.length > 0) {
+    if (isReply) {
+      console.log('prevLetter', prevLetter);
       setLetterRequest({
         receiverId: prevLetter[0].memberId,
         parentLetterId: Number(searchParams.get('letterId')),
         category: prevLetter[0].category,
+        matchingId: prevLetter[0].matchingId,
       });
     }
-  }, [prevLetter, searchParams, setLetterRequest]);
+  }, [prevLetter, searchParams, setLetterRequest, isReply]);
 
   return (
     <div className="flex grow flex-col pb-15">
       <OptionSlide prevLetter={prevLetter} />
       <div className="absolute left-0 flex w-full items-center justify-between px-5">
         <BackButton />
-        {prevLetter.length > 0 ? (
+        {isReply ? (
           <WritePageButton
             text="답장 전송"
             onClick={() => {
               if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                 if (randomMatched) {
-                  console.log('랜덤편지 답장 전송용API');
+                  const firstReplyRequest = removeProperty(letterRequest, ['matchingId']);
+                  console.log(firstReplyRequest);
+                  handlePostFirstReply(firstReplyRequest);
                 } else {
-                  postLetter(letterRequest, () => {
-                    console.log(letterRequest);
-                    console.log(prevLetter);
-                    setSend(true);
-                    setStep('category');
-                  });
+                  handlePostReply(letterRequest);
                 }
               } else {
                 alert('편지 제목, 내용이 작성되었는지 확인해주세요');
@@ -81,7 +106,7 @@ export default function LetterEditor({
         )}
       </div>
       <div className="flex flex-col gap-3 px-6">
-        <div className="body-b mt-15">TO. {'12EE1'}</div>
+        <div className="body-b mt-15">TO. 따숨이에게</div>
         <input
           type="text"
           placeholder="제목을 입력해주세요."

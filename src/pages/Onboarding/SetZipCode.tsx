@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import useAuthStore from '@/stores/authStore';
+
 import Spinner from './components/Spinner';
 
 const SetZipCode = ({
@@ -7,8 +9,8 @@ const SetZipCode = ({
 }: {
   setIsZipCodeSet: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const DUMMY_ZIPCODE = '122A2';
   const [isBtnActive, setIsBtnActive] = useState<boolean>(false);
+  const zipCode = useAuthStore((state) => state.zipCode);
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,7 +25,7 @@ const SetZipCode = ({
         <p className="caption-sb text-gray-60">사용자님이 편지를 주고 받는 주소입니다.</p>
       </header>
       <section className="flex gap-2">
-        {DUMMY_ZIPCODE.split('').map((char, index) => (
+        {zipCode.split('').map((char, index) => (
           <Spinner key={index} target={char} index={index}></Spinner>
         ))}
       </section>

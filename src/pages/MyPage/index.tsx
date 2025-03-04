@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 
+import { deleteUserInfo } from '@/apis/auth';
 import ConfirmModal from '@/components/ConfirmModal';
+import useAuthStore from '@/stores/authStore';
 import useMyPageStore from '@/stores/myPageStore';
 
 import { TEMPERATURE_RANGE } from './constants';
@@ -13,6 +15,7 @@ const MyPage = () => {
 
   const { data, fetchMyPageInfo } = useMyPageStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const logout = useAuthStore((state) => state.logout);
 
   const getDescriptionByTemperature = (temp: number) => {
     const range = TEMPERATURE_RANGE.find((range) => temp >= range.min && temp < range.max);
@@ -20,6 +23,16 @@ const MyPage = () => {
   };
 
   const description = getDescriptionByTemperature(Number(data.temperature));
+
+  const handleLeave = async () => {
+    try {
+      const response = await deleteUserInfo();
+      if (!response) throw new Error('deletioning failed');
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -30,7 +43,10 @@ const MyPage = () => {
           cancelText="되돌아가기"
           confirmText="탈퇴하기"
           onCancel={() => setIsOpenModal(false)}
-          onConfirm={() => setIsOpenModal(false)}
+          onConfirm={() => {
+            handleLeave();
+            setIsOpenModal(false);
+          }}
         />
       )}
       <main className="flex grow flex-col gap-12 px-5 pt-20 pb-6">
@@ -65,7 +81,9 @@ const MyPage = () => {
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">고객 센터</h3>
-            <p className="body-sb text-gray-100">운영자에게 문의하기</p>
+            <Link to="mailto:rlatpqls13@gmail.com">
+              <p className="body-sb text-gray-100">운영자에게 문의하기</p>
+            </Link>
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">계정</h3>
@@ -76,13 +94,22 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
-            <p className="body-sb text-gray-100">로그아웃</p>
+            <button
+              className="body-sb self-start text-gray-100"
+              onClick={() => {
+                logout();
+              }}
+            >
+              로그아웃
+            </button>
           </div>
         </section>
         <button
           type="button"
           className="text-gray-60 body-m mt-auto self-start underline"
-          onClick={() => setIsOpenModal(true)}
+          onClick={async () => {
+            setIsOpenModal(true);
+          }}
         >
           탈퇴하기
         </button>

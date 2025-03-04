@@ -10,22 +10,32 @@ import WritePageButton from './components/WritePageButton';
 
 export default function CategorySelect({
   setStep,
-  prevLetter,
   send,
   setSend,
+  isReply,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
-  prevLetter: PrevLetter[];
   send: boolean;
   setSend: React.Dispatch<React.SetStateAction<boolean>>;
+  isReply: boolean;
 }) {
   const letterRequest = useWrite((state) => state.letterRequest);
+
+  const handlePostLetter = async (letterRequest: LetterRequest) => {
+    const res = await postLetter(letterRequest);
+    if (res?.status === 200) {
+      console.log(letterRequest);
+      setSend(true);
+    } else {
+      alert('전송오류(임시)');
+    }
+  };
 
   return (
     <>
       <div className="flex w-full grow flex-col items-center">
         <div className="absolute left-0 flex w-full items-center justify-between px-5">
-          {!send && prevLetter.length <= 0 && (
+          {!send && !isReply && (
             <WritePageButton
               text="이전 단계"
               onClick={() => {
@@ -37,15 +47,13 @@ export default function CategorySelect({
         </div>
 
         <PageTitle className="mt-20">
-          {send || prevLetter.length > 0
-            ? '편지 작성이 완료 되었어요!'
-            : '어떤 답장을 받고 싶나요?'}
+          {send || isReply ? '편지 작성이 완료 되었어요!' : '어떤 답장을 받고 싶나요?'}
         </PageTitle>
 
         {/* 카테고리 선택 컴포넌트 */}
-        {!send && prevLetter.length <= 0 && <CategoryList />}
+        {!send && !isReply && <CategoryList />}
 
-        {send && prevLetter.length > 0 && (
+        {send && isReply && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
             <ResultLetterAnimation />
             <div className="animate-show-text flex flex-col items-center opacity-0">
@@ -59,7 +67,7 @@ export default function CategorySelect({
           </div>
         )}
 
-        {send && prevLetter.length <= 0 && (
+        {send && !isReply && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
             <ResultLetterAnimation />
             <span className="animate-show-text body-sb text-gray-60 opacity-0">
@@ -68,7 +76,7 @@ export default function CategorySelect({
           </div>
         )}
 
-        {send || prevLetter.length > 0 ? (
+        {send || isReply ? (
           <Link
             to={'/'}
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
@@ -80,10 +88,7 @@ export default function CategorySelect({
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
             onClick={() => {
               if (letterRequest.category) {
-                postLetter(letterRequest, () => {
-                  console.log(letterRequest);
-                  setSend(true);
-                });
+                handlePostLetter(letterRequest);
                 // setSend(true);
               } else {
                 alert('우표 선택을 해주세요');
