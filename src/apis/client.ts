@@ -34,7 +34,6 @@ const processQueue = (error: unknown, token: string | null = null) => {
 client.interceptors.request.use(
   (config) => {
     const accessToken = useAuthStore.getState().accessToken;
-
     if (config.url !== '/auth/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

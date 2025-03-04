@@ -14,6 +14,7 @@ const useWrite = create<WriteStore>((set) => ({
     category: 'CONSOLATION',
     paperType: 'BASIC',
     fontType: 'DEFAULT',
+    matchingId: null,
   },
   setLetterRequest: (updateRequest) =>
     set((state) => ({
@@ -30,6 +31,7 @@ const useWrite = create<WriteStore>((set) => ({
         category: 'CONSOLATION',
         paperType: 'BASIC',
         fontType: 'DEFAULT',
+        matchingId: null,
       },
     }));
   },

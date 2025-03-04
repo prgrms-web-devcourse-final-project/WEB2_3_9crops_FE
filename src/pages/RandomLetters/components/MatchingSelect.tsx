@@ -18,36 +18,20 @@ export default function MatchingSelect({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedLetter: React.Dispatch<React.SetStateAction<RandomLetters>>;
 }) {
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category>('CONSOLATION');
   const [randomLetters, setRandomLetters] = useState<RandomLetters[]>([]);
 
-  const DUMMY_LIST: RandomLetters[] = [
-    {
-      letterId: 1,
-      title: '위로가 필요해요',
-      zipCode: '1aq23',
-      category: 'CONSOLATION',
-      createdAt: new Date(),
-    },
-    {
-      letterId: 2,
-      title: '아래로가 필요해요',
-      zipCode: '23w7q',
-      category: 'CELEBRATION',
-      createdAt: new Date(),
-    },
-    {
-      letterId: 3,
-      title: '안녕하세요',
-      zipCode: '9a5g7',
-      category: 'ETC',
-      createdAt: new Date(),
-    },
-  ];
+  const handleGetRandomLetters = async (selectedCategory: Category) => {
+    const res = await getRandomLetters(selectedCategory);
+    if (res?.status === 200) {
+      setRandomLetters(res.data.data);
+    } else {
+      alert('랜덤편지 데이터를 가져오는중에 오류가 발생했습니다.');
+    }
+  };
 
   useEffect(() => {
-    getRandomLetters(setRandomLetters, selectedCategory);
-    console.log(randomLetters);
+    handleGetRandomLetters(selectedCategory);
   }, [selectedCategory]);
 
   return (
@@ -56,7 +40,7 @@ export default function MatchingSelect({
         <button
           className="flex gap-1"
           onClick={() => {
-            getRandomLetters(setRandomLetters, selectedCategory);
+            handleGetRandomLetters(selectedCategory);
           }}
         >
           <img src={RestartIcon} alt="재시작 아이콘" />
@@ -66,7 +50,7 @@ export default function MatchingSelect({
         </button>
         <div className="w-full max-w-[300px]">
           <Swiper effect={'cards'} grabCursor={true} modules={[EffectCards]} className="mySwiper">
-            {DUMMY_LIST.map((list, idx) => {
+            {randomLetters.map((list, idx) => {
               return (
                 <SwiperSlide key={idx} className="max-w-full">
                   <div
@@ -94,7 +78,9 @@ export default function MatchingSelect({
           return (
             <button
               onClick={() => {
-                setSelectedCategory(category.category);
+                if (category.category) {
+                  setSelectedCategory(category.category);
+                }
               }}
               className={twMerge(
                 `body-b text-gray-60 rounded-full bg-white px-3 py-1.5`,
