@@ -21,7 +21,7 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
       .catch((error) => {
         console.error('❌ 임시저장된 편지를 불러오는데 실패했습니다', error);
       });
-  }, []);
+  }, [onClose]);
 
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
