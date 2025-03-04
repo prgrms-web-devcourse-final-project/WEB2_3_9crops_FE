@@ -6,4 +6,7 @@ interface LetterDetail {
   paperType: PaperType;
   fontType: FontType;
   matched: boolean;
+  evaluated: boolean;
+  matchingId: number;
+  zipCode: string;
 }

@@ -71,7 +71,10 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
 
   return (
     <>
-      {activeReportModal && <ReportModal onClose={() => setActiveReportModal(false)} />}
+      {/* MEMO : 안지원 왔다감 ^o^/ 신고 처리 API 작업을 하면서 추가 사항이 생겼습니다! reportType(이건 제가 추가해놓겠습니당), letterId(해당 게시글 또는 편지 id값, 추가 필요!)을 담아야 신고 모달을 정상적으로 사용 가능합니다!! */}
+      {activeReportModal && (
+        <ReportModal reportType="POST" onClose={() => setActiveReportModal(false)} />
+      )}
       <div className="grow bg-white">
         <Header
           likeCount={likeCount}

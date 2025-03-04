@@ -1,5 +1,5 @@
 type Status = 'PENDING' | 'RESOLVED' | 'REJECTED';
-type reportType = 'LETTER' | 'POST' | 'COMMENT';
+type ReportType = 'LETTER' | 'POST' | 'COMMENT';
 type Reason = 'ABUSE' | 'DEFAMATION' | 'HARASSMENT' | 'THREATS' | 'ETC';
 
 interface Report {
@@ -20,7 +20,14 @@ interface Report {
   };
 }
 
-interface ReportRequest {
+interface PostReportRequest {
+  reportType: ReportType;
+  reasonType: Reason | '';
+  reason: string;
+  letterId: number | null;
+}
+
+interface PatchReportRequest {
   status: 'RESOLVED' | 'REJECTED';
   adminMemo: string;
 }

@@ -1,5 +1,17 @@
 import client from './client';
 
+const postReports = async (postReportRequest: PostReportRequest) => {
+  try {
+    const res = await client.post(`/api/reports`, postReportRequest);
+    console.log(res);
+    if (res.status === 200) {
+      return res;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const getReports = async (
   setReports: React.Dispatch<React.SetStateAction<Report[]>>,
   queryString: string = '',
@@ -15,10 +27,10 @@ const getReports = async (
   }
 };
 
-const patchReport = async (reportId: number, reportRequest: ReportRequest) => {
+const patchReport = async (reportId: number, patchReportRequest: PatchReportRequest) => {
   try {
-    console.log(`/api/reports/${reportId}`, reportRequest);
-    const res = await client.patch(`/api/reports/${reportId}`, reportRequest);
+    console.log(`/api/reports/${reportId}`, patchReportRequest);
+    const res = await client.patch(`/api/reports/${reportId}`, patchReportRequest);
     console.log(res);
   } catch (error) {
     console.error(error);
@@ -61,4 +73,4 @@ const patchBadWords = async (
   }
 };
 
-export { getReports, patchReport, getBadWords, postBadWords, patchBadWords };
+export { getReports, patchReport, getBadWords, postBadWords, patchBadWords, postReports };

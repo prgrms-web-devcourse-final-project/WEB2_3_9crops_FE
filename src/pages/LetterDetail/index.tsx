@@ -15,12 +15,14 @@ import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/ConfirmModal';
 import ReportModal from '@/components/ReportModal';
 import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
+import useAuthStore from '@/stores/authStore';
 
 const LetterDetailPage = () => {
   const params = useParams();
   const navigate = useNavigate();
-  // 상대방의 우편번호도 데이터에 포함되어야 할 거 같음!!!
+
   const [letterDetail, setLetterDetail] = useState<LetterDetail | null>(null);
+  const userZipCode = useAuthStore((state) => state.zipCode);
 
   const DEGREES = [
     { icon: <WarmIcon className="h-5 w-5" />, title: '따뜻해요' },
@@ -55,6 +57,7 @@ const LetterDetailPage = () => {
     const handleGetLetter = async (letterId: string) => {
       const res = await getLetter(letterId);
       if (res?.status === 200) {
+        console.log(res);
         setLetterDetail(res.data.data);
       } else {
         alert(
@@ -71,9 +74,17 @@ const LetterDetailPage = () => {
       document.body.removeEventListener('click', handleOutsideClick);
     };
   }, [params.id, navigate]);
+
   return (
     <>
-      {reportModalOpen && <ReportModal onClose={() => setReportModalOpen(false)} />}
+      {reportModalOpen && (
+        <ReportModal
+          reportType={'LETTER'}
+          letterId={letterDetail?.letterId || null}
+          onClose={() => setReportModalOpen(false)}
+        />
+      )}
+
       <div
         className={twMerge(
           `flex grow flex-col gap-3 px-5 pb-7.5`,
@@ -83,30 +94,36 @@ const LetterDetailPage = () => {
         <div className="absolute top-5 left-0 flex w-full justify-between px-5">
           <BackButton />
           <div className="flex gap-2">
-            <button
-              ref={degreeButtonRef}
-              className="flex items-center justify-center gap-1"
-              onClick={() => {
-                setDegreeModalOpen((cur) => !cur);
-              }}
-            >
-              <ThermostatIcon className="h-6 w-6" />
-              <span className="caption-b text-primary-1">편지 온도</span>
-            </button>
-            <button
-              onClick={() => {
-                setDeleteModalOpen(true);
-              }}
-            >
-              <DeleteIcon className="text-primary-1 h-6 w-6" />
-            </button>
-            <button
-              onClick={() => {
-                setReportModalOpen(true);
-              }}
-            >
-              <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
-            </button>
+            {userZipCode !== letterDetail?.zipCode && (
+              <button
+                ref={degreeButtonRef}
+                className="flex items-center justify-center gap-1"
+                onClick={() => {
+                  setDegreeModalOpen((cur) => !cur);
+                }}
+              >
+                <ThermostatIcon className="h-6 w-6" />
+                <span className="caption-b text-primary-1">편지 온도</span>
+              </button>
+            )}
+            {userZipCode === letterDetail?.zipCode && (
+              <button
+                onClick={() => {
+                  setDeleteModalOpen(true);
+                }}
+              >
+                <DeleteIcon className="text-primary-1 h-6 w-6" />
+              </button>
+            )}
+            {userZipCode !== letterDetail?.zipCode && (
+              <button
+                onClick={() => {
+                  setReportModalOpen(true);
+                }}
+              >
+                <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
+              </button>
+            )}
             {degreeModalOpen && (
               <div className="caption-b text-primary-1 bg-primary-5 absolute top-7 z-40 flex flex-col gap-1 p-2 shadow">
                 {DEGREES.map((degree, idx) => {
