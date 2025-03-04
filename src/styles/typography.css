@@ -11,9 +11,33 @@
     line-height: 36px;
   }
 
+  .h2-r {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
+  }
+
+  .h2-l {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 36px;
+  }
+
   .h3-b {
     font-size: 20px;
     font-weight: 700;
+    line-height: 30px;
+  }
+
+  .h3-sb {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+  }
+
+  .h3-r {
+    font-size: 20px;
+    font-weight: 400;
     line-height: 30px;
   }
 

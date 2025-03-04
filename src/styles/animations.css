@@ -1,0 +1,171 @@
+/* 편지 전송 완료 애니메이션 전용 */
+@theme {
+  --animate-down: down 2s ease-in-out forwards;
+  --animate-up: up 3s ease-in-out forwards;
+  --animate-show-text: showing 0.5s ease-in-out 6s forwards;
+  --animate-rotate-show: rotate-show 1s ease-in-out forwards;
+  --animate-blink: showing 0.3s forwards;
+  --animate-login-move-up-down: move-up-down 3s ease-in-out infinite;
+  --animate-marquee: marquee 10s linear infinite;
+
+  @keyframes down {
+    0% {
+      transform: translateY(-300%);
+    }
+    100% {
+      transform: translateY(35%);
+    }
+  }
+
+  @keyframes up {
+    0% {
+      transform: perspective(800px) rotateY(0deg) translateY(100px);
+      opacity: 0;
+    }
+    20% {
+      transform: perspective(800px) rotateY(0deg) translateY(100px);
+      opacity: 1;
+    }
+    66% {
+      transform: perspective(800px) rotateY(0deg) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: perspective(800px) rotateY(-90deg) translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes showing {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes rotate-show {
+    0% {
+      opacity: 0;
+      transform: perspective(800px) rotateY(90deg);
+    }
+    100% {
+      opacity: 1;
+      transform: perspective(800px) rotateY(0deg);
+    }
+  }
+
+  /* login */
+  @keyframes move-up-down {
+    0%,
+    100% {
+      transform: translateY(10px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* SpecialLetterBanner 애니메이션 */
+  @keyframes marquee {
+    0% {
+      transform: translateX(10%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  --animate-float: float 2s ease-in-out infinite;
+  --animate-openEnvelope: openEnvelope 2s ease-in-out forwards;
+  --animate-expandScale: expandScale 2s ease-in-out forwards;
+  --animate-envelopeSink: envelopeSink 1s ease-in-out forwards;
+  --animate-envelopeOut: envelopeOut 2s ease-in-out forwards;
+  --animate-fadeOut: letter-fadeOut 1s ease 1s forwards;
+  --animate-fadeIn: letter-fadeIn 1s ease 1s forwards;
+
+  /* onBoarding */
+  /* comment floating */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+
+  /* onBoarding */
+  /* letter sinking */
+  @keyframes envelopeSink {
+    0% {
+      transform: translateY(0);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: translateY(100%);
+      transform-origin: bottom;
+    }
+  }
+
+  /* onBoarding */
+  /* letter opening */
+  @keyframes openEnvelope {
+    0% {
+      transform: rotateX(90deg);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: rotateX(0deg);
+      transform-origin: bottom;
+    }
+  }
+
+  /* onBoarding */
+  /* letter coming out */
+  @keyframes expandScale {
+    0% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+  }
+
+  /* onBoarding */
+  /* envelope out animation*/
+  @keyframes envelopeOut {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(2000%);
+    }
+  }
+
+  /* onBoarding */
+  /* welcomeLetter fadeIn */
+  @keyframes letter-fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* onBoarding */
+  /* welcomeLetter fadeOut */
+  @keyframes letter-fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}

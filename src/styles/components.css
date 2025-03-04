@@ -1,4 +1,55 @@
 /* 재사용 가능한 UI 컴포넌트의 스타일 정의 */
 
 @layer components {
+  .primary-btn {
+    @apply bg-primary-3 disabled:bg-gray-10 rounded-lg text-black disabled:text-white;
+  }
+
+  .secondary-btn {
+    @apply bg-primary-4 rounded-lg text-gray-50;
+  }
+
+  .letter-receiver-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #ffb5ac 0%, #ffc1ba 28%, #ffd3ce 98.5%);
+    background-blend-mode: overlay, normal, normal;
+  }
+
+  .letter-sender-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #fad446 0%, #f8de8c 28%, #ffeab8 98.5%);
+    background-blend-mode: overlay, normal, normal;
+  }
+
+  .memo-sender-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #ffe89f 0%, #ffe8a1 28%, #fff2d4 98.5%);
+    background-blend-mode: overlay, normal, normal;
+  }
+
+  .letter-box-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(180deg, #ffedae 0%, #eec297 100%);
+    background-blend-mode: overlay, normal;
+  }
+
+  .wrapper-box-shadow {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  }
+  .message-header {
+    @apply text-gray-60 w-fit rounded-full bg-white px-6 py-4;
+  }
+
+  .admin-list-set {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
 }

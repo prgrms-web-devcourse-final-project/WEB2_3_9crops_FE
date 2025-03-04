@@ -1,7 +1,75 @@
 /* 기본 스타일 리셋 및 전역 스타일 */
 
 @layer base {
+  :root {
+    --vh: 1vh;
+    --vw: 1vw;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     font-family: 'Pretendard Variable', Pretendard, sans-serif;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* 그라데이션 배경 들어가는 곳 */
+    /* background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(
+          180deg,
+          rgba(234, 191, 23, 0.5) 2.83%,
+          rgba(255, 245, 221, 0.5) 35.47%,
+          rgba(255, 251, 248, 0.5) 55.48%
+        )
+        fixed,
+      #f2f2f2;
+    background-blend-mode: overlay, normal, normal; */
+  }
+
+  /* #root {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
+    min-height: calc(var(--vh, 1vh) * 100);
+    margin: 0 auto;
+    position: relative;
+  } */
+
+  button {
+    cursor: pointer;
+  }
+
+  *:focus {
+    outline: none;
+  }
+}
+
+/* 모바일용 레이어로 분리 */
+@layer components {
+  .mobile-bg {
+    background:
+      url('/src/assets/images/background-overlay.png') repeat,
+      linear-gradient(
+          180deg,
+          rgba(234, 191, 23, 0.5) 2.83%,
+          rgba(255, 245, 221, 0.5) 35.47%,
+          rgba(255, 251, 248, 0.5) 55.48%
+        )
+        fixed,
+      #f2f2f2;
+    background-blend-mode: overlay, normal, normal;
+  }
+  .mobile-layout {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
+    min-height: calc(var(--vh, 1vh) * 100);
+    margin: 0 auto;
+    position: relative;
   }
 }
