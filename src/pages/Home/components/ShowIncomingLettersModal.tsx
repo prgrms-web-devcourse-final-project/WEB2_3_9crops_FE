@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 import { useIncomingLettersStore } from '@/stores/incomingLettersStore';
@@ -10,19 +10,11 @@ interface ShowIncomingLettersModalProps {
 }
 
 const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) => {
-  const navigate = useNavigate();
-
-  const handleNavigation = (incomingId: number) => {
-    navigate(`/board/letter/${incomingId}`, {
-      state: { isShareLetterPreview: false },
-    });
-  };
-
   const { data, fetchIncomingLetters } = useIncomingLettersStore();
 
   useEffect(() => {
     fetchIncomingLetters();
-  });
+  }, [fetchIncomingLetters]);
 
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
@@ -41,7 +33,6 @@ const ShowIncomingLettersModal = ({ onClose }: ShowIncomingLettersModalProps) =>
                 <div
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
                   key={letter.letterId}
-                  onClick={() => handleNavigation(letter.letterId)}
                 >
                   <p className="truncate">{letter.title}</p>
                   <p>{letter.remainingTime}</p>

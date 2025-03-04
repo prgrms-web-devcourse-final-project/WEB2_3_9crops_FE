@@ -1,6 +1,10 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+
 import HomeButton from '@/components/HomeButton';
 import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import useViewport from '@/hooks/useViewport';
+import useAuthStore from '@/stores/authStore';
 
 import HomeBackgroundLeft from './components/HomeBackgroundLeft';
 import HomeBackgroundRightBottom from './components/HomeBackgroundRightBottom';
@@ -11,7 +15,16 @@ import HomeRight from './components/HomeRight';
 import LetterActions from './components/LetterActions';
 
 const HomePage = () => {
+  const isLoggedIn = useAuthStore.getState().isLoggedIn;
+  const navigate = useNavigate();
+
   useViewport();
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, []);
+
   return (
     <div className="relative h-[calc(var(--vh)*100)] w-full overflow-hidden">
       <HomeHeader />
