@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { getUnreadLettersCount } from '@/apis/unreadLetters';
 
-const NewLetterModal = () => {
+const UnreadLetterModal = () => {
   const [arrivedCount, setArrivedCount] = useState<number>(0);
 
   useEffect(() => {
@@ -24,4 +24,4 @@ const NewLetterModal = () => {
   );
 };
 
-export default NewLetterModal;
+export default UnreadLetterModal;
