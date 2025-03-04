@@ -32,7 +32,6 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           pnpm install --frozen-lockfile
           pnpm store prune
