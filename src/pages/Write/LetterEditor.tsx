@@ -60,6 +60,7 @@ export default function LetterEditor({
 
   useEffect(() => {
     if (isReply) {
+      console.log('prevLetter', prevLetter);
       setLetterRequest({
         receiverId: prevLetter[0].memberId,
         parentLetterId: Number(searchParams.get('letterId')),
@@ -80,7 +81,7 @@ export default function LetterEditor({
             onClick={() => {
               if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                 if (randomMatched) {
-                  const firstReplyRequest = removeProperty(letterRequest, 'matchingId');
+                  const firstReplyRequest = removeProperty(letterRequest, ['matchingId']);
                   console.log(firstReplyRequest);
                   handlePostFirstReply(firstReplyRequest);
                 } else {
@@ -105,7 +106,7 @@ export default function LetterEditor({
         )}
       </div>
       <div className="flex flex-col gap-3 px-6">
-        <div className="body-b mt-15">TO. {'12EE1'}</div>
+        <div className="body-b mt-15">TO. 따숨이에게</div>
         <input
           type="text"
           placeholder="제목을 입력해주세요."

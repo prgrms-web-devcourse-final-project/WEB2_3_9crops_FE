@@ -1,5 +1,7 @@
-export function removeProperty<T, K extends keyof T>(obj: T, property: K): Omit<T, K> {
+export function removeProperty<T, K extends keyof T>(obj: T, propertys: K[]): Omit<T, K> {
   const newObj = { ...obj };
-  delete newObj[property];
+  propertys.forEach((property) => {
+    delete newObj[property];
+  });
   return newObj;
 }

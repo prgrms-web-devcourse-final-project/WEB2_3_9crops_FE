@@ -11,10 +11,6 @@ const getRandomLetters = async (category: string | null) => {
   }
 };
 
-interface ApproveRequest {
-  letterId: string;
-  writerId: string;
-}
 const postRandomLettersApprove = async (approveRequest: ApproveRequest, callBack?: () => void) => {
   try {
     console.log('엔드포인트 : /api/random-letters/approve');
@@ -22,7 +18,7 @@ const postRandomLettersApprove = async (approveRequest: ApproveRequest, callBack
     const res = await client.post('/api/random-letters/approve', approveRequest);
     if (!res) throw new Error('랜덤편지 매칭수락 도중 에러가 발생했습니다.');
     if (callBack) callBack();
-    console.log(res);
+    return res;
   } catch (error) {
     console.error(error);
   }

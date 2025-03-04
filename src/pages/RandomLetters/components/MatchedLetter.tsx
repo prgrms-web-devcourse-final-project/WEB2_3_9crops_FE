@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
@@ -6,12 +6,12 @@ import BackButton from '@/components/BackButton';
 import ReportModal from '@/components/ReportModal';
 import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
 
-const MatchedLetter = ({ selectedLetter }: { selectedLetter: RandomLetters }) => {
+const MatchedLetter = ({ matchedLetter }: { matchedLetter: MatchedLetter }) => {
   const navigate = useNavigate();
-  // 상대방의 우편번호도 데이터에 포함되어야 할 거 같음!!!
-  const [letterDetail] = useState<LetterDetail | null>(null);
 
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {}, [matchedLetter]);
 
   return (
     <>
@@ -19,7 +19,7 @@ const MatchedLetter = ({ selectedLetter }: { selectedLetter: RandomLetters }) =>
       <div
         className={twMerge(
           `flex grow flex-col gap-3 px-5 pb-7.5`,
-          letterDetail && PAPER_TYPE_OBJ[letterDetail.paperType],
+          PAPER_TYPE_OBJ[matchedLetter.paperType],
         )}
       >
         <div className="absolute top-5 left-0 flex w-full justify-between px-5">
@@ -27,22 +27,22 @@ const MatchedLetter = ({ selectedLetter }: { selectedLetter: RandomLetters }) =>
         </div>
         <div className="flex flex-col gap-3 px-5">
           <span className="body-b mt-[55px]">TO. 따숨이</span>
-          <span className="body-sb">{selectedLetter?.title}</span>
+          <span className="body-sb">{matchedLetter?.title}</span>
         </div>
         <textarea
           readOnly
-          value={letterDetail?.content}
+          value={matchedLetter?.content}
           className={twMerge(
             `body-r basic-theme min-h-full w-full grow px-6`,
-            letterDetail && FONT_TYPE_OBJ[letterDetail.fontType],
+            FONT_TYPE_OBJ[matchedLetter.fontType],
           )}
         ></textarea>
-        <span className="body-sb mt-10 flex justify-end">FROM. {selectedLetter.zipCode}</span>
+        <span className="body-sb mt-10 flex justify-end">FROM. {matchedLetter.zipCode}</span>
         <button
           className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
           onClick={() => {
-            navigate(`/letter/write?letterId=${selectedLetter?.letterId}`, {
-              state: { randomMatched: true, selectedLetter: selectedLetter },
+            navigate(`/letter/write?letterId=${matchedLetter?.letterId}`, {
+              state: { randomMatched: true, matchedLetter: matchedLetter },
             });
           }}
           aria-label="편지 작성 버튼"

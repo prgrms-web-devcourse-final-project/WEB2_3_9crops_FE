@@ -52,49 +52,6 @@ export default function CoolTime({
     };
   });
 
-  // const [endTimes, setEndTimes] = useState({
-  //   hours: Math.floor((endTime / (1000 * 60 * 60)) % 24),
-  //   minutes: Math.floor((endTime / (1000 * 60)) % 60),
-  //   seconds: Math.floor((endTime / 1000) % 60),
-  // });
-
-  // useEffect(() => {
-  //   if (endTimes.hours < 0 || endTimes.minutes < 0 || endTimes.seconds < 0) {
-  //     setEndTimes({ hours: 0, minutes: 0, seconds: 0 });
-  //   }
-  //   if (endTimes.hours === 0 && endTimes.minutes === 0 && endTimes.seconds === 0) {
-  //     setCoolTime(false);
-  //     return;
-  //   }
-  //   const endTimeFlow = setInterval(() => {
-  //     setEndTimes((currentTime) => {
-  //       if (currentTime.seconds > 0) {
-  //         return { ...currentTime, seconds: currentTime.seconds - 1 };
-  //       } //
-  //       else {
-  //         if (currentTime.minutes > 0) {
-  //           return { ...currentTime, minutes: currentTime.minutes - 1, seconds: 59 };
-  //         } //
-  //         else {
-  //           if (currentTime.hours > 0) {
-  //             return { hours: currentTime.hours - 1, minutes: 59, seconds: 59 };
-  //           } //
-  //           else {
-  //             setCoolTime(false);
-  //             return { ...currentTime };
-  //           }
-  //         }
-  //       }
-  //     });
-  //     if (endTimes.hours === 0 && endTimes.minutes === 0 && endTimes.seconds === 0) {
-  //       clearInterval(endTimeFlow);
-  //     }
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(endTimeFlow);
-  //   };
-  // }, [endTimes, setCoolTime]);
   return (
     <div className="mt-20 flex flex-col items-center justify-center">
       <div className="body-m flex flex-col items-center justify-center">

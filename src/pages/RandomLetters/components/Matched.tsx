@@ -7,32 +7,32 @@ import { formatNumber } from '@/utils/formatNumber';
 import { timeFormatter } from '@/utils/timeFormatter';
 
 export default function Matched({
-  selectedLetter,
+  matchedLetter,
   setIsMatched,
   setIsCoolTime,
+  setOpenSelectedDetailModal,
 }: {
-  selectedLetter: RandomLetters;
+  matchedLetter: MatchedLetter;
   setIsMatched: React.Dispatch<React.SetStateAction<boolean>>;
   setIsCoolTime: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSelectedDetailModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  const TIME_STAMP = '2025-03-03T19:35:05';
+  const TIME_STAMP = matchedLetter.replyDeadLine;
+  const MATCH_DURATION = 1000 * 60 * 60 * 24;
+  const MATCH_GRACE = 1000 * 60 * 5;
 
-  const MATCHED_DATE = new Date(TIME_STAMP);
+  const END_DATE = new Date(TIME_STAMP);
 
-  const END_DATE = new Date(MATCHED_DATE);
-  END_DATE.setHours(MATCHED_DATE.getHours() + 24);
-
-  const GRACE_DATE = new Date(MATCHED_DATE);
-  GRACE_DATE.setMinutes(MATCHED_DATE.getMinutes() + 5);
+  const MATCHED_DATE = new Date(END_DATE.getTime() - MATCH_DURATION + MATCH_GRACE);
 
   const NOW_DATE = new Date();
 
   const endTime = END_DATE.getTime() - NOW_DATE.getTime();
-  const graceTime = GRACE_DATE.getTime() - NOW_DATE.getTime();
+  const graceTime = MATCHED_DATE.getTime() - NOW_DATE.getTime();
 
   const [endTimeSeconds, setEndTimeSeconds] = useState(Math.floor(endTime / 1000));
   const [graceTimeSeconds, setGraceTimeSeconds] = useState(Math.floor(graceTime / 1000));
@@ -90,11 +90,16 @@ export default function Matched({
           {formatNumber(FormatedEndTimes.hours)} : {formatNumber(FormatedEndTimes.minutes)} :{' '}
           {formatNumber(FormatedEndTimes.seconds)}
         </p>
-        <div className="mt-2 w-75">
+        <div
+          className="mt-2 w-75"
+          onClick={() => {
+            setOpenSelectedDetailModal(true);
+          }}
+        >
           <ResultLetter
-            categoryName={selectedLetter.category}
-            title={selectedLetter.title}
-            zipCode={selectedLetter.zipCode}
+            categoryName={matchedLetter.category}
+            title={matchedLetter.title}
+            zipCode={matchedLetter.zipCode}
           />
         </div>
         <button

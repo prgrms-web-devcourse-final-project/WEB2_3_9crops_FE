@@ -20,18 +20,19 @@ const RandomLettersPage = () => {
     category: 'ETC',
     title: 'error',
     zipCode: 'error',
-    paperType: 'BASIC',
-    fontType: 'DEFAULT',
+    writerId: 0,
     createdAt: new Date(),
   });
   const [matchedLetter, setMatchedLetter] = useState<MatchedLetter>({
     letterId: 0,
     category: 'ETC',
     title: 'error',
+    content: 'error',
     zipCode: 'error',
     paperType: 'BASIC',
     fontType: 'DEFAULT',
     createdAt: new Date(),
+    writerId: 0,
     replyDeadLine: new Date(),
     temporary: false,
   });
@@ -43,30 +44,10 @@ const RandomLettersPage = () => {
     const res = await getRandomLetterMatched();
     if (res?.status === 200) {
       const data: MatchedLetter = res.data.data;
+      console.log(data);
       if (data?.temporary === true) {
         setIsMatched(true);
-        setMatchedLetter({
-          letterId: data.letterId,
-          category: data.category,
-          title: data.title,
-          zipCode: data.zipCode,
-          paperType: data.paperType,
-          fontType: data.fontType,
-          createdAt: data.createdAt,
-          replyDeadLine: data.replyDeadLine,
-          temporary: data.temporary,
-        });
-        console.log({
-          letterId: data.letterId,
-          category: data.category,
-          title: data.title,
-          zipCode: data.zipCode,
-          paperType: data.paperType,
-          fontType: data.fontType,
-          createdAt: data.createdAt,
-          replyDeadLine: data.replyDeadLine,
-          temporary: data.temporary,
-        });
+        setMatchedLetter(data);
       }
     }
   };
@@ -94,7 +75,7 @@ const RandomLettersPage = () => {
   return (
     <>
       {openSelectedDetailModal ? (
-        <MatchedLetter selectedLetter={selectedLetter} />
+        <MatchedLetter matchedLetter={matchedLetter} />
       ) : (
         <>
           <div className="z-10 flex grow flex-col items-center overflow-hidden">
@@ -115,9 +96,10 @@ const RandomLettersPage = () => {
             ) : (
               <Matched
                 // MEMO : 여기 selectedLetter가 아니라 MatchedLetter 들어가야함
-                selectedLetter={selectedLetter}
+                matchedLetter={matchedLetter}
                 setIsMatched={setIsMatched}
                 setIsCoolTime={setIsCoolTime}
+                setOpenSelectedDetailModal={setOpenSelectedDetailModal}
               />
             )}
 
@@ -126,6 +108,7 @@ const RandomLettersPage = () => {
                 setOpenModal={setOpenSelectModal}
                 selectedLetter={selectedLetter}
                 setOpenSelectedDetailModal={setOpenSelectedDetailModal}
+                setMatchedLetter={setMatchedLetter}
               />
             )}
           </div>

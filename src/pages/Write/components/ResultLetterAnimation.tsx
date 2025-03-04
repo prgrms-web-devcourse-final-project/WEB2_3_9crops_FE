@@ -3,12 +3,15 @@ import { useEffect, useState } from 'react';
 import closedLetter from '@/assets/images/closed-letter.png';
 import openedLetterFront from '@/assets/images/opened-letter-front.png';
 import openedLetter from '@/assets/images/opened-letter.png';
+import useAuthStore from '@/stores/authStore';
 import useWrite from '@/stores/writeStore';
 
 import ResultLetter from '../../../components/ResultLetter';
 
 export default function ResultLetterAnimation() {
   const [next, setNext] = useState('st');
+
+  const userZipCode = useAuthStore((state) => state.zipCode);
 
   const letterRequest = useWrite((state) => state.letterRequest);
 
@@ -28,7 +31,7 @@ export default function ResultLetterAnimation() {
           <ResultLetter
             categoryName={letterRequest.category}
             title={letterRequest.title}
-            zipCode="유저거넣기"
+            zipCode={userZipCode}
           />
         </div>
       ) : (

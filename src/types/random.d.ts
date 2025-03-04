@@ -3,12 +3,14 @@ interface RandomLetters {
   title: string;
   zipCode: string;
   category: Category;
-  paperType: PaperType;
-  fontType: FontType;
+  writerId: number;
   createdAt: Date;
 }
 
 interface MatchedLetter extends RandomLetters {
+  paperType: PaperType;
+  fontType: FontType;
+  content: string;
   replyDeadLine: Date;
   temporary: boolean;
 }
@@ -19,4 +21,9 @@ interface CoolTime {
 
 interface CoolTimeData extends CoolTime {
   canSend: boolean;
+}
+
+interface ApproveRequest {
+  letterId: string;
+  writerId: string;
 }
