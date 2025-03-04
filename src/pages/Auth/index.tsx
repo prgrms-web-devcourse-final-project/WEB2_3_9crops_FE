@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -10,73 +9,75 @@ const AuthCallbackPage = () => {
   const redirectURL = new URLSearchParams(window.location.search).get('redirect');
 
   const login = useAuthStore((state) => state.login);
+  const logout = useAuthStore((state) => state.logout);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setZipCode = useAuthStore((state) => state.setZipCode);
-
   const navigate = useNavigate();
+
+  const handleError = (error: unknown) => {
+    console.error('AuthCallback Error:', error);
+    logout();
+    navigate('/login', { replace: true });
+  };
 
   const setUserInfo = async (stateToken: string) => {
     try {
       const response = await getUserToken(stateToken);
-      if (!response) throw new Error('Error Fetching userInfo');
+      console.log(response);
+      if (!response) throw new Error('Error fetching user token');
 
       const userInfo = response.data;
-      if (userInfo) {
-        login();
-        userInfo.accessToken && setAccessToken(userInfo.accessToken);
+      if (!userInfo) throw new Error('Invalid user info');
 
-        if (redirectURL == 'home') {
-          const zipCodeResponse = await getMydata();
-          if (!zipCodeResponse) throw new Error('Error Fetching userInfo');
-          const zipCode = zipCodeResponse.data.data.zipCode;
-          zipCode && setZipCode(zipCode);
+      login();
+      if (userInfo.accessToken) setAccessToken(userInfo.accessToken);
 
-          console.log(
-            'isLoggedIn',
-            useAuthStore.getState().isLoggedIn,
-            'access',
-            useAuthStore.getState().accessToken,
-            'zipCode',
-            useAuthStore.getState().zipCode,
-          );
-        } else if (redirectURL === 'onboarding') {
-          const createZipCodeResponse = await postZipCode();
-          if (!createZipCodeResponse) throw new Error('Error creating ZipCode');
-          const zipCode = createZipCodeResponse.data.data.zipCode;
-          console.log(createZipCodeResponse);
-          const newAccessToken = createZipCodeResponse.headers['Authorization'];
-          setZipCode(zipCode);
-          setAccessToken(newAccessToken);
-          console.log(
-            'isLoggedIn',
-            useAuthStore.getState().isLoggedIn,
-            'access',
-            useAuthStore.getState().accessToken,
-            'zipCode',
-            useAuthStore.getState().zipCode,
-          );
-        }
-      } else {
-        navigate('/login');
+      switch (redirectURL) {
+        case 'home':
+          {
+            const zipCodeResponse = await getMydata();
+            if (!zipCodeResponse) throw new Error('Error fetching user data');
+            setZipCode(zipCodeResponse.data.data.zipCode);
+          }
+          break;
+
+        case 'onboarding':
+          {
+            const createZipCodeResponse = await postZipCode();
+            if (!createZipCodeResponse) throw new Error('Error creating ZipCode');
+
+            setZipCode(createZipCodeResponse.data.data.zipCode);
+            const newAccessToken = createZipCodeResponse.headers['authorization']?.split(' ')[1];
+            if (!newAccessToken) throw new Error('Missing new access token');
+
+            setAccessToken(newAccessToken);
+          }
+          break;
+
+        default:
+          navigate('/notFound');
+          return;
       }
+      navigate(redirectURL === 'onboarding' ? '/onboarding' : '/');
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
-  const redirection = () => {
-    if (redirectURL === 'onboarding') navigate('/onboarding');
-    else if (redirectURL === 'home') navigate('/');
-    else navigate('/notFound');
-  };
-
   useEffect(() => {
-    if (stateToken) {
-      setUserInfo(stateToken as string);
-      redirection();
-    } else navigate('/notFound');
-  }, []);
-  return <></>;
+    if (!stateToken) {
+      navigate('/notFound');
+      return;
+    }
+
+    const fetchData = async () => {
+      await setUserInfo(stateToken as string);
+    };
+
+    fetchData();
+  }, [stateToken, navigate]);
+
+  return null;
 };
 
 export default AuthCallbackPage;

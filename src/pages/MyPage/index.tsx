@@ -27,7 +27,7 @@ const MyPage = () => {
   const handleLeave = async () => {
     try {
       const response = await deleteUserInfo();
-      if (!response) throw new Error('deletiongi failed');
+      if (!response) throw new Error('deletioning failed');
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -81,7 +81,9 @@ const MyPage = () => {
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">고객 센터</h3>
-            <p className="body-sb text-gray-100">운영자에게 문의하기</p>
+            <Link to="mailto:rlatpqls13@gmail.com">
+              <p className="body-sb text-gray-100">운영자에게 문의하기</p>
+            </Link>
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">계정</h3>
@@ -92,7 +94,12 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
-            <button className="body-sb text-gray-100" onClick={logout}>
+            <button
+              className="body-sb self-start text-gray-100"
+              onClick={() => {
+                logout();
+              }}
+            >
               로그아웃
             </button>
           </div>
@@ -100,7 +107,9 @@ const MyPage = () => {
         <button
           type="button"
           className="text-gray-60 body-m mt-auto self-start underline"
-          onClick={() => setIsOpenModal(true)}
+          onClick={async () => {
+            setIsOpenModal(true);
+          }}
         >
           탈퇴하기
         </button>

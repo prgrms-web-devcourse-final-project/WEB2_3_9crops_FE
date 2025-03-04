@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+
+import useAuthStore from '@/stores/authStore';
 
 import SetZipCode from './SetZipCode';
 import UserInteraction from './UserInteraction';
@@ -7,6 +10,8 @@ import WelcomeLetter from './WelcomeLetter';
 const OnboardingPage = () => {
   const [isZipCodeSet, setIsZipCodeSet] = useState<boolean>(false);
   const [isAnimationOver, setIsAnimationOver] = useState<boolean>(false);
+  const isLoggedIn = useAuthStore.getState().isLoggedIn;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isZipCodeSet || isAnimationOver) {
@@ -27,6 +32,13 @@ const OnboardingPage = () => {
       console.log('isZipCode', isZipCodeSet, 'isAnimation', isAnimationOver);
     }
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, []);
+
   return (
     <main className="inset-0 mx-5 mt-20 mb-[1.875rem] flex grow flex-col items-center justify-between overflow-hidden">
       {!isZipCodeSet ? (
