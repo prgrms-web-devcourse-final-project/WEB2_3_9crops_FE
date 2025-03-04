@@ -1,12 +1,24 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+
 import { socialLogin } from '@/apis/auth';
 import { GoogleIcon, KakaoIcon, NaverIcon, StampIcon } from '@/assets/icons';
+import useAuthStore from '@/stores/authStore';
 
 import Background from './components/Background';
 
 const LoginPage = () => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const navigate = useNavigate();
+
   const handleLogin = (loginType: LoginType) => {
     socialLogin(loginType);
   };
+
+  useEffect(() => {
+    if (isLoggedIn) navigate('/');
+  }, [isLoggedIn]);
+
   return (
     <>
       <main className="mt-10 flex grow flex-col items-center justify-between">
