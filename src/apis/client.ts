@@ -63,10 +63,8 @@ client.interceptors.response.use(
 
     const originalRequest = error.config;
 
-    if (!originalRequest) return Promise.reject(error);
-
-    if (originalRequest.url === '/auth/reissue') {
-      logout();
+    if (!originalRequest || originalRequest.url === '/auth/reissue') {
+      if (isLoggedIn) logout();
       return Promise.reject(error);
     }
 
@@ -77,6 +75,9 @@ client.interceptors.response.use(
       originalRequest._retry = true;
 
       if (isRefreshing) {
+        console.log('request', originalRequest);
+        console.log('isRefreshing');
+        console.log('failedQueue', failedQueue);
         try {
           return new Promise((resolve, reject) => {
             failedQueue.push({
@@ -107,7 +108,8 @@ client.interceptors.response.use(
         }
       }
     }
-    logout();
+    if (isLoggedIn) logout();
+    console.error('Failed to refresh token', error);
     return Promise.reject(error);
   },
 );
