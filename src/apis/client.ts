@@ -63,8 +63,10 @@ client.interceptors.response.use(
 
     const originalRequest = error.config;
 
-    if (!originalRequest || originalRequest.url === '/auth/reissue') {
-      if (isLoggedIn) logout();
+    if (!originalRequest) return Promise.reject(error);
+
+    if (originalRequest.url === '/auth/reissue') {
+      logout();
       return Promise.reject(error);
     }
 
@@ -105,6 +107,7 @@ client.interceptors.response.use(
         }
       }
     }
+    logout();
     return Promise.reject(error);
   },
 );
