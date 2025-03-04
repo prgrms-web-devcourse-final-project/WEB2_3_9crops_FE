@@ -31,13 +31,24 @@ const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue = [];
 };
 
+const callReissue = async () => {
+  try {
+    const response = await getNewToken();
+    const newToken = response?.data.accessToken;
+    return newToken;
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 client.interceptors.request.use(
   (config) => {
+    console.log('response again', config);
+
     const accessToken = useAuthStore.getState().accessToken;
     if (config.url !== '/auth/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     return config;
   },
   (error) => Promise.reject(error),
@@ -48,12 +59,12 @@ client.interceptors.response.use(
   async (error) => {
     const setAccessToken = useAuthStore.getState().setAccessToken;
     const logout = useAuthStore.getState().logout;
+    const isLoggedIn = useAuthStore.getState().isLoggedIn;
+
     const originalRequest = error.config;
 
-    if (!originalRequest) return Promise.reject(error);
-
-    if (originalRequest.url === '/auth/reissue') {
-      logout();
+    if (!originalRequest || originalRequest.url === '/auth/reissue') {
+      if (isLoggedIn) logout();
       return Promise.reject(error);
     }
 
@@ -64,6 +75,9 @@ client.interceptors.response.use(
       originalRequest._retry = true;
 
       if (isRefreshing) {
+        console.log('request', originalRequest);
+        console.log('isRefreshing');
+        console.log('failedQueue', failedQueue);
         try {
           return new Promise((resolve, reject) => {
             failedQueue.push({
@@ -77,30 +91,25 @@ client.interceptors.response.use(
         } catch (e) {
           return Promise.reject(e);
         }
-      }
-
-      isRefreshing = true;
-
-      try {
-        const response = await getNewToken();
-        const newToken = response?.data.accessToken;
-
-        if (!newToken) throw new Error('Failed to refresh token');
-
-        setAccessToken(newToken);
-        processQueue(null, newToken);
-
-        isRefreshing = false;
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return client(originalRequest);
-      } catch (e) {
-        processQueue(e, null);
-        isRefreshing = false;
-        logout();
-        return Promise.reject(e);
+      } else {
+        isRefreshing = true;
+        try {
+          const newToken = await callReissue();
+          setAccessToken(newToken);
+          processQueue(null, newToken);
+          isRefreshing = false;
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return client(originalRequest);
+        } catch (e) {
+          processQueue(e, null);
+          isRefreshing = false;
+          if (isLoggedIn) logout();
+          return Promise.reject(e);
+        }
       }
     }
-    logout();
+    if (isLoggedIn) logout();
+    console.error('Failed to refresh token', error);
     return Promise.reject(error);
   },
 );
