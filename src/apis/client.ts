@@ -52,10 +52,8 @@ client.interceptors.response.use(
 
     if (!originalRequest) return Promise.reject(error);
 
-    if (
-      originalRequest.url === '/auth/reissue' ||
-      originalRequest.url.includes('/api/auth/token?state=')
-    ) {
+    if (originalRequest.url === '/auth/reissue') {
+      logout();
       return Promise.reject(error);
     }
 
@@ -102,6 +100,7 @@ client.interceptors.response.use(
         return Promise.reject(e);
       }
     }
+    logout();
     return Promise.reject(error);
   },
 );
