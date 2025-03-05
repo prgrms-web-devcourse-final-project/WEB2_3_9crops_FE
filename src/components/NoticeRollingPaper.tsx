@@ -7,7 +7,7 @@ import { getCurrentRollingPaper } from '@/apis/rolling';
 import { NoticeIcon } from '@/assets/icons';
 
 const NoticeRollingPaper = () => {
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['notice-rolling-paper'],
     queryFn: () => getCurrentRollingPaper(),
   });
@@ -17,26 +17,30 @@ const NoticeRollingPaper = () => {
   const textRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    const containerElement = containerRef.current;
-    const element = textRef.current;
+    if (data?.title) {
+      const containerElement = containerRef.current;
+      const element = textRef.current;
 
-    if (containerElement && element) {
-      const textWidth = element.scrollWidth;
-      const containerWidth = containerElement.offsetWidth;
+      if (containerElement && element) {
+        const textWidth = element.scrollWidth;
+        const containerWidth = containerElement.offsetWidth;
 
-      if (textWidth > containerWidth) {
-        const animationDuration = (textWidth / 10) * 0.3;
-        const totalDuration = Math.max(animationDuration, 10);
-        document.documentElement.style.setProperty('--marquee-duration', `${totalDuration}s`);
+        if (textWidth > containerWidth) {
+          const animationDuration = (textWidth / 10) * 0.3;
+          const totalDuration = Math.max(animationDuration, 10);
+          document.documentElement.style.setProperty('--marquee-duration', `${totalDuration}s`);
 
-        setActiveAnimate(true);
-      } else {
-        setActiveAnimate(false);
+          setActiveAnimate(true);
+        } else {
+          setActiveAnimate(false);
+        }
       }
     }
   }, [data?.title]);
 
   const noticeText = data?.title;
+
+  if (error || !noticeText) return null;
 
   return (
     <Link to={`/board/rolling/${data?.eventPostId}`}>
