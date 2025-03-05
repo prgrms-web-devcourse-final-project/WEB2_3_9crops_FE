@@ -9,27 +9,27 @@ const client = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-type FailedRequest = {
-  resolve: (token: string) => void;
-  reject: (error: unknown) => void;
-};
+// type FailedRequest = {
+//   resolve: (token: string) => void;
+//   reject: (error: unknown) => void;
+// };
 
 let isRefreshing = false;
-let failedQueue: FailedRequest[] = [];
+// let failedQueue: FailedRequest[] = [];
 
-const processQueue = (error: unknown, token: string | null = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      if (token) {
-        prom.resolve(token);
-      }
-    }
-  });
+// const processQueue = (error: unknown, token: string | null = null) => {
+//   failedQueue.forEach((prom) => {
+//     if (error) {
+//       prom.reject(error);
+//     } else {
+//       if (token) {
+//         prom.resolve(token);
+//       }
+//     }
+//   });
 
-  failedQueue = [];
-};
+//   failedQueue = [];
+// };
 
 const callReissue = async () => {
   try {
@@ -41,6 +41,7 @@ const callReissue = async () => {
   }
 };
 
+let retry = false;
 client.interceptors.request.use(
   (config) => {
     console.log('response again', config);
@@ -68,40 +69,34 @@ client.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (
-      (error.response?.status === 401 || error.response?.status === 403) &&
-      !originalRequest._retry
-    ) {
-      originalRequest._retry = true;
-
+    if ((error.response?.status === 401 || error.response?.status === 403) && !retry) {
       if (isRefreshing) {
-        console.log('request', originalRequest);
-        console.log('isRefreshing');
-        console.log('failedQueue', failedQueue);
-        try {
-          return new Promise((resolve, reject) => {
-            failedQueue.push({
-              resolve: (token: string) => {
-                originalRequest.headers.Authorization = `Bearer ${token}`;
-                resolve(client(originalRequest));
-              },
-              reject: (err: unknown) => reject(err),
-            });
-          });
-        } catch (e) {
-          return Promise.reject(e);
-        }
+        retry = true;
+        if (isLoggedIn) logout();
+        // try {
+        //   return new Promise((resolve, reject) => {
+        //     failedQueue.push({
+        //       resolve: (token: string) => {
+        //         originalRequest.headers.Authorization = `Bearer ${token}`;
+        //         resolve(client(originalRequest));
+        //       },
+        //       reject: (err: unknown) => reject(err),
+        //     });
+        //   });
+        // } catch (e) {
+        //   return Promise.reject(e);
+        // }
       } else {
         isRefreshing = true;
         try {
           const newToken = await callReissue();
           setAccessToken(newToken);
-          processQueue(null, newToken);
+          // processQueue(null, newToken);
           isRefreshing = false;
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
           return client(originalRequest);
         } catch (e) {
-          processQueue(e, null);
+          // processQueue(e, null);
           isRefreshing = false;
           if (isLoggedIn) logout();
           return Promise.reject(e);
