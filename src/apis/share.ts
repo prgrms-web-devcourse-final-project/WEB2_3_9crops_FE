@@ -17,6 +17,7 @@ export interface SharePost {
   active: boolean;
   sharePostId: number;
   sharePostContent: string;
+  zipCode: string;
   letters: ShareLetter[];
 }
 

@@ -82,7 +82,7 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
           isShareLetterPreview={isShareLetterPreview}
         />
         <main className="px-5 pt-18 pb-3">
-          <p className="body-b mb-6 px-5">FROM. {postDetail?.writerZipCode}</p>
+          <p className="body-b mb-6 px-5">FROM. {postDetail?.zipCode}</p>
           <p
             className={twMerge(
               'body-r bg-[repeating-linear-gradient(transparent,transparent_25px,#ffe6e3_26px)] px-5 whitespace-pre-wrap',
