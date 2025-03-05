@@ -4,12 +4,12 @@ import { NOTIFICATION_ICON } from '../constants';
 
 interface NotificationItemProps {
   type: string;
-  message: string;
+  title: string;
   read: boolean;
   onClick: () => void;
 }
 
-const NotificationItem = ({ type, message, read, onClick }: NotificationItemProps) => {
+const NotificationItem = ({ type, title, read, onClick }: NotificationItemProps) => {
   const Icon = NOTIFICATION_ICON[type];
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -22,7 +22,7 @@ const NotificationItem = ({ type, message, read, onClick }: NotificationItemProp
       <div className="flex items-center gap-3">
         {read && <div className="absolute inset-0 z-10 bg-white/60" />}
         <Icon className="z-0 h-6 w-6 text-white" />
-        <p className="body-m text-gray-80 z-0">{message}</p>
+        <p className="body-m text-gray-80 z-0">{title}</p>
       </div>
     </LetterWrapper>
   );
