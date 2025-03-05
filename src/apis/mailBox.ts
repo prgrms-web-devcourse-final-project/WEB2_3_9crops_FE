@@ -12,8 +12,7 @@ export const getMailbox = async () => {
 
 export const getMailboxDetail = async (id: number, pageParam: number) => {
   try {
-    const response = await client.get(`/api/mailbox/${id}?page=${pageParam}&size=20`);
-    // const response = await client.get(`/api/mailbox/${id}`);
+    const response = await client.get(`/api/mailbox/${id}/detail?page=${pageParam}&size=20`);
 
     if (!response) throw new Error('error while fetching mailbox detail data');
     return response.data;
