@@ -1,5 +1,6 @@
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import React, { useEffect, useState } from 'react';
+// import { useNavigate } from 'react-router';
 
 import { DraftLetter, getDraftLetters } from '@/apis/draftLetters';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
@@ -12,6 +13,14 @@ interface ShowDraftModalProps {
 
 const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
   const [draftLetters, setDraftLetters] = useState<DraftLetter[]>([]);
+
+  // const navigate = useNavigate();
+
+  // const handleNavigation = (incomingId: number) => {
+  //   navigate(`/board/letter/${incomingId}`, {
+  //     state: { isShareLetterPreview: false },
+  //   });
+  // };
 
   useEffect(() => {
     getDraftLetters()
@@ -40,6 +49,7 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
                 <div
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
                   key={draft.letterId}
+                  // onClick={() => handleNavigation(draft.letterId)}
                 >
                   <p className="truncate">{draft.title}</p>
                   <div className="text-gray-20">
