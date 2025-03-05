@@ -31,13 +31,24 @@ const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue = [];
 };
 
+const callReissue = async () => {
+  try {
+    const response = await getNewToken();
+    const newToken = response?.data.accessToken;
+    return newToken;
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 client.interceptors.request.use(
   (config) => {
+    console.log('response again', config);
+
     const accessToken = useAuthStore.getState().accessToken;
     if (config.url !== '/auth/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     return config;
   },
   (error) => Promise.reject(error),
@@ -48,14 +59,12 @@ client.interceptors.response.use(
   async (error) => {
     const setAccessToken = useAuthStore.getState().setAccessToken;
     const logout = useAuthStore.getState().logout;
+    const isLoggedIn = useAuthStore.getState().isLoggedIn;
+
     const originalRequest = error.config;
 
-    if (!originalRequest) return Promise.reject(error);
-
-    if (
-      originalRequest.url === '/auth/reissue' ||
-      originalRequest.url.includes('/api/auth/token?state=')
-    ) {
+    if (!originalRequest || originalRequest.url === '/auth/reissue') {
+      if (isLoggedIn) logout();
       return Promise.reject(error);
     }
 
@@ -79,27 +88,21 @@ client.interceptors.response.use(
         } catch (e) {
           return Promise.reject(e);
         }
-      }
-
-      isRefreshing = true;
-
-      try {
-        const response = await getNewToken();
-        const newToken = response?.data.accessToken;
-
-        if (!newToken) throw new Error('Failed to refresh token');
-
-        setAccessToken(newToken);
-        processQueue(null, newToken);
-
-        isRefreshing = false;
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return client(originalRequest);
-      } catch (e) {
-        processQueue(e, null);
-        isRefreshing = false;
-        logout();
-        return Promise.reject(e);
+      } else {
+        isRefreshing = true;
+        try {
+          const newToken = await callReissue();
+          setAccessToken(newToken);
+          processQueue(null, newToken);
+          isRefreshing = false;
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return client(originalRequest);
+        } catch (e) {
+          processQueue(e, null);
+          isRefreshing = false;
+          if (isLoggedIn) logout();
+          return Promise.reject(e);
+        }
       }
     }
     return Promise.reject(error);

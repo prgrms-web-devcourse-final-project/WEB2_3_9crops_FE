@@ -21,6 +21,7 @@ const fetchMailLists = async () => {
   const response = await getMailbox();
   if (!response) throw new Error();
   const data: LetterBoxData[] = response.data;
+  console.log(data);
   // 정렬?
   return data;
 };
@@ -63,7 +64,7 @@ const LetterBoxPage = () => {
                     zipCode={data.oppositeZipCode}
                     letterCount={data.letterCount}
                     isChecked={data.oppositeRead}
-                    isClosed={data.active}
+                    isClosed={!data.active}
                   />
                 )),
               ).map((row, index) =>
