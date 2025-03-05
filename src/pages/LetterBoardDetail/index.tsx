@@ -103,7 +103,11 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
 
           {isShareLetterPreview && (
             <>
-              <img src={BlurImg} alt="landing blur" className="fixed bottom-0 z-10 w-screen" />
+              <img
+                src={BlurImg}
+                alt="landing blur"
+                className="fixed bottom-0 left-0 z-10 w-screen"
+              />
               <section className="fixed bottom-[30px] left-1/2 z-20 flex w-73 translate-x-[-50%] gap-6">
                 <button
                   type="button"
