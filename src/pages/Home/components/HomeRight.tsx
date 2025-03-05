@@ -5,7 +5,7 @@ import { getUnreadLettersCount } from '@/apis/unreadLetters';
 import FloatingLetters from './FloatingLetters';
 import GoToLetterBoard from './GoToLetterBoard';
 import GoToLetterBox from './GoToLetterBox';
-import NewLetterModal from './NewLetterModal';
+import UnreadLetterModal from './UnreadLetterModal';
 
 const HomeRight = () => {
   const [arrivedCount, setArrivedCount] = useState<number>(0);
@@ -27,7 +27,7 @@ const HomeRight = () => {
       {arrivedCount !== 0 && <FloatingLetters />}
       <GoToLetterBox />
       <GoToLetterBoard />
-      {arrivedCount !== 0 && <NewLetterModal />}
+      {arrivedCount !== 0 && <UnreadLetterModal />}
     </div>
   );
 };

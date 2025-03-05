@@ -85,7 +85,7 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
           isShareLetterPreview={isShareLetterPreview}
         />
         <main className="px-5 pt-18 pb-3">
-          <p className="body-b mb-6 px-5">FROM. {postDetail?.writerZipCode}</p>
+          <p className="body-b mb-6 px-5">FROM. {postDetail?.zipCode}</p>
           <p
             className={twMerge(
               'body-r bg-[repeating-linear-gradient(transparent,transparent_25px,#ffe6e3_26px)] px-5 whitespace-pre-wrap',
@@ -99,14 +99,18 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
               <Letter
                 key={index}
                 letter={letter}
-                isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
+                isWriter={letter.writerZipCode === postDetail.zipCode}
               />
             ))}
           </section>
 
           {isShareLetterPreview && (
             <>
-              <img src={BlurImg} alt="landing blur" className="fixed bottom-0 z-10 w-screen" />
+              <img
+                src={BlurImg}
+                alt="landing blur"
+                className="fixed bottom-0 left-0 z-10 w-screen"
+              />
               <section className="fixed bottom-[30px] left-1/2 z-20 flex w-73 translate-x-[-50%] gap-6">
                 <button
                   type="button"

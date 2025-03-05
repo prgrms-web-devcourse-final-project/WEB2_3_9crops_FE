@@ -1,11 +1,5 @@
 import client from './client';
 
-export interface UnreadLetters {
-  data: number;
-  message: string;
-  timestamp: string;
-}
-
 export const getUnreadLettersCount = async (): Promise<UnreadLetters> => {
   try {
     const response = await client.get('/api/letters/unread/count');
