@@ -96,7 +96,7 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
               <Letter
                 key={index}
                 letter={letter}
-                isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
+                isWriter={letter.writerZipCode === postDetail.zipCode}
               />
             ))}
           </section>

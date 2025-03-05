@@ -10,8 +10,8 @@ interface ShareLetter {
 
 // 공유 게시글 목록 조회 타입
 export interface SharePost {
-  writerZipCode: number;
-  receiverZipCode: number;
+  writerZipCode: string;
+  receiverZipCode: string;
   content: string;
   createdAt: string;
   active: boolean;
