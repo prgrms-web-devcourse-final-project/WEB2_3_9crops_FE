@@ -70,8 +70,8 @@ client.interceptors.response.use(
     }
 
     if ((error.response?.status === 401 || error.response?.status === 403) && !retry) {
+      retry = true;
       if (isRefreshing) {
-        retry = true;
         if (isLoggedIn) logout();
         // try {
         //   return new Promise((resolve, reject) => {
