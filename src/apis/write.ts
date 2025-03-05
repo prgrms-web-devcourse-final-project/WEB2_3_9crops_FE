@@ -26,7 +26,7 @@ const postFirstReply = async (data: FirstReplyRequest) => {
 
 const getPrevLetter = async (letterId: string) => {
   try {
-    const res = await client.get(`/api/v1/letters/${letterId}/previous`);
+    const res = await client.get(`/api/letters/${letterId}/previous`);
     console.log(res);
     return res;
   } catch (error) {
