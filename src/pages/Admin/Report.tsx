@@ -26,13 +26,14 @@ export default function ReportManage() {
 
   const [reportQueryString, setReportQueryString] = useState<ReportQueryString>({
     reportType: null,
-    status: null,
+    status: 'PENDING',
     page: '1',
-    size: null,
+    size: '3',
   });
   const handleGetReports = async (reportQueryString: ReportQueryString) => {
     const res = await getReports(reportQueryString);
     if (res?.status === 200) {
+      console.log(res.data.data.content);
       setReports(res.data.data.content);
       setReportPages(() => ({
         currentPage: res.data.data.currentPage,

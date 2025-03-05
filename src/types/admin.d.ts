@@ -17,22 +17,33 @@ interface ReportPages {
 interface Report {
   id: number;
   reporterEmail: string;
+  targetId: number;
   targetEmail: string;
   reportedAt: Date;
+  reporterId: number;
+  updatedAt: Date;
   letterId: number | null;
   comment: string | null;
   sharePostId: number | null;
   reportType: ReportType;
-  reason: Reason;
-  reasonDetail: string | null;
+  reasonType: Reason;
+  reason: string;
   status: Status;
-  letterDetail: {
+  eventCommentId: number;
+  contentDetail: {
     title: string | null;
     content: string;
   };
 }
 
-interface ReportRequest {
+interface PostReportRequest {
+  reportType: ReportType;
+  reasonType: Reason | '';
+  reason: string;
+  letterId: number | null;
+}
+
+interface PatchReportRequest {
   status: 'RESOLVED' | 'REJECTED';
   adminMemo: string;
 }
