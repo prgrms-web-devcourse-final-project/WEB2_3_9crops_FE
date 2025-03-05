@@ -12,7 +12,7 @@ export const fetchMyPageInfo = async () => {
 
 export const getMySharePostList = async () => {
   try {
-    const response = await client.get('/api/share-proposal/inbox');
+    const response = await client.get('/api/share-proposals/inbox');
     if (!response) throw new Error('error while fetching my share post list');
     return response.data;
   } catch (error) {
