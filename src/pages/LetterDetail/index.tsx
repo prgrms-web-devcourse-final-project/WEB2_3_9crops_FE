@@ -157,15 +157,17 @@ const LetterDetailPage = () => {
           )}
         ></textarea>
         <span className="body-sb mt-10 flex justify-end">FROM. {'12E12'}</span>
-        <button
-          className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
-          onClick={() => {
-            navigate(`/letter/write/?letterId=${letterDetail?.letterId}`);
-          }}
-          disabled={!letterDetail?.matched}
-        >
-          {letterDetail?.matched ? '편지 작성하기' : '대화가 종료된 편지입니다.'}
-        </button>
+        {userZipCode !== letterDetail?.zipCode && (
+          <button
+            className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
+            onClick={() => {
+              navigate(`/letter/write/?letterId=${letterDetail?.letterId}`);
+            }}
+            disabled={!letterDetail?.matched}
+          >
+            {letterDetail?.matched ? '편지 작성하기' : '대화가 종료된 편지입니다.'}
+          </button>
+        )}
         {deleteModalOpen && (
           <ConfirmModal
             title="편지를 삭제하시겠습니까?"
