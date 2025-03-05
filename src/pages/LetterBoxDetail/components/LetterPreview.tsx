@@ -1,6 +1,8 @@
+import { forwardRef } from 'react';
 import { useNavigate } from 'react-router';
 
 import LetterWrapper from '@/components/LetterWrapper';
+import formatDate from '@/utils/formatDate';
 
 interface LetterPreviewProps {
   id: number;
@@ -13,18 +15,18 @@ interface LetterPreviewProps {
   isClosed: boolean;
   zipCode: string;
 }
-const LetterPreview = ({
-  id,
-  date,
-  title,
-  isSend,
-  checked,
-  isShareMode = false,
-  onToggle,
-  isClosed,
-  zipCode,
-}: LetterPreviewProps) => {
-  // 차단된 편지인경우 편지 보내기 disable
+const LetterPreview = forwardRef<HTMLDivElement, LetterPreviewProps>((props, ref) => {
+  const {
+    id,
+    date,
+    title,
+    isSend,
+    checked,
+    isShareMode = false,
+    onToggle,
+    isClosed,
+    zipCode,
+  } = props;
   const navigate = useNavigate();
 
   const handleItemClick = (id: number) => {
@@ -39,9 +41,9 @@ const LetterPreview = ({
 
   if (isShareMode)
     return (
-      <LetterWrapper isSender={isSend}>
+      <LetterWrapper isSender={isSend} ref={ref}>
         <div className="mb-3 flex items-center justify-between">
-          <p className="body-r text-gray-80">{date}</p>
+          <p className="body-r text-gray-80">{formatDate(date)}</p>
           <label htmlFor={`${id}`} className="relative">
             <input
               id={`${id}`}
@@ -58,11 +60,11 @@ const LetterPreview = ({
     );
 
   return (
-    <LetterWrapper isSender={isSend} onClick={() => handleItemClick(id)}>
+    <LetterWrapper isSender={isSend} onClick={() => handleItemClick(id)} ref={ref}>
       <p className="body-r text-gray-80 mb-3">{date}</p>
       <p className="body-m text-gray-80 line-clamp-1 break-all">{title}</p>
     </LetterWrapper>
   );
-};
+});
 
 export default LetterPreview;

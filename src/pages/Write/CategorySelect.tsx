@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router';
 
 import { postLetter } from '@/apis/write';
-import BackButton from '@/components/BackButton';
 import PageTitle from '@/components/PageTitle';
 import CategoryList from '@/pages/Write/components/CategoryList';
 import useWrite from '@/stores/writeStore';
@@ -12,35 +10,32 @@ import WritePageButton from './components/WritePageButton';
 
 export default function CategorySelect({
   setStep,
-  prevLetter,
+  send,
+  setSend,
+  isReply,
 }: {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
-  prevLetter: PrevLetter[];
+  send: boolean;
+  setSend: React.Dispatch<React.SetStateAction<boolean>>;
+  isReply: boolean;
 }) {
-  const letterTitle = useWrite((state) => state.letterTitle);
-  const letterText = useWrite((state) => state.letterText);
-  const category = useWrite((state) => state.category);
-  const paperType = useWrite((state) => state.paperType);
-  const fontType = useWrite((state) => state.fontType);
+  const letterRequest = useWrite((state) => state.letterRequest);
 
-  const [send, setSend] = useState<boolean>(false);
-
-  const LETTER_REQUEST: LetterRequest = {
-    receiver: null,
-    parentLetterId: null,
-    title: letterTitle,
-    content: letterText,
-    category: category,
-    paperType: paperType,
-    fontType: fontType,
+  const handlePostLetter = async (letterRequest: LetterRequest) => {
+    const res = await postLetter(letterRequest);
+    if (res?.status === 200) {
+      console.log(letterRequest);
+      setSend(true);
+    } else {
+      alert('전송오류(임시)');
+    }
   };
 
   return (
     <>
       <div className="flex w-full grow flex-col items-center">
         <div className="absolute left-0 flex w-full items-center justify-between px-5">
-          <BackButton />
-          {!send && prevLetter.length <= 0 && (
+          {!send && !isReply && (
             <WritePageButton
               text="이전 단계"
               onClick={() => {
@@ -52,17 +47,15 @@ export default function CategorySelect({
         </div>
 
         <PageTitle className="mt-20">
-          {send || prevLetter.length > 0
-            ? '편지 작성이 완료 되었어요!'
-            : '어떤 답장을 받고 싶나요?'}
+          {send || isReply ? '편지 작성이 완료 되었어요!' : '어떤 답장을 받고 싶나요?'}
         </PageTitle>
 
         {/* 카테고리 선택 컴포넌트 */}
-        {!send && prevLetter.length <= 0 && <CategoryList />}
+        {!send && !isReply && <CategoryList />}
 
-        {prevLetter.length > 0 && (
+        {send && isReply && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetterAnimation categoryName="답변자" />
+            <ResultLetterAnimation />
             <div className="animate-show-text flex flex-col items-center opacity-0">
               <span className="body-sb text-gray-60">작성하신 편지는</span>
               <span className="body-sb text-gray-60">
@@ -74,16 +67,16 @@ export default function CategorySelect({
           </div>
         )}
 
-        {send && (
+        {send && !isReply && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
-            <ResultLetterAnimation categoryName={category} />
+            <ResultLetterAnimation />
             <span className="animate-show-text body-sb text-gray-60 opacity-0">
               두근두근! 답장이 언제 올까요?
             </span>
           </div>
         )}
 
-        {send || prevLetter.length > 0 ? (
+        {send || isReply ? (
           <Link
             to={'/'}
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
@@ -94,8 +87,8 @@ export default function CategorySelect({
           <button
             className="bg-primary-3 body-m mt-auto flex h-10 w-full items-center justify-center rounded-lg"
             onClick={() => {
-              if (category) {
-                postLetter(LETTER_REQUEST, setSend);
+              if (letterRequest.category) {
+                handlePostLetter(letterRequest);
                 // setSend(true);
               } else {
                 alert('우표 선택을 해주세요');

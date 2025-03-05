@@ -3,13 +3,17 @@ import { useEffect, useState } from 'react';
 import closedLetter from '@/assets/images/closed-letter.png';
 import openedLetterFront from '@/assets/images/opened-letter-front.png';
 import openedLetter from '@/assets/images/opened-letter.png';
+import useAuthStore from '@/stores/authStore';
 import useWrite from '@/stores/writeStore';
 
 import ResultLetter from '../../../components/ResultLetter';
 
-export default function ResultLetterAnimation({ categoryName }: { categoryName: Category }) {
+export default function ResultLetterAnimation() {
   const [next, setNext] = useState('st');
-  const letterTitle = useWrite((state) => state.letterTitle);
+
+  const userZipCode = useAuthStore((state) => state.zipCode);
+
+  const letterRequest = useWrite((state) => state.letterRequest);
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,7 +27,12 @@ export default function ResultLetterAnimation({ categoryName }: { categoryName: 
     <>
       {next === 'rd' ? (
         <div className="animate-rotate-show w-full opacity-0">
-          <ResultLetter categoryName={categoryName} title={letterTitle} />
+          {/* MEMO : 여기엔 로그인된 유저의 zipCode가 들어가야함! */}
+          <ResultLetter
+            categoryName={letterRequest.category}
+            title={letterRequest.title}
+            zipCode={userZipCode}
+          />
         </div>
       ) : (
         <>

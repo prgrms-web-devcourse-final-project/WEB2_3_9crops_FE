@@ -14,6 +14,14 @@ function OptionSlide({ prevLetter }: { prevLetter: PrevLetter[] }) {
   const optionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && !slideRef.current?.contains(target)) {
+        setSlideActive(false);
+      }
+    };
+    document.body.addEventListener('click', handleOutsideClick);
+
     const handleSlideButton = () => {
       // ref가 처음 높이를 못 받아오는거 같아서 비동기로 후처리함
       if (slideRef.current) {
@@ -25,6 +33,10 @@ function OptionSlide({ prevLetter }: { prevLetter: PrevLetter[] }) {
       }
     };
     handleSlideButton();
+
+    return () => {
+      document.body.removeEventListener('click', handleOutsideClick);
+    };
   }, [slideActive]);
 
   return (

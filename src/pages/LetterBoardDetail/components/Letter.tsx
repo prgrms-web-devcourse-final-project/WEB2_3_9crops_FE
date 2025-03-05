@@ -2,20 +2,20 @@ import MemoWrapper from '@/components/MemoWrapper';
 
 interface LetterProps {
   letter: {
-    receiver: string;
+    receiverZipCode: string;
     content: string;
-    sender: string;
+    writerZipCode: string;
   };
-  isSender?: boolean;
+  isWriter?: boolean;
 }
 
-const Letter = ({ letter, isSender = false }: LetterProps) => {
+const Letter = ({ letter, isWriter = false }: LetterProps) => {
   return (
-    <MemoWrapper isSender={isSender}>
+    <MemoWrapper isSender={isWriter}>
       <div className="flex flex-col gap-2 text-black">
-        <p className="body-sb">To. {letter.receiver}</p>
+        <p className="body-sb">To. {letter.receiverZipCode}</p>
         <p className="body-r leading-[26px] whitespace-pre-wrap">{letter.content}</p>
-        <p className="body-m place-self-end">From. {letter.sender}</p>
+        <p className="body-m place-self-end">From. {letter.writerZipCode}</p>
       </div>
     </MemoWrapper>
   );

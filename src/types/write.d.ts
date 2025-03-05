@@ -22,8 +22,10 @@ interface PrevLetter {
   letterId: number;
   title: string;
   content: string;
-  paperType: PaperType;
-  fontType: FontType;
+  category: Category;
+  memberId: number;
+  receiverId: number;
+  matchingId: number | null;
 }
 
 interface Categorys {
@@ -48,7 +50,18 @@ interface CategoryStamps {
 
 // API 타입
 interface LetterRequest {
-  receiver: number | null;
+  receiverId: number | null;
+  parentLetterId: number | null;
+  title: string;
+  content: string;
+  category: Category;
+  paperType: PaperType;
+  fontType: FontType;
+  matchingId: number | null;
+}
+
+interface FirstReplyRequest {
+  receiverId: number | null;
   parentLetterId: number | null;
   title: string;
   content: string;

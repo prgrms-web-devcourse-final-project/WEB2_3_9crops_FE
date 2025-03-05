@@ -30,14 +30,15 @@ const LetterBoxItem = ({
       className="flex h-fit w-fit flex-col items-center"
       onClick={() => handleClickItem(boxId)}
     >
-      <div className="text-gray-70 flex h-25 w-20 flex-col gap-1.5 bg-linear-to-b from-[#D5B695] to-[#B3895D] p-1.5">
+      <div className="text-gray-70 window-bg flex h-25 w-20 flex-col gap-1.5 bg-linear-to-b p-1.5">
         <p
           className={twMerge(
             'body-m from-white px-1',
             isClosed
               ? 'bg-[repeating-linear-gradient(#D9D9D9,#D9D9D9_17px,#C2C2C2_17px,#C2C2C2_23px)]'
-              : 'bg-linear-to-b',
-            isChecked ? 'to-[#FFF5ED]' : 'to-[#FFF4F2]',
+              : isChecked
+                ? 'window-top-checked'
+                : 'window-top-unChecked',
           )}
         >
           {zipCode}
@@ -48,7 +49,7 @@ const LetterBoxItem = ({
           <div
             className={twMerge(
               'flex grow flex-col bg-linear-to-b',
-              isChecked ? 'from-[#FFF7E3] to-[#FFE197]' : 'from-[#FFF4F2] to-[#FFE6E3]',
+              isChecked ? 'window-bottom-checked' : 'window-bottom-unChecked',
             )}
           >
             <p className="body-r mt-auto mr-[1px] text-right">{letterCount}통</p>
