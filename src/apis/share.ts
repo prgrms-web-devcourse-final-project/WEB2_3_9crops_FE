@@ -45,9 +45,9 @@ export const getSharePostList = async (
     const response = await client.get('/api/share-posts', {
       params: { page, size },
     });
-    console.log(`🌟공유 게시글 목록`, response.data);
+    console.log(`🌟공유 게시글 목록`, response.data.data);
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error('❌ 편지 공유 게시글 목록을 조회하던 중 에러가 발생했습니다', error);
     throw new Error('편지 공유 게시글 목록 조회 실패');
