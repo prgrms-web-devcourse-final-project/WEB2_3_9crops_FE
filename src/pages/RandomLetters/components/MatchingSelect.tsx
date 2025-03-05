@@ -18,10 +18,10 @@ export default function MatchingSelect({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedLetter: React.Dispatch<React.SetStateAction<RandomLetters>>;
 }) {
-  const [selectedCategory, setSelectedCategory] = useState<Category>('CONSOLATION');
+  const [selectedCategory, setSelectedCategory] = useState<Category | 'ALL'>('ALL');
   const [randomLetters, setRandomLetters] = useState<RandomLetters[]>([]);
 
-  const handleGetRandomLetters = async (selectedCategory: Category) => {
+  const handleGetRandomLetters = async (selectedCategory: Category | 'ALL') => {
     const res = await getRandomLetters(selectedCategory);
     if (res?.status === 200) {
       setRandomLetters(res.data.data);
