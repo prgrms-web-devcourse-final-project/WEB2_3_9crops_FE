@@ -68,7 +68,8 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
                 >
                   <p className="truncate">{draft.title}</p>
                   <div
-                    className="text-gray-20"
+                    className="text-gray-20 active:text-gray-600"
+                    tabIndex={0}
                     onClick={() => handleDeleteDraftLetters(draft.letterId)}
                   >
                     <DeleteOutlineRoundedIcon />
