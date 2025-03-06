@@ -1,6 +1,6 @@
 import client from './client';
 
-export const fetchIncomingLettersApi = async (token: string) => {
+export const getIncomingLetters = async (token: string) => {
   try {
     const { data } = await client.get('/api/letters?status=delivery', {
       headers: {

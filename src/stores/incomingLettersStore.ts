@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { fetchIncomingLettersApi } from '@/apis/incomingLetters';
+import { getIncomingLetters } from '@/apis/incomingLetters';
 
 interface IncomingLetters {
   letterId: number;
@@ -42,7 +42,7 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
   fetchIncomingLetters: async () => {
     try {
       const token = localStorage.getItem('token') || '';
-      const data = await fetchIncomingLettersApi(token);
+      const data = await getIncomingLetters(token);
 
       let arrivedCount = 0;
       const updatedLetters = data.data.map((letter: IncomingLetters) => {
