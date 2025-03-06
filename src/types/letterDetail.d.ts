@@ -1,3 +1,5 @@
+type LetterEvaluation = 'GOOD' | 'SOSO' | 'BAD';
+
 interface LetterDetail {
   letterId: number;
   title: string;

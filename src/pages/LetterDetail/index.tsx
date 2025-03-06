@@ -16,7 +16,7 @@ const LetterDetailPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [letterDetail, setLetterDetail] = useState<LetterDetail | null>(null);
+  const [letterDetail, setLetterDetail] = useState<LetterDetail>({} as LetterDetail);
   const userZipCode = useAuthStore((state) => state.zipCode);
 
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
@@ -49,12 +49,13 @@ const LetterDetailPage = () => {
     }
   }, [params.id, navigate]);
 
+  if (!letterDetail) return <></>;
   return (
     <>
       {reportModalOpen && (
         <ReportModal
-          reportType="LETTER"
-          letterId={letterDetail ? letterDetail.letterId : null}
+          reportType={'LETTER'}
+          letterId={letterDetail.letterId}
           onClose={() => setReportModalOpen(false)}
         />
       )}
@@ -66,6 +67,7 @@ const LetterDetailPage = () => {
       >
         <LetterDetailHeader
           letterDetail={letterDetail}
+          setLetterDetail={setLetterDetail}
           setDeleteModalOpen={setDeleteModalOpen}
           setReportModalOpen={setReportModalOpen}
         />

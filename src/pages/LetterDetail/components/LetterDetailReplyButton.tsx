@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
 interface LetterDetailReplyButton {
-  letterDetail: LetterDetail | null;
+  letterDetail: LetterDetail;
 }
 export default function LetterDetailReplyButton({ letterDetail }: LetterDetailReplyButton) {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ export default function LetterDetailReplyButton({ letterDetail }: LetterDetailRe
     <button
       className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
       onClick={() => {
-        navigate(`/letter/write/?letterId=${letterDetail?.letterId}`);
+        navigate(`/letter/write/?letterId=${letterDetail.letterId}`);
       }}
       disabled={!letterDetail?.matched}
     >
