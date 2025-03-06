@@ -15,7 +15,9 @@ const Header = () => {
         <Link to="/mypage/notifications">
           <AlarmIcon className="h-6 w-6 text-white" />
         </Link>
-        <PersonIcon className="h-6 w-6 text-white" />
+        <Link to="/mypage">
+          <PersonIcon className="h-6 w-6 text-white" />
+        </Link>
       </div>
     </header>
   );

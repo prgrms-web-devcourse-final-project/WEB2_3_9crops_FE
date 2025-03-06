@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-import { postLogout } from '@/apis/auth';
+// import { postLogout } from '@/apis/auth';
 
 interface AuthStore {
   isLoggedIn: boolean;
@@ -21,12 +21,13 @@ const useAuthStore = create(
       zipCode: '',
       login: () => set({ isLoggedIn: true }),
       logout: async () => {
-        try {
-          await postLogout();
-        } catch (e) {
-          console.error(e);
-        }
         set({ isLoggedIn: false, zipCode: '', accessToken: '' });
+        // location.reload();
+        // try {
+        //   await postLogout();
+        // } catch (e) {
+        //   console.error(e);
+        // }
       },
       setZipCode: (zipCode) => set({ zipCode: zipCode }),
       setAccessToken: (accessToken) => set({ accessToken: accessToken }),

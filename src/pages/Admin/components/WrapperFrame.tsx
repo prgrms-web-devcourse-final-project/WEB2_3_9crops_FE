@@ -9,13 +9,15 @@ export default function WrapperFrame({
   className?: string;
 }) {
   return (
-    <section
-      className={twMerge(
-        'wrapper-box-shadow flex w-full flex-col rounded-lg bg-white p-6',
-        className,
-      )}
-    >
-      {children}
-    </section>
+    <div className="h-full p-8">
+      <section
+        className={twMerge(
+          'wrapper-box-shadow flex w-full flex-col rounded-lg bg-white p-6',
+          className,
+        )}
+      >
+        {children}
+      </section>
+    </div>
   );
 }

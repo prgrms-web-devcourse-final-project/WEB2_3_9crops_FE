@@ -35,7 +35,7 @@ const LetterBoxDetailPage = () => {
     useInfiniteQuery({
       queryKey: ['mailBoxDetail', userInfo.id],
       queryFn: async ({ pageParam }) => {
-        console.log(`Fetching page: ${pageParam}`); // 디버깅용
+        console.log(`Fetching page: ${pageParam}`);
         const response = await getMailboxDetail(userInfo.id, pageParam);
         console.log(response.data);
         return response.data;
@@ -72,8 +72,7 @@ const LetterBoxDetailPage = () => {
   });
 
   const shareMutation = useMutation({
-    // Todo : useAuthStore -> myId 대체
-    mutationFn: () => postShareProposals(selected, 1, userInfo.id, shareComment),
+    mutationFn: () => postShareProposals(selected, userInfo.id, shareComment),
     onSuccess: () => {
       toggleShareMode();
       setShareComment('');

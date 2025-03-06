@@ -61,7 +61,7 @@ const LetterPreview = forwardRef<HTMLDivElement, LetterPreviewProps>((props, ref
 
   return (
     <LetterWrapper isSender={isSend} onClick={() => handleItemClick(id)} ref={ref}>
-      <p className="body-r text-gray-80 mb-3">{date}</p>
+      <p className="body-r text-gray-80 mb-3">{formatDate(date)}</p>
       <p className="body-m text-gray-80 line-clamp-1 break-all">{title}</p>
     </LetterWrapper>
   );

@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { getSharePostDetail, postShareProposalApproval, SharePost } from '@/apis/share';
+import {
+  getSharePostDetail,
+  postShareProposalApproval,
+  SharePost,
+  postSharePostLike,
+  getSharePostLikeCount,
+} from '@/apis/share';
 import BlurImg from '@/assets/images/landing-blur.png';
 import ReportModal from '@/components/ReportModal';
 
@@ -32,27 +38,37 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
   const [postDetail, setPostDetail] = useState<SharePost>();
 
   useEffect(() => {
-    const fetchPostDetail = async () => {
-      console.log('location.state:', location.state);
-
+    const { sharePostId } = location.state.postDetail;
+    const fetchPostDetail = async (postId: number) => {
       try {
-        if (location.state?.postDetail) {
-          const { sharePostId } = location.state.postDetail;
+        console.log('sharePostId:', postId);
 
-          console.log('sharePostId:', sharePostId);
+        const data = await getSharePostDetail(postId);
 
-          const data = await getSharePostDetail(sharePostId);
-
-          setPostDetail(data);
-        } else {
-          console.warn('postDetail not found in location.state');
-        }
+        setPostDetail(data);
       } catch (error) {
         console.error('❌ 공유 게시글 상세 조회에 실패했습니다.', error);
       }
     };
 
-    fetchPostDetail();
+    const fetchLikeCounts = async (postId: number) => {
+      try {
+        const response = await getSharePostLikeCount(postId);
+        if (!response) throw new Error('error while fetching like count');
+        console.log(response);
+        setLikeCount(response.data.likeCount);
+      } catch (error) {
+        console.error('❌ 편지 좋아요 갯수를 가져오는 중 에러가 발생했습니다', error);
+        throw new Error('편지 좋아요 갯수 가져오기 실패');
+      }
+    };
+
+    if (location.state?.postDetail) {
+      fetchPostDetail(sharePostId);
+      fetchLikeCounts(sharePostId);
+    } else {
+      console.warn('postDetail not found in location.state');
+    }
   }, [location.state]);
 
   const handleProposalApproval = async (
@@ -82,7 +98,7 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
           isShareLetterPreview={isShareLetterPreview}
         />
         <main className="px-5 pt-18 pb-3">
-          <p className="body-b mb-6 px-5">FROM. {postDetail?.writerZipCode}</p>
+          <p className="body-b mb-6 px-5">FROM. {postDetail?.zipCode}</p>
           <p
             className={twMerge(
               'body-r bg-[repeating-linear-gradient(transparent,transparent_25px,#ffe6e3_26px)] px-5 whitespace-pre-wrap',
@@ -96,14 +112,18 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
               <Letter
                 key={index}
                 letter={letter}
-                isWriter={letter.writerZipCode === String(postDetail.receiverZipCode)}
+                isWriter={letter.writerZipCode === postDetail.zipCode}
               />
             ))}
           </section>
 
           {isShareLetterPreview && (
             <>
-              <img src={BlurImg} alt="landing blur" className="fixed bottom-0 z-10 w-screen" />
+              <img
+                src={BlurImg}
+                alt="landing blur"
+                className="fixed bottom-0 left-0 z-10 w-screen"
+              />
               <section className="fixed bottom-[30px] left-1/2 z-20 flex w-73 translate-x-[-50%] gap-6">
                 <button
                   type="button"
