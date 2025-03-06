@@ -70,3 +70,16 @@ export const deleteRollingPaper = async (eventPostId: number | string) => {
     throw error;
   }
 };
+
+export const patchRollingPaper = async (eventPostId: number | string) => {
+  try {
+    const {
+      data: { data },
+    } = await client.patch(`/api/admin/event-posts/${eventPostId}/status`);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
