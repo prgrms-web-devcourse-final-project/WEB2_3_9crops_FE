@@ -16,6 +16,7 @@ import LikeFilledIcon from './like-filled.svg?react';
 import LikeOutlinedIcon from './like-outlined.svg?react';
 import NaverIcon from './naver.svg?react';
 import NoticeIcon from './notice.svg?react';
+import PencilIcon from './pencil.svg?react';
 import PersonIcon from './person.svg?react';
 import RestartIcon from './restart.svg';
 import SirenFilledIcon from './siren-filled.svg?react';
@@ -52,4 +53,5 @@ export {
   LikeOutlinedIcon,
   DeleteIcon,
   CancelIcon,
+  PencilIcon,
 };

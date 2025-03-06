@@ -2,19 +2,35 @@ type Status = 'PENDING' | 'RESOLVED' | 'REJECTED';
 type ReportType = 'LETTER' | 'POST' | 'COMMENT';
 type Reason = 'ABUSE' | 'DEFAMATION' | 'HARASSMENT' | 'THREATS' | 'ETC';
 
+interface ReportQueryString {
+  reportType: ReportType | null;
+  status: Status | null;
+  page: string | null;
+  size: string | null;
+}
+
+interface ReportPages {
+  currentPage: string;
+  totalPages: string;
+}
+
 interface Report {
   id: number;
   reporterEmail: string;
+  targetId: number;
   targetEmail: string;
   reportedAt: Date;
+  reporterId: number;
+  updatedAt: Date;
   letterId: number | null;
   comment: string | null;
   sharePostId: number | null;
-  reportType: reportType;
-  reason: Reason;
-  reasonDetail: string | null;
+  reportType: ReportType;
+  reasonType: Reason;
+  reason: string;
   status: Status;
-  letterDetail: {
+  eventCommentId: number;
+  contentDetail: {
     title: string | null;
     content: string;
   };

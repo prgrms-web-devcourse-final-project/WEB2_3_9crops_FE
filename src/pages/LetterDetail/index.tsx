@@ -53,12 +53,11 @@ const LetterDetailPage = () => {
     <>
       {reportModalOpen && (
         <ReportModal
-          reportType={'LETTER'}
-          letterId={letterDetail?.letterId || null}
+          reportType="LETTER"
+          letterId={letterDetail ? letterDetail.letterId : null}
           onClose={() => setReportModalOpen(false)}
         />
       )}
-
       <div
         className={twMerge(
           `flex grow flex-col gap-3 px-5 pb-7.5`,
