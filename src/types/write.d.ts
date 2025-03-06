@@ -24,7 +24,6 @@ interface PrevLetter {
   content: string;
   category: Category;
   memberId: number;
-  receiverId: number;
   matchingId: number | null;
 }
 
