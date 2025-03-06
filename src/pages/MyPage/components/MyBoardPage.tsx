@@ -16,7 +16,7 @@ const MyBoardPage = () => {
       const response = await getMySharePostList();
       if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
       console.log(response);
-      return response.data;
+      return response.data as SharePost[];
     } catch (e) {
       console.error(e);
     }
@@ -49,10 +49,9 @@ const MyBoardPage = () => {
               <LetterPreview
                 key={index}
                 id={item.sharePostId}
-                to={item.writerZipCode}
-                from="12E21"
-                content="저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지
-        저희가 주고 받은 행운의 편지"
+                to={item.receiverZipCode}
+                from={item.writerZipCode}
+                content={item.content}
               />
             ))}
           </section>
