@@ -156,7 +156,7 @@ const LetterDetailPage = () => {
             letterDetail && FONT_TYPE_OBJ[letterDetail.fontType],
           )}
         ></textarea>
-        <span className="body-sb mt-10 flex justify-end">FROM. {'12E12'}</span>
+        <span className="body-sb mt-10 flex justify-end">FROM. {letterDetail?.zipCode}</span>
         {userZipCode !== letterDetail?.zipCode && (
           <button
             className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
