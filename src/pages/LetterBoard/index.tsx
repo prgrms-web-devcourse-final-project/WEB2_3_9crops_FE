@@ -1,5 +1,9 @@
-import { twMerge } from 'tailwind-merge';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router';
 
+import { getSharePostList } from '@/apis/share';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import PageTitle from '@/components/PageTitle';
@@ -7,34 +11,77 @@ import PageTitle from '@/components/PageTitle';
 import LetterPreview from './components/LetterPreview';
 
 const LetterBoardPage = () => {
-  const isMyBoard = window.location.pathname.includes('/mypage');
+  const navigate = useNavigate();
+  const { ref, inView } = useInView();
+
+  const fetchPostList = async (page: number = 1) => {
+    try {
+      const response = await getSharePostList(page);
+      if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
+      console.log('page', response);
+      return response as SharePostResponse;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['sharePostList'],
+      queryFn: ({ pageParam = 1 }) => fetchPostList(pageParam),
+      enabled: true,
+      initialPageParam: 1,
+      getNextPageParam: (res) => {
+        if (!res || res.currentPage >= res.totalPages) {
+          return undefined;
+        }
+        return res.currentPage + 1;
+      },
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
+    });
+
+  const postLists = data?.pages.flatMap((page) => page?.content) || [];
+
+  useEffect(() => {
+    if (!hasNextPage) return;
+    if (inView && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (isError) {
+    navigate('/notFound');
+  }
 
   return (
     <>
-      <main className={twMerge('flex grow flex-col px-5 pt-20 pb-10', !isMyBoard && 'mt-[-25px]')}>
-        {isMyBoard ? (
-          <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
+      <main className="mt-[-25px] flex grow flex-col px-5 pt-20 pb-10">
+        <>
+          <NoticeRollingPaper />
+          <PageTitle className="mx-auto mt-4">게시판</PageTitle>
+          <p className="text-gray-60 caption-m mt-4.5 text-center">
+            따숨이에게 힘이 되었던 다양한 편지들을 모아두었어요
+          </p>
+        </>
+        {isLoading ? (
+          <p>loading</p>
         ) : (
-          <>
-            <NoticeRollingPaper />
-            <PageTitle className="mx-auto mt-4">게시판</PageTitle>
-            <p className="text-gray-60 caption-m mt-4.5 text-center">
-              따숨이에게 힘이 되었던 다양한 편지들을 모아두었어요
-            </p>
-          </>
+          <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
+            {postLists.map((item, index) => {
+              return (
+                <LetterPreview
+                  key={index}
+                  id={item?.sharePostId || 0}
+                  to={item?.receiverZipCode || 'ERROR'}
+                  from={item?.writerZipCode || 'ERROR'}
+                  content={item?.content || 'no Data'}
+                  ref={index === postLists.length - 1 ? ref : null}
+                />
+              );
+            })}
+          </section>
         )}
-        <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <LetterPreview
-              key={index}
-              id={`${index}`}
-              to="12E21"
-              from="12E21"
-              content="저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지
-        저희가 주고 받은 행운의 편지"
-            />
-          ))}
-        </section>
       </main>
       <BackgroundBottom />
     </>
