@@ -30,10 +30,10 @@ export const useServerSentEvents = () => {
           console.log('알림 전송');
         };
 
-        // sourceRef.current.addEventListener('notification', (event) => {
-        //   console.log(event);
-        //   console.log('알림 전송 dd');
-        // });
+        sourceRef.current.addEventListener('notification', (event) => {
+          console.log(event);
+          console.log('알림 전송 dd');
+        });
 
         sourceRef.current.onerror = (error) => {
           console.log(error);

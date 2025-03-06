@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router';
 
+import { useServerSentEvents } from './hooks/useServerSentEvents';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
@@ -27,6 +28,7 @@ import WritePage from './pages/Write';
 
 const App = () => {
   useViewport();
+  useServerSentEvents();
 
   return (
     <Routes>

@@ -3,14 +3,11 @@ import { useNavigate } from 'react-router';
 
 import { getTimeLines, patchReadNotification, patchReadNotificationAll } from '@/apis/notification';
 import PageTitle from '@/components/PageTitle';
-import { useServerSentEvents } from '@/hooks/useServerSentEvents';
 
 import NotificationItem from './components/NotificationItem';
 import WarningModal from './components/WarningModal';
 
 const NotificationsPage = () => {
-  useServerSentEvents();
-
   const navigate = useNavigate();
 
   const [noti, setNoti] = useState<Noti[]>([]);
@@ -19,6 +16,7 @@ const NotificationsPage = () => {
 
   const [adminText, setAdmintext] = useState<string>('');
 
+  // MEMO : 편지 데이터 전송중 데이터도 추가될건데 나중에 데이터 추가되면 코드 업데이트 하긔
   const handleClickItem = (alarmType: string, content?: string | number) => {
     if (alarmType === 'LETTER') {
       navigate(`/letter/${content}`);
