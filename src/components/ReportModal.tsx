@@ -1,27 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { postReports } from '@/apis/admin';
 
 import ConfirmModal from './ConfirmModal';
 import TextareaField from './TextareaField';
 
 interface ReportModalProps {
+  reportType: ReportType;
+  letterId: number | null;
   onClose: () => void;
 }
 
-const REPORT_REASON = ['욕설', '비방', '폭언', '성희롱', '기타'];
+interface ReportReason {
+  name: string;
+  type: Reason;
+}
+const REPORT_REASON: ReportReason[] = [
+  { name: '욕설', type: 'ABUSE' },
+  { name: '비방', type: 'DEFAMATION' },
+  { name: '폭언', type: 'THREATS' },
+  { name: '성희롱', type: 'HARASSMENT' },
+  { name: '기타', type: 'ETC' },
+];
 
-const ReportModal = ({ onClose }: ReportModalProps) => {
-  const [selected, setSelected] = useState('');
-  const [additionalReason, setAdditionalReason] = useState('');
+const ReportModal = ({ reportType, letterId, onClose }: ReportModalProps) => {
+  const [postReportRequest, setPostReportRequest] = useState<PostReportRequest>({
+    reportType: reportType,
+    reasonType: '',
+    reason: '',
+    letterId: letterId,
+  });
 
-  const handleReasonClick = (reason: string) => {
-    if (selected === reason) setSelected('');
-    else setSelected(reason);
+  const handleReasonClick = (reason: Reason) => {
+    if (postReportRequest.reasonType === reason)
+      setPostReportRequest((cur) => ({ ...cur, reasonType: '' }));
+    else setPostReportRequest((cur) => ({ ...cur, reasonType: reason }));
   };
 
-  const handleSubmit = () => {
-    onClose();
+  const handleSubmit = async () => {
+    const res = await postReports(postReportRequest);
+    if (res?.status === 200) {
+      alert('신고 처리되었습니다.');
+      onClose();
+    } else if (res?.status === 409) {
+      alert('신고한 이력이 있습니다.');
+      onClose();
+    }
   };
+
+  useEffect(() => {
+    if (!postReportRequest.letterId) {
+      alert('신고 모달을 여는 과정에서 오류가 발생했습니다. 새로고침을 눌러주세요');
+      onClose();
+    }
+  });
 
   return (
     <ConfirmModal
@@ -29,29 +62,30 @@ const ReportModal = ({ onClose }: ReportModalProps) => {
       description="신고한 게시물은 관리자 검토 후 처리됩니다."
       cancelText="취소하기"
       confirmText="제출하기"
-      confirmDisabled={selected === ''}
+      confirmDisabled={postReportRequest.reasonType === ''}
       onCancel={onClose}
       onConfirm={handleSubmit}
     >
       <section className="my-6 flex flex-wrap gap-x-2.5 gap-y-2">
-        {REPORT_REASON.map((reason) => (
+        {REPORT_REASON.map((reason, idx) => (
           <button
+            key={idx}
             type="button"
             className={twMerge(
               'body-m rounded-full bg-white px-5 py-1.5 text-black',
-              selected === reason && 'bg-primary-2',
+              postReportRequest.reasonType === reason.type && 'bg-primary-2',
             )}
-            onClick={() => handleReasonClick(reason)}
+            onClick={() => handleReasonClick(reason.type)}
           >
-            {reason}
+            {reason.name}
           </button>
         ))}
       </section>
       <TextareaField
         rows={3}
         placeholder="이곳을 눌러 추가 사유를 작성해주세요"
-        value={additionalReason}
-        onChange={(e) => setAdditionalReason(e.target.value)}
+        value={postReportRequest.reason}
+        onChange={(e) => setPostReportRequest((cur) => ({ ...cur, reason: e.target.value }))}
       />
     </ConfirmModal>
   );

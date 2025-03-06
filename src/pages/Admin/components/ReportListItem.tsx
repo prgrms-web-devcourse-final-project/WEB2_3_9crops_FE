@@ -62,7 +62,7 @@ export default function ReportListItem({
         <span className="admin-list-set basis-2/10">{report.reporterEmail}</span>
         <span className="admin-list-set basis-2/10">{report.targetEmail}</span>
         <span className="admin-list-set basis-2/10">{`${formattedDate} ${formattedTime}`}</span>
-        <span className="admin-list-set basis-3/10">{reasonList[report.reason]}</span>
+        <span className="admin-list-set basis-3/10">{reasonList[report.reasonType]}</span>
       </div>
       <button
         onClick={(e) => {

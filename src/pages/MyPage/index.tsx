@@ -81,9 +81,13 @@ const MyPage = () => {
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">고객 센터</h3>
-            <Link to="mailto:rlatpqls13@gmail.com">
-              <p className="body-sb text-gray-100">운영자에게 문의하기</p>
-            </Link>
+            <a
+              href="https://forms.gle/ZagrTSZzJhogudSY8"
+              target="_blank"
+              className="body-sb text-gray-100"
+            >
+              운영자에게 문의하기
+            </a>
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-gray-40 body-sb">계정</h3>
