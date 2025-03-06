@@ -48,3 +48,15 @@ export const postNewRollingPaper = async (title: string) => {
     throw error;
   }
 };
+
+export const getRollingPaperList = async (): Promise<RollingPaperList> => {
+  try {
+    const {
+      data: { data },
+    } = await client.get('/api/admin/event-posts');
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -3,6 +3,10 @@ interface RollingPaperInformation {
   title: string;
 }
 
+interface AdminRollingPaperInformation extends RollingPaperInformation {
+  used: boolean;
+}
+
 interface RollingPaperComment {
   commentId: number;
   zipCode: string;
@@ -10,5 +14,21 @@ interface RollingPaperComment {
 }
 
 interface RollingPaper extends RollingPaperInformation {
-  eventPostComments: RollingPaperComment[];
+  eventPostComments: {
+    content: RollingPaperComment[];
+    currentPage: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  };
 }
+
+interface PaginationData<T> {
+  content: T[];
+  currentPage: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+}
+
+type RollingPaperList = PaginationData<AdminRollingPaperInformation>;
