@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { getMySharePostList } from '@/apis/mypage';
+import { getMySharePostList } from '@/apis/myPage';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import PageTitle from '@/components/PageTitle';
 
@@ -45,16 +45,18 @@ const MyBoardPage = () => {
           <p>loading</p>
         ) : (
           <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
-            {postLists.map((item, index) => (
-              <LetterPreview
-                key={index}
-                id={item.sharePostId}
-                to={item.writerZipCode}
-                from="12E21"
-                content="저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지
+            {postLists.map(
+              (item: { sharePostId: number; writerZipCode: string }, index: number) => (
+                <LetterPreview
+                  key={index}
+                  id={item.sharePostId}
+                  to={item.writerZipCode}
+                  from="12E21"
+                  content="저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지
         저희가 주고 받은 행운의 편지"
-              />
-            ))}
+                />
+              ),
+            )}
           </section>
         )}
       </main>

@@ -15,7 +15,7 @@ const MatchedLetter = ({ matchedLetter }: { matchedLetter: MatchedLetter }) => {
 
   return (
     <>
-      {reportModalOpen && <ReportModal onClose={() => setReportModalOpen(false)} />}
+      {reportModalOpen && <ReportModal onClose={() => setReportModalOpen(false)} reportType={'LETTER'} letterId={null} />}
       <div
         className={twMerge(
           `flex grow flex-col gap-3 px-5 pb-7.5`,

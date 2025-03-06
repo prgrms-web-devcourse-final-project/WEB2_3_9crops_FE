@@ -21,7 +21,7 @@ export default function ReportHandlingModal({
     );
   };
 
-  const [reportRequest, setReportRequest] = useState<ReportRequest>({
+  const [reportRequest, setReportRequest] = useState<PatchReportRequest>({
     status: 'RESOLVED',
     adminMemo: '',
   });

@@ -6,7 +6,6 @@ import {
   getSharePostDetail,
   postShareProposalApproval,
   SharePost,
-  postSharePostLike,
   getSharePostLikeCount,
 } from '@/apis/share';
 import BlurImg from '@/assets/images/landing-blur.png';
@@ -87,7 +86,13 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
 
   return (
     <>
-      {activeReportModal && <ReportModal onClose={() => setActiveReportModal(false)} />}
+      {activeReportModal && (
+        <ReportModal
+          onClose={() => setActiveReportModal(false)}
+          reportType={'SHARE_POST'}
+          letterId={null}
+        />
+      )}
       <div className="grow bg-white">
         <Header
           likeCount={likeCount}

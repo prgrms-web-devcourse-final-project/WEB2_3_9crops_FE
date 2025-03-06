@@ -1,5 +1,5 @@
 type Status = 'PENDING' | 'RESOLVED' | 'REJECTED';
-type ReportType = 'LETTER' | 'POST' | 'COMMENT';
+type ReportType = 'LETTER' | 'SHARE_POST' | 'COMMENT';
 type Reason = 'ABUSE' | 'DEFAMATION' | 'HARASSMENT' | 'THREATS' | 'ETC';
 
 interface ReportQueryString {
