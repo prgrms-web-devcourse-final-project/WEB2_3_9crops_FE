@@ -1,3 +1,6 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { deleteRollingPaper } from '@/apis/rolling';
 import { DeleteIcon } from '@/assets/icons';
 
 interface RollingPaperItemProps {
@@ -5,6 +8,19 @@ interface RollingPaperItemProps {
 }
 
 export default function RollingPaperItem({ information }: RollingPaperItemProps) {
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteMutate } = useMutation({
+    mutationFn: () => deleteRollingPaper(information.eventPostId),
+    onSuccess: () => {
+      // TODO: 페이지네이션 적용 후, 현재 page에 대한 캐싱 날리는 방식으로 변경
+      queryClient.invalidateQueries({ queryKey: ['admin-rolling-paper'] });
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
+
   return (
     <tr className="border-gray-40 h-14 border-b">
       <td className="w-14 text-center">{information.eventPostId}</td>
@@ -23,11 +39,12 @@ export default function RollingPaperItem({ information }: RollingPaperItemProps)
           </button>
         )}
       </td>
-      <td>
+      <td className="w-6">
         {!information.used && (
           <button
             type="button"
             className="text-gray-60 flex items-center justify-center p-1 hover:text-black"
+            onClick={() => deleteMutate()}
           >
             <DeleteIcon className="h-5 w-5" />
           </button>

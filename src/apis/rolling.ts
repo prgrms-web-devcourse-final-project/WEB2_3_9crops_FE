@@ -60,3 +60,13 @@ export const getRollingPaperList = async (): Promise<RollingPaperList> => {
     throw error;
   }
 };
+
+export const deleteRollingPaper = async (eventPostId: number | string) => {
+  try {
+    const { data } = await client.delete(`/api/admin/event-posts/${eventPostId}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

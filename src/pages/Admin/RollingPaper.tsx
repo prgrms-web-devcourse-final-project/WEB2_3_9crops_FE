@@ -16,7 +16,6 @@ export default function AdminRollingPaper() {
     queryKey: ['admin-rolling-paper'],
     queryFn: getRollingPaperList,
   });
-  console.log(data);
 
   return (
     <>
@@ -36,21 +35,28 @@ export default function AdminRollingPaper() {
         </section>
         {isLoading && <p className="mt-20 text-center">Loading...</p>}
         {isSuccess && (
-          <table className="mt-5 table-auto">
-            <thead>
-              <tr className="bg-primary-3 border-gray-40 h-14 border-b">
-                <th className="w-14 text-center">ID</th>
-                <th className="text-left">제목</th>
-                <th className="w-30 text-center">상태</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.content.map((rollingPaper) => (
-                <RollingPaperItem key={rollingPaper.eventPostId} information={rollingPaper} />
-              ))}
-            </tbody>
-          </table>
+          <>
+            <table className="mt-5 table-auto">
+              <thead>
+                <tr className="bg-primary-3 border-gray-40 h-14 border-b">
+                  <th className="w-14 text-center">ID</th>
+                  <th className="text-left">제목</th>
+                  <th className="w-30 text-center">상태</th>
+                  <th className="w-6"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.content.map((rollingPaper) => (
+                  <RollingPaperItem key={rollingPaper.eventPostId} information={rollingPaper} />
+                ))}
+              </tbody>
+            </table>
+            {data.content.length === 0 && (
+              <span className="my-10 text-center text-gray-50">
+                아직 생성된 롤링페이퍼가 없어요
+              </span>
+            )}
+          </>
         )}
         {/* TODO: 페이지네이션 적용 */}
       </WrapperFrame>
