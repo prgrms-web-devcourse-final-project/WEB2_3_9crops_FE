@@ -72,7 +72,6 @@ const LetterBoxDetailPage = () => {
   });
 
   const shareMutation = useMutation({
-    // Todo : useAuthStore -> myId 대체
     mutationFn: () => postShareProposals(selected, userInfo.id, shareComment),
     onSuccess: () => {
       toggleShareMode();

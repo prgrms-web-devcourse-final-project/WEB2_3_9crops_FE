@@ -38,10 +38,7 @@ export interface SharePostApproval {
 }
 
 // 공유 게시글 목록 조회
-export const getSharePostList = async (
-  page: number = 1,
-  size: number = 10,
-): Promise<SharePostResponse> => {
+export const getSharePostList = async (page: number = 1, size: number = 10) => {
   try {
     const response = await client.get('/api/share-posts', {
       params: { page, size },
@@ -70,14 +67,12 @@ export const getSharePostDetail = async (sharePostId: number): Promise<SharePost
 // 공유 요청 보내기
 export const postShareProposals = async (
   letterIds: number[],
-  requesterId: number,
   recipientId: number,
   message: string,
 ) => {
   try {
     const response = await client.post('/api/share-proposals', {
       letterIds: letterIds,
-      requesterId,
       recipientId,
       message,
     });
@@ -103,5 +98,29 @@ export const postShareProposalApproval = async (
       error,
     );
     throw new Error(`편지 공유 ${action === 'approve' ? '수락' : '거부'} 실패`);
+  }
+};
+
+// 편지 좋아요 추가, 취소
+export const postSharePostLike = async (sharePostId: number) => {
+  try {
+    const response = await client.post(`/api/share-posts/${sharePostId}/likes`);
+    if (!response) throw new Error('error while posting like');
+    return response.data;
+  } catch (error) {
+    console.error('❌ 편지 좋아요 중 에러가 발생했습니다', error);
+    throw new Error('편지 좋아요 실패');
+  }
+};
+
+// 편지 좋아요 갯수
+export const getSharePostLikeCount = async (sharePostId: number) => {
+  try {
+    const response = await client.get(`/api/share-posts/${sharePostId}/likes`);
+    if (!response) throw new Error('error while fetching likes');
+    return response.data;
+  } catch (error) {
+    console.error('❌ 편지 좋아요 갯수 조회 중 에러가 발생했습니다', error);
+    throw new Error('편지 좋아요 갯수 조회 실패');
   }
 };
