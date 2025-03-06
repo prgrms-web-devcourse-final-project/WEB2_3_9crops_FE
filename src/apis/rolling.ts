@@ -36,3 +36,15 @@ export const deleteRollingPaperComment = async (commentId: string | number) => {
     throw error;
   }
 };
+
+export const postNewRollingPaper = async (title: string) => {
+  try {
+    const {
+      data: { data },
+    } = await client.post('/api/admin/event-posts', { title });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
