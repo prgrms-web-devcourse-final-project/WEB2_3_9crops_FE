@@ -40,7 +40,7 @@ export interface ShareProposal {
 }
 
 // 편지 공유 수락 / 거절
-export interface SharePostApproval {
+export interface ShareProposalApproval {
   shareProposalId: number;
   status: 'APPROVED' | 'REJECTED';
   sharePostId: number;
@@ -110,7 +110,7 @@ export const getShareProposalList = async () => {
 export const postShareProposalApproval = async (
   shareProposalId: number,
   action: 'approve' | 'reject',
-): Promise<SharePostApproval> => {
+): Promise<ShareProposalApproval> => {
   try {
     const response = await client.patch(`/api/share-proposal/${shareProposalId}/${action}`);
     return response.data;
