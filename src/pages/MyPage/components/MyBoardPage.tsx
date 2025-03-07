@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { getMySharePostList } from '@/apis/mypage';
+import { getMySharePostList } from '@/apis/myPage';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import PageTitle from '@/components/PageTitle';
 
@@ -15,8 +15,8 @@ const MyBoardPage = () => {
     try {
       const response = await getMySharePostList();
       if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
-      console.log(response);
-      return response.data;
+      console.log('myPostList', response);
+      return response.data as SharePost[];
     } catch (e) {
       console.error(e);
     }
@@ -43,19 +43,20 @@ const MyBoardPage = () => {
         <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
         {isLoading ? (
           <p>loading</p>
-        ) : (
+        ) : postLists && postLists?.length > 0 ? (
           <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
-            {postLists.map((item, index) => (
+            {postLists?.map((item, index) => (
               <LetterPreview
                 key={index}
                 id={item.sharePostId}
-                to={item.writerZipCode}
-                from="12E21"
-                content="저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지 저희가 주고 받은 행운의 편지
-        저희가 주고 받은 행운의 편지"
+                to={item.receiverZipCode}
+                from={item.writerZipCode}
+                content={item.content}
               />
             ))}
           </section>
+        ) : (
+          <p className="body-m text-gray-60 text-center">게시글이 없습니다.</p>
         )}
       </main>
       <BackgroundBottom />
