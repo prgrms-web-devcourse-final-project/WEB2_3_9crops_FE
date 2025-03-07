@@ -9,10 +9,18 @@ export const getCurrentRollingPaper = async (): Promise<RollingPaperInformation>
 
 export const getRollingPaperDetail = async (
   rollingPaperId: string | number,
+  page: number,
+  size: number,
 ): Promise<RollingPaper> => {
   const {
     data: { data },
-  } = await client.get(`/api/event-posts/${rollingPaperId}`);
+  } = await client.get(`/api/event-posts/${rollingPaperId}`, {
+    params: {
+      page,
+      size,
+    },
+  });
+  console.log(data);
   return data;
 };
 
