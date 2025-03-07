@@ -66,9 +66,9 @@ const LetterBoardPage = () => {
         </>
         {isLoading ? (
           <p>loading</p>
-        ) : (
+        ) : postLists && postLists?.length > 0 ? (
           <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
-            {postLists.map((item, index) => {
+            {postLists?.map((item, index) => {
               return (
                 <LetterPreview
                   key={index}
@@ -81,6 +81,8 @@ const LetterBoardPage = () => {
               );
             })}
           </section>
+        ) : (
+          <p className="body-m text-gray-60 mt-10 text-center">게시글이 없습니다.</p>
         )}
       </main>
       <BackgroundBottom />

@@ -1,5 +1,7 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
+import { postNewRollingPaper } from '@/apis/rolling';
 import ModalOverlay from '@/components/ModalOverlay';
 
 interface AddRollingPaperModalProps {
@@ -9,6 +11,21 @@ interface AddRollingPaperModalProps {
 export default function AddRollingPaperModal({ onClose }: AddRollingPaperModalProps) {
   const [title, setTitle] = useState('');
   const [error, setError] = useState('');
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: () => postNewRollingPaper(title),
+    onSuccess: () => {
+      setTitle('');
+      setError('');
+      onClose();
+      // TODO: 페이지네이션 적용 후, 현재 page에 대한 캐싱 날리는 방식으로 변경
+      queryClient.invalidateQueries({ queryKey: ['admin-rolling-paper'] });
+    },
+    onError: () => {
+      setError('편지 작성에 실패했어요. 다시 시도해주세요.');
+    },
+  });
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
@@ -21,7 +38,7 @@ export default function AddRollingPaperModal({ onClose }: AddRollingPaperModalPr
       return;
     }
 
-    console.log(title);
+    mutate();
   };
 
   return (

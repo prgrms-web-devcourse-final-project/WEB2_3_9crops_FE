@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { getSharePostDetail, getSharePostList } from '@/apis/share';
-import { SharePostResponse } from '@/apis/share';
+import { SharePostResponse, SharePost } from '@/apis/share';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
@@ -14,20 +14,30 @@ interface ShowShareAccessModalProps {
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
   const navigate = useNavigate();
 
-  const [sharePosts, setSharePosts] = useState<SharePostResponse>();
+  const [sharePosts, setSharePosts] = useState<SharePost[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchPosts = async (page: number) => {
+    try {
+      const data: SharePostResponse = await getSharePostList(page, 10);
+      setSharePosts((prev) => [...prev, ...data.content]);
+      setHasMore(page < data.totalPages);
+    } catch (error) {
+      console.error('❌ 게시글 목록을 불러오는 데 실패했습니다.', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const data = await getSharePostList(1, 10);
-        setSharePosts(data);
-      } catch (error) {
-        console.error('❌ 게시글 목록을 불러오는 데 실패했습니다.', error);
-      }
-    };
+    fetchPosts(currentPage);
+  }, [currentPage]);
 
-    fetchPosts();
-  }, []);
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollTop + clientHeight >= scrollHeight - 10 && hasMore) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
 
   const handleNavigation = async (sharePostId: number) => {
     try {
@@ -55,8 +65,11 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
                 허락 여부를 체크해주세요!
               </p>
             </div>
-            <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
-              {sharePosts?.content.map((post) => (
+            <div
+              className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden"
+              onScroll={handleScroll}
+            >
+              {sharePosts?.map((post) => (
                 <button
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
                   key={post.sharePostId}

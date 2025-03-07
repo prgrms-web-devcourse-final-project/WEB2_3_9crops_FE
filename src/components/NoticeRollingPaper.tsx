@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
@@ -6,12 +7,40 @@ import { getCurrentRollingPaper } from '@/apis/rolling';
 import { NoticeIcon } from '@/assets/icons';
 
 const NoticeRollingPaper = () => {
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['notice-rolling-paper'],
     queryFn: () => getCurrentRollingPaper(),
   });
 
+  const [activeAnimate, setActiveAnimate] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (data?.title) {
+      const containerElement = containerRef.current;
+      const element = textRef.current;
+
+      if (containerElement && element) {
+        const textWidth = element.scrollWidth;
+        const containerWidth = containerElement.offsetWidth;
+
+        if (textWidth > containerWidth) {
+          const animationDuration = (textWidth / 10) * 0.3;
+          const totalDuration = Math.max(animationDuration, 10);
+          document.documentElement.style.setProperty('--marquee-duration', `${totalDuration}s`);
+
+          setActiveAnimate(true);
+        } else {
+          setActiveAnimate(false);
+        }
+      }
+    }
+  }, [data?.title]);
+
   const noticeText = data?.title;
+
+  if (error || !noticeText) return null;
 
   return (
     <Link to={`/board/rolling/${data?.eventPostId}`}>
@@ -23,8 +52,13 @@ const NoticeRollingPaper = () => {
         )}
       >
         <NoticeIcon className="h-6 w-6 shrink-0 text-gray-50" />
-        <div className="w-full overflow-hidden">
-          <p className="body-sb animate-marquee whitespace-nowrap">{noticeText}</p>
+        <div ref={containerRef} className="w-full overflow-hidden whitespace-nowrap">
+          <p
+            ref={textRef}
+            className={twMerge('body-sb inline-block', activeAnimate && 'animate-marquee')}
+          >
+            {noticeText}
+          </p>
         </div>
       </article>
     </Link>
