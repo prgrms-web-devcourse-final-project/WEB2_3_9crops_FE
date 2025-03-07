@@ -1,4 +1,4 @@
-import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useLocation, useNavigate } from 'react-router';
@@ -28,6 +28,7 @@ const LetterBoxDetailPage = () => {
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
   const [shareComment, setShareComment] = useState('');
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
@@ -63,6 +64,7 @@ const LetterBoxDetailPage = () => {
     mutationFn: async () => await postMailboxDisconnect(userInfo.id),
     onSuccess: () => {
       navigate(-1);
+      queryClient.invalidateQueries({ queryKey: ['mailBox'] });
     },
     onError: (error) => {
       // TODO: 차단 실패 toastUI 띄워주기
