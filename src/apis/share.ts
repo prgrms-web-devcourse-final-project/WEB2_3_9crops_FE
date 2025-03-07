@@ -21,13 +21,22 @@ export interface SharePost {
   letters: ShareLetter[];
 }
 
-// 페이징 포함
+// 공유 게시글 목록 조회 - 페이징 포함
 export interface SharePostResponse {
   content: SharePost[];
   currentPage: number;
   size: number;
   totalElements: number;
   totalPages: number;
+}
+
+// 편지 공유 요청 수신 조회
+export interface ShareProposal {
+  shareProposalId: number;
+  requesterZipCode: string;
+  recipientZipCode: string;
+  message: string;
+  status: 'REJECTED' | 'APPROVED' | 'PENDING';
 }
 
 // 편지 공유 수락 / 거절
@@ -81,6 +90,19 @@ export const postShareProposals = async (
   } catch (error) {
     console.error('❌ 공유 요청 보내기 중 에러가 발생했습니다', error);
     throw new Error('공유 요청 실패');
+  }
+};
+
+// 편지 공유 요청 수신 조회
+export const getShareProposalList = async () => {
+  try {
+    const response = await client.get('/api/share-proposals/inbox');
+    console.log(`🌟공유 요청 목록`, response.data);
+
+    return response.data.data;
+  } catch (error) {
+    console.error('❌ 편지 공유 요청을 조회하던 중 에러가 발생했습니다', error);
+    throw error;
   }
 };
 
