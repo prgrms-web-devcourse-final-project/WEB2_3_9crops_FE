@@ -50,13 +50,13 @@ export default function PagenationNavigation({
     }
   };
 
-  const buttonStyle = 'border bg-white px-2 py-1 disabled:bg-gray-20';
+  const buttonStyle = 'rounded-full bg-white w-8 h-8 disabled:bg-gray-20';
 
   return (
     <div className="mt-5 flex h-10 w-full items-center justify-center">
-      <div className="flex items-center">
+      <div className="flex items-center gap-2">
         <button
-          className={twMerge(buttonStyle)}
+          className={twMerge(buttonStyle, 'w-14')}
           disabled={nowSection <= 0}
           onClick={() => {
             handlePrevButtonClick();
@@ -69,7 +69,7 @@ export default function PagenationNavigation({
           return (
             <button
               key={num}
-              className={twMerge(buttonStyle, nowPageNumberAt === num && 'bg-accent-3')}
+              className={twMerge(buttonStyle, nowPageNumberAt === num && 'bg-primary-2/50')}
               onClick={() => {
                 handlePageButtonClick(num);
               }}
@@ -79,7 +79,7 @@ export default function PagenationNavigation({
           );
         })}
         <button
-          className={twMerge(buttonStyle)}
+          className={twMerge(buttonStyle, 'w-14')}
           disabled={nowSection >= totalSection}
           onClick={() => {
             handleNextButtonClick();
