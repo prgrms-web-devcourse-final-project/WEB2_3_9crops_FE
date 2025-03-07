@@ -16,7 +16,7 @@ export default function LetterDetailContent({ letterDetail }: LetterDetailConten
         readOnly
         value={letterDetail.content}
         className={twMerge(
-          `body-r basic-theme min-h-full w-full grow px-6`,
+          `body-r basic-theme min-h-full w-full grow resize-none px-6`,
           letterDetail && FONT_TYPE_OBJ[letterDetail.fontType],
         )}
       ></textarea>

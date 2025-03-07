@@ -120,7 +120,7 @@ export default function LetterEditor({
       <div className="mt-9 flex grow">
         <textarea
           className={twMerge(
-            `body-r basic-theme min-h-full w-full px-6`,
+            `body-r basic-theme min-h-full w-full resize-none px-6`,
             `${FONT_TYPE_OBJ[letterRequest.fontType]}`,
           )}
           placeholder="클릭해서 내용을 작성하세요"
