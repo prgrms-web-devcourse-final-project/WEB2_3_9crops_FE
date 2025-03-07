@@ -9,27 +9,7 @@ const client = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// type FailedRequest = {
-//   resolve: (token: string) => void;
-//   reject: (error: unknown) => void;
-// };
-
 let isRefreshing = false;
-// let failedQueue: FailedRequest[] = [];
-
-// const processQueue = (error: unknown, token: string | null = null) => {
-//   failedQueue.forEach((prom) => {
-//     if (error) {
-//       prom.reject(error);
-//     } else {
-//       if (token) {
-//         prom.resolve(token);
-//       }
-//     }
-//   });
-
-//   failedQueue = [];
-// };
 
 const callReissue = async () => {
   try {
@@ -72,19 +52,6 @@ client.interceptors.response.use(
       retry = true;
       if (isRefreshing) {
         if (isLoggedIn) logout();
-        // try {
-        //   return new Promise((resolve, reject) => {
-        //     failedQueue.push({
-        //       resolve: (token: string) => {
-        //         originalRequest.headers.Authorization = `Bearer ${token}`;
-        //         resolve(client(originalRequest));
-        //       },
-        //       reject: (err: unknown) => reject(err),
-        //     });
-        //   });
-        // } catch (e) {
-        //   return Promise.reject(e);
-        // }
       } else {
         isRefreshing = true;
         try {
@@ -102,8 +69,6 @@ client.interceptors.response.use(
         }
       }
     }
-    // if (isLoggedIn) logout();
-    // console.error('Failed to refresh token', error);
     return Promise.reject(error);
   },
 );
