@@ -15,7 +15,7 @@ const MyBoardPage = () => {
     try {
       const response = await getMySharePostList();
       if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
-      console.log(response);
+      console.log('myPostList', response);
       return response.data as SharePost[];
     } catch (e) {
       console.error(e);
@@ -43,9 +43,9 @@ const MyBoardPage = () => {
         <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
         {isLoading ? (
           <p>loading</p>
-        ) : (
+        ) : postLists && postLists?.length > 0 ? (
           <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
-            {postLists.map((item, index) => (
+            {postLists?.map((item, index) => (
               <LetterPreview
                 key={index}
                 id={item.sharePostId}
@@ -55,6 +55,8 @@ const MyBoardPage = () => {
               />
             ))}
           </section>
+        ) : (
+          <p className="body-m text-gray-60 text-center">게시글이 없습니다.</p>
         )}
       </main>
       <BackgroundBottom />

@@ -9,6 +9,7 @@ import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import PageTitle from '@/components/PageTitle';
 
 import LetterPreview from './components/LetterPreview';
+import { p } from 'node_modules/react-router/dist/development/fog-of-war-D6dP9JIt.d.mts';
 
 const LetterBoardPage = () => {
   const navigate = useNavigate();
@@ -66,9 +67,9 @@ const LetterBoardPage = () => {
         </>
         {isLoading ? (
           <p>loading</p>
-        ) : (
+        ) : postLists && postLists?.length > 0 ? (
           <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
-            {postLists.map((item, index) => {
+            {postLists?.map((item, index) => {
               return (
                 <LetterPreview
                   key={index}
@@ -81,6 +82,8 @@ const LetterBoardPage = () => {
               );
             })}
           </section>
+        ) : (
+          <p className="body-m text-gray-60 mt-10 text-center">게시글이 없습니다.</p>
         )}
       </main>
       <BackgroundBottom />
