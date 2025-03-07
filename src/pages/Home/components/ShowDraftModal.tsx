@@ -2,7 +2,7 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import React, { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router';
 
-import { DraftLetter, getDraftLetters } from '@/apis/draftLetters';
+import { DraftLetter, getDraftLetters, deleteDraftLetters } from '@/apis/draftLetters';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
@@ -22,7 +22,7 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
   //   });
   // };
 
-  useEffect(() => {
+  const handleGetDraftLetters = () => {
     getDraftLetters()
       .then((data) => {
         setDraftLetters(data || []);
@@ -30,6 +30,21 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
       .catch((error) => {
         console.error('❌ 임시저장된 편지를 불러오는데 실패했습니다', error);
       });
+  };
+
+  const handleDeleteDraftLetters = async (letterId: number) => {
+    //TODO: 정말로 삭제하시겠습니까? 모달창
+    try {
+      await deleteDraftLetters(letterId);
+      setDraftLetters((prev) => prev.filter((letter) => letter.letterId !== letterId));
+      console.log(`letterId는 `, letterId);
+    } catch (error) {
+      console.error(`❌임시저장된 편지를 삭제하던 중 에러가 발생했습니다.`, error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetDraftLetters();
   }, [onClose]);
 
   return (
@@ -52,7 +67,11 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
                   // onClick={() => handleNavigation(draft.letterId)}
                 >
                   <p className="truncate">{draft.title}</p>
-                  <div className="text-gray-20">
+                  <div
+                    className="text-gray-20 active:text-gray-600"
+                    tabIndex={0}
+                    onClick={() => handleDeleteDraftLetters(draft.letterId)}
+                  >
                     <DeleteOutlineRoundedIcon />
                   </div>
                 </div>

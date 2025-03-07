@@ -20,7 +20,7 @@ const CommentDetailModal = ({ comment, isWriter, onClose, onDelete }: CommentDet
 
         <MemoWrapper className="mt-1 flex max-h-1/2 w-78 overflow-y-auto px-5 text-black">
           <div className="z-1 flex flex-col gap-3">
-            <p className="body-r leading-[26px]">{comment.content}</p>
+            <p className="body-r leading-[26px] whitespace-pre-wrap">{comment.content}</p>
             <p className="body-m place-self-end">From. {comment.zipCode}</p>
           </div>
         </MemoWrapper>

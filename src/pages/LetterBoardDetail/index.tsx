@@ -25,51 +25,29 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
   const [isLike, setIsLike] = useState(false);
   const isWriter = false;
   const [activeReportModal, setActiveReportModal] = useState(false);
+  const sharePostId: string = location.pathname.split('/')[3];
+  // const location = useLocation();
+  const navigate = useNavigate();
+  // const isShareLetterPreview = location.state?.isShareLetterPreview || false;
+  const isShareLetterPreview = false;
+  const [postDetail, setPostDetail] = useState<SharePost>();
+
+  const postLike = async () => {
+    try {
+      const response = await postSharePostLike(sharePostId);
+      if (!response) throw new Error('error while fetching like count');
+      console.log('✅ 편지 좋아요 추가됨:', response);
+    } catch (error) {
+      console.error('❌ 편지 좋아요 추가 중 에러가 발생했습니다', error);
+      throw new Error('편지 좋아요 추가 실패');
+    }
+  };
 
   const handleToggleLike = () => {
     setLikeCount((prev) => prev + (isLike ? -1 : 1));
     setIsLike((prev) => !prev);
+    postLike();
   };
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const isShareLetterPreview = location.state?.isShareLetterPreview || false;
-  const [postDetail, setPostDetail] = useState<SharePost>();
-
-  useEffect(() => {
-    const { sharePostId } = location.state.postDetail;
-    const fetchPostDetail = async (postId: number) => {
-      try {
-        console.log('sharePostId:', postId);
-
-        const data = await getSharePostDetail(postId);
-
-        setPostDetail(data);
-      } catch (error) {
-        console.error('❌ 공유 게시글 상세 조회에 실패했습니다.', error);
-      }
-    };
-
-    const fetchLikeCounts = async (postId: number) => {
-      try {
-        const response = await getSharePostLikeCount(postId);
-        if (!response) throw new Error('error while fetching like count');
-        console.log(response);
-        setLikeCount(response.data.likeCount);
-      } catch (error) {
-        console.error('❌ 편지 좋아요 갯수를 가져오는 중 에러가 발생했습니다', error);
-        throw new Error('편지 좋아요 갯수 가져오기 실패');
-      }
-    };
-
-    if (location.state?.postDetail) {
-      fetchPostDetail(sharePostId);
-      fetchLikeCounts(sharePostId);
-    } else {
-      console.warn('postDetail not found in location.state');
-    }
-  }, [location.state]);
 
   const handleProposalApproval = async (
     action: 'approve' | 'reject',
@@ -85,11 +63,46 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
     }
   };
 
+  useEffect(() => {
+    const fetchPostDetail = async (postId: string) => {
+      try {
+        const data = await getSharePostDetail(postId);
+        setPostDetail(data);
+      } catch (error) {
+        console.error('❌ 공유 게시글 상세 조회에 실패했습니다.', error);
+      }
+    };
+
+    const fetchLikeCounts = async (postId: string) => {
+      try {
+        const response = await getSharePostLikeCount(postId);
+        if (!response) throw new Error('error while fetching like count');
+        console.log('✅ 편지 좋아요 갯수:', response);
+        setLikeCount(response.likeCount);
+        setIsLike(response.liked);
+      } catch (error) {
+        console.error('❌ 편지 좋아요 갯수를 가져오는 중 에러가 발생했습니다', error);
+        throw new Error('편지 좋아요 갯수 가져오기 실패');
+      }
+    };
+
+    // if (location.state?.postDetail) {
+    fetchPostDetail(sharePostId);
+    fetchLikeCounts(sharePostId);
+    // } else {
+    //   console.warn('postDetail not found in location.state');
+    // }
+    // }, [location.state]);
+  }, []);
+
   return (
     <>
-      {/* MEMO : 안지원 왔다감 ^o^/ 신고 처리 API 작업을 하면서 추가 사항이 생겼습니다! reportType(이건 제가 추가해놓겠습니당), letterId(해당 게시글 또는 편지 id값, 추가 필요!)을 담아야 신고 모달을 정상적으로 사용 가능합니다!! */}
       {activeReportModal && (
-        <ReportModal reportType="POST" onClose={() => setActiveReportModal(false)} />
+        <ReportModal
+          reportType="POST"
+          letterId={parseInt(sharePostId)}
+          onClose={() => setActiveReportModal(false)}
+        />
       )}
       <div className="grow bg-white">
         <Header

@@ -45,10 +45,8 @@ let retry = false;
 
 client.interceptors.request.use(
   (config) => {
-    console.log('response again', config);
-
     const accessToken = useAuthStore.getState().accessToken;
-    if (config.url !== '/auth/reissue' && accessToken) {
+    if (config.url !== '/api/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
