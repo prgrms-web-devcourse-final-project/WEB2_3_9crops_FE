@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { getSharePostDetail, getSharePostList } from '@/apis/share';
-import { SharePostResponse, SharePost } from '@/apis/share';
+import { getSharePostDetail } from '@/apis/share';
+import { getShareProposalList } from '@/apis/share';
+import { ShareProposal } from '@/apis/share';
+
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
@@ -14,35 +16,22 @@ interface ShowShareAccessModalProps {
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
   const navigate = useNavigate();
 
-  const [sharePosts, setSharePosts] = useState<SharePost[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
-  const fetchPosts = async (page: number) => {
-    try {
-      const data: SharePostResponse = await getSharePostList(page, 10);
-      setSharePosts((prev) => [...prev, ...data.content]);
-      setHasMore(page < data.totalPages);
-    } catch (error) {
-      console.error('❌ 게시글 목록을 불러오는 데 실패했습니다.', error);
-    }
-  };
+  const [shareProposals, setShareProposals] = useState<ShareProposal[]>([]);
 
   useEffect(() => {
-    fetchPosts(currentPage);
-  }, [currentPage]);
+    getShareProposalList()
+      .then((data) => {
+        setShareProposals(data || []);
+      })
+      .catch((error) => {
+        console.error('❌ 공유 요청 목록을 불러오는 데 실패했습니다.', error);
+      });
+  }, []);
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    if (scrollTop + clientHeight >= scrollHeight - 10 && hasMore) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-
-  const handleNavigation = async (sharePostId: number) => {
+  const handleNavigation = async (shareProposalId: number) => {
     try {
-      const postDetail = await getSharePostDetail(sharePostId);
-      navigate(`/board/letter/${sharePostId}`, {
+      const postDetail = await getSharePostDetail(shareProposalId);
+      navigate(`/board/letter/${shareProposalId}`, {
         state: { postDetail, isShareLetterPreview: true },
       });
     } catch (error) {
@@ -65,19 +54,20 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
                 허락 여부를 체크해주세요!
               </p>
             </div>
-            <div
-              className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden"
-              onScroll={handleScroll}
-            >
-              {sharePosts?.map((post) => (
-                <button
-                  className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
-                  key={post.sharePostId}
-                  onClick={() => handleNavigation(post.sharePostId)}
-                >
-                  <p>{post.writerZipCode}님의 공유 요청</p>
-                </button>
-              ))}
+            <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+              {shareProposals.length > 0 ? (
+                shareProposals.map((proposal) => (
+                  <button
+                    className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
+                    key={proposal.shareProposalId}
+                    onClick={() => handleNavigation(proposal.shareProposalId)}
+                  >
+                    <p>{proposal.requesterZipCode}님의 공유 요청</p>
+                  </button>
+                ))
+              ) : (
+                <p className="caption-m text-center text-gray-50">새로운 공유 요청이 없어요</p>
+              )}
             </div>
           </ModalBackgroundWrapper>
         </div>
