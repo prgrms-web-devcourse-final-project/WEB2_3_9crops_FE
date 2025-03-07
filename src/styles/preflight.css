@@ -4,6 +4,7 @@
   :root {
     --vh: 1vh;
     --vw: 1vw;
+    --marquee-duration: 10s;
   }
 
   * {
