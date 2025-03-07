@@ -31,6 +31,7 @@ const MyPage = () => {
       return response;
     } catch (error) {
       console.error(error);
+      alert('서버 오류로 인해 탈퇴 처리가 되지 않았습니다. 다음에 다시 시도해주세요.');
     }
   };
 
@@ -48,6 +49,7 @@ const MyPage = () => {
             setIsOpenModal(false);
             if (response?.status === 200) {
               logout();
+              alert('탈퇴 되었습니다.');
             }
           }}
         />
