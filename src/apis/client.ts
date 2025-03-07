@@ -57,12 +57,10 @@ client.interceptors.response.use(
         try {
           const newToken = await callReissue();
           setAccessToken(newToken);
-          // processQueue(null, newToken);
           isRefreshing = false;
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
           return client(originalRequest);
         } catch (e) {
-          // processQueue(e, null);
           isRefreshing = false;
           if (isLoggedIn) logout();
           return Promise.reject(e);
