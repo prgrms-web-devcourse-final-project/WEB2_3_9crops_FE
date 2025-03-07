@@ -54,15 +54,19 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
               </p>
             </div>
             <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
-              {shareProposals.map((proposal) => (
-                <button
-                  className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
-                  key={proposal.shareProposalId}
-                  onClick={() => handleNavigation(proposal.shareProposalId)}
-                >
-                  <p>{proposal.requesterZipCode}님의 공유 요청</p>
-                </button>
-              ))}
+              {shareProposals.length > 0 ? (
+                shareProposals.map((proposal) => (
+                  <button
+                    className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
+                    key={proposal.shareProposalId}
+                    onClick={() => handleNavigation(proposal.shareProposalId)}
+                  >
+                    <p>{proposal.requesterZipCode}님의 공유 요청</p>
+                  </button>
+                ))
+              ) : (
+                <p className="caption-m text-center text-gray-50">새로운 공유 요청이 없어요</p>
+              )}
             </div>
           </ModalBackgroundWrapper>
         </div>
