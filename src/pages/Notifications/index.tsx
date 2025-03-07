@@ -18,6 +18,9 @@ const NotificationsPage = () => {
 
   // MEMO : 편지 데이터 전송중 데이터도 추가될건데 나중에 데이터 추가되면 코드 업데이트 하긔
   const handleClickItem = (alarmType: string, content?: string | number) => {
+    if (alarmType === 'SENDING') {
+      navigate('/');
+    }
     if (alarmType === 'LETTER') {
       navigate(`/letter/${content}`);
     }
