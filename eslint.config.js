@@ -31,6 +31,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@tanstack/query/exhaustive-deps': 'error',
+      '@typescript-eslint/no-empty-object-type': off,
       'import/order': [
         'error',
         {
