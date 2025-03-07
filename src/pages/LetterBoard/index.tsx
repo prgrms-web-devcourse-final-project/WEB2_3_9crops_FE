@@ -9,7 +9,6 @@ import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import PageTitle from '@/components/PageTitle';
 
 import LetterPreview from './components/LetterPreview';
-import { p } from 'node_modules/react-router/dist/development/fog-of-war-D6dP9JIt.d.mts';
 
 const LetterBoardPage = () => {
   const navigate = useNavigate();
