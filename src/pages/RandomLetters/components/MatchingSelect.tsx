@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { EffectCards } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { twMerge } from 'tailwind-merge';
@@ -7,6 +8,7 @@ import 'swiper/swiper-bundle.css';
 
 import { getRandomLetters } from '@/apis/randomLetter';
 import { RestartIcon } from '@/assets/icons';
+import LetterWrapper from '@/components/LetterWrapper';
 import ResultLetter from '@/components/ResultLetter';
 
 import { CATEGORY_LIST } from '../constants';
@@ -18,6 +20,8 @@ export default function MatchingSelect({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedLetter: React.Dispatch<React.SetStateAction<RandomLetters>>;
 }) {
+  const navigate = useNavigate();
+
   const [selectedCategory, setSelectedCategory] = useState<Category | 'ALL'>('ALL');
   const [randomLetters, setRandomLetters] = useState<RandomLetters[]>([]);
 
@@ -49,27 +53,42 @@ export default function MatchingSelect({
           </span>
         </button>
         <div className="w-full max-w-[300px]">
-          <Swiper effect={'cards'} grabCursor={true} modules={[EffectCards]} className="mySwiper">
-            {randomLetters.map((list, idx) => {
-              return (
-                <SwiperSlide key={idx} className="max-w-full">
-                  <div
-                    className="w-full cursor-pointer"
-                    onClick={() => {
-                      setOpenModal(true);
-                      setSelectedLetter(list);
-                    }}
-                  >
-                    <ResultLetter
-                      categoryName={list.category}
-                      title={list.title}
-                      zipCode={list.zipCode}
-                    />
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
+          {randomLetters.length === 0 ? (
+            <LetterWrapper className="letter-disabled-bg flex h-[204px] w-full min-w-[300px] items-center justify-center">
+              <div className="caption-sb flex flex-col items-center justify-center gap-3">
+                <div className="caption-r text-gray-80 flex flex-col items-center justify-center">
+                  <span>편지가 없습니다.</span>
+                  <span>따숨님의 편지를 작성해보시겠어요?</span>
+                </div>
+                <button
+                  className="caption-b text-gray-60"
+                  onClick={() => navigate('/letter/write')}
+                >{`작성하러 가기 >`}</button>
+              </div>
+            </LetterWrapper>
+          ) : (
+            <Swiper effect={'cards'} grabCursor={true} modules={[EffectCards]} className="mySwiper">
+              {randomLetters.map((list, idx) => {
+                return (
+                  <SwiperSlide key={idx} className="max-w-full">
+                    <div
+                      className="w-full cursor-pointer"
+                      onClick={() => {
+                        setOpenModal(true);
+                        setSelectedLetter(list);
+                      }}
+                    >
+                      <ResultLetter
+                        categoryName={list.category}
+                        title={list.title}
+                        zipCode={list.zipCode}
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          )}
         </div>
       </div>
 
