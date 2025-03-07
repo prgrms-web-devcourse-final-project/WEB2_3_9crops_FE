@@ -33,14 +33,14 @@ const RollingPaperPage = () => {
       queryClient.setQueryData(['rolling-paper', id], (oldData: RollingPaper) => {
         if (!oldData) return oldData;
 
-        // return {
-        //   ...oldData,
-        //   eventPostComments: oldData.eventPostComments.filter(
-        //     (comment: RollingPaperComment) => comment.commentId !== data.commentId,
-        //   ),
-        // };
-        console.log(data, oldData);
-        return oldData;
+        return {
+          ...oldData,
+          eventPostComments: {
+            content: oldData.eventPostComments.content.filter(
+              (comment: RollingPaperComment) => comment.commentId !== data.commentId,
+            ),
+          },
+        };
       });
 
       setActiveDeleteModal(false);
@@ -102,6 +102,13 @@ const RollingPaperPage = () => {
                 />
               ))}
           </MasonryInfiniteGrid>
+          {isSuccess && data.eventPostComments.content.length === 0 && (
+            <p className="body-sb text-gray-60 my-20 text-center">
+              아직 등록된 편지가 없어요.
+              <br />
+              첫번째로 편지를 남겨볼까요?
+            </p>
+          )}
         </section>
         <WriteCommentButton rollingPaperId={id} />
       </main>
