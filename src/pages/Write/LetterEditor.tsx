@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { postFirstReply, postLetter } from '@/apis/write';
+import { postFirstReply, postLetter, postTemporarySave } from '@/apis/write';
 import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/ConfirmModal';
 import WritePageButton from '@/pages/Write/components/WritePageButton';
@@ -12,17 +12,17 @@ import useWrite from '@/stores/writeStore';
 import { removeProperty } from '@/utils/removeProperty';
 
 export default function LetterEditor({
+  letterId,
   setStep,
   prevLetter,
   setSend,
-  searchParams,
   isReply,
 }: {
-  setStep: React.Dispatch<React.SetStateAction<Step>>;
-  prevLetter: PrevLetter[];
-  setSend: React.Dispatch<React.SetStateAction<boolean>>;
-  searchParams: URLSearchParams;
+  letterId: string | null;
   isReply: boolean;
+  prevLetter: PrevLetter[];
+  setStep: React.Dispatch<React.SetStateAction<Step>>;
+  setSend: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -66,12 +66,23 @@ export default function LetterEditor({
       console.log('prevLetter', prevLetter);
       setLetterRequest({
         receiverId: prevLetter[0].memberId,
-        parentLetterId: Number(searchParams.get('letterId')),
+        parentLetterId: Number(letterId),
         category: prevLetter[0].category,
         matchingId: prevLetter[0].matchingId,
       });
     }
-  }, [prevLetter, searchParams, setLetterRequest, isReply]);
+  }, [prevLetter, setLetterRequest, isReply]);
+
+  const handlePostTemporarySave = async () => {
+    if (!letterId) return alert('임시저장중 오류 발생');
+    const res = await postTemporarySave(letterId, letterRequest);
+    if (res?.status === 200) {
+      console.log(res);
+      navigate('/');
+    } else {
+      alert('실패');
+    }
+  };
 
   return (
     <div className="flex grow flex-col pb-15">
@@ -83,8 +94,7 @@ export default function LetterEditor({
           confirmText="저장하고 나가기"
           onCancel={() => setIsTemporaryConfirmModal(false)}
           onConfirm={() => {
-            // postTemporarySave(letterRequest)
-            navigate('/');
+            handlePostTemporarySave();
           }}
         />
       )}

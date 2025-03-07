@@ -72,10 +72,10 @@ const WritePage = () => {
     <div className={wrapStyle}>
       {step === 'edit' && (
         <LetterEditor
+          letterId={letterId}
           setStep={setStep}
           prevLetter={prevLetter}
           setSend={setSend}
-          searchParams={searchParams}
           isReply={isReply}
         />
       )}
