@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { getSharePostDetail, getSharePostList } from '@/apis/share';
-import { SharePostResponse } from '@/apis/share';
+import { getSharePostDetail } from '@/apis/share';
+import { getShareProposalList } from '@/apis/share';
+import { ShareProposal } from '@/apis/share';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
@@ -14,25 +15,22 @@ interface ShowShareAccessModalProps {
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
   const navigate = useNavigate();
 
-  const [sharePosts, setSharePosts] = useState<SharePostResponse>();
+  const [shareProposals, setShareProposals] = useState<ShareProposal[]>([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const data = await getSharePostList(1, 10);
-        setSharePosts(data);
-      } catch (error) {
-        console.error('❌ 게시글 목록을 불러오는 데 실패했습니다.', error);
-      }
-    };
-
-    fetchPosts();
+    getShareProposalList()
+      .then((data) => {
+        setShareProposals(data || []);
+      })
+      .catch((error) => {
+        console.error('❌ 공유 요청 목록을 불러오는 데 실패했습니다.', error);
+      });
   }, []);
 
-  const handleNavigation = async (sharePostId: number) => {
+  const handleNavigation = async (shareProposalId: number) => {
     try {
-      const postDetail = await getSharePostDetail(sharePostId);
-      navigate(`/board/letter/${sharePostId}`, {
+      const postDetail = await getSharePostDetail(shareProposalId);
+      navigate(`/board/letter/${shareProposalId}`, {
         state: { postDetail, isShareLetterPreview: true },
       });
     } catch (error) {
@@ -56,13 +54,13 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
               </p>
             </div>
             <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
-              {sharePosts?.content.map((post) => (
+              {shareProposals.map((proposal) => (
                 <button
                   className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
-                  key={post.sharePostId}
-                  onClick={() => handleNavigation(post.sharePostId)}
+                  key={proposal.shareProposalId}
+                  onClick={() => handleNavigation(proposal.shareProposalId)}
                 >
-                  <p>{post.writerZipCode}님의 공유 요청</p>
+                  <p>{proposal.requesterZipCode}님의 공유 요청</p>
                 </button>
               ))}
             </div>
