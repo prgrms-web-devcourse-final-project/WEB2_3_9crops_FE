@@ -67,8 +67,7 @@ const LetterBoxDetailPage = () => {
       queryClient.invalidateQueries({ queryKey: ['mailBox'] });
     },
     onError: (error) => {
-      // TODO: 차단 실패 toastUI 띄워주기
-      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      alert('편지 연결 해제에 실패했습니다.');
       console.error(error);
     },
   });
@@ -80,8 +79,8 @@ const LetterBoxDetailPage = () => {
       setShareComment('');
     },
     onError: (error) => {
-      // TODO: 차단 실패 toastUI 띄워주기
-      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      alert('편지 공유에 실패했습니다.');
+
       console.error(error);
     },
   });
