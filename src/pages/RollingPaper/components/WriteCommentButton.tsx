@@ -62,7 +62,7 @@ const WriteCommentButton = ({ rollingPaperId }: WriteCommentButtonProps) => {
       )}
       <button
         type="button"
-        className="fixed bottom-7.5 left-5 z-10 overflow-hidden rounded-sm"
+        className="sticky bottom-8 z-10 mt-4 -mb-4 self-start overflow-hidden rounded-sm"
         onClick={() => setActiveMessageModal(true)}
       >
         <img src={EnvelopeImg} alt="편지지 이미지" className="h-12 w-auto opacity-70" />
