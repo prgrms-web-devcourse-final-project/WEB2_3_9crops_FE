@@ -100,7 +100,7 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
       {activeReportModal && (
         <ReportModal
           reportType="POST"
-          letterId={sharePostId}
+          letterId={parseInt(sharePostId)}
           onClose={() => setActiveReportModal(false)}
         />
       )}

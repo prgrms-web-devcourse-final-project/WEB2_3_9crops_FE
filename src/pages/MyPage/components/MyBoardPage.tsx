@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { getMySharePostList } from '@/apis/mypage';
+import { getMySharePostList } from '@/apis/myPage';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import PageTitle from '@/components/PageTitle';
 

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { fetchMyPageInfo } from '@/apis/mypage';
+import { fetchMyPageInfo } from '@/apis/myPage';
 
 interface MyPageDataStore {
   zipCode: string;
