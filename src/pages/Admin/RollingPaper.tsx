@@ -28,7 +28,9 @@ export default function AdminRollingPaper() {
 
   return (
     <>
-      {activeModal && <AddRollingPaperModal onClose={() => setActiveModal(false)} />}
+      {activeModal && (
+        <AddRollingPaperModal currentPage={currentPage} onClose={() => setActiveModal(false)} />
+      )}
       <PageTitle>게시판 관리 / 롤링 페이퍼 설정</PageTitle>
       <WrapperFrame>
         <section className="flex items-center">
@@ -56,7 +58,11 @@ export default function AdminRollingPaper() {
               </thead>
               <tbody>
                 {data.content.map((rollingPaper) => (
-                  <RollingPaperItem key={rollingPaper.eventPostId} information={rollingPaper} />
+                  <RollingPaperItem
+                    key={rollingPaper.eventPostId}
+                    information={rollingPaper}
+                    currentPage={currentPage}
+                  />
                 ))}
               </tbody>
             </table>
