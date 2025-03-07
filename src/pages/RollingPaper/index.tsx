@@ -12,19 +12,17 @@ import Header from '@/layouts/Header';
 import Comment from './components/Comment';
 import CommentDetailModal from './components/CommentDetailModal';
 import WriteCommentButton from './components/WriteCommentButton';
-
-// TODO: 로그인 구현 완료 시, 더미 완전히 제거
-const DUMMY_USER_ZIP_CODE = '1DR41';
-const DUMMY_MESSAGE_COUNT = 20;
+import useAuthStore from '@/stores/authStore';
 
 const RollingPaperPage = () => {
   const id = useParams().id ?? '';
   const [activeComment, setActiveComment] = useState<RollingPaperComment | null>(null);
   const [activeDetailModal, setActiveDetailModal] = useState(false);
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+  const zipCode = useAuthStore((props) => props.zipCode);
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ['rolling-paper', id],
     queryFn: () => getRollingPaperDetail(id),
   });
@@ -35,12 +33,14 @@ const RollingPaperPage = () => {
       queryClient.setQueryData(['rolling-paper', id], (oldData: RollingPaper) => {
         if (!oldData) return oldData;
 
-        return {
-          ...oldData,
-          eventPostComments: oldData.eventPostComments.filter(
-            (comment: RollingPaperComment) => comment.commentId !== data.commentId,
-          ),
-        };
+        // return {
+        //   ...oldData,
+        //   eventPostComments: oldData.eventPostComments.filter(
+        //     (comment: RollingPaperComment) => comment.commentId !== data.commentId,
+        //   ),
+        // };
+        console.log(data, oldData);
+        return oldData;
       });
 
       setActiveDeleteModal(false);
@@ -56,7 +56,7 @@ const RollingPaperPage = () => {
       {activeDetailModal && activeComment && (
         <CommentDetailModal
           comment={activeComment}
-          isWriter={activeComment.zipCode === DUMMY_USER_ZIP_CODE}
+          isWriter={activeComment.zipCode === zipCode}
           onClose={() => {
             setActiveDetailModal(false);
             setActiveComment(null);
@@ -85,11 +85,13 @@ const RollingPaperPage = () => {
       <Header />
       <main className="flex grow flex-col items-center px-5 pt-20 pb-12">
         <PageTitle className="mb-18 max-w-73 text-center">{data?.title}</PageTitle>
-        <p className="body-sb text-gray-60 mb-2 w-full">등록된 편지 {DUMMY_MESSAGE_COUNT}</p>
+        <p className="body-sb text-gray-60 mb-2 w-full">
+          등록된 편지 {data ? data.eventPostComments.content.length : 0}
+        </p>
         <section className="w-full">
           <MasonryInfiniteGrid column={2} align="stretch" gap={16}>
-            {data &&
-              data.eventPostComments.map((comment) => (
+            {isSuccess &&
+              data.eventPostComments.content.map((comment) => (
                 <Comment
                   key={comment.commentId}
                   comment={comment}

@@ -13,16 +13,6 @@ interface RollingPaperComment {
   content: string;
 }
 
-interface RollingPaper extends RollingPaperInformation {
-  eventPostComments: {
-    content: RollingPaperComment[];
-    currentPage: number;
-    size: number;
-    totalElements: number;
-    totalPages: number;
-  };
-}
-
 interface PaginationData<T> {
   content: T[];
   currentPage: number;
@@ -31,4 +21,8 @@ interface PaginationData<T> {
   totalPages: number;
 }
 
-type RollingPaperList = PaginationData<AdminRollingPaperInformation>;
+interface RollingPaperList extends PaginationData<AdminRollingPaperInformation> {}
+
+interface RollingPaper extends RollingPaperInformation {
+  eventPostComments: PaginationData<RollingPaperComment>;
+}
