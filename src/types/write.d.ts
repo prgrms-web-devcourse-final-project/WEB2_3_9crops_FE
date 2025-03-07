@@ -59,6 +59,10 @@ interface LetterRequest {
   matchingId: number | null;
 }
 
+interface TemporaryRequest extends LetterRequest {
+  letterId: number | null;
+}
+
 interface FirstReplyRequest {
   receiverId: number | null;
   parentLetterId: number | null;

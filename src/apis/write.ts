@@ -34,9 +34,9 @@ const getPrevLetter = async (letterId: string) => {
 };
 
 // 임시저장 최초 생성
-const postTemporarySave = async (letterId: string, data: LetterRequest) => {
+const postTemporarySave = async (data: TemporaryRequest) => {
   try {
-    const res = client.post(`/api/letters/${letterId}/temporary-save`, data);
+    const res = client.post(`/api/letters/temporary-save`, data);
     if (!res) throw new Error('편지 임시저장과정에서 오류가 발생했습니다.');
     return res;
   } catch (error) {
@@ -45,9 +45,9 @@ const postTemporarySave = async (letterId: string, data: LetterRequest) => {
 };
 
 // 임시저장 수정
-const PatchTemporarySave = async (letterId: string, data: LetterRequest) => {
+const PatchTemporarySave = async (data: TemporaryRequest) => {
   try {
-    const res = client.post(`/api/letters/${letterId}/temporary-save`, data);
+    const res = client.post(`/api/letters/temporary-save`, data);
     if (!res) throw new Error('편지 임시저장과정에서 오류가 발생했습니다.');
     return res;
   } catch (error) {

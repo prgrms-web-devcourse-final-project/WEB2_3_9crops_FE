@@ -75,7 +75,11 @@ export default function LetterEditor({
 
   const handlePostTemporarySave = async () => {
     if (!letterId) return alert('임시저장중 오류 발생');
-    const res = await postTemporarySave(letterId, letterRequest);
+    const LETTER_STATE_DUMMY = false;
+    const requestLetterId = LETTER_STATE_DUMMY || null;
+    // MEMO : 임시저장 전송 방식 : 최초임시저장은 letterId : null, 임시저장 업데이트는 letterId : location state로 받아오는 임시저장편지의 letterId값
+    const temporaryRequest: TemporaryRequest = { ...letterRequest, letterId: requestLetterId };
+    const res = await postTemporarySave(temporaryRequest);
     if (res?.status === 200) {
       console.log(res);
       navigate('/');
