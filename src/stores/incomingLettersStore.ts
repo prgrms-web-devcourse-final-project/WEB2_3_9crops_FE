@@ -46,9 +46,27 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
       const inProgressLetters = updatedLetters.filter(
         (letter: IncomingLetters) => letter.remainingTime !== '00:00:00',
       );
+
       set({
         data: inProgressLetters,
       });
+
+      setInterval(() => {
+        set((state) => {
+          const updatedLetters = state.data.map((letter: IncomingLetters) => {
+            const remainingTime = calculatingRemainingTime(letter.deliveryCompletedAt);
+            return { ...letter, remainingTime };
+          });
+
+          const filteredLetters = updatedLetters.filter(
+            (letter) => letter.remainingTime !== '00:00:00',
+          );
+
+          return {
+            data: filteredLetters,
+          };
+        });
+      }, 1000);
     } catch (error) {
       console.error('❌오고 있는 편지 목록을 불러오던 중 에러 발생', error);
     }
