@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { getSharePostDetail } from '@/apis/share';
 import { getShareProposalList } from '@/apis/share';
 import { ShareProposal } from '@/apis/share';
+
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 

@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router';
 
+import { useServerSentEvents } from './hooks/useServerSentEvents';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
@@ -8,6 +9,7 @@ import AdminPage from './pages/Admin';
 import FilteredLetterManage from './pages/Admin/FilteredLetter';
 import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
+import AdminRollingPaper from './pages/Admin/RollingPaper';
 import AuthCallbackPage from './pages/Auth';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
@@ -28,6 +30,7 @@ import WritePage from './pages/Write';
 
 const App = () => {
   useViewport();
+  useServerSentEvents();
 
   return (
     <Routes>
@@ -69,6 +72,7 @@ const App = () => {
           <Route path="report" element={<ReportManage />} />
           <Route path="badwords" element={<FilteringManage />} />
           <Route path="filtered-letter" element={<FilteredLetterManage />} />
+          <Route path="rolling-paper" element={<AdminRollingPaper />} />
         </Route>
       </Route>
     </Routes>

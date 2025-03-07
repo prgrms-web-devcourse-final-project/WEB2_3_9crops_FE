@@ -36,3 +36,50 @@ export const deleteRollingPaperComment = async (commentId: string | number) => {
     throw error;
   }
 };
+
+export const postNewRollingPaper = async (title: string) => {
+  try {
+    const {
+      data: { data },
+    } = await client.post('/api/admin/event-posts', { title });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getRollingPaperList = async (): Promise<RollingPaperList> => {
+  try {
+    const {
+      data: { data },
+    } = await client.get('/api/admin/event-posts');
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteRollingPaper = async (eventPostId: number | string) => {
+  try {
+    const { data } = await client.delete(`/api/admin/event-posts/${eventPostId}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const patchRollingPaper = async (eventPostId: number | string) => {
+  try {
+    const {
+      data: { data },
+    } = await client.patch(`/api/admin/event-posts/${eventPostId}/status`);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

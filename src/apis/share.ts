@@ -62,7 +62,7 @@ export const getSharePostList = async (page: number = 1, size: number = 10) => {
 };
 
 // 공유 게시글 상세 조회
-export const getSharePostDetail = async (sharePostId: number): Promise<SharePost> => {
+export const getSharePostDetail = async (sharePostId: string): Promise<SharePost> => {
   try {
     const response = await client.get(`/api/share-posts/${sharePostId}`);
     console.log(`🔥공유 게시글 상세 데이터`, response.data);
@@ -124,7 +124,7 @@ export const postShareProposalApproval = async (
 };
 
 // 편지 좋아요 추가, 취소
-export const postSharePostLike = async (sharePostId: number) => {
+export const postSharePostLike = async (sharePostId: string) => {
   try {
     const response = await client.post(`/api/share-posts/${sharePostId}/likes`);
     if (!response) throw new Error('error while posting like');
@@ -136,7 +136,7 @@ export const postSharePostLike = async (sharePostId: number) => {
 };
 
 // 편지 좋아요 갯수
-export const getSharePostLikeCount = async (sharePostId: number) => {
+export const getSharePostLikeCount = async (sharePostId: string) => {
   try {
     const response = await client.get(`/api/share-posts/${sharePostId}/likes`);
     if (!response) throw new Error('error while fetching likes');
