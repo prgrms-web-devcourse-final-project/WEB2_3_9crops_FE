@@ -28,7 +28,7 @@ const MyPage = () => {
     try {
       const response = await deleteUserInfo();
       if (!response) throw new Error('deletioning failed');
-      console.log(response);
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -43,9 +43,12 @@ const MyPage = () => {
           cancelText="되돌아가기"
           confirmText="탈퇴하기"
           onCancel={() => setIsOpenModal(false)}
-          onConfirm={() => {
-            handleLeave();
+          onConfirm={async () => {
+            const response = await handleLeave();
             setIsOpenModal(false);
+            if (response?.status === 200) {
+              logout();
+            }
           }}
         />
       )}
