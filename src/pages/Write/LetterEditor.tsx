@@ -107,12 +107,14 @@ export default function LetterEditor({
         <BackButton />
         {isReply ? (
           <div className="flex gap-1">
-            <WritePageButton
-              text="임시저장"
-              onClick={() => {
-                setIsTemporaryConfirmModal(true);
-              }}
-            />
+            {!randomMatched && (
+              <WritePageButton
+                text="임시저장"
+                onClick={() => {
+                  setIsTemporaryConfirmModal(true);
+                }}
+              />
+            )}
             <WritePageButton
               text="답장 전송"
               onClick={() => {
