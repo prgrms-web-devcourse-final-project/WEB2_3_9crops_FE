@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import useAuthStore from '@/stores/authStore';
 
 export const useServerSentEvents = () => {
-  const accessToken = useAuthStore.getState().accessToken;
+  const accessToken = useAuthStore((state) => state.accessToken);
   const sourceRef = useRef<EventSourcePolyfill | null>(null);
 
   useEffect(() => {
@@ -50,11 +50,10 @@ export const useServerSentEvents = () => {
     };
   }, [accessToken]);
 
-  // 바깥으로 보낼 closeSSE 함수
   const closeSSE = () => {
     sourceRef.current?.close();
     sourceRef.current = null;
   };
 
-  return { closeSSE };
+  // return { closeSSE };
 };
