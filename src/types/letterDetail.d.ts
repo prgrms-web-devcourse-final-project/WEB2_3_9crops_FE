@@ -1,3 +1,5 @@
+type LetterEvaluation = 'GOOD' | 'SOSO' | 'BAD';
+
 interface LetterDetail {
   letterId: number;
   title: string;
@@ -6,4 +8,7 @@ interface LetterDetail {
   paperType: PaperType;
   fontType: FontType;
   matched: boolean;
+  evaluated: boolean;
+  matchingId: number;
+  zipCode: string;
 }

@@ -102,8 +102,8 @@ client.interceptors.response.use(
         }
       }
     }
-    if (isLoggedIn) logout();
-    console.error('Failed to refresh token', error);
+    // if (isLoggedIn) logout();
+    // console.error('Failed to refresh token', error);
     return Promise.reject(error);
   },
 );

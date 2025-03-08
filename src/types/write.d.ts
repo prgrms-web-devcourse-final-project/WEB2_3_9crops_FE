@@ -24,7 +24,6 @@ interface PrevLetter {
   content: string;
   category: Category;
   memberId: number;
-  receiverId: number;
   matchingId: number | null;
 }
 
@@ -58,6 +57,10 @@ interface LetterRequest {
   paperType: PaperType;
   fontType: FontType;
   matchingId: number | null;
+}
+
+interface TemporaryRequest extends LetterRequest {
+  letterId: number | null;
 }
 
 interface FirstReplyRequest {
