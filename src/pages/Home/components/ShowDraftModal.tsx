@@ -60,22 +60,26 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
               <p className="caption-r text-black">로그아웃 시 임시 저장된 편지는 사라집니다</p>
             </div>
             <div className="mt-6 flex max-h-60 min-h-auto w-[251px] flex-col gap-[10px] overflow-y-scroll [&::-webkit-scrollbar]:hidden">
-              {draftLetters.map((draft) => (
-                <div
-                  className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
-                  key={draft.letterId}
-                  // onClick={() => handleNavigation(draft.letterId)}
-                >
-                  <p className="truncate">{draft.title}</p>
+ {draftLetters.length > 0 ? (
+                draftLetters.map((draft) => (
                   <div
-                    className="text-gray-20 active:text-gray-600"
-                    tabIndex={0}
-                    onClick={() => handleDeleteDraftLetters(draft.letterId)}
+                    className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
+                    key={draft.letterId}
+                    // onClick={() => handleNavigation(draft.letterId)}
                   >
-                    <DeleteOutlineRoundedIcon />
+                    <p className="truncate">{draft.title}</p>
+                    <div
+                      className="text-gray-20 active:text-gray-600"
+                      tabIndex={0}
+                      onClick={() => handleDeleteDraftLetters(draft.letterId)}
+                    >
+                      <DeleteOutlineRoundedIcon />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="caption-m text-center text-gray-50">작성 중인 편지가 없어요</p>
+              )}
             </div>
           </ModalBackgroundWrapper>
         </div>
