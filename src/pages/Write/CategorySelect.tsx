@@ -59,9 +59,7 @@ export default function CategorySelect({
             <div className="animate-show-text flex flex-col items-center opacity-0">
               <span className="body-sb text-gray-60">작성하신 편지는</span>
               <span className="body-sb text-gray-60">
-                <span>{'00'}시간 </span>
-                <span>{'00'}분 </span>
-                <span>{'00'}초 후에 도착합니다.</span>
+                <span>1시간 후에 도착합니다.</span>
               </span>
             </div>
           </div>
