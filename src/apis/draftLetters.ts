@@ -14,7 +14,7 @@ export interface DraftLetter {
 
 export const getDraftLetters = async (): Promise<DraftLetter[]> => {
   try {
-    const { data } = await client.get('/api/letters?status=draft', {});
+    const { data } = await client.get('/api/letters?status=draft');
     console.log('임시저장된 편지 데이터', data);
     return data.data;
   } catch (error) {
