@@ -39,7 +39,7 @@ const MyBoardPage = () => {
   }
   return (
     <>
-      <main className={twMerge('flex grow flex-col px-5 pt-20 pb-10')}>
+      <main className={twMerge('z-1 flex grow flex-col px-5 pt-20 pb-10')}>
         <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
         {isLoading ? (
           <p>loading</p>

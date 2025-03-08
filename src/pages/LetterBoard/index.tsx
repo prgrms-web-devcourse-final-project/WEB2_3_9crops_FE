@@ -56,7 +56,7 @@ const LetterBoardPage = () => {
 
   return (
     <>
-      <main className="mt-[-25px] flex grow flex-col px-5 pt-20 pb-10">
+      <main className="z-1 mt-[-25px] flex grow flex-col px-5 pt-20 pb-10">
         <>
           <NoticeRollingPaper />
           <PageTitle className="mx-auto mt-4">게시판</PageTitle>
