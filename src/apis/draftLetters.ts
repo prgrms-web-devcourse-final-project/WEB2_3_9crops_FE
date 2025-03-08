@@ -2,18 +2,14 @@ import client from './client';
 
 export interface DraftLetter {
   letterId: number;
-  writerId: number;
+  matchingId: number;
   receiverId: number;
   parentLetterId: number;
-  zipCode: string;
   title: string;
   content: string;
   category: string;
   paperType: string;
   fontType: string;
-  deliveryStartedAt: string;
-  deliveryCompletedAt: string;
-  matched: boolean;
 }
 
 export const getDraftLetters = async (): Promise<DraftLetter[]> => {
