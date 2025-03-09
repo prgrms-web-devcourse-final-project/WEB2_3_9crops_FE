@@ -17,11 +17,15 @@ const LetterBoardPage = () => {
   const fetchPostList = async (page: number = 1) => {
     try {
       const response = await getSharePostList(page);
-      if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
+      if (!response || !response.content) {
+        console.error('게시글 목록을 불러오는데 실패했습니다.');
+        return { content: [], currentPage: page, totalPages: 1 };
+      }
       console.log('page', response);
       return response as SharePostResponse;
     } catch (e) {
       console.error(e);
+      return { content: [], currentPage: page, totalPages: 1 };
     }
   };
 
@@ -32,7 +36,7 @@ const LetterBoardPage = () => {
       enabled: true,
       initialPageParam: 1,
       getNextPageParam: (res) => {
-        if (!res || !res.content || res.currentPage >= res.totalPages) {
+        if (!res || !res?.content || res?.currentPage >= res?.totalPages) {
           return undefined;
         }
         return res.currentPage + 1;
@@ -65,7 +69,7 @@ const LetterBoardPage = () => {
           </p>
         </>
         {isLoading ? (
-          <p>loading</p>
+          <p className="body-m text-gray-60 mt-10 text-center">로딩 중 입니다.</p>
         ) : postLists ? (
           postLists?.length > 0 ? (
             <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
