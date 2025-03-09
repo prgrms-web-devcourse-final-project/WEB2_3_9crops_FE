@@ -28,7 +28,7 @@ export default function ReportManage() {
     reportType: null,
     status: 'PENDING',
     page: '1',
-    size: '2',
+    size: '1',
   });
 
   const handleGetReports = async (reportQueryString: ReportQueryString) => {
@@ -47,6 +47,10 @@ export default function ReportManage() {
     setReportQueryString((cur) => ({ ...cur, page: page }));
   };
 
+  const handleStatus = (status: Status) => {
+    setReportQueryString((cur) => ({ ...cur, status: status }));
+  };
+
   useEffect(() => {
     handleGetReports(reportQueryString);
   }, [reportQueryString]);
@@ -54,7 +58,19 @@ export default function ReportManage() {
     <>
       <AdminPageTitle>검열 관리 / 신고 편지 목록</AdminPageTitle>
       <WrapperFrame>
-        <WrapperTitle title="신고 편지 목록" Icon={AlarmIcon} />
+        <div className="flex items-center justify-between">
+          <WrapperTitle title="신고 편지 목록" Icon={AlarmIcon} />
+          <select
+            onChange={(e) => {
+              const status = e.currentTarget.value as Status;
+              handleStatus(status);
+            }}
+          >
+            <option value="PENDING">대기중</option>
+            <option value="RESOLVED">승인됨</option>
+            <option value="REJECTED">거절됨</option>
+          </select>
+        </div>
 
         <section className="mt-5 flex flex-col">
           <ListHeaderFrame>

@@ -3,9 +3,8 @@ import client from './client';
 const postReports = async (postReportRequest: PostReportRequest) => {
   try {
     const res = await client.post(`/api/reports`, postReportRequest);
-    if (res.status === 200) {
-      return res;
-    }
+    if (!res) throw new Error('신고 요청중 에러가 발생했습니다.');
+    return res;
   } catch (error) {
     console.error(error);
   }
@@ -51,25 +50,22 @@ const getBadWords = async (setBadWords: React.Dispatch<React.SetStateAction<BadW
   }
 };
 
-const postBadWords = async (badWordsRequest: BadWords, callBack?: () => void) => {
+const postBadWords = async (badWordsRequest: BadWords) => {
   try {
     const res = await client.post('/api/bad-words', badWordsRequest);
-    if (callBack) callBack();
     console.log(res);
+    if (!res) throw new Error('금칙어 등록 도중 에러가 발생했습니다.');
+    return res;
   } catch (error) {
     console.error(error);
   }
 };
 
 // 내 상상대로 만든 필터링 단어 취소 버튼
-const patchBadWords = async (
-  badWordId: number,
-  badWordsRequest: BadWords,
-  callBack?: () => void,
-) => {
+const patchBadWords = async (badWordId: number) => {
   try {
-    const res = await client.patch(`/api/bad-words/${badWordId}/status`, badWordsRequest);
-    if (callBack) callBack();
+    const res = await client.patch(`/api/bad-words/${badWordId}/status`, { isUsed: false });
+    if (!res) throw new Error('검열 단어 삭제 도중 에러가 발생했습니다.');
     console.log(res);
   } catch (error) {
     console.error(error);
