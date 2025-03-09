@@ -9,10 +9,10 @@ export default function Toast({}: Toast) {
   const setToastUnActive = useToastStore((state) => state.setToastUnActive);
 
   const TOAST_DESIGN = {
-    Warning: { style: 'bg-primary-3' },
-    Success: { style: 'bg-[#38d9a9] text-[#FFFFFF]' },
-    Error: { style: 'bg-[#FFDCD8] text-[#FF0000]' },
-    Info: { style: 'bg-[#FFFFFF]' },
+    Warning: { style: 'bg-primary-4', imoji: '⚠️' },
+    Success: { style: 'bg-[#38d9a9] text-[#FFFFFF]', imoji: '✅' },
+    Error: { style: 'bg-[#FFDCD8] text-[#FF0000]', imoji: '🚨' },
+    Info: { style: 'bg-[#FFFFFF]', imoji: 'ℹ️' },
   };
 
   const animation = `toast-blink ${toastObj.time}s ease-in-out forwards`;
@@ -33,7 +33,7 @@ export default function Toast({}: Toast) {
   if (!isActive) return null;
   return (
     <div className={toastStyle} style={{ animation: animation }} onClick={() => setToastUnActive()}>
-      {toastObj.content}
+      {`${TOAST_DESIGN[toastObj.toastType].imoji} ${toastObj.content} ${TOAST_DESIGN[toastObj.toastType].imoji}`}
     </div>
   );
 }
