@@ -48,7 +48,16 @@ const NotificationsPage = () => {
 
   const handlePatchReadNotification = async (timelineId: number) => {
     const res = await patchReadNotification(timelineId);
-    if (res?.status !== 200) {
+    if (res?.status === 200) {
+      setNoti((curNoti) =>
+        curNoti.map((noti) => {
+          if (noti.timelineId === timelineId) {
+            return { ...noti, read: true };
+          }
+          return noti;
+        }),
+      );
+    } else {
       console.log('읽음처리 에러 발생');
     }
   };
