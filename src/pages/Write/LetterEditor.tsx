@@ -131,7 +131,7 @@ export default function LetterEditor({
                 } else {
                   setToastActive({
                     toastType: 'Warning',
-                    content: '편지 제목, 내용이 작성되었는지 확인해주세요',
+                    title: '편지 제목, 내용이 작성되었는지 확인해주세요',
                   });
                 }
               }}
@@ -146,7 +146,7 @@ export default function LetterEditor({
               } else {
                 setToastActive({
                   toastType: 'Warning',
-                  content: '편지 제목, 내용이 작성되었는지 확인해주세요',
+                  title: '편지 제목, 내용이 작성되었는지 확인해주세요',
                 });
               }
             }}

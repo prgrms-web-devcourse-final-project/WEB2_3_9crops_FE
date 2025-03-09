@@ -1,41 +1,42 @@
-import { ReactNode } from 'react';
 import { create } from 'zustand';
 
 interface ToastObj {
   time: number;
   toastType: 'Warning' | 'Success' | 'Error' | 'Info';
-  content: ReactNode;
+  position: 'TOP' | 'BOTTOM';
+  title: string;
   onClick?: () => void;
 }
 
 interface ToastStore {
-  isActive: boolean;
-  toastObj: ToastObj;
+  toastObjects: ToastObj[] | [];
   setToastActive: (prompt: Partial<ToastObj>) => void;
-  setToastUnActive: () => void;
+  setToastUnActive: (idx: number) => void;
 }
+
+// 토스트 기본형
+const toastObjFormat: ToastObj = {
+  time: 2,
+  toastType: 'Info',
+  position: 'BOTTOM',
+  title: '',
+  onClick: () => {},
+};
+
 const useToastStore = create<ToastStore>((set) => ({
-  isActive: false,
-  toastObj: {
-    time: 3,
-    toastType: 'Info',
-    content: '',
-    onClick: () => {},
-  },
+  toastObjects: [],
   setToastActive: (prompt) =>
     set((state) => ({
-      isActive: true,
-      toastObj: { ...state.toastObj, ...prompt },
+      toastObjects: [...state.toastObjects, { ...toastObjFormat, ...prompt }],
     })),
-  setToastUnActive: () => {
-    set(() => ({
-      isActive: false,
-      toastObj: {
-        time: 2,
-        toastType: 'Info',
-        content: '',
-        onClick: () => {},
-      },
+  setToastUnActive: (idx) => {
+    set((state) => ({
+      toastObjects: state.toastObjects.filter((target, currentIdx) => {
+        if (currentIdx === idx) {
+          return null;
+        }
+        return target;
+      }),
     }));
   },
 }));

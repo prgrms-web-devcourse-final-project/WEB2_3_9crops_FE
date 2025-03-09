@@ -3,8 +3,11 @@ import { useEffect, useRef } from 'react';
 
 import useAuthStore from '@/stores/authStore';
 import useToastStore from '@/stores/toastStore';
+import { useNavigate } from 'react-router';
 
 export const useServerSentEvents = () => {
+  const navigate = useNavigate();
+
   const accessToken = useAuthStore((state) => state.accessToken);
   const sourceRef = useRef<EventSourcePolyfill | null>(null);
 
@@ -30,8 +33,14 @@ export const useServerSentEvents = () => {
 
         sourceRef.current.onmessage = (event) => {
           console.log(event);
-          setToastActive({ toastType: 'Success', content: '새 알림이 도착했어요!' });
-          console.log('알림 전송');
+          console.log('알림 수신');
+          setToastActive({
+            toastType: 'Info',
+            title: '새 알림이 도착했어요!',
+            position: 'TOP',
+            time: 5,
+            onClick: () => navigate('/mypage/notifications'),
+          });
         };
 
         sourceRef.current.onerror = (error) => {
