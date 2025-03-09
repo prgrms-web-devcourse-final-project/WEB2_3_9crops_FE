@@ -32,7 +32,7 @@ const LetterBoardPage = () => {
       enabled: true,
       initialPageParam: 1,
       getNextPageParam: (res) => {
-        if (!res || res.currentPage >= res.totalPages) {
+        if (!res || !res.content || res.currentPage >= res.totalPages) {
           return undefined;
         }
         return res.currentPage + 1;
