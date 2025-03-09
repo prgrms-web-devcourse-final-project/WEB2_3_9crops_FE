@@ -14,19 +14,19 @@ export default function ToastItem({ toastObj, index }: { toastObj: ToastObj; ind
 
   const TOAST_DESIGN = {
     Warning: { style: 'bg-primary-4', imoji: '⚠️' },
-    Success: { style: 'bg-[#38d9a9] text-[#FFFFFF]', imoji: '✅' },
+    Success: { style: 'bg-[#DFFFDA] text-[#000000]', imoji: '✅' },
     Error: { style: 'bg-[#FFDCD8] text-[#FF0000]', imoji: '🚨' },
     Info: { style: 'bg-[#FFFFFF]', imoji: '📫' },
   };
 
   const TOAST_POSITION = {
     Top: 'top-20',
-    Bottom: 'bottom-20',
+    Bottom: 'bottom-5',
   };
 
   const animation = `toast-blink ${toastObj.time}s ease-in-out forwards`;
   const toastStyle = twMerge(
-    'fixed bottom-20 left-1/2 z-40 flex h-[40px] max-w-150 min-w-[335px] w-[85%] -translate-1/2 items-center justify-center rounded-2xl caption-sb',
+    'fixed bottom-5 left-1/2 z-40 flex h-[40px] max-w-150 min-w-[300px] w-[100%] -translate-1/2 items-center justify-center rounded-lg caption-sb shadow-[0_1px_6px_rgba(200,200,200,0.2)]',
     TOAST_POSITION[toastObj.position],
     TOAST_DESIGN[toastObj.toastType].style,
   );

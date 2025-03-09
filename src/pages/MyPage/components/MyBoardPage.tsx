@@ -14,11 +14,14 @@ const MyBoardPage = () => {
   const fetchMyPostList = async () => {
     try {
       const response = await getMySharePostList();
-      if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
+      if (!response) {
+        throw new Error('게시글 목록을 불러오는데 실패했습니다.');
+      }
       console.log('myPostList', response);
       return response.data as SharePost[];
     } catch (e) {
       console.error(e);
+      return [];
     }
   };
 
@@ -42,7 +45,7 @@ const MyBoardPage = () => {
       <main className={twMerge('z-1 flex grow flex-col px-5 pt-20 pb-10')}>
         <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
         {isLoading ? (
-          <p>loading</p>
+          <p className="body-m text-gray-60 text-center">로딩 중 입니다.</p>
         ) : postLists && postLists?.length > 0 ? (
           <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
             {postLists?.map((item, index) => (
