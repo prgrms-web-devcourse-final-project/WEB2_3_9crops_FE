@@ -46,12 +46,12 @@ const NoticeRollingPaper = () => {
     <Link to={`/board/rolling/${data?.eventPostId}`}>
       <article
         className={twMerge(
-          'text-gray-60 flex w-full items-center gap-2.5 rounded-lg px-4 py-2',
+          'text-gray-60 flex w-full items-center gap-2.5 rounded-lg px-4 py-2 dark:text-white',
           'bg-linear-[275deg,rgba(255,255,255,0.4)_13.74%,rgba(238,238,238,0.4)_67.61%]',
-          'shadow-[0_1px_6px_rgba(218,189,74,0.8)]',
+          'shadow-[0_1px_6px_rgba(218,189,74,0.8)] dark:shadow-[0_1px_6px_rgba(255,255,255,0.8)]',
         )}
       >
-        <NoticeIcon className="h-6 w-6 shrink-0 text-gray-50" />
+        <NoticeIcon className="h-6 w-6 shrink-0 text-gray-50 dark:text-white" />
         <div ref={containerRef} className="w-full overflow-hidden whitespace-nowrap">
           <p
             ref={textRef}

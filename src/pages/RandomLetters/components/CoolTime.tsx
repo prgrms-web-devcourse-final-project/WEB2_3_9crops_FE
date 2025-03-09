@@ -55,8 +55,8 @@ export default function CoolTime({
   return (
     <div className="mt-20 flex flex-col items-center justify-center">
       <div className="body-m flex flex-col items-center justify-center">
-        <p className="text-gray-60">랜덤 편지 활성화 까지</p>
-        <p className="text-gray-80">
+        <p className="text-gray-60 dark:text-white">랜덤 편지 활성화 까지</p>
+        <p className="text-gray-80 dark:text-white">
           {formatNumber(formatedEndTime.hours)} : {formatNumber(formatedEndTime.minutes)} :{' '}
           {formatNumber(formatedEndTime.seconds)}
         </p>

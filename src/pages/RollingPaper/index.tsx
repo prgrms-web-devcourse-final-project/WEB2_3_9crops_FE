@@ -85,7 +85,7 @@ const RollingPaperPage = () => {
       <Header />
       <main className="flex grow flex-col items-center px-5 pt-20 pb-12">
         <PageTitle className="mb-18 max-w-73 text-center">{data?.title}</PageTitle>
-        <p className="body-sb text-gray-60 mb-2 w-full">
+        <p className="body-sb text-gray-60 mb-2 w-full dark:text-white">
           등록된 편지 {data ? data.eventPostComments.content.length : 0}
         </p>
         <section className="w-full">

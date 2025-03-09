@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import useThemeStore from './themeStore';
+import { useTheme } from '@emotion/react';
 
 // import { postLogout } from '@/apis/auth';
 
@@ -21,6 +23,12 @@ const useAuthStore = create(
       zipCode: '',
       login: () => set({ isLoggedIn: true }),
       logout: async () => {
+        const theme = useThemeStore.getState().theme;
+        const toggleTheme = useThemeStore.getState().toggleTheme;
+
+        if (theme === 'dark') {
+          toggleTheme();
+        }
         set({ isLoggedIn: false, zipCode: '', accessToken: '' });
         // location.reload();
         // try {

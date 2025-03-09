@@ -60,7 +60,7 @@ const LetterBoardPage = () => {
         <>
           <NoticeRollingPaper />
           <PageTitle className="mx-auto mt-4">게시판</PageTitle>
-          <p className="text-gray-60 caption-m mt-4.5 text-center">
+          <p className="text-gray-60 caption-m mt-4.5 text-center dark:text-white">
             따숨이에게 힘이 되었던 다양한 편지들을 모아두었어요
           </p>
         </>
@@ -82,7 +82,9 @@ const LetterBoardPage = () => {
             })}
           </section>
         ) : (
-          <p className="body-m text-gray-60 mt-10 text-center">게시글이 없습니다.</p>
+          <p className="body-m text-gray-60 mt-10 text-center dark:text-white">
+            게시글이 없습니다.
+          </p>
         )}
       </main>
       <BackgroundBottom />

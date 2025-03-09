@@ -62,8 +62,8 @@ const MyPage = () => {
         </h1>
         <section>
           <h2 className="mb-2 flex justify-between">
-            <p className="body-sb text-gray-60">{description}</p>
-            <p className="body-sb text-accent-1">{data.temperature}도</p>
+            <p className="body-sb text-gray-60 dark:text-white">{description}</p>
+            <p className="body-sb text-accent-2">{data.temperature}도</p>
           </h2>
           <div className="h-4 w-full rounded-full bg-white">
             <div
@@ -74,32 +74,32 @@ const MyPage = () => {
         </section>
         <section className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
-            <h3 className="text-gray-40 body-sb">활동</h3>
+            <h3 className="text-gray-40 body-sb dark:text-gray-10">활동</h3>
             <Link to="board">
-              <p className="body-sb text-gray-100">내가 올린 게시물</p>
+              <p className="body-sb text-gray-100 dark:text-white">내가 올린 게시물</p>
             </Link>
           </div>
           <div className="flex flex-col gap-2">
-            <h3 className="text-gray-40 body-sb">고객 센터</h3>
+            <h3 className="text-gray-40 body-sb dark:text-gray-10">고객 센터</h3>
             <a
               href="https://forms.gle/ZagrTSZzJhogudSY8"
               target="_blank"
-              className="body-sb text-gray-100"
+              className="body-sb text-gray-100 dark:text-white"
             >
               운영자에게 문의하기
             </a>
           </div>
           <div className="flex flex-col gap-2">
-            <h3 className="text-gray-40 body-sb">계정</h3>
+            <h3 className="text-gray-40 body-sb dark:text-gray-10">계정</h3>
             <div className="flex justify-between">
-              <p className="body-sb text-gray-100">로그인 정보</p>
-              <p className="body-r text-gray-60">
+              <p className="body-sb text-gray-100 dark:text-white">로그인 정보</p>
+              <p className="body-r text-gray-60 dark:text-white">
                 <span className="mr-2">{data.social}</span>
                 <span>{data.email}</span>
               </p>
             </div>
             <button
-              className="body-sb self-start text-gray-100"
+              className="body-sb self-start text-gray-100 dark:text-white"
               onClick={() => {
                 logout();
               }}
@@ -110,7 +110,7 @@ const MyPage = () => {
         </section>
         <button
           type="button"
-          className="text-gray-60 body-m mt-auto self-start underline"
+          className="text-gray-60 body-m mt-auto self-start underline dark:text-white"
           onClick={async () => {
             setIsOpenModal(true);
           }}
