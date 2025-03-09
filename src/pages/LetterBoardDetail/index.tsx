@@ -25,8 +25,8 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
   const [isLike, setIsLike] = useState(false);
   const isWriter = false;
   const [activeReportModal, setActiveReportModal] = useState(false);
+  const location = useLocation();
   const sharePostId: string = location.pathname.split('/')[3];
-  // const location = useLocation();
   const navigate = useNavigate();
   // const isShareLetterPreview = location.state?.isShareLetterPreview || false;
   const isShareLetterPreview = false;
