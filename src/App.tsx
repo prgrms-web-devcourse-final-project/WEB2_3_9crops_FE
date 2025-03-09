@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router';
 
-import { useServerSentEvents } from './hooks/useServerSentEvents';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
@@ -30,7 +29,6 @@ import WritePage from './pages/Write';
 
 const App = () => {
   useViewport();
-  useServerSentEvents();
 
   return (
     <Routes>
@@ -39,10 +37,10 @@ const App = () => {
         <Route path="landing" element={<Landing />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="auth-callback" element={<AuthCallbackPage />} />
-        <Route index element={<Home />} />
         <Route path="onboarding" element={<OnboardingPage />} />
 
         <Route element={<PrivateRoute />}>
+          <Route index element={<Home />} />
           <Route path="letter">
             <Route element={<Layout />}>
               <Route path="random" element={<RandomLettersPage />} />
