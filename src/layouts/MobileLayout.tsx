@@ -1,4 +1,3 @@
-import Toast from '@/components/Toast';
 import { Outlet } from 'react-router';
 
 const MobileLayout = () => {
@@ -7,7 +6,6 @@ const MobileLayout = () => {
       <div className="mobile-layout">
         <Outlet />
       </div>
-      <Toast />
     </div>
   );
 };

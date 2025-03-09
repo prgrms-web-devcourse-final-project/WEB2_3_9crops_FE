@@ -15,17 +15,25 @@ export default function Toast({}: Toast) {
     Info: { style: 'bg-[#FFFFFF]' },
   };
 
+  const animation = `toast-blink ${toastObj.time}s ease-in-out forwards`;
   const toastStyle = twMerge(
-    'fixed top-10 left-1/2 z-40 flex h-[50px] min-w-[335px] w-[85%] -translate-1/2 items-center justify-center rounded-2xl caption-sb',
+    'fixed bottom-20 left-1/2 z-40 flex h-[40px] min-w-[335px] w-[85%] -translate-1/2 items-center justify-center rounded-2xl caption-sb',
     TOAST_DESIGN[toastObj.toastType].style,
   );
 
   const activeTime = toastObj.time * 1000;
   useEffect(() => {
-    setTimeout(() => {
+    const closeToast = setTimeout(() => {
       setToastUnActive();
     }, activeTime);
+
+    return () => clearTimeout(closeToast);
   });
+
   if (!isActive) return null;
-  return <div className={toastStyle}>{toastObj.children}</div>;
+  return (
+    <div className={toastStyle} style={{ animation: animation }} onClick={() => setToastUnActive()}>
+      {toastObj.content}
+    </div>
+  );
 }

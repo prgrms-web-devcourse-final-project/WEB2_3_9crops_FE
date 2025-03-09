@@ -4,7 +4,8 @@ import { create } from 'zustand';
 interface ToastObj {
   time: number;
   toastType: 'Warning' | 'Success' | 'Error' | 'Info';
-  children: ReactNode;
+  content: ReactNode;
+  onClick?: () => void;
 }
 
 interface ToastStore {
@@ -16,9 +17,10 @@ interface ToastStore {
 const useToastStore = create<ToastStore>((set) => ({
   isActive: false,
   toastObj: {
-    time: 1,
+    time: 3,
     toastType: 'Info',
-    children: '',
+    content: '',
+    onClick: () => {},
   },
   setToastActive: (prompt) =>
     set((state) => ({
@@ -28,6 +30,12 @@ const useToastStore = create<ToastStore>((set) => ({
   setToastUnActive: () => {
     set(() => ({
       isActive: false,
+      toastObj: {
+        time: 2,
+        toastType: 'Info',
+        content: '',
+        onClick: () => {},
+      },
     }));
   },
 }));

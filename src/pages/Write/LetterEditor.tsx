@@ -10,6 +10,7 @@ import { FONT_TYPE_OBJ } from '@/pages/Write/constants';
 import OptionSlide from '@/pages/Write/OptionSlide';
 import useWrite from '@/stores/writeStore';
 import { removeProperty } from '@/utils/removeProperty';
+import useToastStore from '@/stores/toastStore';
 
 export default function LetterEditor({
   letterId,
@@ -32,6 +33,8 @@ export default function LetterEditor({
   const letterRequest = useWrite((state) => state.letterRequest);
   const setLetterRequest = useWrite((state) => state.setLetterRequest);
 
+  const setToastActive = useToastStore((state) => state.setToastActive);
+
   const handlePostFirstReply = async (firstReplyRequest: Omit<LetterRequest, 'matchingId'>) => {
     const res = await postFirstReply(firstReplyRequest);
     if (res?.status === 200) {
@@ -42,7 +45,6 @@ export default function LetterEditor({
     }
   };
 
-  // MEMO : 답장 전송 matchingId가 undefined로 나오는데 뭐 때문인지 내일 찾아보자 ㅎ
   const handlePostReply = async (letterRequest: LetterRequest) => {
     const res = await postLetter(letterRequest);
     if (res?.status === 200) {
@@ -127,7 +129,10 @@ export default function LetterEditor({
                     handlePostReply(letterRequest);
                   }
                 } else {
-                  alert('편지 제목, 내용이 작성되었는지 확인해주세요');
+                  setToastActive({
+                    toastType: 'Warning',
+                    content: '편지 제목, 내용이 작성되었는지 확인해주세요',
+                  });
                 }
               }}
             />
@@ -139,7 +144,10 @@ export default function LetterEditor({
               if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                 setStep('category');
               } else {
-                alert('편지 제목, 내용이 작성되었는지 확인해주세요');
+                setToastActive({
+                  toastType: 'Warning',
+                  content: '편지 제목, 내용이 작성되었는지 확인해주세요',
+                });
               }
             }}
           />

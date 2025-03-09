@@ -3,6 +3,7 @@ import { useNavigate, Outlet } from 'react-router';
 
 import useAuthStore from '@/stores/authStore';
 import { useServerSentEvents } from '@/hooks/useServerSentEvents';
+import Toast from '@/components/Toast';
 
 export default function PrivateRoute() {
   useServerSentEvents();
@@ -22,5 +23,10 @@ export default function PrivateRoute() {
     return null;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <Toast />
+    </>
+  );
 }
