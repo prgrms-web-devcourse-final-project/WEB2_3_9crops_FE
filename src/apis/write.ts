@@ -1,4 +1,3 @@
-// import { AxiosResponse } from 'axios';
 import client from './client';
 
 const postLetter = async (data: LetterRequest) => {
@@ -33,7 +32,6 @@ const getPrevLetter = async (letterId: string) => {
   }
 };
 
-// 임시저장 최초 생성
 const postTemporarySave = async (data: TemporaryRequest) => {
   try {
     const res = client.post(`/api/letters/temporary-save`, data);
@@ -44,15 +42,4 @@ const postTemporarySave = async (data: TemporaryRequest) => {
   }
 };
 
-// 임시저장 수정
-const PatchTemporarySave = async (data: TemporaryRequest) => {
-  try {
-    const res = client.post(`/api/letters/temporary-save`, data);
-    if (!res) throw new Error('편지 임시저장과정에서 오류가 발생했습니다.');
-    return res;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export { postLetter, postFirstReply, getPrevLetter, postTemporarySave, PatchTemporarySave };
+export { postLetter, postFirstReply, getPrevLetter, postTemporarySave };

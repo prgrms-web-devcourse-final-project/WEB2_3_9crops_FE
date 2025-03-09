@@ -72,9 +72,3 @@ interface FirstReplyRequest {
   paperType: PaperType;
   fontType: FontType;
 }
-
-// 기존 설정 타입들
-// type Stamp = '위로와 공감' | '축하와 응원' | '고민 상담' | '기타' | '답변자';
-// type Option = '편지지' | '글꼴' | '이전 편지 내용' | null;
-// type Step = 'edit' | 'category';
-// type Theme = '기본' | '축하' | '위로' | '빈티지' | '들판';
