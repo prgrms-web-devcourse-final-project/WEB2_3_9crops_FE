@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 interface ToastObj {
   time: number;
   toastType: 'Warning' | 'Success' | 'Error' | 'Info';
-  position: 'TOP' | 'BOTTOM';
+  position: 'Top' | 'Bottom';
   title: string;
   onClick?: () => void;
 }
@@ -20,8 +20,8 @@ export default function ToastItem({ toastObj, index }: { toastObj: ToastObj; ind
   };
 
   const TOAST_POSITION = {
-    TOP: 'top-20',
-    BOTTOM: 'bottom-20',
+    Top: 'top-20',
+    Bottom: 'bottom-20',
   };
 
   const animation = `toast-blink ${toastObj.time}s ease-in-out forwards`;

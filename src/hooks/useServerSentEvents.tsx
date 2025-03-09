@@ -37,7 +37,7 @@ export const useServerSentEvents = () => {
           setToastActive({
             toastType: 'Info',
             title: '새 알림이 도착했어요!',
-            position: 'TOP',
+            position: 'Top',
             time: 5,
             onClick: () => navigate('/mypage/notifications'),
           });

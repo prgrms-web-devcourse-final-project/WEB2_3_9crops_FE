@@ -3,7 +3,7 @@ import { create } from 'zustand';
 interface ToastObj {
   time: number;
   toastType: 'Warning' | 'Success' | 'Error' | 'Info';
-  position: 'TOP' | 'BOTTOM';
+  position: 'Top' | 'Bottom';
   title: string;
   onClick?: () => void;
 }
@@ -18,7 +18,7 @@ interface ToastStore {
 const toastObjFormat: ToastObj = {
   time: 2,
   toastType: 'Info',
-  position: 'BOTTOM',
+  position: 'Bottom',
   title: '',
   onClick: () => {},
 };
