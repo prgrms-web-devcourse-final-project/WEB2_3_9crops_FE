@@ -9,10 +9,18 @@ export const getCurrentRollingPaper = async (): Promise<RollingPaperInformation>
 
 export const getRollingPaperDetail = async (
   rollingPaperId: string | number,
+  page: number,
+  size: number,
 ): Promise<RollingPaper> => {
   const {
     data: { data },
-  } = await client.get(`/api/event-posts/${rollingPaperId}`);
+  } = await client.get(`/api/event-posts/${rollingPaperId}`, {
+    params: {
+      page,
+      size,
+    },
+  });
+  console.log(data);
   return data;
 };
 
@@ -49,11 +57,19 @@ export const postNewRollingPaper = async (title: string) => {
   }
 };
 
-export const getRollingPaperList = async (): Promise<RollingPaperList> => {
+export const getRollingPaperList = async (
+  page: string | number,
+  size: number,
+): Promise<RollingPaperList> => {
   try {
     const {
       data: { data },
-    } = await client.get('/api/admin/event-posts');
+    } = await client.get('/api/admin/event-posts', {
+      params: {
+        page,
+        size,
+      },
+    });
     return data;
   } catch (error) {
     console.error(error);
