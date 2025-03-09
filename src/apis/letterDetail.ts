@@ -23,4 +23,17 @@ const deleteLetter = async (letterId: string) => {
   }
 };
 
-export { getLetter, deleteLetter };
+const postEvaluateLetter = async (letterId: number, evaluation: LetterEvaluation) => {
+  try {
+    const res = await client.post(`/api/letters/${letterId}/evaluate`, {
+      evaluation: evaluation,
+    });
+    if (!res) throw new Error('편지 삭제 요청 도중 에러가 발생했습니다.');
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { getLetter, deleteLetter, postEvaluateLetter };

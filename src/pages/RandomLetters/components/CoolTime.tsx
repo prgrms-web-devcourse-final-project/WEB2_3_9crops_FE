@@ -16,9 +16,7 @@ export default function CoolTime({
 }) {
   const navigate = useNavigate();
 
-  const TIME_STAMP = coolTime?.lastMatchedAt
-    ? coolTime.lastMatchedAt
-    : '2025-03-01T21:15:25.262045608';
+  const TIME_STAMP = coolTime?.lastMatchedAt;
 
   const COMPLETED_DATE = new Date(TIME_STAMP);
 
@@ -61,8 +59,10 @@ export default function CoolTime({
           {formatNumber(formatedEndTime.seconds)}
         </p>
         <div className="mt-2 w-75">
-          <LetterWrapper>
-            <div className="flex h-50 w-full max-w-[300px] flex-col gap-[35px] p-4"></div>
+          <LetterWrapper className="letter-disabled-bg flex h-[204px] w-full min-w-[300px] items-center justify-center">
+            <div className="caption-r text-gray-80 flex flex-col items-center justify-center gap-3">
+              <span>기다림의 미학을 느껴보시는건 어떨까요?</span>
+            </div>
           </LetterWrapper>
         </div>
         <button

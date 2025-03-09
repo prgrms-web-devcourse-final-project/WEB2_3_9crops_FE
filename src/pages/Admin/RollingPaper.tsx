@@ -1,18 +1,36 @@
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
-import { AddIcon, AlarmIcon, DeleteIcon } from '@/assets/icons';
+import { getRollingPaperList } from '@/apis/rolling';
+import { AddIcon, AlarmIcon } from '@/assets/icons';
 
 import AddRollingPaperModal from './components/AddRollingPaperModal';
 import PageTitle from './components/AdminPageTitle';
+import RollingPaperItem from './components/RollingPaperItem';
 import WrapperFrame from './components/WrapperFrame';
 import WrapperTitle from './components/WrapperTitle';
+import PagenationNavigation from './components/PagenationNavigation';
+
+const SIZE = 10;
 
 export default function AdminRollingPaper() {
   const [activeModal, setActiveModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState<string>('1');
+  const { data, isLoading, isSuccess, refetch } = useQuery({
+    queryKey: ['admin-rolling-paper', currentPage],
+    queryFn: () => getRollingPaperList(currentPage ?? 1, SIZE),
+  });
+
+  const handleNowPage = (page: string) => {
+    setCurrentPage(page);
+    refetch();
+  };
 
   return (
     <>
-      {activeModal && <AddRollingPaperModal onClose={() => setActiveModal(false)} />}
+      {activeModal && (
+        <AddRollingPaperModal currentPage={currentPage} onClose={() => setActiveModal(false)} />
+      )}
       <PageTitle>게시판 관리 / 롤링 페이퍼 설정</PageTitle>
       <WrapperFrame>
         <section className="flex items-center">
@@ -26,55 +44,40 @@ export default function AdminRollingPaper() {
             롤링페이퍼 생성
           </button>
         </section>
-        <table className="mt-5 table-auto">
-          <thead>
-            <tr className="bg-primary-3 border-gray-40 h-14 border-b">
-              <th className="w-14 text-center">ID</th>
-              <th className="text-left">제목</th>
-              <th className="w-30 text-center">쌓인 편지 수</th>
-              <th className="w-30 text-center">상태</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-gray-40 h-14 border-b">
-              <td className="w-14 text-center">1</td>
-              <td className="text-left">
-                침수 피해를 복구중인 포스코 임직원 분들에게 응원의 메시지를 보내주세요!
-              </td>
-              <td className="w-30 text-center">12</td>
-              <td className="text-center">
-                <span className="rounded-full border border-amber-500 bg-amber-100/70 px-4 py-1.5 whitespace-nowrap text-amber-500">
-                  진행 중
-                </span>
-              </td>
-              <td></td>
-            </tr>
-            <tr className="border-gray-40 h-14 border-b">
-              <td className="w-14 text-center">2</td>
-              <td className="text-left">
-                침수 피해를 복구중인 포스코 임직원 분들에게 응원의 메시지를 보내주세요!
-              </td>
-              <td className="w-30 text-center">12</td>
-              <td className="w-30 px-2 text-center">
-                <button
-                  type="button"
-                  className="hover:bg-gray-10 text-gray-60 rounded-md px-3 py-1 hover:text-black"
-                >
-                  진행하기
-                </button>
-              </td>
-              <td>
-                <button
-                  type="button"
-                  className="text-gray-60 flex items-center justify-center p-1 hover:text-black"
-                >
-                  <DeleteIcon className="h-5 w-5" />
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        {isLoading && <p className="mt-20 text-center">Loading...</p>}
+        {isSuccess && (
+          <>
+            <table className="mt-5 table-auto">
+              <thead>
+                <tr className="bg-primary-3 border-gray-40 h-14 border-b">
+                  <th className="w-14 text-center">ID</th>
+                  <th className="text-left">제목</th>
+                  <th className="w-30 text-center">상태</th>
+                  <th className="w-6"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.content.map((rollingPaper) => (
+                  <RollingPaperItem
+                    key={rollingPaper.eventPostId}
+                    information={rollingPaper}
+                    currentPage={currentPage}
+                  />
+                ))}
+              </tbody>
+            </table>
+            {data.content.length === 0 && (
+              <span className="my-10 text-center text-gray-50">
+                아직 생성된 롤링페이퍼가 없어요
+              </span>
+            )}
+          </>
+        )}
+        <PagenationNavigation
+          totalPage={Number(data?.totalPages)}
+          buttonLength={5}
+          handlePageNumberButtonClick={handleNowPage}
+        />
       </WrapperFrame>
     </>
   );

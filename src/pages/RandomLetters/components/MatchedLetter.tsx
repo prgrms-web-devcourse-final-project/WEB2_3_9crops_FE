@@ -1,21 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import BackButton from '@/components/BackButton';
-import ReportModal from '@/components/ReportModal';
 import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
 
 const MatchedLetter = ({ matchedLetter }: { matchedLetter: MatchedLetter }) => {
   const navigate = useNavigate();
 
-  const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
-
   useEffect(() => {}, [matchedLetter]);
 
   return (
     <>
-      {reportModalOpen && <ReportModal onClose={() => setReportModalOpen(false)} reportType={'LETTER'} letterId={null} />}
       <div
         className={twMerge(
           `flex grow flex-col gap-3 px-5 pb-7.5`,

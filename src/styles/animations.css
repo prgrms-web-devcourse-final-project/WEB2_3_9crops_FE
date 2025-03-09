@@ -6,7 +6,7 @@
   --animate-rotate-show: rotate-show 1s ease-in-out forwards;
   --animate-blink: showing 0.3s forwards;
   --animate-login-move-up-down: move-up-down 3s ease-in-out infinite;
-  --animate-marquee: marquee 10s linear infinite;
+  --animate-marquee: marquee var(--marquee-duration) linear infinite;
 
   @keyframes down {
     0% {
@@ -70,7 +70,7 @@
   /* SpecialLetterBanner 애니메이션 */
   @keyframes marquee {
     0% {
-      transform: translateX(10%);
+      transform: translateX(100%);
     }
     100% {
       transform: translateX(-100%);
@@ -165,6 +165,23 @@
       opacity: 1;
     }
     to {
+      opacity: 0;
+    }
+  }
+
+  /* Toast */
+  /* show and hide */
+  @keyframes toast-blink {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
       opacity: 0;
     }
   }

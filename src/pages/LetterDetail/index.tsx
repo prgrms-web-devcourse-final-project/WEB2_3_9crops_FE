@@ -1,61 +1,47 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import { deleteLetter, getLetter } from '@/apis/letterDetail';
-import {
-  CloudIcon,
-  DeleteIcon,
-  SirenOutlinedIcon,
-  SnowIcon,
-  ThermostatIcon,
-  WarmIcon,
-} from '@/assets/icons';
-import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/ConfirmModal';
 import ReportModal from '@/components/ReportModal';
-import { FONT_TYPE_OBJ, PAPER_TYPE_OBJ } from '@/pages/Write/constants';
+import { PAPER_TYPE_OBJ } from '@/pages/Write/constants';
+import useAuthStore from '@/stores/authStore';
+
+import LetterDetailContent from './components/LetterDetailContent';
+import LetterDetailHeader from './components/LetterDetailHeader';
+import LetterDetailReplyButton from './components/LetterDetailReplyButton';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const LetterDetailPage = () => {
   const params = useParams();
   const navigate = useNavigate();
-  // 상대방의 우편번호도 데이터에 포함되어야 할 거 같음!!!
-  const [letterDetail, setLetterDetail] = useState<LetterDetail | null>(null);
+  const queryClient = useQueryClient();
 
-  const DEGREES = [
-    { icon: <WarmIcon className="h-5 w-5" />, title: '따뜻해요' },
-    { icon: <CloudIcon className="h-5 w-5" />, title: '그럭저럭' },
-    { icon: <SnowIcon className="h-5 w-5" />, title: '앗! 차가워' },
-  ];
-  const [degreeModalOpen, setDegreeModalOpen] = useState<boolean>(false);
+  const [letterDetail, setLetterDetail] = useState<LetterDetail>({} as LetterDetail);
+  const userZipCode = useAuthStore((state) => state.zipCode);
+
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
 
-  const degreeButtonRef = useRef<HTMLButtonElement>(null);
-  const handleOutsideClick = (event: MouseEvent) => {
-    const target = event.target as Node;
-    if (!target || degreeButtonRef.current?.contains(target)) {
-      return;
-    }
-    setDegreeModalOpen(false);
-  };
-
-  const handleDeleteLetter = async (letterId: string) => {
-    const res = await deleteLetter(letterId);
-    if (res?.status === 200) {
+  const { mutate: handleDeleteLetter } = useMutation({
+    mutationFn: (letterId: string) => deleteLetter(letterId),
+    onSuccess: () => {
       navigate(-1);
-    } else {
+      queryClient.invalidateQueries({ queryKey: ['mailBoxDetail'] });
+      queryClient.invalidateQueries({ queryKey: ['mailBox'] });
+    },
+    onError: () => {
       alert('편지 삭제 도중 오류 발생(임시)');
-    }
-  };
+    },
+  });
 
   useEffect(() => {
-    document.body.addEventListener('click', handleOutsideClick);
-
     const handleGetLetter = async (letterId: string) => {
       const res = await getLetter(letterId);
       if (res?.status === 200) {
-        setLetterDetail(res.data.data);
+        const data: LetterDetail = res.data.data;
+        setLetterDetail(data);
       } else {
         alert(
           '에러가 발생했거나 존재하지 않거나 따숨님의 편지가 아니에요(임시) - 이거 에러코드 따른 처리 달리해야할듯',
@@ -66,17 +52,15 @@ const LetterDetailPage = () => {
     if (params.id) {
       handleGetLetter(params.id);
     }
-
-    return () => {
-      document.body.removeEventListener('click', handleOutsideClick);
-    };
   }, [params.id, navigate]);
+
+  if (!letterDetail) return <></>;
   return (
     <>
       {reportModalOpen && (
         <ReportModal
-          reportType="LETTER"
-          letterId={letterDetail ? letterDetail.letterId : null}
+          reportType={'LETTER'}
+          letterId={letterDetail.letterId}
           onClose={() => setReportModalOpen(false)}
         />
       )}
@@ -86,75 +70,16 @@ const LetterDetailPage = () => {
           letterDetail && PAPER_TYPE_OBJ[letterDetail.paperType],
         )}
       >
-        <div className="absolute top-5 left-0 flex w-full justify-between px-5">
-          <BackButton />
-          <div className="flex gap-2">
-            <button
-              ref={degreeButtonRef}
-              className="flex items-center justify-center gap-1"
-              onClick={() => {
-                setDegreeModalOpen((cur) => !cur);
-              }}
-            >
-              <ThermostatIcon className="h-6 w-6" />
-              <span className="caption-b text-primary-1">편지 온도</span>
-            </button>
-            <button
-              onClick={() => {
-                setDeleteModalOpen(true);
-              }}
-            >
-              <DeleteIcon className="text-primary-1 h-6 w-6" />
-            </button>
-            <button
-              onClick={() => {
-                setReportModalOpen(true);
-              }}
-            >
-              <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
-            </button>
-            {degreeModalOpen && (
-              <div className="caption-b text-primary-1 bg-primary-5 absolute top-7 z-40 flex flex-col gap-1 p-2 shadow">
-                {DEGREES.map((degree, idx) => {
-                  return (
-                    <button
-                      key={idx}
-                      className="flex items-center justify-start gap-1"
-                      onClick={() => {
-                        console.log(idx);
-                      }}
-                    >
-                      {degree.icon}
-                      {degree.title}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-col gap-3 px-5">
-          <span className="body-b mt-[55px]">TO. 따숨이</span>
-          <span className="body-sb">{letterDetail?.title}</span>
-        </div>
-        <textarea
-          readOnly
-          value={letterDetail?.content}
-          className={twMerge(
-            `body-r basic-theme min-h-full w-full grow px-6`,
-            letterDetail && FONT_TYPE_OBJ[letterDetail.fontType],
-          )}
-        ></textarea>
-        <span className="body-sb mt-10 flex justify-end">FROM. {'12E12'}</span>
-        <button
-          className="bg-primary-3 disabled:bg-gray-30 body-m mt-3 w-full rounded-lg py-2 disabled:text-white"
-          onClick={() => {
-            navigate(`/letter/write/?letterId=${letterDetail?.letterId}`);
-          }}
-          disabled={!letterDetail?.matched}
-        >
-          {letterDetail?.matched ? '편지 작성하기' : '대화가 종료된 편지입니다.'}
-        </button>
+        <LetterDetailHeader
+          letterDetail={letterDetail}
+          setLetterDetail={setLetterDetail}
+          setDeleteModalOpen={setDeleteModalOpen}
+          setReportModalOpen={setReportModalOpen}
+        />
+        <LetterDetailContent letterDetail={letterDetail} />
+        {userZipCode !== letterDetail?.zipCode && (
+          <LetterDetailReplyButton letterDetail={letterDetail} />
+        )}
         {deleteModalOpen && (
           <ConfirmModal
             title="편지를 삭제하시겠습니까?"
@@ -166,7 +91,6 @@ const LetterDetailPage = () => {
             }}
             onConfirm={() => {
               if (params.id) handleDeleteLetter(params.id);
-              navigate(-1);
             }}
           />
         )}

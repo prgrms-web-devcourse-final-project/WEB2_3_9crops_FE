@@ -4,7 +4,9 @@ export const NOTIFICATION_ICON: Record<
   string,
   React.ComponentType<React.SVGProps<SVGSVGElement>>
 > = {
-  letter: EnvelopeIcon,
-  warning: SirenFilledIcon,
-  board: BoardIcon,
+  SENDING: EnvelopeIcon,
+  LETTER: EnvelopeIcon,
+  REPORT: SirenFilledIcon,
+  SHARE: BoardIcon,
+  POSTED: BoardIcon,
 };

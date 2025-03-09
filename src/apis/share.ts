@@ -21,13 +21,22 @@ export interface SharePost {
   letters: ShareLetter[];
 }
 
-// 페이징 포함
+// 공유 게시글 목록 조회 - 페이징 포함
 export interface SharePostResponse {
   content: SharePost[];
   currentPage: number;
   size: number;
   totalElements: number;
   totalPages: number;
+}
+
+// 편지 공유 요청 수신 조회
+export interface ShareProposal {
+  shareProposalId: number;
+  requesterZipCode: string;
+  recipientZipCode: string;
+  message: string;
+  status: 'REJECTED' | 'APPROVED' | 'PENDING';
 }
 
 // 편지 공유 수락 / 거절
@@ -53,7 +62,7 @@ export const getSharePostList = async (page: number = 1, size: number = 10) => {
 };
 
 // 공유 게시글 상세 조회
-export const getSharePostDetail = async (sharePostId: number): Promise<SharePost> => {
+export const getSharePostDetail = async (sharePostId: string): Promise<SharePost> => {
   try {
     const response = await client.get(`/api/share-posts/${sharePostId}`);
     console.log(`🔥공유 게시글 상세 데이터`, response.data);
@@ -84,6 +93,19 @@ export const postShareProposals = async (
   }
 };
 
+// 편지 공유 요청 수신 조회
+export const getShareProposalList = async () => {
+  try {
+    const response = await client.get('/api/share-proposals/inbox');
+    console.log(`🌟공유 요청 목록`, response.data);
+
+    return response.data.data;
+  } catch (error) {
+    console.error('❌ 편지 공유 요청을 조회하던 중 에러가 발생했습니다', error);
+    throw error;
+  }
+};
+
 // 편지 공유 수락 / 거절
 export const postShareProposalApproval = async (
   shareProposalId: number,
@@ -102,7 +124,7 @@ export const postShareProposalApproval = async (
 };
 
 // 편지 좋아요 추가, 취소
-export const postSharePostLike = async (sharePostId: number) => {
+export const postSharePostLike = async (sharePostId: string) => {
   try {
     const response = await client.post(`/api/share-posts/${sharePostId}/likes`);
     if (!response) throw new Error('error while posting like');
@@ -114,7 +136,7 @@ export const postSharePostLike = async (sharePostId: number) => {
 };
 
 // 편지 좋아요 갯수
-export const getSharePostLikeCount = async (sharePostId: number) => {
+export const getSharePostLikeCount = async (sharePostId: string) => {
   try {
     const response = await client.get(`/api/share-posts/${sharePostId}/likes`);
     if (!response) throw new Error('error while fetching likes');

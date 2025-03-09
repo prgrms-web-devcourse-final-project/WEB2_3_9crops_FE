@@ -8,6 +8,7 @@ import AdminPage from './pages/Admin';
 import FilteredLetterManage from './pages/Admin/FilteredLetter';
 import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
+import AdminRollingPaper from './pages/Admin/RollingPaper';
 import AuthCallbackPage from './pages/Auth';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
@@ -36,10 +37,10 @@ const App = () => {
         <Route path="landing" element={<Landing />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="auth-callback" element={<AuthCallbackPage />} />
-        <Route index element={<Home />} />
         <Route path="onboarding" element={<OnboardingPage />} />
 
         <Route element={<PrivateRoute />}>
+          <Route index element={<Home />} />
           <Route path="letter">
             <Route element={<Layout />}>
               <Route path="random" element={<RandomLettersPage />} />
@@ -69,6 +70,7 @@ const App = () => {
           <Route path="report" element={<ReportManage />} />
           <Route path="badwords" element={<FilteringManage />} />
           <Route path="filtered-letter" element={<FilteredLetterManage />} />
+          <Route path="rolling-paper" element={<AdminRollingPaper />} />
         </Route>
       </Route>
     </Routes>

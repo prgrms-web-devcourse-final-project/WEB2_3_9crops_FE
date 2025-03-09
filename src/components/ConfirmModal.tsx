@@ -22,7 +22,6 @@ const ConfirmModal = ({
   onCancel,
   onConfirm,
 }: ConfirmModalProps) => {
-  // TODO: 전역 상태로 관리해야하는지 고민
   return (
     <ModalOverlay>
       <div className="w-73">
