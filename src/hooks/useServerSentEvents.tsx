@@ -2,10 +2,16 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 import { useEffect, useRef } from 'react';
 
 import useAuthStore from '@/stores/authStore';
+import useToastStore from '@/stores/toastStore';
+import { useNavigate } from 'react-router';
 
 export const useServerSentEvents = () => {
-  const accessToken = useAuthStore.getState().accessToken;
+  const navigate = useNavigate();
+
+  const accessToken = useAuthStore((state) => state.accessToken);
   const sourceRef = useRef<EventSourcePolyfill | null>(null);
+
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   useEffect(() => {
     if (!accessToken) {
@@ -27,18 +33,20 @@ export const useServerSentEvents = () => {
 
         sourceRef.current.onmessage = (event) => {
           console.log(event);
-          console.log('알림 전송');
+          console.log('알림 수신');
+          setToastActive({
+            toastType: 'Info',
+            title: '새 알림이 도착했어요!',
+            position: 'Top',
+            time: 5,
+            onClick: () => navigate('/mypage/notifications'),
+          });
         };
-
-        sourceRef.current.addEventListener('notification', (event) => {
-          console.log(event);
-          console.log('알림 전송 dd');
-        });
 
         sourceRef.current.onerror = (error) => {
           console.log(error);
           console.log('에러 발생함');
-          sourceRef.current?.close();
+          closeSSE();
           // 재연결 로직 추가 가능
           setTimeout(connectSSE, 5000); // 5초 후 재연결 시도
         };
@@ -55,11 +63,10 @@ export const useServerSentEvents = () => {
     };
   }, [accessToken]);
 
-  // 바깥으로 보낼 closeSSE 함수
   const closeSSE = () => {
     sourceRef.current?.close();
     sourceRef.current = null;
   };
 
-  return { closeSSE };
+  // return { closeSSE };
 };

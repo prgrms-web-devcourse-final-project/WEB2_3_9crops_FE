@@ -6,6 +6,7 @@ import PageTitle from '@/components/PageTitle';
 
 import NotificationItem from './components/NotificationItem';
 import WarningModal from './components/WarningModal';
+import SendingModal from './components/SendingModal';
 
 const NotificationsPage = () => {
   const navigate = useNavigate();
@@ -13,17 +14,21 @@ const NotificationsPage = () => {
   const [noti, setNoti] = useState<Noti[]>([]);
 
   const [isOpenWarningModal, setIsOpenWarningModal] = useState(false);
+  const [isOpenSendingModal, setIsOpenSendingModal] = useState(false);
 
-  const [adminText, setAdmintext] = useState<string>('');
+  const [reportContent, setReportContent] = useState<string>('');
 
   // MEMO : 편지 데이터 전송중 데이터도 추가될건데 나중에 데이터 추가되면 코드 업데이트 하긔
   const handleClickItem = (alarmType: string, content?: string | number) => {
+    if (alarmType === 'SENDING') {
+      setIsOpenSendingModal(true);
+    }
     if (alarmType === 'LETTER') {
       navigate(`/letter/${content}`);
     }
     if (alarmType === 'REPORT') {
       setIsOpenWarningModal(true);
-      if (typeof content === 'string') setAdmintext(content);
+      if (typeof content === 'string') setReportContent(content);
     }
     if (alarmType === 'SHARE') {
       navigate(`/board/letter/${content}`, { state: { isShareLetterPreview: true } });
@@ -50,7 +55,16 @@ const NotificationsPage = () => {
 
   const handlePatchReadNotificationAll = async () => {
     const res = await patchReadNotificationAll();
-    if (res?.status !== 200) {
+    if (res?.status === 200) {
+      setNoti((currentNoti) => {
+        return currentNoti.map((noti) => {
+          if (!noti.read) {
+            return { ...noti, read: true };
+          }
+          return noti;
+        });
+      });
+    } else {
       console.log('모두 읽음처리 에러 발생');
     }
   };
@@ -63,8 +77,12 @@ const NotificationsPage = () => {
     <>
       <WarningModal
         isOpen={isOpenWarningModal}
-        adminText={adminText}
+        reportContent={reportContent}
         onClose={() => setIsOpenWarningModal(false)}
+      />
+      <SendingModal
+        isOpenSendingModal={isOpenSendingModal}
+        setIsOpenSendingModal={setIsOpenSendingModal}
       />
       <main className="flex grow flex-col items-center px-5 pt-20 pb-9">
         <PageTitle className="mb-10">알림</PageTitle>
