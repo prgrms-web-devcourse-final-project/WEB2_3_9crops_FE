@@ -25,6 +25,7 @@ const RandomCheer = () => {
         src={randomCheerBird}
         alt="random cheer bird"
         className="h-[26.5px] w-[21px] opacity-80"
+        onClick={() => setRandomCheer(getRandomCheer())}
       />
     </div>
   );
