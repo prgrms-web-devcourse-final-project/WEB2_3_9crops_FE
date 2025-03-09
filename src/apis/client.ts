@@ -14,6 +14,7 @@ let isRefreshing = false;
 const callReissue = async () => {
   try {
     const response = await getNewToken();
+    console.log('reissue', response);
     const newToken = response?.data.accessToken;
     return newToken;
   } catch (e) {
@@ -28,6 +29,7 @@ client.interceptors.request.use(
     const accessToken = useAuthStore.getState().accessToken;
     if (config.url !== '/api/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
+      console.log('interceptor', config);
     }
     return config;
   },
