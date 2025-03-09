@@ -5,7 +5,7 @@ export default function index() {
   const navigate = useNavigate();
   return (
     <main className="animate-fadeIn absolute inset-0 flex h-full w-full flex-col justify-end bg-white px-5 pt-7.5 pb-4 opacity-0">
-      <article className="basic-theme mt-7.5 mb-9 grow pl-4">
+      <article className="basic-theme mt-7.5 mb-9 grow px-4">
         <h1 className="font-malang mt-15">To.따숨이</h1>
         <h2 className="font-malang">환영합니다! 우리 함께 마음을 나누어 보아요</h2>
         <section className="mt-9" style={{ fontFamily: 'KyoboHandwriting2020A' }}>
@@ -22,7 +22,7 @@ export default function index() {
           </p>
           <p>3. 고민 편지에 대한 답장은 검수 후에 전달됩니다.</p>
         </section>
-        <p className="font-malang mt-22">From.9황작물</p>
+        <p className="font-malang mt-22 text-right">From.9황작물</p>
       </article>
       <button
         className="primary-btn body-sb text-gray-60 h-fit w-full py-2"
