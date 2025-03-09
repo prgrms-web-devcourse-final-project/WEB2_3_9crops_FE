@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 
 import { getUserToken, getMydata, postZipCode } from '@/apis/auth';
 import useAuthStore from '@/stores/authStore';
+import useToastStore from '@/stores/toastStore';
 
 const AuthCallbackPage = () => {
   const stateToken = new URLSearchParams(window.location.search).get('state');
@@ -14,6 +15,7 @@ const AuthCallbackPage = () => {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setZipCode = useAuthStore((state) => state.setZipCode);
   const navigate = useNavigate();
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   const handleError = (error: unknown) => {
     console.error('AuthCallback Error:', error);
