@@ -14,8 +14,8 @@ let isRefreshing = false;
 const callReissue = async () => {
   try {
     const response = await getNewToken();
-    console.log('reissue', response);
-    const newToken = response?.data.accessToken;
+    if(response?.status !== 200) throw new Error('error while fetching newToken');
+    const newToken = response?.data.data.accessToken;
     return newToken;
   } catch (e) {
     return Promise.reject(e);
