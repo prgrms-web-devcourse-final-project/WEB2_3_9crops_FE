@@ -9,17 +9,28 @@ import PageTitle from './components/AdminPageTitle';
 import RollingPaperItem from './components/RollingPaperItem';
 import WrapperFrame from './components/WrapperFrame';
 import WrapperTitle from './components/WrapperTitle';
+import PagenationNavigation from './components/PagenationNavigation';
+
+const SIZE = 10;
 
 export default function AdminRollingPaper() {
   const [activeModal, setActiveModal] = useState(false);
-  const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['admin-rolling-paper'],
-    queryFn: getRollingPaperList,
+  const [currentPage, setCurrentPage] = useState<string>('1');
+  const { data, isLoading, isSuccess, refetch } = useQuery({
+    queryKey: ['admin-rolling-paper', currentPage],
+    queryFn: () => getRollingPaperList(currentPage ?? 1, SIZE),
   });
+
+  const handleNowPage = (page: string) => {
+    setCurrentPage(page);
+    refetch();
+  };
 
   return (
     <>
-      {activeModal && <AddRollingPaperModal onClose={() => setActiveModal(false)} />}
+      {activeModal && (
+        <AddRollingPaperModal currentPage={currentPage} onClose={() => setActiveModal(false)} />
+      )}
       <PageTitle>게시판 관리 / 롤링 페이퍼 설정</PageTitle>
       <WrapperFrame>
         <section className="flex items-center">
@@ -47,7 +58,11 @@ export default function AdminRollingPaper() {
               </thead>
               <tbody>
                 {data.content.map((rollingPaper) => (
-                  <RollingPaperItem key={rollingPaper.eventPostId} information={rollingPaper} />
+                  <RollingPaperItem
+                    key={rollingPaper.eventPostId}
+                    information={rollingPaper}
+                    currentPage={currentPage}
+                  />
                 ))}
               </tbody>
             </table>
@@ -58,7 +73,11 @@ export default function AdminRollingPaper() {
             )}
           </>
         )}
-        {/* TODO: 페이지네이션 적용 */}
+        <PagenationNavigation
+          totalPage={Number(data?.totalPages)}
+          buttonLength={5}
+          handlePageNumberButtonClick={handleNowPage}
+        />
       </WrapperFrame>
     </>
   );

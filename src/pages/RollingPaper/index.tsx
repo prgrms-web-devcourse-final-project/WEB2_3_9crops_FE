@@ -1,6 +1,6 @@
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useState, useCallback } from 'react';
 import { useParams } from 'react-router';
 
 import { deleteRollingPaperComment, getRollingPaperDetail } from '@/apis/rolling';
@@ -14,6 +14,8 @@ import CommentDetailModal from './components/CommentDetailModal';
 import WriteCommentButton from './components/WriteCommentButton';
 import useAuthStore from '@/stores/authStore';
 
+const MESSAGE_SIZE = 10;
+
 const RollingPaperPage = () => {
   const id = useParams().id ?? '';
   const [activeComment, setActiveComment] = useState<RollingPaperComment | null>(null);
@@ -22,34 +24,35 @@ const RollingPaperPage = () => {
   const zipCode = useAuthStore((props) => props.zipCode);
   const queryClient = useQueryClient();
 
-  const { data, isSuccess } = useQuery({
+  const { data, isSuccess, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['rolling-paper', id],
-    queryFn: () => getRollingPaperDetail(id),
+    queryFn: ({ pageParam = 1 }) => getRollingPaperDetail(id, pageParam, MESSAGE_SIZE),
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.eventPostComments;
+      return currentPage < totalPages ? currentPage + 1 : undefined;
+    },
+    initialPageParam: 1,
   });
 
   const { mutate: deleteComment } = useMutation({
     mutationFn: (rollingPaperId: number | string) => deleteRollingPaperComment(rollingPaperId),
-    onSuccess: (data) => {
-      queryClient.setQueryData(['rolling-paper', id], (oldData: RollingPaper) => {
-        if (!oldData) return oldData;
-
-        return {
-          ...oldData,
-          eventPostComments: {
-            content: oldData.eventPostComments.content.filter(
-              (comment: RollingPaperComment) => comment.commentId !== data.commentId,
-            ),
-          },
-        };
-      });
-
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['rolling-paper', id] });
       setActiveDeleteModal(false);
       setActiveComment(null);
     },
-    onError: (err) => {
-      console.error(err);
+    onError: () => {
+      alert('편지 삭제에 실패했어요. 다시 시도해주세요');
     },
   });
+
+  const handleLoadMore = useCallback(() => {
+    if (!isFetchingNextPage && hasNextPage) fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  const allComments = data?.pages.flatMap((page) => page.eventPostComments.content) || [];
+  const totalComments = data?.pages[0]?.eventPostComments.totalElements || 0;
+  const title = data?.pages[0]?.title || '';
 
   return (
     <>
@@ -83,15 +86,13 @@ const RollingPaperPage = () => {
         />
       )}
       <Header />
-      <main className="flex grow flex-col items-center px-5 pt-20 pb-12">
-        <PageTitle className="mb-18 max-w-73 text-center">{data?.title}</PageTitle>
-        <p className="body-sb text-gray-60 mb-2 w-full">
-          등록된 편지 {data ? data.eventPostComments.content.length : 0}
-        </p>
+      <main className="z-1 flex grow flex-col items-center px-5 pt-20 pb-12">
+        <PageTitle className="mb-18 max-w-73 text-center">{title}</PageTitle>
+        <p className="body-sb text-gray-60 mb-2 w-full">등록된 편지 {totalComments}</p>
         <section className="w-full">
-          <MasonryInfiniteGrid column={2} align="stretch" gap={16}>
+          <MasonryInfiniteGrid column={2} align="stretch" gap={16} onRequestAppend={handleLoadMore}>
             {isSuccess &&
-              data.eventPostComments.content.map((comment) => (
+              allComments.map((comment) => (
                 <Comment
                   key={comment.commentId}
                   comment={comment}
@@ -102,12 +103,15 @@ const RollingPaperPage = () => {
                 />
               ))}
           </MasonryInfiniteGrid>
-          {isSuccess && data.eventPostComments.content.length === 0 && (
+          {isSuccess && allComments.length === 0 && (
             <p className="body-sb text-gray-60 my-20 text-center">
               아직 등록된 편지가 없어요.
               <br />
               첫번째로 편지를 남겨볼까요?
             </p>
+          )}
+          {isFetchingNextPage && (
+            <p className="body-sb text-gray-60 my-4 text-center">Loading...</p>
           )}
         </section>
         <WriteCommentButton rollingPaperId={id} />
