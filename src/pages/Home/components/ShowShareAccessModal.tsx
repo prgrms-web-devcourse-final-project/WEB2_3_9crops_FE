@@ -61,6 +61,7 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
                     className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
                     key={proposal.shareProposalId}
                     onClick={() => handleNavigation(proposal.shareProposalId)}
+                    aria-label="따숨님의 공유 요청"
                   >
                     <p>{proposal.requesterZipCode}님의 공유 요청</p>
                   </button>

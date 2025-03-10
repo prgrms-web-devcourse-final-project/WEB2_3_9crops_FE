@@ -51,7 +51,9 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
         data: inProgressLetters,
       });
 
-      setInterval(() => {
+      if (inProgressLetters.length === 0) return;
+
+      const intervalId = setInterval(() => {
         set((state) => {
           const updatedLetters = state.data.map((letter: IncomingLetters) => {
             const remainingTime = calculatingRemainingTime(letter.deliveryCompletedAt);
@@ -61,6 +63,10 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
           const filteredLetters = updatedLetters.filter(
             (letter) => letter.remainingTime !== '00:00:00',
           );
+
+          if (filteredLetters.length === 0) {
+            clearInterval(intervalId);
+          }
 
           return {
             data: filteredLetters,

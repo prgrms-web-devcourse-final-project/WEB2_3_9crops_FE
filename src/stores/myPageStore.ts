@@ -7,6 +7,7 @@ interface MyPageDataStore {
   temperature: string;
   social: string;
   email: string;
+  warningCount: number;
 }
 
 interface MyPageStore {
@@ -21,6 +22,7 @@ const useMyPageStore = create<MyPageStore>((set) => ({
     temperature: '',
     social: '',
     email: '',
+    warningCount: 0,
   },
   message: '',
   setMyPageData: (newData) => set({ data: newData }),
