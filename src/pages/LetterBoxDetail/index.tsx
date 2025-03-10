@@ -50,6 +50,7 @@ const LetterBoxDetailPage = () => {
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.currentPage >= lastPage.totalPages ? undefined : allPages.length + 1;
       },
+      staleTime: 0,
       refetchOnMount: true,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,

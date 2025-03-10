@@ -25,6 +25,7 @@ const LetterBoxPage = () => {
   } = useQuery({
     queryKey: ['mailBox'],
     queryFn: fetchMailLists,
+    staleTime: 0,
     refetchOnMount: true,
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
