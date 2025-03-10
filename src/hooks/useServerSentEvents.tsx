@@ -79,7 +79,6 @@ export const useServerSentEvents = () => {
 
         sourceRef.current.onerror = () => {
           // 에러 발생시 해당 에러가 45초를 넘어서 발생한 에러인지, 401에러인지 판단할 수 있는게 없어서 그냥 에러 발생하면 reissue 넣는걸로 때움
-          callReissue();
           closeSSE();
           recallCountRef.current += 1;
           console.log('SSE연결 에러 발생');
@@ -92,6 +91,7 @@ export const useServerSentEvents = () => {
           }
         };
       } catch (error) {
+        callReissue();
         console.error(error);
       }
     };

@@ -11,7 +11,7 @@ import ReportModal from '@/components/ReportModal';
 
 import Header from './components/Header';
 import Letter from './components/Letter';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import useAuthStore from '@/stores/authStore';
 
 const LetterBoardDetailPage = () => {
@@ -20,8 +20,8 @@ const LetterBoardDetailPage = () => {
   const [isWriter, setIsWriter] = useState(false);
   const [postDetail, setPostDetail] = useState<SharePost>();
   const [activeReportModal, setActiveReportModal] = useState(false);
-  const location = useLocation();
-  const sharePostId: string = location.pathname.split('/')[3];
+  // const location = useLocation();
+  // const sharePostId: string = location.pathname.split('/')[3];
   // const isShareLetterPreview = location.state?.isShareLetterPreview || false;
 
   const { id } = useParams();
@@ -82,38 +82,6 @@ const LetterBoardDetailPage = () => {
       fetchPostDetail(id);
       fetchLikeCounts(id);
     }
-  }, []);
-
-  useEffect(() => {
-    const fetchPostDetail = async (postId: string) => {
-      try {
-        const data = await getSharePostDetail(postId);
-        setPostDetail(data);
-      } catch (error) {
-        console.error('❌ 공유 게시글 상세 조회에 실패했습니다.', error);
-      }
-    };
-
-    const fetchLikeCounts = async (postId: string) => {
-      try {
-        const response = await getSharePostLikeCount(postId);
-        if (!response) throw new Error('error while fetching like count');
-        console.log('✅ 편지 좋아요 갯수:', response);
-        setLikeCount(response.likeCount);
-        setIsLike(response.liked);
-      } catch (error) {
-        console.error('❌ 편지 좋아요 갯수를 가져오는 중 에러가 발생했습니다', error);
-        throw new Error('편지 좋아요 갯수 가져오기 실패');
-      }
-    };
-
-    // if (location.state?.postDetail) {
-    fetchPostDetail(sharePostId);
-    fetchLikeCounts(sharePostId);
-    // } else {
-    //   console.warn('postDetail not found in location.state');
-    // }
-    // }, [location.state]);
   }, []);
 
   return (
