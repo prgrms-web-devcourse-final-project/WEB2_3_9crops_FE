@@ -65,7 +65,7 @@ const LetterBoxDetailPage = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const disconnectMutation = useMutation({
-    mutationFn: async () => await postMailboxDisconnect(userInfo.id),
+    mutationFn: async () => await postMailboxDisconnect(userInfo.oppositeId),
     onSuccess: () => {
       navigate(-1);
       setToastActive({
@@ -86,7 +86,7 @@ const LetterBoxDetailPage = () => {
   });
 
   const shareMutation = useMutation({
-    mutationFn: () => postShareProposals(selected, userInfo.id, shareComment),
+    mutationFn: () => postShareProposals(selected, userInfo.oppositeId, shareComment),
     onSuccess: () => {
       toggleShareMode();
       setShareComment('');

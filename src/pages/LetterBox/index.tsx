@@ -25,6 +25,7 @@ const LetterBoxPage = () => {
   } = useQuery({
     queryKey: ['mailBox'],
     queryFn: fetchMailLists,
+    staleTime: 0,
     refetchOnMount: true,
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
@@ -57,6 +58,7 @@ const LetterBoxPage = () => {
                     letterCount={data.letterCount}
                     isChecked={data.oppositeRead}
                     isClosed={!data.active}
+                    oppositeId={data.oppositeId}
                   />
                 )),
               ).map((row, index) =>
