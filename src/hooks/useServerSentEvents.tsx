@@ -1,5 +1,5 @@
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import useAuthStore from '@/stores/authStore';
 import useToastStore from '@/stores/toastStore';
@@ -9,7 +9,7 @@ import { getNewToken } from '@/apis/auth';
 
 interface MessageEventData {
   title: string;
-  alarmType: AlarmType | 'TEST';
+  alarmType: AlarmType;
 }
 
 export const useServerSentEvents = () => {
@@ -25,13 +25,14 @@ export const useServerSentEvents = () => {
 
   const incrementNotReadCount = useNotificationStore((state) => state.incrementNotReadCount);
 
-  const handleOnMessage = async (event: MessageEvent) => {
-    const data: MessageEventData = await JSON.parse(event.data);
-    if (data.alarmType === 'TEST') return;
+  const ALARM_TYPE: AlarmType[] = ['SENDING', 'LETTER', 'REPORT', 'SHARE', 'POSTED'];
+  const handleOnMessage = async (data: string) => {
+    const message: MessageEventData = await JSON.parse(data);
+    if (ALARM_TYPE.includes(message.alarmType)) return;
     incrementNotReadCount();
     setToastActive({
       toastType: 'Info',
-      title: data.title,
+      title: message.title,
       position: 'Top',
       time: 5,
       onClick: () => navigate('/mypage/notifications'),
@@ -71,14 +72,12 @@ export const useServerSentEvents = () => {
         sourceRef.current.onmessage = (event) => {
           console.log(event);
           console.log('알림 수신');
-          handleOnMessage(event); // 나중에 코드 수정해야함
+          handleOnMessage(event.data);
         };
 
-        sourceRef.current.onerror = (error) => {
+        sourceRef.current.onerror = () => {
+          // 에러 발생시 해당 에러가 45초를 넘어서 발생한 에러인지, 401에러인지 판단할 수 있는게 없어서 그냥 에러 발생하면 reissue 넣는걸로 때움
           callReissue();
-          console.log(error);
-          console.log('에러 발생함');
-
           closeSSE();
           // 재연결 로직 추가 가능
           reconnect = setTimeout(connectSSE, 5000);
