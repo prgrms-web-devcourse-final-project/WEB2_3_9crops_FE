@@ -21,6 +21,7 @@ const WritePage = () => {
   const [isReply, setIsReply] = useState<boolean>(false);
 
   const letterRequest = useWrite((state) => state.letterRequest);
+  const setLetterRequest = useWrite((state) => state.setLetterRequest);
   const resetLetterRequest = useWrite((state) => state.resetLetterRequest);
 
   const wrapStyle = twMerge(
@@ -54,6 +55,16 @@ const WritePage = () => {
         }
       };
       handleGetPrevLetter(letterId);
+      if (location.state?.isDraft) {
+        const draft: TemporaryRequest = location.state.draft;
+        setLetterRequest({
+          category: draft.category,
+          content: draft.content,
+          fontType: draft.fontType,
+          paperType: draft.paperType,
+          title: draft.title,
+        });
+      }
     }
   }, [location.state, prevLetter.length, navigate, letterId]);
 
