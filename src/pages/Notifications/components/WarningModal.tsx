@@ -34,13 +34,7 @@ const WarningModal = ({ isOpen, reportContent, onClose }: WarningModalProps) => 
           <p className="caption-r mb-5 text-black">{`${divideContents[1]} 회`}</p>
 
           <h2 className="body-sb mb-1.5 text-gray-100">경고 규칙</h2>
-          <p className="caption-r text-black">
-            1회 경고: 주의 안내
-            <br />
-            2회 경고: 7일 동안 서비스 이용 제한
-            <br />
-            3회 경고: 서비스 이용 불가능
-          </p>
+          <p className="caption-r text-black">3회 경고: 서비스 이용 불가능</p>
         </div>
       </article>
     </ModalOverlay>
