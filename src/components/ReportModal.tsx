@@ -29,7 +29,9 @@ const ReportModal = ({ reportType, letterId, onClose }: ReportModalProps) => {
     reportType: reportType,
     reasonType: '',
     reason: '',
-    letterId: letterId,
+    letterId: reportType === 'LETTER' ? letterId : null,
+    sharePostId: reportType === 'SHARE_POST' ? letterId : null,
+    eventCommentId: reportType === 'EVENT_COMMENT' ? letterId : null,
   });
 
   const handleReasonClick = (reason: Reason) => {
