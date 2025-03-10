@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import {
   ArrowLeftIcon,
@@ -47,7 +47,7 @@ const Header = ({
             </div>
             {isWriter ? (
               // TODO: 게시물 삭제
-              <DeleteIcon className="text-primary-1 h-6 w-6"/>
+              <DeleteIcon className="text-primary-1 h-6 w-6" />
             ) : (
               <button type="button" onClick={onOpenReportModal}>
                 <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
