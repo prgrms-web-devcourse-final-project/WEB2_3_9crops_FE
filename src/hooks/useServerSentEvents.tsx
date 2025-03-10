@@ -72,8 +72,8 @@ export const useServerSentEvents = () => {
         );
 
         sourceRef.current.onmessage = (event) => {
-          console.log(event);
-          console.log('알림 수신');
+          // console.log(event);
+          // console.log('알림 수신');
           handleOnMessage(event.data);
         };
 
