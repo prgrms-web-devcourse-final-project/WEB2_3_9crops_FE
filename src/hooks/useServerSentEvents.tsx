@@ -82,7 +82,7 @@ export const useServerSentEvents = () => {
           callReissue();
           closeSSE();
           recallCountRef.current += 1;
-          console.log(recallCountRef.current);
+          console.log('SSE연결 에러 발생');
 
           // 재연결 로직 추가 가능
           if (recallCountRef.current < 5) {
@@ -92,7 +92,6 @@ export const useServerSentEvents = () => {
           }
         };
       } catch (error) {
-        console.log('에러', error);
         console.error(error);
       }
     };

@@ -12,6 +12,7 @@ import useNotificationStore from '@/stores/notificationStore';
 const NotificationsPage = () => {
   const navigate = useNavigate();
 
+  const decrementNotReadCount = useNotificationStore((state) => state.decrementNotReadCount);
   const setNotReadCount = useNotificationStore((state) => state.setNotReadCount);
 
   const [noti, setNoti] = useState<Noti[]>([]);
@@ -55,7 +56,7 @@ const NotificationsPage = () => {
       setNoti((curNoti) =>
         curNoti.map((noti) => {
           if (noti.timelineId === timelineId && !noti.read) {
-            setNotReadCount(0);
+            decrementNotReadCount();
             return { ...noti, read: true };
           }
           return noti;
