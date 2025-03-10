@@ -81,6 +81,7 @@ export const useServerSentEvents = () => {
           console.log(event);
           const errorEvent = event as unknown as { status?: number };
           if (errorEvent.status === 401) {
+            console.log('401로 인한 리이슈 작업 실행');
             callReissue();
             closeSSE();
             reconnect = setTimeout(connectSSE, 5000);
