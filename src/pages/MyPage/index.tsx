@@ -120,6 +120,7 @@ const MyPage = () => {
               onClick={() => {
                 logout();
               }}
+              aria-label="로그아웃"
             >
               로그아웃
             </button>
@@ -131,6 +132,7 @@ const MyPage = () => {
           onClick={async () => {
             setIsOpenModal(true);
           }}
+          aria-label="탈퇴하기"
         >
           탈퇴하기
         </button>

@@ -145,6 +145,7 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
                   type="button"
                   className="body-m secondary-btn h-10 flex-1 basis-1/2"
                   onClick={() => handleProposalApproval('reject', postDetail?.sharePostId)}
+                  aria-label="거부하기"
                 >
                   거부하기
                 </button>
@@ -154,6 +155,7 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
                   className="primary-btn body-m h-10 flex-1 basis-1/2"
                   disabled={confirmDisabled}
                   onClick={() => handleProposalApproval('approve', postDetail?.sharePostId)}
+                  aria-label="승인하기"
                 >
                   승인하기
                 </button>
