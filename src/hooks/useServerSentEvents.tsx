@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import useAuthStore from '@/stores/authStore';
 import useToastStore from '@/stores/toastStore';
 import { useNavigate } from 'react-router';
+import useNotificationStore from '@/stores/notification';
 
 export const useServerSentEvents = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ export const useServerSentEvents = () => {
   const sourceRef = useRef<EventSourcePolyfill | null>(null);
 
   const setToastActive = useToastStore((state) => state.setToastActive);
+
+  const addNotReadCount = useNotificationStore((state) => state.addNotReadCount);
 
   useEffect(() => {
     if (!accessToken) {
@@ -34,6 +37,8 @@ export const useServerSentEvents = () => {
         sourceRef.current.onmessage = (event) => {
           console.log(event);
           console.log('알림 수신');
+          addNotReadCount();
+
           setToastActive({
             toastType: 'Info',
             title: '새 알림이 도착했어요!',
@@ -46,6 +51,8 @@ export const useServerSentEvents = () => {
         sourceRef.current.onerror = (error) => {
           console.log(error);
           console.log('에러 발생함');
+          addNotReadCount();
+
           closeSSE();
           // 재연결 로직 추가 가능
           setTimeout(connectSSE, 5000); // 5초 후 재연결 시도
