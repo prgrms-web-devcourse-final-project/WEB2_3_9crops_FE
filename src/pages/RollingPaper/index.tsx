@@ -14,6 +14,7 @@ import Comment from './components/Comment';
 import CommentDetailModal from './components/CommentDetailModal';
 import WriteCommentButton from './components/WriteCommentButton';
 import useAuthStore from '@/stores/authStore';
+import ReportModal from '@/components/ReportModal';
 
 const MESSAGE_SIZE = 10;
 
@@ -22,6 +23,7 @@ const RollingPaperPage = () => {
   const [activeComment, setActiveComment] = useState<RollingPaperComment | null>(null);
   const [activeDetailModal, setActiveDetailModal] = useState(false);
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+  const [activeReportModal, setActiveReportModal] = useState(false);
   const zipCode = useAuthStore((props) => props.zipCode);
   const queryClient = useQueryClient();
 
@@ -69,6 +71,17 @@ const RollingPaperPage = () => {
             setActiveDetailModal(false);
             setActiveDeleteModal(true);
           }}
+          onReport={() => {
+            setActiveDetailModal(false);
+            setActiveReportModal(true);
+          }}
+        />
+      )}
+      {activeReportModal && (
+        <ReportModal
+          reportType="EVENT_COMMENT"
+          letterId={Number(activeComment?.commentId)}
+          onClose={() => setActiveReportModal(false)}
         />
       )}
       {activeDeleteModal && (
@@ -90,7 +103,7 @@ const RollingPaperPage = () => {
       <main className="z-1 flex grow flex-col items-center px-5 pt-20 pb-12">
         <PageTitle className="mb-18 max-w-73 text-center">{title}</PageTitle>
         <p className="body-sb text-gray-60 mb-2 w-full">등록된 편지 {totalComments}</p>
-        <section className="w-full">
+        <section className="mb-4 w-full">
           <MasonryInfiniteGrid column={2} align="stretch" gap={16} onRequestAppend={handleLoadMore}>
             {isSuccess &&
               allComments.map((comment) => (
