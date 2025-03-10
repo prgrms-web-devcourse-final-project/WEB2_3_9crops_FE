@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { postNewRollingPaper } from '@/apis/rolling';
 import ModalOverlay from '@/components/ModalOverlay';
+import { AxiosError } from 'axios';
 
 interface AddRollingPaperModalProps {
   currentPage: number | string;
@@ -22,8 +23,12 @@ export default function AddRollingPaperModal({ currentPage, onClose }: AddRollin
       onClose();
       queryClient.invalidateQueries({ queryKey: ['admin-rolling-paper', currentPage] });
     },
-    onError: () => {
-      setError('편지 작성에 실패했어요. 다시 시도해주세요.');
+    onError: (err: AxiosError<{ code: string; message: string }>) => {
+      if (err.response?.data.code === 'MOD-003') {
+        setError('금칙어가 포함되어 있어요. 다시 작성해주세요.');
+      } else {
+        setError('편지 작성에 실패했어요. 다시 시도해주세요.');
+      }
     },
   });
 

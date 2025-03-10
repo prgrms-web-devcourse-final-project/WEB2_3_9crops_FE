@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { postRollingPaperComment } from '@/apis/rolling';
 import EnvelopeImg from '@/assets/images/closed-letter.png';
 import MessageModal from '@/components/MessageModal';
 import useAuthStore from '@/stores/authStore';
+import { AxiosError } from 'axios';
 
 interface WriteCommentButtonProps {
   rollingPaperId: string;
@@ -25,8 +26,12 @@ const WriteCommentButton = ({ rollingPaperId }: WriteCommentButtonProps) => {
       setError(null);
       setActiveMessageModal(false);
     },
-    onError: () => {
-      setError('편지 작성에 실패했어요. 다시 시도해주세요.');
+    onError: (err: AxiosError<{ code: string; message: string }>) => {
+      if (err.response?.data.code === 'MOD-003') {
+        setError('금칙어가 포함되어 있어요. 다시 작성해주세요.');
+      } else {
+        setError('편지 작성에 실패했어요. 다시 시도해주세요.');
+      }
     },
   });
 
@@ -43,6 +48,10 @@ const WriteCommentButton = ({ rollingPaperId }: WriteCommentButtonProps) => {
 
     mutate(newMessage.trim());
   };
+
+  useEffect(() => {
+    setError(null);
+  }, [activeMessageModal]);
 
   return (
     <>
@@ -62,7 +71,7 @@ const WriteCommentButton = ({ rollingPaperId }: WriteCommentButtonProps) => {
       )}
       <button
         type="button"
-        className="sticky bottom-8 z-10 mt-4 -mb-4 self-start overflow-hidden rounded-sm"
+        className="sticky bottom-8 z-10 mt-auto -mb-4 self-start overflow-hidden rounded-sm"
         onClick={() => setActiveMessageModal(true)}
       >
         <img src={EnvelopeImg} alt="편지지 이미지" className="h-12 w-auto opacity-70" />
