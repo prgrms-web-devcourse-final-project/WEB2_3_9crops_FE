@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getRandomLetterCoolTime, getRandomLetterMatched } from '@/apis/randomLetter';
 import BackgroundBottom from '@/components/BackgroundBottom';
 import PageTitle from '@/components/PageTitle';
+import MenuButton from '@/components/MenuButton';
 
 import CoolTime from './components/CoolTime';
 import Matched from './components/Matched';
@@ -115,6 +116,7 @@ const RandomLettersPage = () => {
           <BackgroundBottom />
         </>
       )}
+      <MenuButton />
     </>
   );
 };

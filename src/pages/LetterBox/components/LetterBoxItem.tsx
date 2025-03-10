@@ -1,12 +1,5 @@
 import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
-interface LetterBoxItemProps {
-  boxId: number;
-  zipCode: string;
-  letterCount: number;
-  isChecked?: boolean;
-  isClosed?: boolean;
-}
 
 const LetterBoxItem = ({
   boxId,
@@ -14,6 +7,7 @@ const LetterBoxItem = ({
   letterCount,
   isChecked = false,
   isClosed = false,
+  oppositeId,
 }: LetterBoxItemProps) => {
   const navigate = useNavigate();
   const handleClickItem = (id: number) => {
@@ -22,6 +16,7 @@ const LetterBoxItem = ({
         id,
         zipCode,
         isClosed,
+        oppositeId,
       },
     });
   };

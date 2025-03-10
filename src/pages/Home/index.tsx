@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import HomeButton from '@/components/HomeButton';
+import MenuButton from '@/components/MenuButton';
 import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import useViewport from '@/hooks/useViewport';
 import useAuthStore from '@/stores/authStore';
@@ -46,7 +46,7 @@ const HomePage = () => {
         </section>
       </div>
 
-      <HomeButton />
+      <MenuButton />
     </div>
   );
 };

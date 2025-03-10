@@ -8,6 +8,7 @@ import BackgroundBottom from '@/components/BackgroundBottom';
 import ConfirmModal from '@/components/ConfirmModal';
 import PageTitle from '@/components/PageTitle';
 import Header from '@/layouts/Header';
+import MenuButton from '@/components/MenuButton';
 
 import Comment from './components/Comment';
 import CommentDetailModal from './components/CommentDetailModal';
@@ -116,6 +117,7 @@ const RollingPaperPage = () => {
         </section>
         <WriteCommentButton rollingPaperId={id} />
       </main>
+      <MenuButton />
       <BackgroundBottom />
     </>
   );
