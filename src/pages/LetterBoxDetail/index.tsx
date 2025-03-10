@@ -50,8 +50,9 @@ const LetterBoxDetailPage = () => {
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.currentPage >= lastPage.totalPages ? undefined : allPages.length + 1;
       },
-      staleTime: 1000 * 60 * 5,
-      gcTime: 1000 * 60 * 10,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
     });
 
   const mailLists: MailBoxDetailProps[] = data?.pages.flatMap((page) => page.content) || [];

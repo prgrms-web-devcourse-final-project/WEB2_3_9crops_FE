@@ -30,16 +30,9 @@ const Header = ({
   return (
     <header className="fixed top-0 z-40 w-full max-w-150">
       <div className="flex h-16 items-center justify-between bg-white p-5">
-        {isShareLetterPreview ? (
-          <button onClick={() => navigate(-1)}>
-            <ArrowLeftIcon className="text-primary-1 h-6 w-6" />
-          </button>
-        ) : (
-          <Link to="/board/letter">
-            <ArrowLeftIcon className="text-primary-1 h-6 w-6" />
-          </Link>
-        )}
-
+        <button onClick={() => navigate(-1)}>
+          <ArrowLeftIcon className="text-primary-1 h-6 w-6" />
+        </button>
         {!isShareLetterPreview && (
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">

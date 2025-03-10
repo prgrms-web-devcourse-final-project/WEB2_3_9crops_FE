@@ -62,7 +62,11 @@ const LetterBoardDetailPage = () => {
         console.log('✅ 편지 좋아요 갯수:', response);
         setLikeCount(response.likeCount);
         setIsLike(response.liked);
-        if (myZipCode === response.zipCode) {
+        console.log('myZip', myZipCode);
+        console.log('responseZip', response.zipCode);
+        console.log('responseZip', response);
+
+        if (myZipCode === response.zipCode || !response.zipCode) {
           setIsWriter(true);
         }
       } catch (error) {
