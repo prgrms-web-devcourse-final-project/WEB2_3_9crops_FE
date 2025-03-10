@@ -75,6 +75,9 @@ const AuthCallbackPage = () => {
         return;
       }
       navigate('/notFound');
+      if (error === 'deleted_member') {
+        alert('탈퇴한 회원입니다.');
+      }
       return;
     }
 
