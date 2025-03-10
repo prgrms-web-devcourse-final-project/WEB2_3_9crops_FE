@@ -30,11 +30,14 @@ const MyBoardPage = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['sharePostList'],
+    queryKey: ['sharMyPostList'],
     queryFn: () => fetchMyPostList(),
     enabled: true,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
   });
 
   if (isError) {

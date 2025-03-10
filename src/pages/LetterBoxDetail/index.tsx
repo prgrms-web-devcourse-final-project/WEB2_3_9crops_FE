@@ -8,6 +8,7 @@ import { postShareProposals } from '@/apis/share';
 import ConfirmModal from '@/components/ConfirmModal';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
+import MenuButton from '@/components/MenuButton';
 
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
@@ -50,8 +51,10 @@ const LetterBoxDetailPage = () => {
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.currentPage >= lastPage.totalPages ? undefined : allPages.length + 1;
       },
-      staleTime: 1000 * 60 * 5,
-      gcTime: 1000 * 60 * 10,
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
     });
 
   const mailLists: MailBoxDetailProps[] = data?.pages.flatMap((page) => page.content) || [];
@@ -65,7 +68,7 @@ const LetterBoxDetailPage = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const disconnectMutation = useMutation({
-    mutationFn: async () => await postMailboxDisconnect(userInfo.id),
+    mutationFn: async () => await postMailboxDisconnect(userInfo.oppositeId),
     onSuccess: () => {
       navigate(-1);
       setToastActive({
@@ -86,7 +89,7 @@ const LetterBoxDetailPage = () => {
   });
 
   const shareMutation = useMutation({
-    mutationFn: () => postShareProposals(selected, userInfo.id, shareComment),
+    mutationFn: () => postShareProposals(selected, userInfo.oppositeId, shareComment),
     onSuccess: () => {
       toggleShareMode();
       setShareComment('');
@@ -223,6 +226,7 @@ const LetterBoxDetailPage = () => {
           </button>
         </div>
       )}
+      <MenuButton />
     </>
   );
 };
