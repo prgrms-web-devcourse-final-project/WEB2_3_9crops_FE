@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router';
 
 import { ArrowLeftIcon, PersonIcon } from '@/assets/icons';
-import AlarmButton from '@/components/AlarmButton';
+import NotificationButton from '@/components/NotificationButton';
 
 const Header = () => {
   // TODO: 뒤로 가기 버튼이 보이는 조건 추가
@@ -14,7 +14,7 @@ const Header = () => {
         <ArrowLeftIcon className="h-6 w-6 text-white" />
       </button>
       <div className="flex items-center gap-3">
-        <AlarmButton />
+        <NotificationButton />
         <Link to="/mypage">
           <PersonIcon className="h-6 w-6 text-white" />
         </Link>
