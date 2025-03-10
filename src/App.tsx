@@ -26,6 +26,7 @@ import OnboardingPage from './pages/Onboarding';
 import RandomLettersPage from './pages/RandomLetters';
 import RollingPaperPage from './pages/RollingPaper';
 import WritePage from './pages/Write';
+import ShareApprovalPage from './pages/Share';
 
 const App = () => {
   useViewport();
@@ -56,6 +57,7 @@ const App = () => {
               <Route path="letter" element={<LetterBoardPage />} />
             </Route>
             <Route path="letter/:id" element={<LetterBoardDetailPage />} />
+            <Route path="share/:shareProposalId" element={<ShareApprovalPage />} />
           </Route>
           <Route path="mypage" element={<Layout />}>
             <Route index element={<MyPage />} />
