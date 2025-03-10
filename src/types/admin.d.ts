@@ -1,5 +1,5 @@
 type Status = 'PENDING' | 'RESOLVED' | 'REJECTED';
-type ReportType = 'LETTER' | 'POST' | 'COMMENT';
+type ReportType = 'LETTER' | 'SHARE_POST' | 'EVENT_COMMENT';
 type Reason = 'ABUSE' | 'DEFAMATION' | 'HARASSMENT' | 'THREATS' | 'ETC';
 
 interface ReportQueryString {
@@ -41,6 +41,8 @@ interface PostReportRequest {
   reasonType: Reason | '';
   reason: string;
   letterId: number | null;
+  sharePostId: number | null;
+  eventCommentId: number | null;
 }
 
 interface PatchReportRequest {
