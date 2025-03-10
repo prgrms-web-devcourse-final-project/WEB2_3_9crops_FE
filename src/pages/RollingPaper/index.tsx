@@ -102,7 +102,9 @@ const RollingPaperPage = () => {
       <Header />
       <main className="z-1 flex grow flex-col items-center px-5 pt-20 pb-12">
         <PageTitle className="mb-18 max-w-73 text-center">{title}</PageTitle>
-        <p className="body-sb text-gray-60 mb-2 w-full">등록된 편지 {totalComments}</p>
+        <p className="body-sb text-gray-60 mb-2 w-full dark:text-white">
+          등록된 편지 {totalComments}
+        </p>
         <section className="mb-4 w-full">
           <MasonryInfiniteGrid column={2} align="stretch" gap={16} onRequestAppend={handleLoadMore}>
             {isSuccess &&

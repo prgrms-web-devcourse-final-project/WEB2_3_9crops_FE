@@ -132,8 +132,8 @@ const MyPage = () => {
                 setIsOpenWarningModal(true);
               }}
             >
-              <p className="body-sb text-gray-100">경고 횟수</p>
-              <p className="body-r text-gray-60">
+              <p className="body-sb text-gray-100 dark:text-white">경고 횟수</p>
+              <p className="body-r text-gray-60 dark:text-white">
                 <span>{data.warningCount}회</span>
               </p>
             </div>

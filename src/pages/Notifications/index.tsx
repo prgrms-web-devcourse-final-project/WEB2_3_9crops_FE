@@ -103,7 +103,7 @@ const NotificationsPage = () => {
         <PageTitle className="mb-10">알림</PageTitle>
         <button
           type="button"
-          className="body-sb text-gray-60 place-self-end"
+          className="body-sb text-gray-60 place-self-end dark:text-white"
           onClick={() => {
             handlePatchReadNotificationAll();
           }}
