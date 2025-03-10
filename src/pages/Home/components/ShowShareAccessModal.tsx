@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { getSharePostDetail } from '@/apis/share';
+import { getShareProposalDetail } from '@/apis/share';
 import { getShareProposalList } from '@/apis/share';
 import { ShareProposal } from '@/apis/share';
 
@@ -30,9 +30,9 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
 
   const handleNavigation = async (shareProposalId: number) => {
     try {
-      const postDetail = await getSharePostDetail(shareProposalId);
-      navigate(`/board/letter/${shareProposalId}`, {
-        state: { postDetail, isShareLetterPreview: true },
+      const proposalDetail = await getShareProposalDetail(shareProposalId);
+      navigate(`/board/share/${shareProposalId}`, {
+        state: { proposalDetail },
       });
     } catch (error) {
       console.error('❌ 게시글 상세 페이지로 이동하는 데에 실패했습니다.', error);
