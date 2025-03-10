@@ -112,7 +112,7 @@ const MyPage = () => {
             <div className="flex justify-between">
               <p className="body-sb text-gray-100">경고 횟수</p>
               <p className="body-r text-gray-60">
-                <span>{data.warningCount}</span>
+                <span>{data.warningCount}회</span>
               </p>
             </div>
             <button
