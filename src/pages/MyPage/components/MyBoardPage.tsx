@@ -14,11 +14,14 @@ const MyBoardPage = () => {
   const fetchMyPostList = async () => {
     try {
       const response = await getMySharePostList();
-      if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
+      if (!response) {
+        throw new Error('게시글 목록을 불러오는데 실패했습니다.');
+      }
       console.log('myPostList', response);
       return response.data as SharePost[];
     } catch (e) {
       console.error(e);
+      return [];
     }
   };
 
@@ -27,11 +30,14 @@ const MyBoardPage = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['sharePostList'],
+    queryKey: ['sharMyPostList'],
     queryFn: () => fetchMyPostList(),
     enabled: true,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
   });
 
   if (isError) {
@@ -39,7 +45,7 @@ const MyBoardPage = () => {
   }
   return (
     <>
-      <main className={twMerge('flex grow flex-col px-5 pt-20 pb-10')}>
+      <main className={twMerge('z-1 flex grow flex-col px-5 pt-20 pb-10')}>
         <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
         {isLoading ? (
           <p className="body-m text-gray-60 text-center dark:text-white">loading</p>

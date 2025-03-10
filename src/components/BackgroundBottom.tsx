@@ -1,5 +1,4 @@
 import BgItem from '@/assets/images/field-4.png';
-import BgItemDark from '@/assets/images/home-right-mountain-bottom-dark.png';
 
 import BackgroundImageWrapper from './BackgroundImageWrapper';
 import useThemeStore from '@/stores/themeStore';

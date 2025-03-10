@@ -5,6 +5,7 @@ import { AlarmIcon } from '@/assets/icons';
 
 import AdminPageTitle from './components/AdminPageTitle';
 import ListHeaderFrame from './components/ListHeaderFrame';
+import PagenationNavigation from './components/PagenationNavigation';
 import ReportDetailModal from './components/ReportDetailModal';
 import ReportHandlingModal from './components/ReportHandlingModal';
 import ReportListItem from './components/ReportListItem';
@@ -19,28 +20,37 @@ export default function ReportManage() {
     currentPage: '1',
     totalPages: '0',
   });
+
   const [selectedReport, setSelectReport] = useState<Report | null>(null);
   const [selectedReportId, setSelectedReportId] = useState<number | null>(null);
-
-  // const [allReports, setAllReports] = useState();
 
   const [reportQueryString, setReportQueryString] = useState<ReportQueryString>({
     reportType: null,
     status: 'PENDING',
     page: '1',
-    size: '3',
+    size: '1',
   });
+
   const handleGetReports = async (reportQueryString: ReportQueryString) => {
     const res = await getReports(reportQueryString);
     if (res?.status === 200) {
-      console.log(res.data.data.content);
-      setReports(res.data.data.content);
+      const data = res.data.data;
+      setReports(data.content);
       setReportPages(() => ({
-        currentPage: res.data.data.currentPage,
-        totalPages: res.data.data.totalPages,
+        currentPage: data.currentPage,
+        totalPages: data.totalPages,
       }));
     }
   };
+
+  const handleNowPage = (page: string) => {
+    setReportQueryString((cur) => ({ ...cur, page: page }));
+  };
+
+  const handleStatus = (status: Status) => {
+    setReportQueryString((cur) => ({ ...cur, status: status }));
+  };
+
   useEffect(() => {
     handleGetReports(reportQueryString);
   }, [reportQueryString]);
@@ -48,7 +58,19 @@ export default function ReportManage() {
     <>
       <AdminPageTitle>검열 관리 / 신고 편지 목록</AdminPageTitle>
       <WrapperFrame>
-        <WrapperTitle title="신고 편지 목록" Icon={AlarmIcon} />
+        <div className="flex items-center justify-between">
+          <WrapperTitle title="신고 편지 목록" Icon={AlarmIcon} />
+          <select
+            onChange={(e) => {
+              const status = e.currentTarget.value as Status;
+              handleStatus(status);
+            }}
+          >
+            <option value="PENDING">대기중</option>
+            <option value="RESOLVED">승인됨</option>
+            <option value="REJECTED">거절됨</option>
+          </select>
+        </div>
 
         <section className="mt-5 flex flex-col">
           <ListHeaderFrame>
@@ -68,39 +90,11 @@ export default function ReportManage() {
               setSelectReport={setSelectReport}
             />
           ))}
-          <div className="bg-accent-1 mt-5 flex h-10 w-full items-center justify-center">
-            <div className="flex gap-2">
-              <button
-                className="h-full w-10 rounded-2xl border bg-white"
-                onClick={() => {
-                  const nowPage = Number(reportQueryString.page);
-                  if (nowPage > 1) {
-                    const newPage = (nowPage - 1).toString();
-                    setReportQueryString((cur) => ({ ...cur, page: newPage }));
-                  }
-                }}
-              >
-                뒤
-              </button>
-              <span>
-                {reportPages.currentPage}/{reportPages.totalPages}
-              </span>
-              <button
-                className="h-full w-10 rounded-2xl border bg-white"
-                onClick={() => {
-                  const nowPage = Number(reportQueryString.page);
-                  const totalPage = Number(reportPages.totalPages);
-                  if (nowPage < totalPage) {
-                    const newPage = (nowPage + 1).toString();
-                    console.log(newPage);
-                    setReportQueryString((cur) => ({ ...cur, page: newPage }));
-                  }
-                }}
-              >
-                앞
-              </button>
-            </div>
-          </div>
+          <PagenationNavigation
+            totalPage={Number(reportPages.totalPages)}
+            buttonLength={3}
+            handlePageNumberButtonClick={handleNowPage}
+          />
         </section>
         {detailModalOpen && (
           <ReportDetailModal selectedReport={selectedReport} closeEvent={setDetailModalOpen} />

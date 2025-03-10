@@ -12,9 +12,6 @@ interface IncomingLetters {
 
 interface IncomingLettersStore {
   data: IncomingLetters[];
-  arrivedCount: number;
-  message: string;
-  timestamp: string;
   fetchIncomingLetters: () => void;
 }
 
@@ -36,18 +33,12 @@ const calculatingRemainingTime = (deliveryCompletedAt: string): string => {
 
 export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
   data: [],
-  arrivedCount: 0,
-  message: '',
-  timestamp: '',
   fetchIncomingLetters: async () => {
     try {
-      const token = localStorage.getItem('token') || '';
-      const data = await getIncomingLetters(token);
+      const data = await getIncomingLetters();
 
-      let arrivedCount = 0;
       const updatedLetters = data.data.map((letter: IncomingLetters) => {
         const remainingTime = calculatingRemainingTime(letter.deliveryCompletedAt);
-        if (remainingTime === '00:00:00') arrivedCount += 1; // 도착한 편지 카운트
 
         return { ...letter, remainingTime };
       });
@@ -55,12 +46,33 @@ export const useIncomingLettersStore = create<IncomingLettersStore>((set) => ({
       const inProgressLetters = updatedLetters.filter(
         (letter: IncomingLetters) => letter.remainingTime !== '00:00:00',
       );
+
       set({
         data: inProgressLetters,
-        arrivedCount,
-        message: data.message,
-        timestamp: data.timestamp,
       });
+
+      if (inProgressLetters.length === 0) return;
+
+      const intervalId = setInterval(() => {
+        set((state) => {
+          const updatedLetters = state.data.map((letter: IncomingLetters) => {
+            const remainingTime = calculatingRemainingTime(letter.deliveryCompletedAt);
+            return { ...letter, remainingTime };
+          });
+
+          const filteredLetters = updatedLetters.filter(
+            (letter) => letter.remainingTime !== '00:00:00',
+          );
+
+          if (filteredLetters.length === 0) {
+            clearInterval(intervalId);
+          }
+
+          return {
+            data: filteredLetters,
+          };
+        });
+      }, 1000);
     } catch (error) {
       console.error('❌오고 있는 편지 목록을 불러오던 중 에러 발생', error);
     }

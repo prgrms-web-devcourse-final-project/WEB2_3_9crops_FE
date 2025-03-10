@@ -6,21 +6,31 @@ interface CommentDetailModalProps {
   isWriter: boolean;
   onClose: () => void;
   onDelete: () => void;
+  onReport: () => void;
 }
 
-const CommentDetailModal = ({ comment, isWriter, onClose, onDelete }: CommentDetailModalProps) => {
+const CommentDetailModal = ({
+  comment,
+  isWriter,
+  onClose,
+  onDelete,
+  onReport,
+}: CommentDetailModalProps) => {
+  const handleButtonClick = () => {
+    if (isWriter) onDelete();
+    else onReport();
+  };
+
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <>
-        {isWriter && (
-          <button type="button" className="body-b ml-auto text-white" onClick={onDelete}>
-            삭제하기
-          </button>
-        )}
+        <button type="button" className="body-b ml-auto text-white" onClick={handleButtonClick}>
+          {isWriter ? '삭제하기' : '신고하기'}
+        </button>
 
         <MemoWrapper className="mt-1 flex max-h-1/2 w-78 overflow-y-auto px-5 text-black">
           <div className="z-1 flex flex-col gap-3">
-            <p className="body-r leading-[26px] whitespace-pre-wrap">{comment.content}</p>
+            <p className="body-r leading-[26px] break-all whitespace-pre-wrap">{comment.content}</p>
             <p className="body-m place-self-end">From. {comment.zipCode}</p>
           </div>
         </MemoWrapper>

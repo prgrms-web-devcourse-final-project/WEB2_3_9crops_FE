@@ -7,6 +7,8 @@ import useAuthStore from '@/stores/authStore';
 import useMyPageStore from '@/stores/myPageStore';
 
 import { TEMPERATURE_RANGE } from './constants';
+import useToastStore from '@/stores/toastStore';
+import ModalOverlay from '@/components/ModalOverlay';
 
 const MyPage = () => {
   useEffect(() => {
@@ -14,8 +16,12 @@ const MyPage = () => {
   }, []);
 
   const { data, fetchMyPageInfo } = useMyPageStore();
+
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenWarningModal, setIsOpenWarningModal] = useState(false);
+
   const logout = useAuthStore((state) => state.logout);
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   const getDescriptionByTemperature = (temp: number) => {
     const range = TEMPERATURE_RANGE.find((range) => temp >= range.min && temp < range.max);
@@ -28,9 +34,14 @@ const MyPage = () => {
     try {
       const response = await deleteUserInfo();
       if (!response) throw new Error('deletioning failed');
-      console.log(response);
+      return response;
     } catch (error) {
       console.error(error);
+      setToastActive({
+        toastType: 'Error',
+        title: '서버오류로 탈퇴처리가 되지 않았습니다. 잠시 후에 다시 시도해주세요.',
+        time: 5,
+      });
     }
   };
 
@@ -43,12 +54,29 @@ const MyPage = () => {
           cancelText="되돌아가기"
           confirmText="탈퇴하기"
           onCancel={() => setIsOpenModal(false)}
-          onConfirm={() => {
-            handleLeave();
+          onConfirm={async () => {
+            const response = await handleLeave();
             setIsOpenModal(false);
+            if (response?.status === 200) {
+              logout();
+              alert('탈퇴가 완료 되었습니다.');
+            }
           }}
         />
       )}
+
+      {isOpenWarningModal && (
+        <ModalOverlay closeOnOutsideClick onClose={() => setIsOpenWarningModal(false)}>
+          <article className="bg-accent-1 relative w-77 overflow-hidden rounded-sm p-6">
+            <div className="absolute inset-0 h-full w-full bg-white/90 blur-[25px]" />
+            <div className="relative">
+              <h2 className="body-sb mb-1.5 text-gray-100">경고 규칙</h2>
+              <p className="caption-r text-black">3회 경고: 서비스 이용 불가능</p>
+            </div>
+          </article>
+        </ModalOverlay>
+      )}
+
       <main className="flex grow flex-col gap-12 px-5 pt-20 pb-6">
         <h1 className="h2-b mx-auto flex gap-1.5">
           {data.zipCode.split('').map((code, index) => (
@@ -98,11 +126,24 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
+            <div
+              className="flex justify-between"
+              onClick={async () => {
+                setIsOpenWarningModal(true);
+              }}
+            >
+              <p className="body-sb text-gray-100">경고 횟수</p>
+              <p className="body-r text-gray-60">
+                <span>{data.warningCount}회</span>
+              </p>
+            </div>
+
             <button
               className="body-sb self-start text-gray-100 dark:text-white"
               onClick={() => {
                 logout();
               }}
+              aria-label="로그아웃"
             >
               로그아웃
             </button>
@@ -114,6 +155,7 @@ const MyPage = () => {
           onClick={async () => {
             setIsOpenModal(true);
           }}
+          aria-label="탈퇴하기"
         >
           탈퇴하기
         </button>

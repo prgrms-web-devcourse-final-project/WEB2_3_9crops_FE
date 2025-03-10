@@ -7,6 +7,7 @@ import useWrite from '@/stores/writeStore';
 
 import ResultLetterAnimation from './components/ResultLetterAnimation';
 import WritePageButton from './components/WritePageButton';
+import useToastStore from '@/stores/toastStore';
 
 export default function CategorySelect({
   setStep,
@@ -21,13 +22,17 @@ export default function CategorySelect({
 }) {
   const letterRequest = useWrite((state) => state.letterRequest);
 
+  const setToastActive = useToastStore((state) => state.setToastActive);
+
   const handlePostLetter = async (letterRequest: LetterRequest) => {
     const res = await postLetter(letterRequest);
     if (res?.status === 200) {
       console.log(letterRequest);
       setSend(true);
     } else {
-      alert('전송오류(임시)');
+      // 일단 에러 발생하면 무조건 검열단어라고 토스트를 띄웠는데 후에 에러 처리 수정해야함
+      setToastActive({ title: '편지에 검열 단어가 포함되어있습니다. ', toastType: 'Error' });
+      setStep('edit');
     }
   };
 
@@ -59,9 +64,7 @@ export default function CategorySelect({
             <div className="animate-show-text flex flex-col items-center opacity-0">
               <span className="body-sb text-gray-60">작성하신 편지는</span>
               <span className="body-sb text-gray-60">
-                <span>{'00'}시간 </span>
-                <span>{'00'}분 </span>
-                <span>{'00'}초 후에 도착합니다.</span>
+                <span>1시간 후에 도착합니다.</span>
               </span>
             </div>
           </div>
@@ -91,7 +94,7 @@ export default function CategorySelect({
                 handlePostLetter(letterRequest);
                 // setSend(true);
               } else {
-                alert('우표 선택을 해주세요');
+                setToastActive({ title: '카테고리를 선택해주세요.', toastType: 'Warning' });
               }
             }}
           >

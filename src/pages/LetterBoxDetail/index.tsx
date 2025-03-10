@@ -1,4 +1,4 @@
-import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useLocation, useNavigate } from 'react-router';
@@ -8,9 +8,13 @@ import { postShareProposals } from '@/apis/share';
 import ConfirmModal from '@/components/ConfirmModal';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
+import MenuButton from '@/components/MenuButton';
 
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
+
+import useToastStore from '@/stores/toastStore';
+
 interface MailBoxDetailProps {
   letterId: number;
   title: string;
@@ -28,6 +32,8 @@ const LetterBoxDetailPage = () => {
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
   const [shareComment, setShareComment] = useState('');
+  const queryClient = useQueryClient();
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   const navigate = useNavigate();
 
@@ -45,8 +51,10 @@ const LetterBoxDetailPage = () => {
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.currentPage >= lastPage.totalPages ? undefined : allPages.length + 1;
       },
-      staleTime: 1000 * 60 * 5,
-      gcTime: 1000 * 60 * 10,
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
     });
 
   const mailLists: MailBoxDetailProps[] = data?.pages.flatMap((page) => page.content) || [];
@@ -60,26 +68,41 @@ const LetterBoxDetailPage = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const disconnectMutation = useMutation({
-    mutationFn: async () => await postMailboxDisconnect(userInfo.id),
+    mutationFn: async () => await postMailboxDisconnect(userInfo.oppositeId),
     onSuccess: () => {
       navigate(-1);
+      setToastActive({
+        toastType: 'Success',
+        title: '차단 완료 되었습니다.',
+        time: 5,
+      });
+      queryClient.invalidateQueries({ queryKey: ['mailBox'] });
     },
     onError: (error) => {
-      // TODO: 차단 실패 toastUI 띄워주기
-      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      setToastActive({
+        toastType: 'Error',
+        title: '차단이 실패했습니다. 잠시 후에 다시 시도해주세요.',
+        time: 5,
+      });
       console.error(error);
     },
   });
 
   const shareMutation = useMutation({
-    mutationFn: () => postShareProposals(selected, userInfo.id, shareComment),
+    mutationFn: () => postShareProposals(selected, userInfo.oppositeId, shareComment),
     onSuccess: () => {
       toggleShareMode();
       setShareComment('');
+      setToastActive({
+        toastType: 'Success',
+        title: '공유 완료 되었습니다.',
+      });
     },
     onError: (error) => {
-      // TODO: 차단 실패 toastUI 띄워주기
-      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      setToastActive({
+        toastType: 'Error',
+        title: '공유가 실패했습니다. 잠시 후에 다시 시도해주세요.',
+      });
       console.error(error);
     },
   });
@@ -203,6 +226,7 @@ const LetterBoxDetailPage = () => {
           </button>
         </div>
       )}
+      <MenuButton />
     </>
   );
 };

@@ -28,6 +28,7 @@ const RandomCheer = () => {
         src={theme === 'light' ? randomCheerBird : randomCheerBirdDark}
         alt="random cheer bird"
         className="h-[26.5px] w-[21px] opacity-80"
+        onClick={() => setRandomCheer(getRandomCheer())}
       />
     </div>
   );

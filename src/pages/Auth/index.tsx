@@ -7,6 +7,7 @@ import useAuthStore from '@/stores/authStore';
 const AuthCallbackPage = () => {
   const stateToken = new URLSearchParams(window.location.search).get('state');
   const redirectURL = new URLSearchParams(window.location.search).get('redirect');
+  const error = new URLSearchParams(window.location.search).get('error');
 
   const login = useAuthStore((state) => state.login);
   const logout = useAuthStore((state) => state.logout);
@@ -31,6 +32,8 @@ const AuthCallbackPage = () => {
 
       login();
       if (userInfo.accessToken) setAccessToken(userInfo.accessToken);
+
+      console.log(redirectURL);
 
       switch (redirectURL) {
         case 'home':
@@ -66,6 +69,11 @@ const AuthCallbackPage = () => {
 
   useEffect(() => {
     if (!stateToken) {
+      if (error === 'deleted_member') {
+        navigate('/login');
+        alert('탈퇴한 회원입니다. 관리자에게 문의 부탁드립니다.');
+        return;
+      }
       navigate('/notFound');
       return;
     }

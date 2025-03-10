@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router';
 
-import { useServerSentEvents } from './hooks/useServerSentEvents';
 import useViewport from './hooks/useViewport';
 import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
@@ -27,6 +26,7 @@ import OnboardingPage from './pages/Onboarding';
 import RandomLettersPage from './pages/RandomLetters';
 import RollingPaperPage from './pages/RollingPaper';
 import WritePage from './pages/Write';
+import ShareApprovalPage from './pages/Share';
 import useThemeStore from './stores/themeStore';
 
 const App = () => {
@@ -51,10 +51,10 @@ const App = () => {
         <Route path="landing" element={<Landing />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="auth-callback" element={<AuthCallbackPage />} />
-        <Route index element={<Home />} />
         <Route path="onboarding" element={<OnboardingPage />} />
 
         <Route element={<PrivateRoute />}>
+          <Route index element={<Home />} />
           <Route path="letter">
             <Route element={<Layout />}>
               <Route path="random" element={<RandomLettersPage />} />
@@ -70,6 +70,7 @@ const App = () => {
               <Route path="letter" element={<LetterBoardPage />} />
             </Route>
             <Route path="letter/:id" element={<LetterBoardDetailPage />} />
+            <Route path="share/:shareProposalId" element={<ShareApprovalPage />} />
           </Route>
           <Route path="mypage" element={<Layout />}>
             <Route index element={<MyPage />} />
