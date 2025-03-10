@@ -109,6 +109,12 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
+            <div className="flex justify-between">
+              <p className="body-sb text-gray-100">경고 횟수</p>
+              <p className="body-r text-gray-60">
+                <span>{data.warningCount}</span>
+              </p>
+            </div>
             <button
               className="body-sb self-start text-gray-100"
               onClick={() => {
