@@ -28,15 +28,16 @@ export const useServerSentEvents = () => {
   const ALARM_TYPE: AlarmType[] = ['SENDING', 'LETTER', 'REPORT', 'SHARE', 'POSTED'];
   const handleOnMessage = async (data: string) => {
     const message: MessageEventData = await JSON.parse(data);
-    if (ALARM_TYPE.includes(message.alarmType)) return;
-    incrementNotReadCount();
-    setToastActive({
-      toastType: 'Info',
-      title: message.title,
-      position: 'Top',
-      time: 5,
-      onClick: () => navigate('/mypage/notifications'),
-    });
+    if (ALARM_TYPE.includes(message.alarmType)) {
+      incrementNotReadCount();
+      setToastActive({
+        toastType: 'Info',
+        title: message.title,
+        position: 'Top',
+        time: 5,
+        onClick: () => navigate('/mypage/notifications'),
+      });
+    }
   };
 
   // 토큰 재발급 함수
