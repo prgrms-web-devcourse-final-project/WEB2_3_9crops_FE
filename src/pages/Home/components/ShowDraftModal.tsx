@@ -17,7 +17,7 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
   const navigate = useNavigate();
 
   const handleNavigation = (draft: DraftLetter) => {
-    navigate(`/letter/write/?letterId=${draft.letterId}`, {
+    navigate(`/letter/write/?letterId=${draft.parentLetterId}`, {
       state: { draft, isDraft: true },
     });
   };
