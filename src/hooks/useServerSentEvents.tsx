@@ -16,7 +16,8 @@ export const useServerSentEvents = () => {
   let reconnect: number | undefined;
 
   const navigate = useNavigate();
-  const recallCountRef = useRef(1);
+  // const recallCountRef = useRef(1);
+
 
   const accessToken = useAuthStore((state) => state.accessToken);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
@@ -77,22 +78,22 @@ export const useServerSentEvents = () => {
           handleOnMessage(event.data);
         };
 
-        sourceRef.current.onerror = () => {
-          // 에러 발생시 해당 에러가 45초를 넘어서 발생한 에러인지, 401에러인지 판단할 수 있는게 없어서 그냥 에러 발생하면 reissue 넣는걸로 때움
-          closeSSE();
-          recallCountRef.current += 1;
-          console.log('SSE연결 에러 발생');
-
-          // 재연결 로직 추가 가능
-          if (recallCountRef.current < 5) {
+        sourceRef.current.onerror = (event) => {
+          console.log(event);
+          const errorEvent = event as unknown as { status?: number };
+          if (errorEvent.status === 401) {
+            console.log('401로 인한 리이슈 작업 실행');
+            callReissue();
+            closeSSE();
             reconnect = setTimeout(connectSSE, 5000);
           } else {
-            console.log('5회 이상 에러발생으로 구독기능 제거');
+            closeSSE();
+            reconnect = setTimeout(connectSSE, 5000);
           }
         };
       } catch (error) {
-        callReissue();
-        console.error(error);
+        console.log('catch문에서 에러 발생', error);
+
       }
     };
 
