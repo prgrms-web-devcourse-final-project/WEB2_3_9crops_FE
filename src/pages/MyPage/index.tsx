@@ -8,6 +8,7 @@ import useMyPageStore from '@/stores/myPageStore';
 
 import { TEMPERATURE_RANGE } from './constants';
 import useToastStore from '@/stores/toastStore';
+import ModalOverlay from '@/components/ModalOverlay';
 
 const MyPage = () => {
   useEffect(() => {
@@ -15,7 +16,10 @@ const MyPage = () => {
   }, []);
 
   const { data, fetchMyPageInfo } = useMyPageStore();
+
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenWarningModal, setIsOpenWarningModal] = useState(false);
+
   const logout = useAuthStore((state) => state.logout);
   const setToastActive = useToastStore((state) => state.setToastActive);
 
@@ -60,6 +64,19 @@ const MyPage = () => {
           }}
         />
       )}
+
+      {isOpenWarningModal && (
+        <ModalOverlay closeOnOutsideClick onClose={() => setIsOpenWarningModal(false)}>
+          <article className="bg-accent-1 relative w-77 overflow-hidden rounded-sm p-6">
+            <div className="absolute inset-0 h-full w-full bg-white/90 blur-[25px]" />
+            <div className="relative">
+              <h2 className="body-sb mb-1.5 text-gray-100">경고 규칙</h2>
+              <p className="caption-r text-black">3회 경고: 서비스 이용 불가능</p>
+            </div>
+          </article>
+        </ModalOverlay>
+      )}
+
       <main className="flex grow flex-col gap-12 px-5 pt-20 pb-6">
         <h1 className="h2-b mx-auto flex gap-1.5">
           {data.zipCode.split('').map((code, index) => (
@@ -109,11 +126,24 @@ const MyPage = () => {
                 <span>{data.email}</span>
               </p>
             </div>
+            <div
+              className="flex justify-between"
+              onClick={async () => {
+                setIsOpenWarningModal(true);
+              }}
+            >
+              <p className="body-sb text-gray-100">경고 횟수</p>
+              <p className="body-r text-gray-60">
+                <span>{data.warningCount}회</span>
+              </p>
+            </div>
+
             <button
               className="body-sb self-start text-gray-100"
               onClick={() => {
                 logout();
               }}
+              aria-label="로그아웃"
             >
               로그아웃
             </button>
@@ -125,6 +155,7 @@ const MyPage = () => {
           onClick={async () => {
             setIsOpenModal(true);
           }}
+          aria-label="탈퇴하기"
         >
           탈퇴하기
         </button>

@@ -7,9 +7,13 @@ import PageTitle from '@/components/PageTitle';
 import NotificationItem from './components/NotificationItem';
 import WarningModal from './components/WarningModal';
 import SendingModal from './components/SendingModal';
+import useNotificationStore from '@/stores/notificationStore';
 
 const NotificationsPage = () => {
   const navigate = useNavigate();
+
+  const decrementNotReadCount = useNotificationStore((state) => state.decrementNotReadCount);
+  const setNotReadCount = useNotificationStore((state) => state.setNotReadCount);
 
   const [noti, setNoti] = useState<Noti[]>([]);
 
@@ -51,7 +55,8 @@ const NotificationsPage = () => {
     if (res?.status === 200) {
       setNoti((curNoti) =>
         curNoti.map((noti) => {
-          if (noti.timelineId === timelineId) {
+          if (noti.timelineId === timelineId && !noti.read) {
+            decrementNotReadCount();
             return { ...noti, read: true };
           }
           return noti;
@@ -73,6 +78,7 @@ const NotificationsPage = () => {
           return noti;
         });
       });
+      setNotReadCount(0);
     } else {
       console.log('모두 읽음처리 에러 발생');
     }

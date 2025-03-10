@@ -5,6 +5,7 @@ import { postReports } from '@/apis/admin';
 
 import ConfirmModal from './ConfirmModal';
 import TextareaField from './TextareaField';
+import useToastStore from '@/stores/toastStore';
 
 interface ReportModalProps {
   reportType: ReportType;
@@ -29,7 +30,9 @@ const ReportModal = ({ reportType, letterId, onClose }: ReportModalProps) => {
     reportType: reportType,
     reasonType: '',
     reason: '',
-    letterId: letterId,
+    letterId: reportType === 'LETTER' ? letterId : null,
+    sharePostId: reportType === 'SHARE_POST' ? letterId : null,
+    eventCommentId: reportType === 'EVENT_COMMENT' ? letterId : null,
   });
 
   const handleReasonClick = (reason: Reason) => {
@@ -38,14 +41,16 @@ const ReportModal = ({ reportType, letterId, onClose }: ReportModalProps) => {
     else setPostReportRequest((cur) => ({ ...cur, reasonType: reason }));
   };
 
+  const setToastActive = useToastStore((state) => state.setToastActive);
+
   const handleSubmit = async () => {
     const res = await postReports(postReportRequest);
     if (res?.status === 200) {
-      alert('신고 처리되었습니다.');
+      setToastActive({ title: '신고가 접수되었습니다.', toastType: 'Success' });
       console.log(res);
       onClose();
-    } else if (res?.status === 409) {
-      alert('신고한 이력이 있습니다.');
+    } else {
+      setToastActive({ title: '신고한 이력이 있습니다.', toastType: 'Error' });
       onClose();
     }
   };

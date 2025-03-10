@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
-// import { getSharePostDetail } from '@/apis/share';
 import { getShareProposalList } from '@/apis/share';
 import { ShareProposal } from '@/apis/share';
+
+import { getShareProposalDetail } from '@/apis/share';
 
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
@@ -14,7 +15,7 @@ interface ShowShareAccessModalProps {
 }
 
 const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [shareProposals, setShareProposals] = useState<ShareProposal[]>([]);
 
@@ -28,16 +29,16 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
       });
   }, []);
 
-  // const handleNavigation = async (shareProposalId: number) => {
-  //   try {
-  //     const postDetail = await getSharePostDetail(shareProposalId);
-  //     navigate(`/board/letter/${shareProposalId}`, {
-  //       state: { postDetail, isShareLetterPreview: true },
-  //     });
-  //   } catch (error) {
-  //     console.error('❌ 게시글 상세 페이지로 이동하는 데에 실패했습니다.', error);
-  //   }
-  // };
+  const handleNavigation = async (shareProposalId: number) => {
+    try {
+      const proposalDetail = await getShareProposalDetail(shareProposalId);
+      navigate(`/board/share/${shareProposalId}`, {
+        state: { proposalDetail },
+      });
+    } catch (error) {
+      console.error('❌ 게시글 상세 페이지로 이동하는 데에 실패했습니다.', error);
+    }
+  };
 
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
@@ -60,7 +61,8 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
                   <button
                     className="text-gray-80 body-m flex h-10 w-full items-center justify-between gap-1 rounded-lg bg-white p-3"
                     key={proposal.shareProposalId}
-                    // onClick={() => handleNavigation(proposal.shareProposalId)}
+                    onClick={() => handleNavigation(proposal.shareProposalId)}
+                    aria-label="따숨님의 공유 요청"
                   >
                     <p>{proposal.requesterZipCode}님의 공유 요청</p>
                   </button>

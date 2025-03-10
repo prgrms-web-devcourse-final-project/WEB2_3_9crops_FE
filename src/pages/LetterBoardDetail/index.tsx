@@ -1,38 +1,34 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import {
   getSharePostDetail,
-  postShareProposalApproval,
   SharePost,
   getSharePostLikeCount,
   postSharePostLike,
 } from '@/apis/share';
-import BlurImg from '@/assets/images/landing-blur.png';
 import ReportModal from '@/components/ReportModal';
 
 import Header from './components/Header';
 import Letter from './components/Letter';
+import { useLocation, useParams } from 'react-router';
+import useAuthStore from '@/stores/authStore';
 
-interface ShareLetterPreviewProps {
-  confirmDisabled?: boolean;
-  children?: React.ReactNode;
-}
-
-const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => {
-  const [likeCount, setLikeCount] = useState(122);
+const LetterBoardDetailPage = () => {
+  const [likeCount, setLikeCount] = useState(0);
   const [isLike, setIsLike] = useState(false);
-  const isWriter = false;
+  const [isWriter, setIsWriter] = useState(false);
+  const [postDetail, setPostDetail] = useState<SharePost>();
   const [activeReportModal, setActiveReportModal] = useState(false);
   const location = useLocation();
   const sharePostId: string = location.pathname.split('/')[3];
-  const navigate = useNavigate();
   // const isShareLetterPreview = location.state?.isShareLetterPreview || false;
-  const isShareLetterPreview = false;
-  const [postDetail, setPostDetail] = useState<SharePost>();
 
-  const postLike = async () => {
+  const { id } = useParams();
+
+  const myZipCode = useAuthStore.getState().zipCode;
+
+  const postLike = async (sharePostId: string) => {
     try {
       const response = await postSharePostLike(sharePostId);
       if (!response) throw new Error('error while fetching like count');
@@ -43,25 +39,50 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
     }
   };
 
-  const handleToggleLike = () => {
+  const handleToggleLike = (sharePostId: string) => {
+    if (sharePostId === 'error') {
+      return;
+    }
     setLikeCount((prev) => prev + (isLike ? -1 : 1));
     setIsLike((prev) => !prev);
-    postLike();
+    postLike(sharePostId);
   };
 
-  const handleProposalApproval = async (
-    action: 'approve' | 'reject',
-    shareProposalId: number = location.state?.postDetail?.sharePostId,
-  ) => {
-    try {
-      const result = await postShareProposalApproval(shareProposalId, action);
-      console.log(`✅ 편지 공유 ${action === 'approve' ? '수락' : '거절'}됨:`, result);
+  useEffect(() => {
+    const fetchPostDetail = async (postId: string) => {
+      try {
+        const data = await getSharePostDetail(postId);
+        setPostDetail(data);
+      } catch (error) {
+        console.error('❌ 공유 게시글 상세 조회에 실패했습니다.', error);
+      }
+    };
 
-      navigate('/');
-    } catch (error) {
-      console.error(error);
+    const fetchLikeCounts = async (postId: string) => {
+      try {
+        const response = await getSharePostLikeCount(postId);
+        if (!response) throw new Error('error while fetching like count');
+        console.log('✅ 편지 좋아요 갯수:', response);
+        setLikeCount(response.likeCount);
+        setIsLike(response.liked);
+        console.log('myZip', myZipCode);
+        console.log('responseZip', response.zipCode);
+        console.log('responseZip', response);
+
+        if (myZipCode === response.zipCode || !response.zipCode) {
+          setIsWriter(true);
+        }
+      } catch (error) {
+        console.error('❌ 편지 좋아요 갯수를 가져오는 중 에러가 발생했습니다', error);
+        throw new Error('편지 좋아요 갯수 가져오기 실패');
+      }
+    };
+
+    if (id) {
+      fetchPostDetail(id);
+      fetchLikeCounts(id);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const fetchPostDetail = async (postId: string) => {
@@ -99,9 +120,9 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
     <>
       {activeReportModal && (
         <ReportModal
+          reportType="SHARE_POST"
+          letterId={id ? parseInt(id) : 0}
           onClose={() => setActiveReportModal(false)}
-          reportType={'SHARE_POST'}
-          letterId={parseInt(sharePostId)}
         />
       )}
       <div className="grow bg-white">
@@ -109,9 +130,8 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
           likeCount={likeCount}
           isLike={isLike}
           isWriter={isWriter}
-          onToggleLike={handleToggleLike}
+          onToggleLike={() => (id ? handleToggleLike(id) : handleToggleLike('error'))}
           onOpenReportModal={() => setActiveReportModal(true)}
-          isShareLetterPreview={isShareLetterPreview}
         />
         <main className="px-5 pt-18 pb-3">
           <p className="body-b mb-6 px-5">FROM. {postDetail?.zipCode}</p>
@@ -132,34 +152,6 @@ const LetterBoardDetailPage = ({ confirmDisabled }: ShareLetterPreviewProps) => 
               />
             ))}
           </section>
-
-          {isShareLetterPreview && (
-            <>
-              <img
-                src={BlurImg}
-                alt="landing blur"
-                className="fixed bottom-0 left-0 z-10 w-screen"
-              />
-              <section className="fixed bottom-[30px] left-1/2 z-20 flex w-73 translate-x-[-50%] gap-6">
-                <button
-                  type="button"
-                  className="body-m secondary-btn h-10 flex-1 basis-1/2"
-                  onClick={() => handleProposalApproval('reject', postDetail?.sharePostId)}
-                >
-                  거부하기
-                </button>
-
-                <button
-                  type="button"
-                  className="primary-btn body-m h-10 flex-1 basis-1/2"
-                  disabled={confirmDisabled}
-                  onClick={() => handleProposalApproval('approve', postDetail?.sharePostId)}
-                >
-                  승인하기
-                </button>
-              </section>
-            </>
-          )}
         </main>
       </div>
     </>

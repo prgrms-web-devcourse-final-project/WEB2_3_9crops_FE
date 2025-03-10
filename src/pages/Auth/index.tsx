@@ -69,6 +69,11 @@ const AuthCallbackPage = () => {
 
   useEffect(() => {
     if (!stateToken) {
+      if (error === 'deleted_member') {
+        navigate('/login');
+        alert('탈퇴한 회원입니다. 관리자에게 문의 부탁드립니다.');
+        return;
+      }
       navigate('/notFound');
       if (error === 'deleted_member') {
         alert('탈퇴한 회원입니다.');
