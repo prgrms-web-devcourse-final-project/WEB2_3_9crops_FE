@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <header className="fixed top-0 z-40 flex h-16 w-full max-w-150 items-center justify-between p-5">
-      <button onClick={() => navigate(-1)}>
+      <button onClick={() => navigate('/')}>
         <ArrowLeftIcon className="h-6 w-6 text-white" />
       </button>
       <div className="flex items-center gap-3">

@@ -9,20 +9,11 @@ import { chunkBox } from '@/utils/chunkBox';
 
 import LetterBoxItem from './components/LetterBoxItem';
 
-interface LetterBoxData {
-  letterMatchingId: number;
-  oppositeZipCode: string;
-  active: boolean;
-  oppositeRead: boolean;
-  letterCount: number;
-}
-
 const fetchMailLists = async () => {
   const response = await getMailbox();
   if (!response) throw new Error();
   const data: LetterBoxData[] = response.data;
   console.log(data);
-  // 정렬?
   return data;
 };
 
@@ -34,8 +25,9 @@ const LetterBoxPage = () => {
   } = useQuery({
     queryKey: ['mailBox'],
     queryFn: fetchMailLists,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
   });
 
   const navigate = useNavigate();
