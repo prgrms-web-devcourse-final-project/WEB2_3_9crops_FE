@@ -11,6 +11,7 @@ import OptionSlide from '@/pages/Write/OptionSlide';
 import useWrite from '@/stores/writeStore';
 import { removeProperty } from '@/utils/removeProperty';
 import useToastStore from '@/stores/toastStore';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function LetterEditor({
   letterId,
@@ -26,6 +27,7 @@ export default function LetterEditor({
   setSend: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const location = useLocation();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [randomMatched, setRandomMatched] = useState<boolean>(false);
   const [isTemporaryConfirmModal, setIsTemporaryConfirmModal] = useState<boolean>(false);
@@ -128,6 +130,8 @@ export default function LetterEditor({
                   } else {
                     handlePostReply(letterRequest);
                   }
+                  queryClient.invalidateQueries({ queryKey: ['mailBox'] });
+                  queryClient.invalidateQueries({ queryKey: ['mailBoxDetail'] });
                 } else {
                   setToastActive({
                     toastType: 'Warning',

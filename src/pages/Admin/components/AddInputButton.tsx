@@ -19,12 +19,13 @@ export default function AddInputButton({
     target.style.width = `${target.scrollWidth}px`;
   };
 
-  const handlePostBadWords = () => {
+  const handlePostBadWords = async () => {
     if (inputText.word === '') return setAddInputShow(false);
-    postBadWords(inputText, () => {
+    const res = await postBadWords(inputText);
+    if (res?.status === 200) {
       setBadWords((cur) => [...cur, inputText]);
       setAddInputShow(false);
-    });
+    }
   };
 
   useEffect(() => {

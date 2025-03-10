@@ -17,11 +17,15 @@ const LetterBoardPage = () => {
   const fetchPostList = async (page: number = 1) => {
     try {
       const response = await getSharePostList(page);
-      if (!response) throw new Error('게시글 목록을 불러오는데 실패했습니다.');
+      if (!response || !response.content) {
+        console.error('게시글 목록을 불러오는데 실패했습니다.');
+        return { content: [], currentPage: page, totalPages: 1 };
+      }
       console.log('page', response);
       return response as SharePostResponse;
     } catch (e) {
       console.error(e);
+      return { content: [], currentPage: page, totalPages: 1 };
     }
   };
 
@@ -32,7 +36,7 @@ const LetterBoardPage = () => {
       enabled: true,
       initialPageParam: 1,
       getNextPageParam: (res) => {
-        if (!res || res.currentPage >= res.totalPages) {
+        if (!res || !res?.content || res?.currentPage >= res?.totalPages) {
           return undefined;
         }
         return res.currentPage + 1;
@@ -41,7 +45,7 @@ const LetterBoardPage = () => {
       gcTime: 1000 * 60 * 10,
     });
 
-  const postLists = data?.pages.flatMap((page) => page?.content) || [];
+  const postLists = data?.pages?.flatMap((page) => page?.content || []) || [];
 
   useEffect(() => {
     if (!hasNextPage) return;
@@ -65,24 +69,30 @@ const LetterBoardPage = () => {
           </p>
         </>
         {isLoading ? (
-          <p>loading</p>
-        ) : postLists && postLists?.length > 0 ? (
-          <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
-            {postLists?.map((item, index) => {
-              return (
-                <LetterPreview
-                  key={index}
-                  id={item?.sharePostId || 0}
-                  to={item?.receiverZipCode || 'ERROR'}
-                  from={item?.writerZipCode || 'ERROR'}
-                  content={item?.content || 'no Data'}
-                  ref={index === postLists.length - 1 ? ref : null}
-                />
-              );
-            })}
-          </section>
+          <p className="body-m text-gray-60 mt-10 text-center">로딩 중 입니다.</p>
+        ) : postLists ? (
+          postLists?.length > 0 ? (
+            <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
+              {postLists?.map((item, index) => {
+                return (
+                  <LetterPreview
+                    key={index}
+                    id={item?.sharePostId || 0}
+                    to={item?.receiverZipCode || 'ERROR'}
+                    from={item?.writerZipCode || 'ERROR'}
+                    content={item?.content || 'no Data'}
+                    ref={index === postLists.length - 1 ? ref : null}
+                  />
+                );
+              })}
+            </section>
+          ) : (
+            <p className="body-m text-gray-60 mt-10 text-center">게시글이 없습니다.</p>
+          )
         ) : (
-          <p className="body-m text-gray-60 mt-10 text-center">게시글이 없습니다.</p>
+          <p className="body-m text-gray-60 mt-10 text-center">
+            오류가 발생했습니다. 다시 한 번 시도해주세요
+          </p>
         )}
       </main>
       <BackgroundBottom />

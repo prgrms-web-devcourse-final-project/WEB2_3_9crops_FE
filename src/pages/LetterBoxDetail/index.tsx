@@ -1,4 +1,4 @@
-import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useLocation, useNavigate } from 'react-router';
@@ -11,6 +11,9 @@ import PageTitle from '@/components/PageTitle';
 
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
+
+import useToastStore from '@/stores/toastStore';
+
 interface MailBoxDetailProps {
   letterId: number;
   title: string;
@@ -28,6 +31,8 @@ const LetterBoxDetailPage = () => {
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
   const [shareComment, setShareComment] = useState('');
+  const queryClient = useQueryClient();
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   const navigate = useNavigate();
 
@@ -63,10 +68,19 @@ const LetterBoxDetailPage = () => {
     mutationFn: async () => await postMailboxDisconnect(userInfo.id),
     onSuccess: () => {
       navigate(-1);
+      setToastActive({
+        toastType: 'Success',
+        title: '차단 완료 되었습니다.',
+        time: 5,
+      });
+      queryClient.invalidateQueries({ queryKey: ['mailBox'] });
     },
     onError: (error) => {
-      // TODO: 차단 실패 toastUI 띄워주기
-      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      setToastActive({
+        toastType: 'Error',
+        title: '차단이 실패했습니다. 잠시 후에 다시 시도해주세요.',
+        time: 5,
+      });
       console.error(error);
     },
   });
@@ -76,10 +90,16 @@ const LetterBoxDetailPage = () => {
     onSuccess: () => {
       toggleShareMode();
       setShareComment('');
+      setToastActive({
+        toastType: 'Success',
+        title: '공유 완료 되었습니다.',
+      });
     },
     onError: (error) => {
-      // TODO: 차단 실패 toastUI 띄워주기
-      // 요청이 실패했어요 잠시 후에 다시 시도해주세요.
+      setToastActive({
+        toastType: 'Error',
+        title: '공유가 실패했습니다. 잠시 후에 다시 시도해주세요.',
+      });
       console.error(error);
     },
   });

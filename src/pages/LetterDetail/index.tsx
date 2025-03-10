@@ -11,10 +11,12 @@ import useAuthStore from '@/stores/authStore';
 import LetterDetailContent from './components/LetterDetailContent';
 import LetterDetailHeader from './components/LetterDetailHeader';
 import LetterDetailReplyButton from './components/LetterDetailReplyButton';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const LetterDetailPage = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [letterDetail, setLetterDetail] = useState<LetterDetail>({} as LetterDetail);
   const userZipCode = useAuthStore((state) => state.zipCode);
@@ -22,14 +24,17 @@ const LetterDetailPage = () => {
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
 
-  const handleDeleteLetter = async (letterId: string) => {
-    const res = await deleteLetter(letterId);
-    if (res?.status === 200) {
+  const { mutate: handleDeleteLetter } = useMutation({
+    mutationFn: (letterId: string) => deleteLetter(letterId),
+    onSuccess: () => {
       navigate(-1);
-    } else {
+      queryClient.invalidateQueries({ queryKey: ['mailBoxDetail'] });
+      queryClient.invalidateQueries({ queryKey: ['mailBox'] });
+    },
+    onError: () => {
       alert('편지 삭제 도중 오류 발생(임시)');
-    }
-  };
+    },
+  });
 
   useEffect(() => {
     const handleGetLetter = async (letterId: string) => {
@@ -86,7 +91,6 @@ const LetterDetailPage = () => {
             }}
             onConfirm={() => {
               if (params.id) handleDeleteLetter(params.id);
-              navigate(-1);
             }}
           />
         )}

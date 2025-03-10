@@ -50,7 +50,8 @@ export default function PagenationNavigation({
     }
   };
 
-  const buttonStyle = 'rounded-full bg-white w-8 h-8 disabled:bg-gray-20';
+  const buttonStyle =
+    'rounded-full bg-white w-8 h-8 disabled:bg-gray-20 disabled:text-white disabled:cursor-auto';
 
   return (
     <div className="mt-5 flex h-10 w-full items-center justify-center">
