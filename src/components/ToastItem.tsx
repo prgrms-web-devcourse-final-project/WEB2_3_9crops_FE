@@ -26,7 +26,7 @@ export default function ToastItem({ toastObj, index }: { toastObj: ToastObj; ind
 
   const animation = `toast-blink ${toastObj.time}s ease-in-out forwards`;
   const toastStyle = twMerge(
-    'fixed bottom-5 left-1/2 z-40 flex h-[40px] max-w-150 min-w-[300px] w-[100%] -translate-1/2 items-center justify-center rounded-lg caption-sb shadow-[0_1px_6px_rgba(200,200,200,0.2)]',
+    'fixed bottom-5 left-1/2 z-40 flex h-[40px] max-w-150 min-w-[300px] w-[80%] -translate-1/2 items-center justify-center rounded-lg caption-sb shadow-[0_1px_6px_rgba(200,200,200,0.2)]',
     TOAST_POSITION[toastObj.position],
     TOAST_DESIGN[toastObj.toastType].style,
   );

@@ -7,6 +7,7 @@ const postReports = async (postReportRequest: PostReportRequest) => {
     return res;
   } catch (error) {
     console.error(error);
+    return null;
   }
 };
 
