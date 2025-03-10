@@ -108,4 +108,9 @@
   .window-bottom-unChecked {
     background: linear-gradient(to bottom, #fff4f2, #ffe6e3) !important;
   }
+
+  /* Menu */
+  .submenu-btn {
+    @apply bg-primary-3 flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-300 hover:scale-105 active:scale-90;
+  }
 }

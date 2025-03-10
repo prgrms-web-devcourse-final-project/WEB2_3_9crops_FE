@@ -9,6 +9,7 @@ import NoticeRollingPaper from '@/components/NoticeRollingPaper';
 import PageTitle from '@/components/PageTitle';
 
 import LetterPreview from './components/LetterPreview';
+import MenuButton from '@/components/MenuButton';
 
 const LetterBoardPage = () => {
   const navigate = useNavigate();
@@ -99,6 +100,7 @@ const LetterBoardPage = () => {
           </p>
         )}
       </main>
+      <MenuButton />
       <BackgroundBottom />
     </>
   );

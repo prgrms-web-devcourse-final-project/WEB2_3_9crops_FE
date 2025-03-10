@@ -8,6 +8,7 @@ import { postShareProposals } from '@/apis/share';
 import ConfirmModal from '@/components/ConfirmModal';
 import MessageModal from '@/components/MessageModal';
 import PageTitle from '@/components/PageTitle';
+import MenuButton from '@/components/MenuButton';
 
 import InformationTooltip from './components/InformationTooltip';
 import LetterPreview from './components/LetterPreview';
@@ -225,6 +226,7 @@ const LetterBoxDetailPage = () => {
           </button>
         </div>
       )}
+      <MenuButton />
     </>
   );
 };
