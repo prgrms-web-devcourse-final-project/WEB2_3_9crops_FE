@@ -4,14 +4,14 @@ import { twMerge } from 'tailwind-merge';
 import {
   getSharePostDetail,
   SharePost,
-  postSharePostLike,
   getSharePostLikeCount,
+  postSharePostLike,
 } from '@/apis/share';
 import ReportModal from '@/components/ReportModal';
 
 import Header from './components/Header';
 import Letter from './components/Letter';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import useAuthStore from '@/stores/authStore';
 
 const LetterBoardDetailPage = () => {
@@ -20,6 +20,9 @@ const LetterBoardDetailPage = () => {
   const [isWriter, setIsWriter] = useState(false);
   const [postDetail, setPostDetail] = useState<SharePost>();
   const [activeReportModal, setActiveReportModal] = useState(false);
+  const location = useLocation();
+  const sharePostId: string = location.pathname.split('/')[3];
+  // const isShareLetterPreview = location.state?.isShareLetterPreview || false;
 
   const { id } = useParams();
 
