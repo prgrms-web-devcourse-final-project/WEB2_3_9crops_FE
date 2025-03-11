@@ -183,6 +183,6 @@ export const deleteSharePost = async (sharePostId: string) => {
     if (!response) throw new Error('error while deleting post');
     return response;
   } catch (error) {
-    console.error('❌ 편지 좋아요 갯수 조회 중 에러가 발생했습니다', error);
+    console.error('❌ 편지 삭제 중 에러가 발생했습니다', error);
   }
 };
