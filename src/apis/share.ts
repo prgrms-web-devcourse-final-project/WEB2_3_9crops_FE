@@ -163,7 +163,6 @@ export const postSharePostLike = async (sharePostId: string) => {
     return response.data;
   } catch (error) {
     console.error('❌ 편지 좋아요 중 에러가 발생했습니다', error);
-    throw new Error('편지 좋아요 실패');
   }
 };
 
@@ -175,6 +174,15 @@ export const getSharePostLikeCount = async (sharePostId: string) => {
     return response.data;
   } catch (error) {
     console.error('❌ 편지 좋아요 갯수 조회 중 에러가 발생했습니다', error);
-    throw new Error('편지 좋아요 갯수 조회 실패');
+  }
+};
+
+export const deleteSharePost = async (sharePostId: string) => {
+  try {
+    const response = await client.delete(`/api/share-post/${sharePostId}`);
+    if (!response) throw new Error('error while deleting post');
+    return response;
+  } catch (error) {
+    console.error('❌ 편지 좋아요 갯수 조회 중 에러가 발생했습니다', error);
   }
 };

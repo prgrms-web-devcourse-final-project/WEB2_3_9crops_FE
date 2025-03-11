@@ -6,13 +6,16 @@ import {
   SharePost,
   getSharePostLikeCount,
   postSharePostLike,
+  deleteSharePost,
 } from '@/apis/share';
 import ReportModal from '@/components/ReportModal';
 
 import Header from './components/Header';
 import Letter from './components/Letter';
-import { useParams } from 'react-router';
+
+import { useNavigate, useParams } from 'react-router';
 import useAuthStore from '@/stores/authStore';
+import useToastStore from '@/stores/toastStore';
 
 const LetterBoardDetailPage = () => {
   const [likeCount, setLikeCount] = useState(0);
@@ -20,13 +23,11 @@ const LetterBoardDetailPage = () => {
   const [isWriter, setIsWriter] = useState(false);
   const [postDetail, setPostDetail] = useState<SharePost>();
   const [activeReportModal, setActiveReportModal] = useState(false);
-  // const location = useLocation();
-  // const sharePostId: string = location.pathname.split('/')[3];
-  // const isShareLetterPreview = location.state?.isShareLetterPreview || false;
 
   const { id } = useParams();
-
   const myZipCode = useAuthStore.getState().zipCode;
+  const setToastActive = useToastStore((state) => state.setToastActive);
+  const navigate = useNavigate();
 
   const postLike = async (sharePostId: string) => {
     try {
@@ -35,7 +36,6 @@ const LetterBoardDetailPage = () => {
       console.log('✅ 편지 좋아요 추가됨:', response);
     } catch (error) {
       console.error('❌ 편지 좋아요 추가 중 에러가 발생했습니다', error);
-      throw new Error('편지 좋아요 추가 실패');
     }
   };
 
@@ -46,6 +46,26 @@ const LetterBoardDetailPage = () => {
     setLikeCount((prev) => prev + (isLike ? -1 : 1));
     setIsLike((prev) => !prev);
     postLike(sharePostId);
+  };
+
+  const handleDeleteLetter = async () => {
+    try {
+      if (id) {
+        const response = await deleteSharePost(id);
+        if (!response) throw new Error('deleteSharePost: no response');
+        navigate(-1);
+        setToastActive({
+          toastType: 'Success',
+          title: '게시물 삭제 완료',
+        });
+      } else throw new Error('deleteSharePost: id 값을 조회할 수 없습니다.');
+    } catch (error) {
+      console.error(error);
+      setToastActive({
+        toastType: 'Error',
+        title: '삭제 실패했습니다. 다시 시도해주세요.',
+      });
+    }
   };
 
   useEffect(() => {
@@ -100,6 +120,7 @@ const LetterBoardDetailPage = () => {
           isWriter={isWriter}
           onToggleLike={() => (id ? handleToggleLike(id) : handleToggleLike('error'))}
           onOpenReportModal={() => setActiveReportModal(true)}
+          onDeleteLetter={() => handleDeleteLetter()}
         />
         <main className="px-5 pt-18 pb-3">
           <p className="body-b mb-6 px-5">FROM. {postDetail?.zipCode}</p>
