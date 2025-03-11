@@ -75,6 +75,14 @@ const RandomLettersPage = () => {
   }, []);
   return (
     <>
+      {openSelectModal && (
+        <MatchingSelectModal
+          setOpenModal={setOpenSelectModal}
+          selectedLetter={selectedLetter}
+          setOpenSelectedDetailModal={setOpenSelectedDetailModal}
+          setMatchedLetter={setMatchedLetter}
+        />
+      )}
       {openSelectedDetailModal ? (
         <MatchedLetter matchedLetter={matchedLetter} />
       ) : (
@@ -101,15 +109,6 @@ const RandomLettersPage = () => {
                 setIsMatched={setIsMatched}
                 setIsCoolTime={setIsCoolTime}
                 setOpenSelectedDetailModal={setOpenSelectedDetailModal}
-              />
-            )}
-
-            {openSelectModal && (
-              <MatchingSelectModal
-                setOpenModal={setOpenSelectModal}
-                selectedLetter={selectedLetter}
-                setOpenSelectedDetailModal={setOpenSelectedDetailModal}
-                setMatchedLetter={setMatchedLetter}
               />
             )}
           </div>
