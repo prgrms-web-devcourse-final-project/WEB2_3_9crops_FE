@@ -1,4 +1,4 @@
-import homeLeftMountain from '@/assets/images/home-left-mountain.png';
+import homeLeftMountain from '@/assets/images/home-left-mountain.webp';
 import homeLeftMountainDark from '@/assets/images/home-left-mountain-dark.webp';
 
 import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';

@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import FieldImg from '@/assets/images/home-left-mountain.png';
+import FieldImg from '@/assets/images/home-left-mountain.webp';
 import FieldImgDark from '@/assets/images/home-left-mountain-dark.webp';
 
 import BlurImg from '@/assets/images/landing-blur.png';

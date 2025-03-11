@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import goToRandomLetter from '@/assets/images/go-to-random-letter.png';
+import goToRandomLetter from '@/assets/images/go-to-random-letter.webp';
 
 const GoToRandomLetter = () => {
   return (
@@ -10,7 +10,7 @@ const GoToRandomLetter = () => {
           고민편지 보러가기
         </p>
         <Link to={'/letter/random'}>
-          <img src={goToRandomLetter} alt="go to random letter" />
+          <img src={goToRandomLetter} alt="go to random letter" className="h-45 translate-x-5" />
         </Link>
       </div>
     </>
