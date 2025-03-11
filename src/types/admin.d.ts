@@ -73,6 +73,10 @@ interface BadWords {
   word: string;
 }
 
+interface BadWordsData extends BadWords {
+  id: string;
+}
+
 //
 interface ModalContents {
   title: string;
