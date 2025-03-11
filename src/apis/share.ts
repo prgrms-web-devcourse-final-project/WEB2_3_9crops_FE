@@ -179,7 +179,7 @@ export const getSharePostLikeCount = async (sharePostId: string) => {
 
 export const deleteSharePost = async (sharePostId: string) => {
   try {
-    const response = await client.delete(`/api/share-post/${sharePostId}`);
+    const response = await client.delete(`/api/share-posts/${sharePostId}`);
     if (!response) throw new Error('error while deleting post');
     return response;
   } catch (error) {
