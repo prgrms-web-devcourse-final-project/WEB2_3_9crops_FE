@@ -34,7 +34,7 @@ const LetterActions = () => {
             <button
               key={index}
               onClick={() => setActiveModal(item.title)}
-              className="flex h-12 w-12 items-center justify-center gap-[10px] rounded-full bg-white/40 text-gray-50 shadow-[inset_0_-2px_2px_0_rgba(208,169,14,0.30),_0_0px_4px_0_rgba(199,164,29,0.30)]"
+              className="flex h-12 w-12 items-center justify-center gap-[10px] rounded-full bg-white/40 text-gray-50 shadow-[inset_0_-2px_2px_0_rgba(208,169,14,0.30),_0_0px_4px_0_rgba(199,164,29,0.30)] dark:text-white dark:shadow-[inset_0_-2px_2px_0_rgba(255,255,255,0.30),_0_0px_4px_0_rgba(180,180,180,0.30)]"
             >
               {item.icon}
             </button>

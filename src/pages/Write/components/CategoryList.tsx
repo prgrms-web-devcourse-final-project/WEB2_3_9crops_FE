@@ -9,7 +9,9 @@ function CategoryList() {
         return (
           <div className="w-[calc(50%-12px)]" key={idx}>
             <CategoryStamp categoryName={stamp.category} image={stamp.image} />
-            <p className="body-m mt-2 flex items-center justify-center">{stamp.title}</p>
+            <p className="body-m mt-2 flex items-center justify-center dark:text-white">
+              {stamp.title}
+            </p>
           </div>
         );
       })}

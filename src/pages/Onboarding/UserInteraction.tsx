@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import envelope from '@/assets/images/closed-letter.png';
-// import envelopeTop from '@/assets/images/envelope-pink-back-top.png';
 import envelopeFront from '@/assets/images/opened-letter-front.png';
 
 export default function UserInteraction({
@@ -25,7 +24,6 @@ export default function UserInteraction({
   const [imgToBottom, setImgToBottom] = useState<boolean>(false);
 
   const [startAnimation, setStartAnimation] = useState<boolean>(false);
-  // const [openAnimation, setOpenAnimation] = useState<boolean>(false);
   const [letterOutAnimation, setLetterOutAnimation] = useState<boolean>(false);
   const [envelopeOut, setEnvelopeOut] = useState<boolean>(false);
   const [finishAnimation, setFinishAnimation] = useState<boolean>(false);
@@ -48,14 +46,6 @@ export default function UserInteraction({
       }, 1000);
     }
   }, [imgToBottom]);
-
-  // useEffect(() => {
-  //   if (openAnimation) {
-  //     setTimeout(() => {
-  //       setLetterOutAnimation(true);
-  //     }, 2000);
-  //   }
-  // }, [openAnimation]);
 
   useEffect(() => {
     if (letterOutAnimation) {
@@ -118,34 +108,9 @@ export default function UserInteraction({
             left: '0px',
           }}
         />
-        {/* {openAnimation && (
-          <img
-            src={envelopeTop}
-            alt=""
-            className={twMerge(
-              `z-10 mx-10 h-auto rounded`,
-              openAnimation && !envelopeOut && 'animate-openEnvelope',
-              envelopeOut && 'animate-envelopeOut',
-            )}
-            style={{
-              bottom: `calc(${sinkRefTop.top}px - 7.5rem)`,
-              position: 'absolute',
-              width: `${imgPos.width}px`,
-              left: '0px',
-            }}
-          />
-        )} */}
         <img
           src={envelope}
           alt="분홍색 편지지"
-          // ref={sinkRef}
-          // onAnimationEnd={(e) => {
-          //   if (e.animationName === 'envelopeSink') {
-          //     const rect = sinkRef.current?.getBoundingClientRect();
-          //     if (rect?.top) setSinkRefTop({ top: rect?.top });
-          //     console.log('Animation ended. boundingRect top:', rect?.top);
-          //   }
-          // }}
           className={twMerge(
             `z-0 mx-10 h-auto rounded`,
             imgToBottom && !envelopeOut && 'animate-envelopeSink',
@@ -166,7 +131,7 @@ export default function UserInteraction({
             )}
             style={{
               width: `${imgPos.width - imgPos.width * 0.1}px`,
-              bottom: `${0.9 * imgPos.height}px`,
+              bottom: `${120}px`,
               top: `${imgPos.top - 0.7 * imgPos.top}px`,
               position: 'absolute',
               left: `58px`,

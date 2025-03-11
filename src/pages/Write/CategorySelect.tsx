@@ -76,7 +76,7 @@ export default function CategorySelect({
         {send && !isReply && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
             <ResultLetterAnimation />
-            <span className="animate-show-text body-sb text-gray-60 opacity-0">
+            <span className="animate-show-text body-sb text-gray-60 opacity-0 dark:text-white">
               두근두근! 답장이 언제 올까요?
             </span>
           </div>

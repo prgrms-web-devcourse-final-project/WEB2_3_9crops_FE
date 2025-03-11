@@ -48,7 +48,7 @@ const MyBoardPage = () => {
       <main className={twMerge('z-1 flex grow flex-col px-5 pt-20 pb-10')}>
         <PageTitle className="mx-auto mb-11">내가 올린 게시물</PageTitle>
         {isLoading ? (
-          <p className="body-m text-gray-60 text-center">로딩 중 입니다.</p>
+          <p className="body-m text-gray-60 text-center dark:text-white">loading</p>
         ) : postLists && postLists?.length > 0 ? (
           <section className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4">
             {postLists?.map((item, index) => (
@@ -62,7 +62,7 @@ const MyBoardPage = () => {
             ))}
           </section>
         ) : (
-          <p className="body-m text-gray-60 text-center">게시글이 없습니다.</p>
+          <p className="body-m text-gray-60 text-center dark:text-white">게시글이 없습니다.</p>
         )}
       </main>
       <BackgroundBottom />
