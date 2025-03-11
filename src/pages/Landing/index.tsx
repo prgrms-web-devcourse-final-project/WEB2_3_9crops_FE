@@ -3,7 +3,9 @@ import { Navigate, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import LandingImg from '@/assets/images/landing.png';
+import LandingImgDark from '@/assets/images/landing-dark.png';
 import useAuthStore from '@/stores/authStore';
+import useThemeStore from '@/stores/themeStore';
 
 import { STYLE_CLASS } from './constants';
 
@@ -11,6 +13,7 @@ const Landing = () => {
   const [step, setStep] = useState(0);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
+  const theme = useThemeStore((state) => state.theme);
 
   useEffect(() => {
     if (isLoggedIn) navigate('/');
@@ -21,7 +24,7 @@ const Landing = () => {
   return (
     <main className="relative flex grow justify-center" onClick={() => setStep((prev) => prev + 1)}>
       <img
-        src={LandingImg}
+        src={theme === 'light' ? LandingImg : LandingImgDark}
         alt="서비스 소개 이미지"
         className={twMerge(
           'fixed bottom-0 h-70 w-auto max-w-none -translate-x-1/2 transition-all duration-200',

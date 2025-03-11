@@ -24,9 +24,13 @@ const LoginPage = () => {
       <main className="mt-10 flex grow flex-col items-center justify-between">
         <section className="relative mt-10 text-center">
           <StampIcon className="absolute -top-2 -right-0.5 -translate-y-1/2 translate-x-1/2" />
-          <h2 className="text-xl leading-[24px] font-medium tracking-[-1px]">마음이 맞닿는 온도</h2>
-          <h1 className="font-malang my-2 text-5xl leading-[57.6px] text-[#F15847]">36.5</h1>
-          <p className="body-sb text-gray-60">
+          <h2 className="text-xl leading-[24px] font-medium tracking-[-1px] dark:text-white">
+            마음이 맞닿는 온도
+          </h2>
+          <h1 className="font-malang dark:text-primary-3 my-2 text-5xl leading-[57.6px] text-[#F15847]">
+            36.5
+          </h1>
+          <p className="body-sb text-gray-60 dark:text-white">
             모르는 사람과 편지를 주고 받으며
             <br />
             마음의 위안을 얻어보세요.

@@ -30,7 +30,7 @@ const GoToLetterBox = () => {
   return (
     <div className="absolute bottom-[11%] left-5 z-9 flex">
       <div className="text-left">
-        <p className="text-gray-60 body-r mb-1 ml-2">내 편지함</p>
+        <p className="text-gray-60 body-r mb-1 ml-2 dark:text-white">내 편지함</p>
         <Link to="/letter/box">
           <img
             src={arrivedCount ? goToLetterBoxNewLetters : goToLetterBox}

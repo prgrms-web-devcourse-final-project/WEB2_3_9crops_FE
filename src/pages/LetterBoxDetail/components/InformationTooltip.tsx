@@ -20,7 +20,7 @@ const InformationTooltip = () => {
   return (
     <div ref={ref} className="relative flex items-center">
       <button type="button" onClick={() => setIsShow((prev) => !prev)}>
-        <InformationIcon className="text-gray-40 h-5 w-5" />
+        <InformationIcon className="text-gray-40 h-5 w-5 dark:text-white/80" />
       </button>
       <article
         className={twMerge(

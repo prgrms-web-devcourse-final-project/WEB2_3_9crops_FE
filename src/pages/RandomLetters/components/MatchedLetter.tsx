@@ -14,7 +14,7 @@ const MatchedLetter = ({ matchedLetter }: { matchedLetter: MatchedLetter }) => {
     <>
       <div
         className={twMerge(
-          `flex grow flex-col gap-3 px-5 pb-7.5`,
+          `z-50 flex grow flex-col gap-3 px-5 pb-7.5`,
           PAPER_TYPE_OBJ[matchedLetter.paperType],
         )}
       >

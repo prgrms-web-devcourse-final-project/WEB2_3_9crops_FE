@@ -43,13 +43,13 @@ const LetterBoxPage = () => {
       <main className="flex grow flex-col items-center px-5 pt-20">
         <PageTitle>내 편지함</PageTitle>
         <div className="w-full max-w-94">
-          <p className="body-sb mt-16 mb-[7px] place-self-start text-gray-50">
+          <p className="body-sb mt-16 mb-[7px] place-self-start text-gray-50 dark:text-white">
             나와 연락한 사람들 {letterBox?.length}
           </p>
           <section className="letter-box-bg flex grow flex-col items-center px-4 pt-5">
             <div className="flex w-full flex-col gap-5">
               {isLoading ? (
-                <p className="body-m text-gray-60 text-center">로딩중..</p>
+                <p className="body-m text-gray-60 text-center dark:text-white">로딩중..</p>
               ) : letterBox.length > 0 ? (
                 chunkBox(
                   letterBox.map((data: LetterBoxData, index) => (
