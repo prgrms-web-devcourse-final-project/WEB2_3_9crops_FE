@@ -28,14 +28,14 @@ const GoToLetterBox = () => {
   }, []);
 
   return (
-    <div className="absolute bottom-15 left-5 z-9 flex">
+    <div className="absolute bottom-[11%] left-5 z-9 flex">
       <div className="text-left">
         <p className="text-gray-60 body-r mb-1 ml-2">내 편지함</p>
         <Link to="/letter/box">
           <img
             src={arrivedCount ? goToLetterBoxNewLetters : goToLetterBox}
             alt="go to letter box"
-            className="w-[206.5px]"
+            className="w-[190px] sm:w-[210px] md:w-[240px]"
           />
         </Link>
       </div>

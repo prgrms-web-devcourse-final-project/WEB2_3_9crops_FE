@@ -16,7 +16,7 @@ const FloatingLetters = () => {
     lettersRef.current.forEach((letter, index) => {
       gsap.to(letter, {
         // x: Math.random() * 50 - 40,
-        y: Math.random() * 20 - 40 + 'vh', // 위아래 이동
+        y: Math.random() * 20 - 30 + 'vh', // 위아래 이동
         rotation: Math.random() * 50 - 25, // 회전
         duration: Math.random() * 3 + 2, // 지속 시간
         repeat: -1, // 무한 반복
@@ -35,7 +35,7 @@ const FloatingLetters = () => {
           ref={(el) => {
             if (el) lettersRef.current[index] = el;
           }}
-          className="absolute w-20 opacity-90"
+          className="absolute w-20 opacity-90 md:w-24"
           style={{
             left: `${index * 30 + 30}px`, // 편지지 간격
             top: '60vh',
