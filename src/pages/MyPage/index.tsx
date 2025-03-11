@@ -59,7 +59,11 @@ const MyPage = () => {
             setIsOpenModal(false);
             if (response?.status === 200) {
               logout();
-              alert('탈퇴가 완료 되었습니다.');
+              setToastActive({
+                toastType: 'Success',
+                title: '탈퇴가 완료되었습니다.',
+                time: 5,
+              });
             }
           }}
         />

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { getUnreadLettersCount } from '@/apis/unreadLetters';
+import useToastStore from '@/stores/toastStore';
 
 const UnreadLetterModal = () => {
   const [arrivedCount, setArrivedCount] = useState<number>(0);
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   useEffect(() => {
     const fetchUnreadCount = async () => {
@@ -12,6 +14,11 @@ const UnreadLetterModal = () => {
         setArrivedCount(result.data);
       } catch (error) {
         console.error('❌ 안 읽은 편지 개수를 불러오는 데 실패했습니다:', error);
+        setToastActive({
+          toastType: 'Error',
+          title: '서버 오류로 안 읽은 편지 개수를 불러오는 데에 실패했습니다.',
+          time: 5,
+        });
       }
     };
     fetchUnreadCount();
