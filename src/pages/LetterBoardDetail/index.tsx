@@ -23,6 +23,9 @@ const LetterBoardDetailPage = () => {
   const [isWriter, setIsWriter] = useState(false);
   const [postDetail, setPostDetail] = useState<SharePost>();
   const [activeReportModal, setActiveReportModal] = useState(false);
+  // const location = useLocation();
+  // const sharePostId: string = location.pathname.split('/')[3];
+  // const isShareLetterPreview = location.state?.isShareLetterPreview || false;
 
   const { id } = useParams();
   const myZipCode = useAuthStore.getState().zipCode;
