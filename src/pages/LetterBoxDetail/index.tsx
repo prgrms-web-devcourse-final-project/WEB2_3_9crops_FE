@@ -222,11 +222,11 @@ const LetterBoxDetailPage = () => {
             disabled={selected.length === 0}
             onClick={() => setIsOpenShareModal(true)}
           >
-            다음으로
+            공유하기
           </button>
         </div>
       )}
-      <MenuButton />
+      {!isShareMode && <MenuButton />}
     </>
   );
 };
