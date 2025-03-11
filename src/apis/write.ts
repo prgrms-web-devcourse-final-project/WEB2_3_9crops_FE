@@ -7,7 +7,9 @@ const postLetter = async (data: LetterRequest) => {
     if (!res) throw new Error('편지 전송과정에서 오류가 발생했습니다.');
     return res;
   } catch (error) {
+    const errorWithStatus = error as unknown as { status: number };
     console.error(error);
+    return errorWithStatus;
   }
 };
 
@@ -42,4 +44,17 @@ const postTemporarySave = async (data: TemporaryRequest) => {
   }
 };
 
-export { postLetter, postFirstReply, getPrevLetter, postTemporarySave };
+const postTemporaryLetter = async (data: TemporaryRequest) => {
+  console.log('Temporary request', data);
+  try {
+    const res = await client.post('/api/letters', data);
+    if (!res) throw new Error('편지 전송과정에서 오류가 발생했습니다.');
+    return res;
+  } catch (error) {
+    const errorWithStatus = error as unknown as { status: number };
+    console.error(error);
+    return errorWithStatus;
+  }
+};
+
+export { postLetter, postFirstReply, getPrevLetter, postTemporarySave, postTemporaryLetter };

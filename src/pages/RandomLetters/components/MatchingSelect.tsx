@@ -42,7 +42,7 @@ export default function MatchingSelect({
     <>
       <div className="mt-25 flex flex-col items-start justify-center">
         <button
-          className="flex gap-1"
+          className="mb-2 flex items-center gap-1"
           onClick={() => {
             handleGetRandomLetters(selectedCategory);
           }}

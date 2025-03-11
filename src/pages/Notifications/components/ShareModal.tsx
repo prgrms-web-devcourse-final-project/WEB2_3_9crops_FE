@@ -1,31 +1,31 @@
 import LetterWrapper from '@/components/LetterWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 import { useNavigate } from 'react-router';
-import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
-export default function SendingModal({
-  isOpenSendingModal,
-  setIsOpenSendingModal,
+export default function ShareModal({
+  isOpenShareModal,
+  setIsOpenShareModal,
 }: {
-  isOpenSendingModal: boolean;
-  setIsOpenSendingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenShareModal: boolean;
+  setIsOpenShareModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
-  if (!isOpenSendingModal) return null;
+  if (!isOpenShareModal) return null;
   const onClose = () => {
-    setIsOpenSendingModal(false);
+    setIsOpenShareModal(false);
   };
   return (
     <>
       <ModalOverlay closeOnOutsideClick onClose={onClose}>
         <LetterWrapper className="w-77">
           <div className="caption-r flex flex-col gap-2">
-            <h2 className="body-b mb-3">편지 도착</h2>
-            <span>편지는 작성된 시점으로 1시간 이후에 도착합니다.</span>
+            <h2 className="body-b mb-3">편지 공유</h2>
+            <span>따숨이님과의 편지를 공유하고 싶어합니다!</span>
             <div className="flex flex-col">
               <div className="flex items-center gap-1">
-                <span>남은시간은 홈 화면의 편지 도착 시간 버튼 </span>
-                <SendOutlinedIcon fontSize="small" />
+                <span>공유 요청은 홈 화면의 편지 공유 버튼 </span>
+                <ShareOutlinedIcon fontSize="small" />
               </div>
               <span>을 눌러 확인 가능합니다.</span>
             </div>

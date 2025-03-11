@@ -8,6 +8,7 @@ import NotificationItem from './components/NotificationItem';
 import WarningModal from './components/WarningModal';
 import SendingModal from './components/SendingModal';
 import useNotificationStore from '@/stores/notificationStore';
+import ShareModal from './components/ShareModal';
 
 const NotificationsPage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const NotificationsPage = () => {
 
   const [isOpenWarningModal, setIsOpenWarningModal] = useState(false);
   const [isOpenSendingModal, setIsOpenSendingModal] = useState(false);
+  const [isOpenShareModal, setIsOpenShareModal] = useState(false);
 
   const [reportContent, setReportContent] = useState<string>('');
 
@@ -35,7 +37,7 @@ const NotificationsPage = () => {
       if (typeof content === 'string') setReportContent(content);
     }
     if (alarmType === 'SHARE') {
-      navigate(`/board/letter/${content}`, { state: { isShareLetterPreview: true } });
+      setIsOpenShareModal(true);
     }
     if (alarmType === 'POSTED') {
       navigate(`/board/letter/${content}`);
@@ -99,6 +101,7 @@ const NotificationsPage = () => {
         isOpenSendingModal={isOpenSendingModal}
         setIsOpenSendingModal={setIsOpenSendingModal}
       />
+      <ShareModal isOpenShareModal={isOpenShareModal} setIsOpenShareModal={setIsOpenShareModal} />
       <main className="flex grow flex-col items-center px-5 pt-20 pb-9">
         <PageTitle className="mb-10">알림</PageTitle>
         <button

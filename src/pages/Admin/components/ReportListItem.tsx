@@ -64,14 +64,17 @@ export default function ReportListItem({
         <span className="admin-list-set basis-2/10">{`${formattedDate} ${formattedTime}`}</span>
         <span className="admin-list-set basis-3/10">{reasonList[report.reasonType]}</span>
       </div>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setModalOpen((cur) => !cur);
-        }}
-      >
-        <KebobMenuIcon className="h-5 w-5" />
-      </button>
+      {report.status === 'PENDING' && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setModalOpen((cur) => !cur);
+          }}
+        >
+          <KebobMenuIcon className="h-5 w-5" />
+        </button>
+      )}
+
       {modalOpen && <MenuModal modalContents={modalContents} setModalOpen={setModalOpen} />}
     </div>
   );
