@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import useThemeStore from './themeStore';
-import { useTheme } from '@emotion/react';
-
-// import { postLogout } from '@/apis/auth';
 
 interface AuthStore {
   isLoggedIn: boolean;
