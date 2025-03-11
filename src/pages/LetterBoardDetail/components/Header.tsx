@@ -14,6 +14,7 @@ interface HeaderProps {
   isWriter: boolean;
   onToggleLike: () => void;
   onOpenReportModal: () => void;
+  onDeleteLetter: () => void;
   isShareLetterPreview?: boolean;
 }
 
@@ -23,10 +24,10 @@ const Header = ({
   isWriter,
   onToggleLike,
   onOpenReportModal,
+  onDeleteLetter,
   isShareLetterPreview = false,
 }: HeaderProps) => {
   const navigate = useNavigate();
-
   return (
     <header className="fixed top-0 z-40 w-full max-w-150">
       <div className="flex h-16 items-center justify-between bg-white p-5">
@@ -46,8 +47,7 @@ const Header = ({
               <p className="body-l-m text-primary-1">{likeCount}</p>
             </div>
             {isWriter ? (
-              // TODO: 게시물 삭제
-              <DeleteIcon className="text-primary-1 h-6 w-6" />
+              <DeleteIcon className="text-primary-1 h-6 w-6" onClick={onDeleteLetter} />
             ) : (
               <button type="button" onClick={onOpenReportModal}>
                 <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
