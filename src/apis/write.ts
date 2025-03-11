@@ -7,7 +7,9 @@ const postLetter = async (data: LetterRequest) => {
     if (!res) throw new Error('편지 전송과정에서 오류가 발생했습니다.');
     return res;
   } catch (error) {
+    const errorWithStatus = error as unknown as { status: number };
     console.error(error);
+    return errorWithStatus;
   }
 };
 
@@ -49,7 +51,9 @@ const postTemporaryLetter = async (data: TemporaryRequest) => {
     if (!res) throw new Error('편지 전송과정에서 오류가 발생했습니다.');
     return res;
   } catch (error) {
+    const errorWithStatus = error as unknown as { status: number };
     console.error(error);
+    return errorWithStatus;
   }
 };
 

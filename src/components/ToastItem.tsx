@@ -21,7 +21,7 @@ export default function ToastItem({ toastObj, index }: { toastObj: ToastObj; ind
 
   const TOAST_POSITION = {
     Top: 'top-20',
-    Bottom: 'bottom-5',
+    Bottom: 'bottom-20',
   };
 
   const animation = `toast-blink ${toastObj.time}s ease-in-out forwards`;

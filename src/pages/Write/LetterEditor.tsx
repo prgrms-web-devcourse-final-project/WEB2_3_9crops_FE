@@ -43,6 +43,8 @@ export default function LetterEditor({
       setSend(true);
       setStep('category');
       setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
+    } else if (res?.status === 400) {
+      setToastActive({ title: '편지에 검열단어가 포함되어있습니다.', toastType: 'Error' });
     } else {
       setToastActive({ title: '전송중 오류가 발생했습니다.', toastType: 'Error' });
     }
@@ -56,6 +58,8 @@ export default function LetterEditor({
       setSend(true);
       setStep('category');
       setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
+    } else if (res?.status === 400) {
+      setToastActive({ title: '편지에 검열단어가 포함되어있습니다.', toastType: 'Error' });
     } else {
       setToastActive({ title: '전송중 오류가 발생했습니다.', toastType: 'Error' });
     }
@@ -82,6 +86,8 @@ export default function LetterEditor({
       setSend(true);
       setStep('category');
       setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
+    } else if (res?.status === 400) {
+      setToastActive({ title: '편지에 검열단어가 포함되어있습니다.', toastType: 'Error' });
     } else {
       setToastActive({ title: '전송중 오류가 발생했습니다.', toastType: 'Error' });
     }
