@@ -25,7 +25,6 @@ const Header = ({
   onToggleLike,
   onOpenReportModal,
   onDeleteLetter,
-  isShareLetterPreview = false,
 }: HeaderProps) => {
   const navigate = useNavigate();
   return (
@@ -34,27 +33,25 @@ const Header = ({
         <button onClick={() => navigate(-1)}>
           <ArrowLeftIcon className="text-primary-1 h-6 w-6" />
         </button>
-        {!isShareLetterPreview && (
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1">
-              <button type="button" onClick={onToggleLike}>
-                {isLike ? (
-                  <LikeFilledIcon className="text-primary-1 h-6 w-6" />
-                ) : (
-                  <LikeOutlinedIcon className="text-primary-1 h-6 w-6" />
-                )}
-              </button>
-              <p className="body-l-m text-primary-1">{likeCount}</p>
-            </div>
-            {isWriter ? (
-              <DeleteIcon className="text-primary-1 h-6 w-6" onClick={onDeleteLetter} />
-            ) : (
-              <button type="button" onClick={onOpenReportModal}>
-                <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
-              </button>
-            )}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <button type="button" onClick={onToggleLike}>
+              {isLike ? (
+                <LikeFilledIcon className="text-primary-1 h-6 w-6" />
+              ) : (
+                <LikeOutlinedIcon className="text-primary-1 h-6 w-6" />
+              )}
+            </button>
+            <p className="body-l-m text-primary-1">{likeCount}</p>
           </div>
-        )}
+          {isWriter ? (
+            <DeleteIcon className="text-primary-1 h-6 w-6" onClick={onDeleteLetter} />
+          ) : (
+            <button type="button" onClick={onOpenReportModal}>
+              <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
+            </button>
+          )}
+        </div>
       </div>
       <div className="h-4 w-full bg-gradient-to-b from-white to-white/0" />
     </header>

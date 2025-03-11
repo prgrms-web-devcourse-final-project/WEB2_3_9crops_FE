@@ -73,6 +73,9 @@ const LetterBoardDetailPage = () => {
       try {
         const data = await getSharePostDetail(postId);
         setPostDetail(data);
+        if (myZipCode === data.zipCode || !data.zipCode) {
+          setIsWriter(true);
+        }
       } catch (error) {
         console.error('❌ 공유 게시글 상세 조회에 실패했습니다.', error);
       }
@@ -85,13 +88,6 @@ const LetterBoardDetailPage = () => {
         console.log('✅ 편지 좋아요 갯수:', response);
         setLikeCount(response.likeCount);
         setIsLike(response.liked);
-        console.log('myZip', myZipCode);
-        console.log('responseZip', response.zipCode);
-        console.log('responseZip', response);
-
-        if (myZipCode === response.zipCode || !response.zipCode) {
-          setIsWriter(true);
-        }
       } catch (error) {
         console.error('❌ 편지 좋아요 갯수를 가져오는 중 에러가 발생했습니다', error);
         throw new Error('편지 좋아요 갯수 가져오기 실패');

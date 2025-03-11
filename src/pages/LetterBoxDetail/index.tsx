@@ -68,7 +68,11 @@ const LetterBoxDetailPage = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const disconnectMutation = useMutation({
-    mutationFn: async () => await postMailboxDisconnect(userInfo.oppositeId),
+    mutationFn: async () => {
+      console.log('userInfo', userInfo, userInfo.id);
+      const response = await postMailboxDisconnect(userInfo.id);
+      if (!response) throw new Error(`no response`);
+    },
     onSuccess: () => {
       navigate(-1);
       setToastActive({
