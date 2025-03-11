@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { getBadWords, patchBadWordsUsed } from '@/apis/admin';
-import { AddIcon, AlarmIcon, CancelIcon } from '@/assets/icons';
+import { getBadWords } from '@/apis/admin';
+import { AddIcon, AlarmIcon } from '@/assets/icons';
 
 import AddInputButton from './components/AddInputButton';
 import AdminPageTitle from './components/AdminPageTitle';
