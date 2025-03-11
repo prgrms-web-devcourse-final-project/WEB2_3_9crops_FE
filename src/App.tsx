@@ -9,6 +9,7 @@ import FilteredLetterManage from './pages/Admin/FilteredLetter';
 import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
 import AdminRollingPaper from './pages/Admin/RollingPaper';
+import AdminRoute from './layouts/AdminRoute';
 import AuthCallbackPage from './pages/Auth';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
@@ -28,12 +29,10 @@ import RollingPaperPage from './pages/RollingPaper';
 import WritePage from './pages/Write';
 import ShareApprovalPage from './pages/Share';
 import useThemeStore from './stores/themeStore';
-import { useServerSentEvents } from './hooks/useServerSentEvents';
 
 const App = () => {
   const theme = useThemeStore((state) => state.theme);
   useViewport();
-  useServerSentEvents();
 
   const initializeTheme = () => {
     if (theme === 'dark') {
@@ -81,7 +80,7 @@ const App = () => {
         </Route>
       </Route>
 
-      <Route element={<PrivateRoute />}>
+      <Route element={<AdminRoute />}>
         <Route path="admin" element={<AdminPage />}>
           <Route path="report" element={<ReportManage />} />
           <Route path="badwords" element={<FilteringManage />} />

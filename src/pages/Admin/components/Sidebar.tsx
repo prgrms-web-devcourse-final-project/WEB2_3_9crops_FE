@@ -4,9 +4,11 @@ import { twMerge } from 'tailwind-merge';
 import { AlarmIcon, ArrowDownIcon } from '@/assets/icons';
 
 import { ADMIN_MENU_LIST } from '../constants';
+import useAuthStore from '@/stores/authStore';
 
 export default function Sidebar() {
   const location = useLocation();
+  const logout = useAuthStore((state) => state.logout);
 
   return (
     <section className="border-gray-10 flex w-65 shrink-0 flex-col border-r">
@@ -16,7 +18,7 @@ export default function Sidebar() {
       </h1>
       <section className="mt-2 flex flex-col px-5 py-4">
         <h2 className="body-l-b py-2">현재 로그인 계정</h2>
-        <p className="body-l-r py-2">{'admin123@test.com'}</p>
+        <p className="body-l-r py-2">{'wl990@naver.com'}</p>
       </section>
       <hr className="border-gray-20 mx-2.5" />
       <section className="flex flex-col py-5">
@@ -54,7 +56,9 @@ export default function Sidebar() {
       </section>
       <button className="mt-auto flex w-full items-center gap-3 px-5 py-3 hover:bg-amber-100">
         <AlarmIcon className="text-gray-80 h-5 w-5" />
-        <span className="text-gray-80 body-l-m">로그아웃</span>
+        <span className="text-gray-80 body-l-m" onClick={logout}>
+          로그아웃
+        </span>
       </button>
     </section>
   );
