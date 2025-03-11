@@ -129,8 +129,8 @@ const RollingPaperPage = () => {
           )}
         </section>
         <WriteCommentButton rollingPaperId={id} />
+        <MenuButton />
       </main>
-      <MenuButton />
       <BackgroundBottom />
     </>
   );
