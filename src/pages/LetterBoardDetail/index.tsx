@@ -16,6 +16,7 @@ import Letter from './components/Letter';
 import { useNavigate, useParams } from 'react-router';
 import useAuthStore from '@/stores/authStore';
 import useToastStore from '@/stores/toastStore';
+import { useQueryClient } from '@tanstack/react-query';
 
 const LetterBoardDetailPage = () => {
   const [likeCount, setLikeCount] = useState(0);
@@ -27,13 +28,14 @@ const LetterBoardDetailPage = () => {
   const { id } = useParams();
   const myZipCode = useAuthStore.getState().zipCode;
   const setToastActive = useToastStore((state) => state.setToastActive);
+
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const postLike = async (sharePostId: string) => {
     try {
       const response = await postSharePostLike(sharePostId);
       if (!response) throw new Error('error while fetching like count');
-      console.log('✅ 편지 좋아요 추가됨:', response);
     } catch (error) {
       console.error('❌ 편지 좋아요 추가 중 에러가 발생했습니다', error);
     }
@@ -53,6 +55,7 @@ const LetterBoardDetailPage = () => {
       if (id) {
         const response = await deleteSharePost(id);
         if (!response) throw new Error('deleteSharePost: no response');
+        queryClient.invalidateQueries({ queryKey: ['sharePostList'] });
         navigate(-1);
         setToastActive({
           toastType: 'Success',
