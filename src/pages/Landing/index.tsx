@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import LandingImg from '@/assets/images/landing.png';
-import LandingImgDark from '@/assets/images/landing-dark.png';
+import LandingImgDark from '@/assets/images/landing-dark.webp';
 import useAuthStore from '@/stores/authStore';
 import useThemeStore from '@/stores/themeStore';
 

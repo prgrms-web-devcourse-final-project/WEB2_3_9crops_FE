@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 
 import FieldImg from '@/assets/images/home-left-mountain.png';
-import FieldImgDark from '@/assets/images/home-left-mountain-dark.png';
+import FieldImgDark from '@/assets/images/home-left-mountain-dark.webp';
 
 import BlurImg from '@/assets/images/landing-blur.png';
 import EnvelopeImg from '@/assets/images/postoffice-letter.png';

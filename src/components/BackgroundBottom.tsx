@@ -1,5 +1,5 @@
 import BgItem from '@/assets/images/field-4.png';
-import BgItemDark from '@/assets/images/field-4-dark.png';
+import BgItemDark from '@/assets/images/field-4-dark.webp';
 
 import BackgroundImageWrapper from './BackgroundImageWrapper';
 import useThemeStore from '@/stores/themeStore';
