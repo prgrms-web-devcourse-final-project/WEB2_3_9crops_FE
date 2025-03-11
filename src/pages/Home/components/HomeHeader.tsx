@@ -14,9 +14,9 @@ const HomeHeader = () => {
     <header className="fixed top-0 z-40 flex h-16 w-full max-w-150 items-center justify-end p-5">
       <div className="flex items-center gap-3">
         {theme === 'light' ? (
-          <FlareRoundedIcon className="h-6 w-6 text-white" onClick={toggleTheme} />
-        ) : (
           <DarkModeOutlinedIcon className="h-6 w-6 text-white" onClick={toggleTheme} />
+        ) : (
+          <FlareRoundedIcon className="h-6 w-6 text-white" onClick={toggleTheme} />
         )}
         <NotificationButton />
         <Link to="/mypage">
