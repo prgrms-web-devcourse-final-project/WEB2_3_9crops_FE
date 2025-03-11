@@ -8,6 +8,8 @@ import { ShareProposal } from '@/apis/share';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
+import useToastStore from '@/stores/toastStore';
+
 interface ShowShareAccessModalProps {
   children?: React.ReactNode;
   onClose: () => void;
@@ -18,6 +20,8 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
 
   const [shareProposals, setShareProposals] = useState<ShareProposal[]>([]);
 
+  const setToastActive = useToastStore((state) => state.setToastActive);
+
   useEffect(() => {
     getShareProposalList()
       .then((data) => {
@@ -25,6 +29,11 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
       })
       .catch((error) => {
         console.error('❌ 공유 요청 목록을 불러오는 데 실패했습니다.', error);
+        setToastActive({
+          toastType: 'Error',
+          title: '서버 오류로 공유 요청 목록을 불러오는 데에 실패했습니다.',
+          time: 5,
+        });
       });
   }, []);
 
@@ -36,6 +45,11 @@ const ShowShareAccessModal = ({ onClose }: ShowShareAccessModalProps) => {
       });
     } catch (error) {
       console.error('❌ 게시글 상세 페이지로 이동하는 데에 실패했습니다.', error);
+      setToastActive({
+        toastType: 'Error',
+        title: '서버 오류로 게시글 상세 페이지로 이동하는 데에 실패했습니다.',
+        time: 5,
+      });
     }
   };
 

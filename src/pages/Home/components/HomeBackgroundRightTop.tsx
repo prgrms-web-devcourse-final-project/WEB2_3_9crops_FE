@@ -10,7 +10,7 @@ const HomeBackgroundRightTop = () => {
   return (
     <BackgroundImageWrapper
       as="div"
-      className="absolute bottom-0 z-8 h-[calc(var(--vh)*32)] w-full min-w-[760px] -translate-x-1/4 overflow-hidden"
+      className="absolute bottom-0 z-8 h-[35%] w-full min-w-[760px] -translate-x-1/4 overflow-hidden md:w-[1200px]"
       imageUrl={theme === 'light' ? homeRightMountainTop : homeRightMountainTopDark}
     />
   );
