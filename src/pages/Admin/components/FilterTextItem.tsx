@@ -1,7 +1,8 @@
-import { patchBadWordsUsed } from '@/apis/admin';
+import { deleteBadWords, patchBadWordsUsed } from '@/apis/admin';
 import { DeleteIcon, PencilIcon, ToggleOff, ToggleOn } from '@/assets/icons';
 import { useState } from 'react';
 import PatchInput from './PatchInput';
+import { twMerge } from 'tailwind-merge';
 
 export default function FilterTextItem({
   badWord,
@@ -12,8 +13,47 @@ export default function FilterTextItem({
 }) {
   const [patchInputShow, setPatchInputShow] = useState<boolean>(false);
 
+  const handleDeleteBadWords = async (id: string) => {
+    const res = await deleteBadWords(id);
+    if (res?.status === 200) {
+      setBadWords((cur) =>
+        cur.filter((e) => {
+          if (e.id === id) {
+            return null;
+          }
+          return e;
+        }),
+      );
+    }
+  };
+
+  const handlePatchBadWordsUsed = async (id: string, isUsed: string) => {
+    const res = await patchBadWordsUsed(id, isUsed);
+    if (res?.status === 200) {
+      setBadWords((cur) =>
+        cur.map((e) => {
+          if (e.id === id) {
+            let reverseIsUsed: string;
+            if (e.isUsed === 'true') {
+              reverseIsUsed = 'false';
+            } else {
+              reverseIsUsed = 'true';
+            }
+            return { ...e, isUsed: reverseIsUsed };
+          }
+          return e;
+        }),
+      );
+    }
+  };
+
+  const buttonStyle = twMerge(
+    `flex items-center gap-1.5 rounded-2xl px-4 py-1.5`,
+    badWord.isUsed === 'true' ? 'bg-primary-3' : 'bg-[#c1c1c1]',
+  );
+
   return (
-    <span className="bg-primary-3 flex items-center gap-1.5 rounded-2xl px-4 py-1.5">
+    <span className={buttonStyle}>
       {patchInputShow ? (
         <PatchInput
           badWordId={badWord.id}
@@ -28,12 +68,20 @@ export default function FilterTextItem({
         <PencilIcon className="h-4 w-4" />
       </button>
 
-      <button onClick={() => {}}>
+      <button
+        onClick={() => {
+          handleDeleteBadWords(badWord.id);
+        }}
+      >
         <DeleteIcon className="h-5 w-5" />
       </button>
 
-      <button onClick={() => patchBadWordsUsed(badWord.id)}>
-        {true ? <ToggleOn className="h-5 w-5" /> : <ToggleOff className="h-5 w-5" />}
+      <button onClick={() => handlePatchBadWordsUsed(badWord.id, badWord.isUsed)}>
+        {badWord.isUsed === 'true' ? (
+          <ToggleOn className="h-5 w-5" />
+        ) : (
+          <ToggleOff className="h-5 w-5" />
+        )}
       </button>
     </span>
   );

@@ -63,11 +63,12 @@ const postBadWords = async (badWordsRequest: BadWords) => {
   }
 };
 
-// 내 상상대로 만든 필터링 단어 취소 버튼
-const patchBadWordsUsed = async (badWordId: string) => {
+const patchBadWordsUsed = async (badWordId: string, isUsed: string) => {
+  const reverseIsUsed = isUsed === 'true' ? false : true;
+
   try {
-    const res = await client.patch(`/api/bad-words/${badWordId}/status`, { isUsed: false });
-    if (!res) throw new Error('검열 단어 삭제 도중 에러가 발생했습니다.');
+    const res = await client.patch(`/api/bad-words/${badWordId}/status`, { isUsed: reverseIsUsed });
+    if (!res) throw new Error('검열 활성화/비활성화 도중 에러가 발생했습니다.');
     console.log(res);
     return res;
   } catch (error) {
@@ -78,7 +79,18 @@ const patchBadWordsUsed = async (badWordId: string) => {
 const patchBadWords = async (badWordId: string, word: string) => {
   try {
     const res = await client.patch(`/api/bad-words/${badWordId}`, { word: word });
-    if (!res) throw new Error('검열 단어 삭제 도중 에러가 발생했습니다.');
+    if (!res) throw new Error('금칙어 수정중 에러가 발생했습니다.');
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const deleteBadWords = async (id: string) => {
+  try {
+    const res = await client.delete(`/api/bad-words/${id}`);
+    if (!res) throw new Error('금칙어 삭제 도중 에러가 발생했습니다.');
     console.log(res);
     return res;
   } catch (error) {
@@ -94,4 +106,5 @@ export {
   postBadWords,
   patchBadWordsUsed,
   patchBadWords,
+  deleteBadWords,
 };

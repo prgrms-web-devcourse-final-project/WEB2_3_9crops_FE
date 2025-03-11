@@ -23,7 +23,7 @@ export default function AddInputButton({
     if (inputText.word === '') return setAddInputShow(false);
     const res = await postBadWords(inputText);
     if (res?.status === 200) {
-      setBadWords((cur) => [...cur, res.data.data]);
+      setBadWords((cur) => [...cur, { ...res.data.data, isUsed: `${res.data.data.isUsed}` }]);
       setAddInputShow(false);
     }
   };
