@@ -126,7 +126,7 @@ const LetterBoardDetailPage = () => {
           <p className="body-b mb-6 px-5">FROM. {postDetail?.zipCode}</p>
           <p
             className={twMerge(
-              'body-r bg-[repeating-linear-gradient(transparent,transparent_25px,#ffe6e3_26px)] px-5 whitespace-pre-wrap',
+              'body-r bg-[repeating-linear-gradient(transparent,transparent_25px,#ffe6e3_26px)] px-5 break-all whitespace-pre-wrap',
               'leading-[26px]',
             )}
           >
