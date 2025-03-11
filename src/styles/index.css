@@ -6,3 +6,5 @@
 @import './utilities.css';
 @import './fonts.css';
 @import './animations.css';
+
+@custom-variant dark (&:where(.dark, .dark *));

@@ -171,7 +171,7 @@ const LetterBoxDetailPage = () => {
             ? '게시판에 올릴 편지를 선택해주세요'
             : `${userInfo.zipCode}님과 주고 받은 편지`}
         </PageTitle>
-        <section className="text-gray-60 body-sb mt-18 mb-2 flex w-full justify-between">
+        <section className="text-gray-60 body-sb mt-18 mb-2 flex w-full justify-between dark:text-white">
           <p>주고 받은 편지 {mailLists.length}</p>
           <div className="flex items-center gap-0.5 underline">
             {!userInfo.isClosed && (
@@ -207,7 +207,7 @@ const LetterBoxDetailPage = () => {
         {!isShareMode && !userInfo.isClosed && !isLoading && (
           <button
             type="button"
-            className="body-sb text-gray-60 mt-auto text-left underline"
+            className="body-sb text-gray-60 mt-auto text-left underline dark:text-white"
             onClick={() => setIsOpenDisConnectModal(true)}
           >
             더 이상 편지하지 않을래요
