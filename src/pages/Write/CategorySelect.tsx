@@ -29,10 +29,13 @@ export default function CategorySelect({
     if (res?.status === 200) {
       console.log(letterRequest);
       setSend(true);
-    } else {
+      setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
+    } else if (res?.status === 400) {
       // 일단 에러 발생하면 무조건 검열단어라고 토스트를 띄웠는데 후에 에러 처리 수정해야함
-      setToastActive({ title: '편지에 검열 단어가 포함되어있습니다. ', toastType: 'Error' });
+      setToastActive({ title: '편지에 검열 단어가 포함되어있습니다.', toastType: 'Error' });
       setStep('edit');
+    } else {
+      setToastActive({ title: '편지 전송과정에 오류가 발생했습니다.', toastType: 'Error' });
     }
   };
 
@@ -73,7 +76,7 @@ export default function CategorySelect({
         {send && !isReply && (
           <div className="mt-25 flex w-full max-w-[300px] flex-col items-center gap-5">
             <ResultLetterAnimation />
-            <span className="animate-show-text body-sb text-gray-60 opacity-0">
+            <span className="animate-show-text body-sb text-gray-60 opacity-0 dark:text-white">
               두근두근! 답장이 언제 올까요?
             </span>
           </div>

@@ -25,6 +25,8 @@ import SnowIcon from './snow.svg?react';
 import StampIcon from './stamp.svg?react';
 import ThermostatIcon from './thermostat.svg?react';
 import WarmIcon from './warm.svg?react';
+import ToggleOff from './toggle-off.svg?react';
+import ToggleOn from './toggle-on.svg?react';
 
 export {
   AddIcon,
@@ -54,4 +56,6 @@ export {
   DeleteIcon,
   CancelIcon,
   PencilIcon,
+  ToggleOff,
+  ToggleOn,
 };

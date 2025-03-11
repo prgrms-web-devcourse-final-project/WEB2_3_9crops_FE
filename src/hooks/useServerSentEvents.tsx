@@ -18,7 +18,6 @@ export const useServerSentEvents = () => {
   const navigate = useNavigate();
   // const recallCountRef = useRef(1);
 
-
   const accessToken = useAuthStore((state) => state.accessToken);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const sourceRef = useRef<EventSourcePolyfill | null>(null);
@@ -93,7 +92,6 @@ export const useServerSentEvents = () => {
         };
       } catch (error) {
         console.log('catch문에서 에러 발생', error);
-
       }
     };
 

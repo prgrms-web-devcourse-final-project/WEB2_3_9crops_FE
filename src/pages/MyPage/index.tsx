@@ -59,7 +59,11 @@ const MyPage = () => {
             setIsOpenModal(false);
             if (response?.status === 200) {
               logout();
-              alert('탈퇴가 완료 되었습니다.');
+              setToastActive({
+                toastType: 'Success',
+                title: '탈퇴가 완료되었습니다.',
+                time: 5,
+              });
             }
           }}
         />
@@ -70,6 +74,11 @@ const MyPage = () => {
           <article className="bg-accent-1 relative w-77 overflow-hidden rounded-sm p-6">
             <div className="absolute inset-0 h-full w-full bg-white/90 blur-[25px]" />
             <div className="relative">
+              <h2 className="body-sb mb-1.5 text-gray-100">경고 안내</h2>
+              <p className="caption-r mb-5 text-black">
+                따사로운 서비스 이용을 위해, 부적절하다고 판단되는 편지는 반려하고 있어요. 서로를
+                존중하는 따뜻한 공간을 만들기 위해 협조 부탁드립니다.
+              </p>
               <h2 className="body-sb mb-1.5 text-gray-100">경고 규칙</h2>
               <p className="caption-r text-black">3회 경고: 서비스 이용 불가능</p>
             </div>
@@ -90,8 +99,8 @@ const MyPage = () => {
         </h1>
         <section>
           <h2 className="mb-2 flex justify-between">
-            <p className="body-sb text-gray-60">{description}</p>
-            <p className="body-sb text-accent-1">{data.temperature}도</p>
+            <p className="body-sb text-gray-60 dark:text-white">{description}</p>
+            <p className="body-sb text-accent-2">{data.temperature}도</p>
           </h2>
           <div className="h-4 w-full rounded-full bg-white">
             <div
@@ -102,26 +111,26 @@ const MyPage = () => {
         </section>
         <section className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
-            <h3 className="text-gray-40 body-sb">활동</h3>
+            <h3 className="text-gray-40 body-sb dark:text-gray-10">활동</h3>
             <Link to="board">
-              <p className="body-sb text-gray-100">내가 올린 게시물</p>
+              <p className="body-sb text-gray-100 dark:text-white">내가 올린 게시물</p>
             </Link>
           </div>
           <div className="flex flex-col gap-2">
-            <h3 className="text-gray-40 body-sb">고객 센터</h3>
+            <h3 className="text-gray-40 body-sb dark:text-gray-10">고객 센터</h3>
             <a
               href="https://forms.gle/ZagrTSZzJhogudSY8"
               target="_blank"
-              className="body-sb text-gray-100"
+              className="body-sb text-gray-100 dark:text-white"
             >
               운영자에게 문의하기
             </a>
           </div>
           <div className="flex flex-col gap-2">
-            <h3 className="text-gray-40 body-sb">계정</h3>
+            <h3 className="text-gray-40 body-sb dark:text-gray-10">계정</h3>
             <div className="flex justify-between">
-              <p className="body-sb text-gray-100">로그인 정보</p>
-              <p className="body-r text-gray-60">
+              <p className="body-sb text-gray-100 dark:text-white">로그인 정보</p>
+              <p className="body-r text-gray-60 dark:text-white">
                 <span className="mr-2">{data.social}</span>
                 <span>{data.email}</span>
               </p>
@@ -132,14 +141,14 @@ const MyPage = () => {
                 setIsOpenWarningModal(true);
               }}
             >
-              <p className="body-sb text-gray-100">경고 횟수</p>
-              <p className="body-r text-gray-60">
+              <p className="body-sb text-gray-100 dark:text-white">경고 횟수</p>
+              <p className="body-r text-gray-60 dark:text-white">
                 <span>{data.warningCount}회</span>
               </p>
             </div>
 
             <button
-              className="body-sb self-start text-gray-100"
+              className="body-sb self-start text-gray-100 dark:text-white"
               onClick={() => {
                 logout();
               }}
@@ -151,7 +160,7 @@ const MyPage = () => {
         </section>
         <button
           type="button"
-          className="text-gray-60 body-m mt-auto self-start underline"
+          className="text-gray-60 body-m mt-auto self-start underline dark:text-white"
           onClick={async () => {
             setIsOpenModal(true);
           }}

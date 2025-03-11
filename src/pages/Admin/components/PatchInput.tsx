@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { postBadWords } from '@/apis/admin';
+import { patchBadWords } from '@/apis/admin';
 import { AddIcon } from '@/assets/icons';
 
-export default function AddInputButton({
-  setAddInputShow,
+export default function PatchInput({
+  badWordId,
+  setPatchInputShow,
   setBadWords,
 }: {
-  setAddInputShow: React.Dispatch<React.SetStateAction<boolean>>;
+  badWordId: string;
+  setPatchInputShow: React.Dispatch<React.SetStateAction<boolean>>;
   setBadWords: React.Dispatch<React.SetStateAction<BadWordsData[]>>;
 }) {
   const [inputText, setInputText] = useState<BadWords>({ word: '' });
@@ -19,12 +21,20 @@ export default function AddInputButton({
     target.style.width = `${target.scrollWidth}px`;
   };
 
-  const handlePostBadWords = async () => {
-    if (inputText.word === '') return setAddInputShow(false);
-    const res = await postBadWords(inputText);
+  const handlePatchBadWords = async () => {
+    if (inputText.word === '') return setPatchInputShow(false);
+    const res = await patchBadWords(badWordId, inputText.word);
     if (res?.status === 200) {
-      setBadWords((cur) => [...cur, res.data.data]);
-      setAddInputShow(false);
+      setBadWords((cur) =>
+        cur.map((e) => {
+          if (e.id === badWordId) {
+            return { ...e, word: inputText.word };
+          }
+          return e;
+        }),
+      );
+      console.log('일단 수정했음 api 새로 업데이트되면 바인딩');
+      setPatchInputShow(false);
     }
   };
 
@@ -36,7 +46,7 @@ export default function AddInputButton({
   }, []);
 
   return (
-    <span className="flex items-center gap-1.5 rounded-2xl bg-[#C1C1C1] px-4 py-1.5">
+    <>
       <input
         ref={inputRef}
         type="text"
@@ -49,17 +59,17 @@ export default function AddInputButton({
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            handlePostBadWords();
+            handlePatchBadWords();
           }
         }}
       />
       <button
         onClick={() => {
-          handlePostBadWords();
+          handlePatchBadWords();
         }}
       >
         <AddIcon className="h-4 w-4" />
       </button>
-    </span>
+    </>
   );
 }

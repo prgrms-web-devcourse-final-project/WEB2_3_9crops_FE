@@ -27,9 +27,21 @@ import RandomLettersPage from './pages/RandomLetters';
 import RollingPaperPage from './pages/RollingPaper';
 import WritePage from './pages/Write';
 import ShareApprovalPage from './pages/Share';
+import useThemeStore from './stores/themeStore';
 
 const App = () => {
+  const theme = useThemeStore((state) => state.theme);
   useViewport();
+
+  const initializeTheme = () => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  initializeTheme();
 
   return (
     <Routes>

@@ -28,7 +28,7 @@ export default function ReportManage() {
     reportType: null,
     status: 'PENDING',
     page: '1',
-    size: '1',
+    size: '8',
   });
 
   const handleGetReports = async (reportQueryString: ReportQueryString) => {

@@ -5,6 +5,7 @@ import { deleteRandomLetterMatching } from '@/apis/randomLetter';
 import ResultLetter from '@/components/ResultLetter';
 import { formatNumber } from '@/utils/formatNumber';
 import { timeFormatter } from '@/utils/timeFormatter';
+import useToastStore from '@/stores/toastStore';
 
 export default function Matched({
   matchedLetter,
@@ -18,6 +19,7 @@ export default function Matched({
   setOpenSelectedDetailModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
@@ -43,7 +45,7 @@ export default function Matched({
   const handleDeleteRandomLetterMatching = async () => {
     const res = await deleteRandomLetterMatching();
     if (res?.status === 200) {
-      alert('매칭이 취소되었습니다.');
+      setToastActive({ title: '매칭이 취소되었습니다.', toastType: 'Success' });
       navigate(-1);
     }
   };

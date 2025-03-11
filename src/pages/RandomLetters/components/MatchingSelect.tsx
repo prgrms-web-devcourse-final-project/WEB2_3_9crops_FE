@@ -42,13 +42,13 @@ export default function MatchingSelect({
     <>
       <div className="mt-25 flex flex-col items-start justify-center">
         <button
-          className="flex gap-1"
+          className="mb-2 flex items-center gap-1"
           onClick={() => {
             handleGetRandomLetters(selectedCategory);
           }}
         >
           <img src={RestartIcon} alt="재시작 아이콘" />
-          <span className="caption-sb text-gray-30" aria-label="리스트 새로고침 버튼">
+          <span className="caption-sb text-gray-30 dark:text-white" aria-label="리스트 새로고침 버튼">
             리스트 새로고침
           </span>
         </button>

@@ -95,13 +95,13 @@ const LetterBoxDetailPage = () => {
       setShareComment('');
       setToastActive({
         toastType: 'Success',
-        title: '공유 완료 되었습니다.',
+        title: '공유 요청이 완료 되었습니다.',
       });
     },
     onError: (error) => {
       setToastActive({
         toastType: 'Error',
-        title: '공유가 실패했습니다. 잠시 후에 다시 시도해주세요.',
+        title: '공유 요청이 실패했습니다. 잠시 후에 다시 시도해주세요.',
       });
       console.error(error);
     },
@@ -171,7 +171,7 @@ const LetterBoxDetailPage = () => {
             ? '게시판에 올릴 편지를 선택해주세요'
             : `${userInfo.zipCode}님과 주고 받은 편지`}
         </PageTitle>
-        <section className="text-gray-60 body-sb mt-18 mb-2 flex w-full justify-between">
+        <section className="text-gray-60 body-sb mt-18 mb-2 flex w-full justify-between dark:text-white">
           <p>주고 받은 편지 {mailLists.length}</p>
           <div className="flex items-center gap-0.5 underline">
             {!userInfo.isClosed && (
@@ -207,7 +207,7 @@ const LetterBoxDetailPage = () => {
         {!isShareMode && !userInfo.isClosed && !isLoading && (
           <button
             type="button"
-            className="body-sb text-gray-60 mt-auto text-left underline"
+            className="body-sb text-gray-60 mt-auto text-left underline dark:text-white"
             onClick={() => setIsOpenDisConnectModal(true)}
           >
             더 이상 편지하지 않을래요
@@ -222,11 +222,11 @@ const LetterBoxDetailPage = () => {
             disabled={selected.length === 0}
             onClick={() => setIsOpenShareModal(true)}
           >
-            다음으로
+            공유하기
           </button>
         </div>
       )}
-      <MenuButton />
+      {!isShareMode && <MenuButton />}
     </>
   );
 };
