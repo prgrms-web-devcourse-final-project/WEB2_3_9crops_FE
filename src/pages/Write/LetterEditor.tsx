@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
-import { postFirstReply, postLetter, postTemporarySave } from '@/apis/write';
+import { postFirstReply, postLetter, postTemporaryLetter, postTemporarySave } from '@/apis/write';
 import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/ConfirmModal';
 import WritePageButton from '@/pages/Write/components/WritePageButton';
@@ -42,6 +42,7 @@ export default function LetterEditor({
     if (res?.status === 200) {
       setSend(true);
       setStep('category');
+      setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
     } else {
       setToastActive({ title: '전송중 오류가 발생했습니다.', toastType: 'Error' });
     }
@@ -54,6 +55,33 @@ export default function LetterEditor({
       console.log(prevLetter);
       setSend(true);
       setStep('category');
+      setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
+    } else {
+      setToastActive({ title: '전송중 오류가 발생했습니다.', toastType: 'Error' });
+    }
+  };
+
+  const handlePostTemporarySave = async () => {
+    if (!letterId) return alert('임시저장중 오류 발생');
+    const requestLetterId = location.state?.draft.letterId || null;
+    // MEMO : 임시저장 전송 방식 : 최초임시저장은 letterId : null, 임시저장 업데이트는 letterId : location state로 받아오는 임시저장편지의 letterId값
+    const temporaryRequest: TemporaryRequest = { ...letterRequest, letterId: requestLetterId };
+    const res = await postTemporarySave(temporaryRequest);
+    if (res?.status === 200) {
+      console.log(res);
+      setToastActive({ title: '임시저장을 완료했습니다.', toastType: 'Success' });
+      navigate('/');
+    } else {
+      setToastActive({ title: '임시저장에 실패했습니다.', toastType: 'Error' });
+    }
+  };
+
+  const handleTemporaryLetter = async (temporaryRequest: TemporaryRequest) => {
+    const res = await postTemporaryLetter(temporaryRequest);
+    if (res?.status === 200) {
+      setSend(true);
+      setStep('category');
+      setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
     } else {
       setToastActive({ title: '전송중 오류가 발생했습니다.', toastType: 'Error' });
     }
@@ -76,21 +104,6 @@ export default function LetterEditor({
       });
     }
   }, [prevLetter, setLetterRequest, isReply]);
-
-  const handlePostTemporarySave = async () => {
-    if (!letterId) return alert('임시저장중 오류 발생');
-    const requestLetterId = location.state?.draft.letterId || null;
-    // MEMO : 임시저장 전송 방식 : 최초임시저장은 letterId : null, 임시저장 업데이트는 letterId : location state로 받아오는 임시저장편지의 letterId값
-    const temporaryRequest: TemporaryRequest = { ...letterRequest, letterId: requestLetterId };
-    const res = await postTemporarySave(temporaryRequest);
-    if (res?.status === 200) {
-      console.log(res);
-      setToastActive({ title: '임시저장을 완료했습니다.', toastType: 'Success' });
-      navigate('/');
-    } else {
-      setToastActive({ title: '임시저장에 실패했습니다.', toastType: 'Error' });
-    }
-  };
 
   return (
     <div className="flex grow flex-col pb-15">
@@ -128,7 +141,15 @@ export default function LetterEditor({
                     console.log(firstReplyRequest);
                     handlePostFirstReply(firstReplyRequest);
                   } else {
-                    handlePostReply(letterRequest);
+                    if (location.state?.isDraft) {
+                      const temporaryRequest: TemporaryRequest = {
+                        ...letterRequest,
+                        letterId: location.state.draft.letterId,
+                      };
+                      handleTemporaryLetter(temporaryRequest);
+                    } else {
+                      handlePostReply(letterRequest);
+                    }
                   }
                   queryClient.invalidateQueries({ queryKey: ['mailBox'] });
                   queryClient.invalidateQueries({ queryKey: ['mailBoxDetail'] });
