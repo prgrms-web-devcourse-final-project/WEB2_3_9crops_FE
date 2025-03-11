@@ -75,6 +75,7 @@ interface BadWords {
 
 interface BadWordsData extends BadWords {
   id: string;
+  isUsed: string;
 }
 
 //
