@@ -11,17 +11,17 @@ export default function PrivateRoute() {
   const navigate = useNavigate();
   const [shouldRender, setShouldRender] = useState(false);
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     navigate('/login', { replace: true });
-  //   } else {
-  //     setShouldRender(true);
-  //   }
-  // }, [isLoggedIn, navigate]);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login', { replace: true });
+    } else {
+      setShouldRender(true);
+    }
+  }, [isLoggedIn, navigate]);
 
-  // if (!shouldRender) {
-  //   return null;
-  // }
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <>

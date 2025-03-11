@@ -19,11 +19,11 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useViewport();
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     navigate('/login');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, []);
 
   return (
     <div className="relative h-[calc(var(--vh)*100)] w-full overflow-hidden">
