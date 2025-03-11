@@ -95,13 +95,13 @@ const LetterBoxDetailPage = () => {
       setShareComment('');
       setToastActive({
         toastType: 'Success',
-        title: '공유 완료 되었습니다.',
+        title: '공유 요청이 완료 되었습니다.',
       });
     },
     onError: (error) => {
       setToastActive({
         toastType: 'Error',
-        title: '공유가 실패했습니다. 잠시 후에 다시 시도해주세요.',
+        title: '공유 요청이 실패했습니다. 잠시 후에 다시 시도해주세요.',
       });
       console.error(error);
     },

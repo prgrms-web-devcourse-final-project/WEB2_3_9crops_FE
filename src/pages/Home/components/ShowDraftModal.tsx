@@ -6,6 +6,8 @@ import { DraftLetter, getDraftLetters, deleteDraftLetters } from '@/apis/draftLe
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
+import useToastStore from '@/stores/toastStore';
+
 interface ShowDraftModalProps {
   children?: React.ReactNode;
   onClose: () => void;
@@ -15,6 +17,8 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
   const [draftLetters, setDraftLetters] = useState<DraftLetter[]>([]);
 
   const navigate = useNavigate();
+
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   const handleNavigation = (draft: DraftLetter) => {
     navigate(`/letter/write/?letterId=${draft.parentLetterId}`, {
@@ -29,17 +33,26 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
       })
       .catch((error) => {
         console.error('❌ 임시저장된 편지를 불러오는데 실패했습니다', error);
+        setToastActive({
+          toastType: 'Error',
+          title: '서버 오류로 임시저장된 편지를 불러오는 데에 실패했습니다.',
+          time: 5,
+        });
       });
   };
 
   const handleDeleteDraftLetters = async (letterId: number) => {
-    //TODO: 정말로 삭제하시겠습니까? 모달창
     try {
       await deleteDraftLetters(letterId);
       setDraftLetters((prev) => prev.filter((letter) => letter.letterId !== letterId));
       console.log(`letterId는 `, letterId);
     } catch (error) {
       console.error(`❌임시저장된 편지를 삭제하던 중 에러가 발생했습니다.`, error);
+      setToastActive({
+        toastType: 'Error',
+        title: '서버 오류로 임시저장 된 편지를 삭제하던 중 에러가 발생했습니다.',
+        time: 5,
+      });
     }
   };
 

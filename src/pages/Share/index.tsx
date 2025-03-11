@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router';
 import { getShareProposalDetail } from '@/apis/share';
 import { postShareProposalApproval, ShareProposalDetail } from '@/apis/share';
 
+import useToastStore from '@/stores/toastStore';
+
 import { twMerge } from 'tailwind-merge';
 import Letter from '../LetterBoardDetail/components/Letter';
 
@@ -12,17 +14,36 @@ import BlurImg from '@/assets/images/landing-blur.png';
 const ShareApprovalPage = () => {
   const navigate = useNavigate();
   const { shareProposalId } = useParams();
-  console.log(shareProposalId);
 
   const [proposalDetail, setProposalDetail] = useState<ShareProposalDetail>();
+
+  const setToastActive = useToastStore((state) => state.setToastActive);
 
   const handleProposalApproval = async (action: 'approve' | 'reject') => {
     try {
       const result = await postShareProposalApproval(Number(shareProposalId), action);
       console.log(`✅ 편지 공유 ${action === 'approve' ? '수락' : '거절'}됨:`, result);
+      if (action === 'approve') {
+        setToastActive({
+          toastType: 'Success',
+          title: '편지를 성공적으로 공유하였습니다. 게시판에서 확인해보세요!',
+          time: 5,
+        });
+      } else {
+        setToastActive({
+          toastType: 'Info',
+          title: '공유 요청을 성공적으로 거부하였습니다.',
+          time: 5,
+        });
+      }
       navigate('/');
     } catch (error) {
       console.error('❌공유 요청 처리 중 에러 발생', error);
+      setToastActive({
+        toastType: 'Error',
+        title: '서버 오류로 편지를 공유하는 데에 실패했습니다.',
+        time: 5,
+      });
     }
   };
   useEffect(() => {
@@ -32,6 +53,11 @@ const ShareApprovalPage = () => {
         setProposalDetail(data);
       } catch (error) {
         console.error('❌ 공유 요청 상세 조회에 실패했습니다.', error);
+        setToastActive({
+          toastType: 'Error',
+          title: '서버 오류로 공유 요청을 조회하는 데에 실패했습니다.',
+          time: 5,
+        });
         throw error;
       }
     };
