@@ -10,8 +10,6 @@ export default function PrivateRoute() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
 
-  useServerSentEvents();
-
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login', { replace: true });
