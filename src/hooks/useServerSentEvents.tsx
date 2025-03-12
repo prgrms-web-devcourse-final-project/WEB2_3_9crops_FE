@@ -5,7 +5,6 @@ import useAuthStore from '@/stores/authStore';
 import useToastStore from '@/stores/toastStore';
 import { useNavigate } from 'react-router';
 import useNotificationStore from '@/stores/notificationStore';
-import { getNewToken } from '@/apis/auth';
 
 interface MessageEventData {
   title: string;
@@ -19,7 +18,6 @@ export const useServerSentEvents = () => {
   // const recallCountRef = useRef(1);
 
   const accessToken = useAuthStore((state) => state.accessToken);
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const sourceRef = useRef<EventSourcePolyfill | null>(null);
 
   const setToastActive = useToastStore((state) => state.setToastActive);
@@ -41,27 +39,15 @@ export const useServerSentEvents = () => {
     }
   };
 
-  // 토큰 재발급 함수
-  const callReissue = async () => {
-    try {
-      const response = await getNewToken();
-      if (response?.status !== 200) throw new Error('error while fetching newToken');
-      const newToken = response?.data.data.accessToken;
-      return setAccessToken(newToken);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
-
   useEffect(() => {
     if (!accessToken) {
-      console.log('로그인 정보 확인불가');
+      // console.log('로그인 정보 확인불가');
       return;
     }
 
     const connectSSE = () => {
       try {
-        console.log('구독 시작');
+        // console.log('구독 시작');
         sourceRef.current = new EventSourcePolyfill(
           `${import.meta.env.VITE_API_URL}/api/notifications/sub`,
           {
@@ -77,11 +63,15 @@ export const useServerSentEvents = () => {
           handleOnMessage(event.data);
         };
 
-        sourceRef.current.onerror = (event) => {
+        sourceRef.current.onerror = async (event) => {
           console.log(event);
           const errorEvent = event as unknown as { status?: number };
           if (errorEvent.status === 401) {
-            callReissue();
+            try {
+              await useAuthStore.getState().refreshToken();
+            } catch (error) {
+              console.log('다른 api에서 리프레시 토큰 호출중입니다.');
+            }
             closeSSE();
             reconnect = setTimeout(connectSSE, 5000);
           } else {
@@ -97,7 +87,7 @@ export const useServerSentEvents = () => {
     connectSSE();
 
     return () => {
-      console.log('컴포넌트 언마운트로 인한 구독해제');
+      // console.log('컴포넌트 언마운트로 인한 구독해제');
       closeSSE();
     };
   }, [accessToken]);
