@@ -13,7 +13,10 @@ const AuthCallbackPage = () => {
   const logout = useAuthStore((state) => state.logout);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setZipCode = useAuthStore((state) => state.setZipCode);
+  const setIsAdmin = useAuthStore((state) => state.setIsAdmin);
   const navigate = useNavigate();
+  let accessToken = '';
+  let role = '';
 
   const handleError = (error: unknown) => {
     console.error('AuthCallback Error:', error);
@@ -32,6 +35,7 @@ const AuthCallbackPage = () => {
 
       login();
       if (userInfo.accessToken) setAccessToken(userInfo.accessToken);
+      accessToken = userInfo.accessToken;
 
       console.log(redirectURL);
 
@@ -54,6 +58,7 @@ const AuthCallbackPage = () => {
             if (!newAccessToken) throw new Error('Missing new access token');
 
             setAccessToken(newAccessToken);
+            accessToken = newAccessToken;
           }
           break;
 
@@ -61,7 +66,15 @@ const AuthCallbackPage = () => {
           navigate('/notFound');
           return;
       }
-      navigate(redirectURL === 'onboarding' ? '/onboarding' : '/');
+
+      role = JSON.parse(atob(accessToken.split('.')[1])).role;
+
+      if (role === 'ADMIN') {
+        setIsAdmin();
+        navigate('/admin');
+      } else {
+        navigate(redirectURL === 'onboarding' ? '/onboarding' : '/');
+      }
     } catch (error) {
       handleError(error);
     }

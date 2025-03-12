@@ -26,7 +26,7 @@ const ShareApprovalPage = () => {
       if (action === 'approve') {
         setToastActive({
           toastType: 'Success',
-          title: '편지를 성공적으로 공유하였습니다. 게시판에서 확인해보세요!',
+          title: '편지가 공유되었습니다. 게시판에서 확인해보세요!',
           time: 5,
         });
       } else {

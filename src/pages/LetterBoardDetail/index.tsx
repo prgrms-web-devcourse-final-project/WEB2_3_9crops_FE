@@ -16,6 +16,7 @@ import Letter from './components/Letter';
 import { useNavigate, useParams } from 'react-router';
 import useAuthStore from '@/stores/authStore';
 import useToastStore from '@/stores/toastStore';
+import { useQueryClient } from '@tanstack/react-query';
 
 const LetterBoardDetailPage = () => {
   const [likeCount, setLikeCount] = useState(0);
@@ -30,13 +31,14 @@ const LetterBoardDetailPage = () => {
   const { id } = useParams();
   const myZipCode = useAuthStore.getState().zipCode;
   const setToastActive = useToastStore((state) => state.setToastActive);
+
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const postLike = async (sharePostId: string) => {
     try {
       const response = await postSharePostLike(sharePostId);
       if (!response) throw new Error('error while fetching like count');
-      console.log('✅ 편지 좋아요 추가됨:', response);
     } catch (error) {
       console.error('❌ 편지 좋아요 추가 중 에러가 발생했습니다', error);
     }
@@ -56,6 +58,7 @@ const LetterBoardDetailPage = () => {
       if (id) {
         const response = await deleteSharePost(id);
         if (!response) throw new Error('deleteSharePost: no response');
+        queryClient.invalidateQueries({ queryKey: ['sharePostList'] });
         navigate(-1);
         setToastActive({
           toastType: 'Success',
@@ -76,6 +79,9 @@ const LetterBoardDetailPage = () => {
       try {
         const data = await getSharePostDetail(postId);
         setPostDetail(data);
+        if (myZipCode === data.zipCode || !data.zipCode) {
+          setIsWriter(true);
+        }
       } catch (error) {
         console.error('❌ 공유 게시글 상세 조회에 실패했습니다.', error);
       }
@@ -88,13 +94,6 @@ const LetterBoardDetailPage = () => {
         console.log('✅ 편지 좋아요 갯수:', response);
         setLikeCount(response.likeCount);
         setIsLike(response.liked);
-        console.log('myZip', myZipCode);
-        console.log('responseZip', response.zipCode);
-        console.log('responseZip', response);
-
-        if (myZipCode === response.zipCode || !response.zipCode) {
-          setIsWriter(true);
-        }
       } catch (error) {
         console.error('❌ 편지 좋아요 갯수를 가져오는 중 에러가 발생했습니다', error);
         throw new Error('편지 좋아요 갯수 가져오기 실패');

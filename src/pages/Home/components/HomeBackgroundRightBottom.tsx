@@ -1,5 +1,5 @@
-import homeRightMountainBottom from '@/assets/images/home-right-mountain-bottom.png';
-import homeRightMountainBottomDark from '@/assets/images/home-right-mountain-bottom-dark.png';
+import homeRightMountainBottom from '@/assets/images/home-right-mountain-bottom.webp';
+import homeRightMountainBottomDark from '@/assets/images/home-right-mountain-bottom-dark.webp';
 import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
 import useThemeStore from '@/stores/themeStore';
 

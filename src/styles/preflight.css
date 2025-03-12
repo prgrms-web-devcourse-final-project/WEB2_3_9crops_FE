@@ -84,7 +84,7 @@
     left: 0;
     width: 100%;
     height: 50%;
-    background: url('/src/assets/images/background-dark.png') repeat center top;
+    background: url('/src/assets/images/background-dark.webp') repeat center top;
     background-size: cover;
     opacity: 1;
     z-index: 1;
