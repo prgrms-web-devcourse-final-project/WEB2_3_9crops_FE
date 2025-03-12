@@ -46,6 +46,8 @@ export const useServerSentEvents = () => {
     }
 
     const connectSSE = () => {
+      const accessToken = useAuthStore.getState().accessToken;
+
       try {
         // console.log('구독 시작');
         sourceRef.current = new EventSourcePolyfill(
