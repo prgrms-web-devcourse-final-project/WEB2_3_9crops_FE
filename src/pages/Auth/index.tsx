@@ -37,6 +37,8 @@ const AuthCallbackPage = () => {
       if (userInfo.accessToken) setAccessToken(userInfo.accessToken);
       accessToken = userInfo.accessToken;
 
+      console.log(redirectURL);
+
       switch (redirectURL) {
         case 'home':
           {
