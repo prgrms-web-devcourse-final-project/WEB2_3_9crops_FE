@@ -6,9 +6,10 @@ import { useServerSentEvents } from '@/hooks/useServerSentEvents';
 import Toast from '@/components/Toast';
 
 export default function PrivateRoute() {
-  useServerSentEvents();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
+
+  useServerSentEvents();
 
   useEffect(() => {
     if (!isLoggedIn) {

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import useThemeStore from './themeStore';
+import { getNewToken } from '@/apis/auth';
 
 interface AuthStore {
   isLoggedIn: boolean;
@@ -12,11 +13,14 @@ interface AuthStore {
   setZipCode: (zipCode: string) => void;
   setAccessToken: (accessToken: string) => void;
   setIsAdmin: () => void;
+  isRefreshing: boolean;
+  refreshPromise: Promise<string> | null;
+  refreshToken: () => Promise<string>;
 }
 
 const useAuthStore = create(
   persist<AuthStore>(
-    (set) => ({
+    (set, get) => ({
       isLoggedIn: false,
       accessToken: '',
       zipCode: '',
@@ -40,6 +44,30 @@ const useAuthStore = create(
       setZipCode: (zipCode) => set({ zipCode: zipCode }),
       setAccessToken: (accessToken) => set({ accessToken: accessToken }),
       setIsAdmin: () => set({ isAdmin: true }),
+      isRefreshing: false,
+      refreshPromise: null,
+      refreshToken: async () => {
+        // 이미 재발급 중이면 진행 중인 Promise 반환
+        if (get().isRefreshing && get().refreshPromise) {
+          return get().refreshPromise;
+        }
+        const refreshPromise = getNewToken()
+          .then((response) => {
+            if (response?.status !== 200) throw new Error('Token refresh failed');
+            const newToken = response?.data.data.accessToken;
+            set({ accessToken: newToken, isRefreshing: false, refreshPromise: null });
+            return newToken;
+          })
+          .catch((error) => {
+            set({ isRefreshing: false, refreshPromise: null });
+            // 재발급 실패 시 로그아웃
+            if (get().isLoggedIn) get().logout();
+            throw error;
+          });
+
+        set({ isRefreshing: true, refreshPromise });
+        return refreshPromise;
+      },
     }),
     {
       name: 'userInfo',
