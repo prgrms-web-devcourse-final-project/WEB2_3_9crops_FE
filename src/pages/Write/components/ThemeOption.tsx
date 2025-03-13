@@ -17,6 +17,7 @@ export default function ThemeOption() {
             onClick={() => {
               setLetterRequest({ paperType: target.paperType });
             }}
+            aria-label="편지 테마 설정하기"
           >
             <span className="caption-m">{target.name}</span>
             <img

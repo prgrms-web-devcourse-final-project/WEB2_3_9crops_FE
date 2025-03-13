@@ -51,7 +51,7 @@ const deleteRandomLetterMatching = async () => {
     if (!res) throw new Error('매칭 취소 도중 에러가 발생했습니다.');
     return res;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 

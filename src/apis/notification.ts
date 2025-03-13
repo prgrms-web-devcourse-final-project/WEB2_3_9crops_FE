@@ -4,7 +4,6 @@ const getTimeLines = async () => {
   try {
     const res = await client.get('/api/timelines');
     if (!res) throw new Error('타임라인을 받아오는 도중 오류가 발생했습니다.');
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
@@ -35,7 +34,6 @@ const getNotReadCount = async () => {
   try {
     const res = await client.get('/api/notifications/not-read');
     if (!res) throw new Error('안 읽은 알림 수를 가져오는 도중 오류가 발생했습니다.');
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);

@@ -45,7 +45,6 @@ const RandomLettersPage = () => {
     const res = await getRandomLetterMatched();
     if (res?.status === 200) {
       const data: MatchedLetter = res.data.data;
-      console.log(data);
       if (data?.temporary === true) {
         setIsMatched(true);
         setMatchedLetter(data);
@@ -55,16 +54,12 @@ const RandomLettersPage = () => {
 
   const handleGetRandomLetterCoolTime = async () => {
     const res = await getRandomLetterCoolTime();
-    console.log(res);
     if (res?.status === 200) {
       const data: CoolTimeData = res.data.data;
-      console.log('쿨타임 데이터', data);
       if (data?.canSend === false) {
         setIsCoolTime(true);
         setCoolTime({ lastMatchedAt: data.lastMatchedAt });
       }
-    } else {
-      console.log('?');
     }
   };
 

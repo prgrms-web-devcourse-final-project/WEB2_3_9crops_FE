@@ -17,7 +17,6 @@ const MyBoardPage = () => {
       if (!response) {
         throw new Error('게시글 목록을 불러오는데 실패했습니다.');
       }
-      console.log('myPostList', response);
       return response.data as SharePost[];
     } catch (e) {
       console.error(e);

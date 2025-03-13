@@ -86,6 +86,7 @@ export default function UserInteraction({
             alt="분홍색 편지지"
             className="h-auto w-full rounded transition-transform duration-1000 ease-in-out hover:scale-105"
             onClick={handleLetterClick}
+            aria-label="분홍색 편지를 눌러보세요!"
           />
         </section>
       </>

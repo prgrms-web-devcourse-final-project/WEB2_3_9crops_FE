@@ -69,6 +69,7 @@ export default function RollingPaperItem({ information, currentPage }: RollingPa
             type="button"
             className="hover:bg-gray-10 text-gray-60 rounded-md px-3 py-1 hover:text-black"
             onClick={() => toggleStatus()}
+            aria-label="중단하기 / 진행하기"
           >
             {information.used ? '중단하기' : '진행하기'}
           </button>
@@ -79,6 +80,7 @@ export default function RollingPaperItem({ information, currentPage }: RollingPa
               type="button"
               className="text-gray-60 flex items-center justify-center p-1 hover:text-black"
               onClick={() => setActiveDeleteModal(true)}
+              aria-label="삭제하기"
             >
               <DeleteIcon className="h-5 w-5" />
             </button>

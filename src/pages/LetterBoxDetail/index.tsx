@@ -41,9 +41,7 @@ const LetterBoxDetailPage = () => {
     useInfiniteQuery({
       queryKey: ['mailBoxDetail', userInfo.id],
       queryFn: async ({ pageParam }) => {
-        console.log(`Fetching page: ${pageParam}`);
         const response = await getMailboxDetail(userInfo.id, pageParam);
-        console.log(response.data);
         return response.data;
       },
       enabled: !!userInfo.id,
@@ -69,7 +67,6 @@ const LetterBoxDetailPage = () => {
 
   const disconnectMutation = useMutation({
     mutationFn: async () => {
-      console.log('userInfo', userInfo, userInfo.id);
       const response = await postMailboxDisconnect(userInfo.id);
       if (!response) throw new Error(`no response`);
     },
@@ -179,7 +176,7 @@ const LetterBoxDetailPage = () => {
           <p>주고 받은 편지 {mailLists.length}</p>
           <div className="flex items-center gap-0.5 underline">
             {!userInfo.isClosed && (
-              <button type="button" onClick={toggleShareMode}>
+              <button type="button" onClick={toggleShareMode} aria-label="편지 공유하기">
                 {isLoading ? '' : isShareMode ? '취소하기' : '편지 공유하기'}
               </button>
             )}
@@ -213,6 +210,7 @@ const LetterBoxDetailPage = () => {
             type="button"
             className="body-sb text-gray-60 mt-auto text-left underline dark:text-white"
             onClick={() => setIsOpenDisConnectModal(true)}
+            aria-label="더 이상 편지하지 않을래요"
           >
             더 이상 편지하지 않을래요
           </button>
@@ -225,6 +223,7 @@ const LetterBoxDetailPage = () => {
             className="body-m primary-btn w-full py-2 text-black"
             disabled={selected.length === 0}
             onClick={() => setIsOpenShareModal(true)}
+            aria-label="공유하기"
           >
             공유하기
           </button>

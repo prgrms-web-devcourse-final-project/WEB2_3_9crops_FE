@@ -53,8 +53,6 @@ export default function LetterEditor({
   const handlePostReply = async (letterRequest: LetterRequest) => {
     const res = await postLetter(letterRequest);
     if (res?.status === 200) {
-      console.log(letterRequest);
-      console.log(prevLetter);
       setSend(true);
       setStep('category');
       setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
@@ -72,7 +70,6 @@ export default function LetterEditor({
     const temporaryRequest: TemporaryRequest = { ...letterRequest, letterId: requestLetterId };
     const res = await postTemporarySave(temporaryRequest);
     if (res?.status === 200) {
-      console.log(res);
       setToastActive({ title: '임시저장을 완료했습니다.', toastType: 'Success' });
       navigate('/');
     } else {
@@ -101,7 +98,6 @@ export default function LetterEditor({
 
   useEffect(() => {
     if (isReply) {
-      console.log('prevLetter', prevLetter);
       setLetterRequest({
         receiverId: prevLetter[0].memberId,
         parentLetterId: Number(letterId),
@@ -144,7 +140,6 @@ export default function LetterEditor({
                 if (letterRequest.title.trim() !== '' && letterRequest.content.trim() !== '') {
                   if (randomMatched) {
                     const firstReplyRequest = removeProperty(letterRequest, ['matchingId']);
-                    console.log(firstReplyRequest);
                     handlePostFirstReply(firstReplyRequest);
                   } else {
                     if (location.state?.isDraft) {

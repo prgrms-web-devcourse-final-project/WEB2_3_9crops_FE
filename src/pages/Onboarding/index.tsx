@@ -26,10 +26,8 @@ const OnboardingPage = () => {
     const prevDataString = sessionStorage.getItem('onBoarding');
     if (prevDataString) {
       const newData = JSON.parse(prevDataString);
-      console.log(newData);
       setIsZipCodeSet(newData.isZipCodeSet);
       setIsAnimationOver(newData.isAnimationOver);
-      console.log('isZipCode', isZipCodeSet, 'isAnimation', isAnimationOver);
     }
   }, []);
 

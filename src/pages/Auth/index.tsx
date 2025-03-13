@@ -27,7 +27,6 @@ const AuthCallbackPage = () => {
   const setUserInfo = async (stateToken: string) => {
     try {
       const response = await getUserToken(stateToken);
-      console.log(response);
       if (!response) throw new Error('Error fetching user token');
 
       const userInfo = response.data;
@@ -36,8 +35,6 @@ const AuthCallbackPage = () => {
       login();
       if (userInfo.accessToken) setAccessToken(userInfo.accessToken);
       accessToken = userInfo.accessToken;
-
-      console.log(redirectURL);
 
       switch (redirectURL) {
         case 'home':

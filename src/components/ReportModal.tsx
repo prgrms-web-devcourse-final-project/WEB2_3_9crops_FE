@@ -47,7 +47,6 @@ const ReportModal = ({ reportType, letterId, onClose }: ReportModalProps) => {
     const res = await postReports(postReportRequest);
     if (res?.status === 200) {
       setToastActive({ title: '신고가 접수되었습니다.', toastType: 'Success' });
-      console.log(res);
       onClose();
     } else {
       setToastActive({ title: '신고한 이력이 있습니다.', toastType: 'Error' });

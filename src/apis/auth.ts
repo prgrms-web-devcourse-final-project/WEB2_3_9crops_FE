@@ -33,7 +33,6 @@ export const getNewToken = async () => {
   try {
     const response = await client.post('/api/reissue', {}, { withCredentials: true });
     if (!response) throw new Error('getNewToken: no response data');
-    console.log(response.data);
     return response;
   } catch (error) {
     console.error(error);
@@ -64,15 +63,10 @@ export const deleteUserInfo = async () => {
 
 export const postLogout = async () => {
   try {
-    console.log(' before logout');
-
     const response = await client.post('/api/logout', { withCredentials: true });
-    console.log('logout', response);
     if (!response) throw new Error('postLogout: failed to logout');
     return response;
   } catch (error) {
-    console.log('logout error');
-
     console.error(error);
   }
 };

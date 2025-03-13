@@ -32,6 +32,7 @@ export default function SendingModal({
             <button
               className="body-b mt-3 flex items-center justify-center"
               onClick={() => navigate('/')}
+              aria-label="홈 화면으로 이동"
             >
               홈 화면으로 이동 {'>'}
             </button>

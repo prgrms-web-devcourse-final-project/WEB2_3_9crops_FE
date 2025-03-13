@@ -54,6 +54,7 @@ export default function ReportHandlingModal({
             onClick={() => {
               setHandleModalOpen(false);
             }}
+            aria-label="취소"
           >
             취소
           </button>
@@ -66,6 +67,7 @@ export default function ReportHandlingModal({
               handleDeleteList(selectedReportId);
               setHandleModalOpen(false);
             }}
+            aria-label="전송"
           >
             전송
           </button>

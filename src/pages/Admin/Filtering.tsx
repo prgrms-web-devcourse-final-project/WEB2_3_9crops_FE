@@ -17,8 +17,6 @@ export default function FilteringManage() {
     const res = await getBadWords();
     if (res?.status === 200) {
       setBadWords(res.data.data);
-    } else {
-      console.log('검열 조회 오류 발생');
     }
   };
 
@@ -43,6 +41,7 @@ export default function FilteringManage() {
                 onClick={() => {
                   setAddInputShow(true);
                 }}
+                aria-label="추가하기"
               >
                 <AddIcon className="h-4 w-4" />
               </button>
