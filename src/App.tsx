@@ -5,7 +5,6 @@ import Layout from './layouts/Layout';
 import MobileLayout from './layouts/MobileLayout';
 import PrivateRoute from './layouts/PrivateRoute';
 import AdminPage from './pages/Admin';
-import FilteredLetterManage from './pages/Admin/FilteredLetter';
 import FilteringManage from './pages/Admin/Filtering';
 import ReportManage from './pages/Admin/Report';
 import AdminRollingPaper from './pages/Admin/RollingPaper';
@@ -84,7 +83,6 @@ const App = () => {
         <Route path="admin" element={<AdminPage />}>
           <Route path="report" element={<ReportManage />} />
           <Route path="badwords" element={<FilteringManage />} />
-          <Route path="filtered-letter" element={<FilteredLetterManage />} />
           <Route path="rolling-paper" element={<AdminRollingPaper />} />
         </Route>
       </Route>
