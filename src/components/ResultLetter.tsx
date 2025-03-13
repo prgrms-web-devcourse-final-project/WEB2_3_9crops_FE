@@ -15,7 +15,7 @@ export default function ResultLetter({
   const today = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
   return (
-    <LetterWrapper className="min-w-[300px]">
+    <LetterWrapper className="w-[300px]">
       <div className="flex w-full flex-col gap-[35px]">
         <div className="flex justify-between gap-3">
           <div className="flex flex-col gap-2.5">
