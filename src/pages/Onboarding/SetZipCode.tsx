@@ -38,6 +38,7 @@ const SetZipCode = ({
         onClick={() => {
           setIsZipCodeSet(true);
         }}
+        aria-label="다음으로"
       >
         다음으로
       </button>

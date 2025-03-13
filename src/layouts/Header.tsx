@@ -14,10 +14,10 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 z-40 flex h-16 w-full max-w-150 items-center justify-between p-5">
-      <button onClick={() => navigate(-1)}>
+      <button onClick={() => navigate(-1)} aria-label="뒤로 가기">
         <ArrowLeftIcon className="h-6 w-6 text-white" />
       </button>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3" aria-label="테마 바꾸기">
         {theme === 'light' ? (
           <DarkModeOutlinedIcon className="h-6 w-6 text-white" onClick={toggleTheme} />
         ) : (

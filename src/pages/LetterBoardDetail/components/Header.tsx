@@ -35,7 +35,7 @@ const Header = ({
         </button>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
-            <button type="button" onClick={onToggleLike}>
+            <button type="button" onClick={onToggleLike} aria-label="좋아요">
               {isLike ? (
                 <LikeFilledIcon className="text-primary-1 h-6 w-6" />
               ) : (
@@ -47,7 +47,7 @@ const Header = ({
           {isWriter ? (
             <DeleteIcon className="text-primary-1 h-6 w-6" onClick={onDeleteLetter} />
           ) : (
-            <button type="button" onClick={onOpenReportModal}>
+            <button type="button" onClick={onOpenReportModal} aria-label="신고하기">
               <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
             </button>
           )}

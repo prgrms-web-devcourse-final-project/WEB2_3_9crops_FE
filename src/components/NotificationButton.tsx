@@ -26,7 +26,7 @@ export default function NotificationButton() {
   });
 
   return (
-    <Link to="/mypage/notifications" className="relative">
+    <Link to="/mypage/notifications" className="relative" aria-label="알림">
       {notReadCount > 0 && (
         <div className={notReadStyle}>{notReadCount < 100 ? notReadCount : '99+'}</div>
       )}

@@ -12,7 +12,6 @@ client.interceptors.request.use(
     const accessToken = useAuthStore.getState().accessToken;
     if (config.url !== '/api/reissue' && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-      console.log('interceptor', config);
     }
     return config;
   },

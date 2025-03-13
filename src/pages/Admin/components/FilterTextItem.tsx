@@ -64,7 +64,7 @@ export default function FilterTextItem({
         badWord.word
       )}
 
-      <button onClick={() => setPatchInputShow(true)}>
+      <button onClick={() => setPatchInputShow(true)} aria-label="작성하기">
         <PencilIcon className="h-4 w-4" />
       </button>
 
@@ -72,6 +72,7 @@ export default function FilterTextItem({
         onClick={() => {
           handleDeleteBadWords(badWord.id);
         }}
+        aria-label="삭제하기"
       >
         <DeleteIcon className="h-5 w-5" />
       </button>

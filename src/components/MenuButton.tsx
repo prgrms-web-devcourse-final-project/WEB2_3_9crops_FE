@@ -22,6 +22,7 @@ export default function MenuButton() {
               : 'pointer-events-none translate-y-[120%] rotate-180 opacity-0',
           )}
           onClick={() => setIsOpen(false)}
+          aria-label="내 편지함으로 이동하기"
         >
           <MarkunreadOutlinedIcon fontSize="small" />
         </Link>
@@ -34,6 +35,7 @@ export default function MenuButton() {
               : 'pointer-events-none translate-y-[120%] rotate-180 opacity-0',
           )}
           onClick={() => setIsOpen(false)}
+          aria-label="게시판으로 이동하기"
         >
           <CalendarTodayOutlinedIcon fontSize="small" />
         </Link>
@@ -46,6 +48,7 @@ export default function MenuButton() {
               : 'pointer-events-none translate-y-[120%] rotate-180 opacity-0',
           )}
           onClick={() => setIsOpen(false)}
+          aria-label="속마음 나누기로 이동하기"
         >
           <EditNoteRoundedIcon fontSize="medium" />
         </Link>
@@ -56,6 +59,7 @@ export default function MenuButton() {
             isOpen ? 'rotate-90' : 'rotate-0',
           )}
           onClick={() => setIsOpen((state) => !state)}
+          aria-label="메뉴 열기"
         >
           <MenuRoundedIcon />
         </div>

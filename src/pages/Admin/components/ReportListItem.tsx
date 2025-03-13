@@ -70,6 +70,7 @@ export default function ReportListItem({
             e.stopPropagation();
             setModalOpen((cur) => !cur);
           }}
+          aria-label="더보기"
         >
           <KebobMenuIcon className="h-5 w-5" />
         </button>

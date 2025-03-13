@@ -39,6 +39,7 @@ export default function AdminRollingPaper() {
             type="button"
             className="ml-auto flex items-center gap-2 rounded-md text-black"
             onClick={() => setActiveModal(true)}
+            aria-label='롤링페이퍼 생성하기'
           >
             <AddIcon />
             롤링페이퍼 생성

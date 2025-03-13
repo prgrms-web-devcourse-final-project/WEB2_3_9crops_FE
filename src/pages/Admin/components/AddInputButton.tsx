@@ -57,6 +57,7 @@ export default function AddInputButton({
         onClick={() => {
           handlePostBadWords();
         }}
+        aria-label="검열 단어 추가하기"
       >
         <AddIcon className="h-4 w-4" />
       </button>

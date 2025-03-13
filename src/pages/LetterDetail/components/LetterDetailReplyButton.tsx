@@ -12,6 +12,7 @@ export default function LetterDetailReplyButton({ letterDetail }: LetterDetailRe
         navigate(`/letter/write/?letterId=${letterDetail.letterId}`);
       }}
       disabled={!letterDetail?.matched}
+      aria-label="편지 작성하기"
     >
       {letterDetail?.matched ? '편지 작성하기' : '대화가 종료된 편지입니다.'}
     </button>

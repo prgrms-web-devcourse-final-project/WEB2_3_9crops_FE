@@ -40,7 +40,6 @@ const WriteCommentButton = ({ rollingPaperId }: WriteCommentButtonProps) => {
   };
 
   const handleAddComment = () => {
-    console.log(rollingPaperId);
     if (newMessage.trim() === '') {
       setError('편지를 작성해주세요.');
       return;
@@ -73,6 +72,7 @@ const WriteCommentButton = ({ rollingPaperId }: WriteCommentButtonProps) => {
         type="button"
         className="sticky bottom-8 z-10 mt-auto -mb-4 self-start overflow-hidden rounded-sm"
         onClick={() => setActiveMessageModal(true)}
+        aria-label="편지 쓰기"
       >
         <img src={EnvelopeImg} alt="편지지 이미지" className="h-12 w-auto opacity-70" />
         <p className="caption-sb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-white">

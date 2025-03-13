@@ -62,6 +62,7 @@ export default function PagenationNavigation({
           onClick={() => {
             handlePrevButtonClick();
           }}
+          aria-label="이전으로"
         >
           prev
         </button>
@@ -85,6 +86,7 @@ export default function PagenationNavigation({
           onClick={() => {
             handleNextButtonClick();
           }}
+          aria-label="다음으로"
         >
           next
         </button>

@@ -41,7 +41,6 @@ export const useServerSentEvents = () => {
 
   useEffect(() => {
     if (!accessToken) {
-      // console.log('로그인 정보 확인불가');
       return;
     }
 
@@ -49,7 +48,6 @@ export const useServerSentEvents = () => {
       const accessToken = useAuthStore.getState().accessToken;
 
       try {
-        // console.log('구독 시작');
         sourceRef.current = new EventSourcePolyfill(
           `${import.meta.env.VITE_API_URL}/api/notifications/sub`,
           {
@@ -60,19 +58,16 @@ export const useServerSentEvents = () => {
         );
 
         sourceRef.current.onmessage = (event) => {
-          // console.log(event);
-          // console.log('알림 수신');
           handleOnMessage(event.data);
         };
 
         sourceRef.current.onerror = async (event) => {
-          console.log(event);
           const errorEvent = event as unknown as { status?: number };
           if (errorEvent.status === 401) {
             try {
               await useAuthStore.getState().refreshToken();
             } catch (error) {
-              console.log('다른 api에서 리프레시 토큰 호출중입니다.');
+              throw error;
             }
             closeSSE();
             reconnect = setTimeout(connectSSE, 5000);
@@ -82,14 +77,13 @@ export const useServerSentEvents = () => {
           }
         };
       } catch (error) {
-        console.log('catch문에서 에러 발생', error);
+        throw error;
       }
     };
 
     connectSSE();
 
     return () => {
-      // console.log('컴포넌트 언마운트로 인한 구독해제');
       closeSSE();
     };
   }, [accessToken]);
@@ -99,6 +93,4 @@ export const useServerSentEvents = () => {
     sourceRef.current?.close();
     sourceRef.current = null;
   };
-
-  // return { closeSSE };
 };

@@ -33,7 +33,6 @@ export default function PatchInput({
           return e;
         }),
       );
-      console.log('일단 수정했음 api 새로 업데이트되면 바인딩');
       setPatchInputShow(false);
     }
   };
@@ -67,6 +66,7 @@ export default function PatchInput({
         onClick={() => {
           handlePatchBadWords();
         }}
+        aria-label="추가하기"
       >
         <AddIcon className="h-4 w-4" />
       </button>

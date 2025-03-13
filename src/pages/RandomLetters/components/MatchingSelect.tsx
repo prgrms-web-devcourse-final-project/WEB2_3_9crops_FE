@@ -46,9 +46,13 @@ export default function MatchingSelect({
           onClick={() => {
             handleGetRandomLetters(selectedCategory);
           }}
+          aria-label="리스트 새로고침"
         >
           <img src={RestartIcon} alt="재시작 아이콘" />
-          <span className="caption-sb text-gray-30 dark:text-white" aria-label="리스트 새로고침 버튼">
+          <span
+            className="caption-sb text-gray-30 dark:text-white"
+            aria-label="리스트 새로고침 버튼"
+          >
             리스트 새로고침
           </span>
         </button>
@@ -63,6 +67,7 @@ export default function MatchingSelect({
                 <button
                   className="caption-b text-gray-60"
                   onClick={() => navigate('/letter/write')}
+                  aria-label="작성하러 가기"
                 >{`작성하러 가기 >`}</button>
               </div>
             </LetterWrapper>
@@ -106,6 +111,7 @@ export default function MatchingSelect({
                 selectedCategory === category.category && 'bg-primary-1 text-white',
               )}
               key={idx}
+              aria-label="카테고리 제목"
             >
               {category.title}
             </button>

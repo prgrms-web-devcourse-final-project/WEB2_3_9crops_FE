@@ -20,7 +20,6 @@ export const getRollingPaperDetail = async (
       size,
     },
   });
-  console.log(data);
   return data;
 };
 
@@ -92,7 +91,6 @@ export const patchRollingPaper = async (eventPostId: number | string) => {
     const {
       data: { data },
     } = await client.patch(`/api/admin/event-posts/${eventPostId}/status`);
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

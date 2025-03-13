@@ -22,7 +22,6 @@ const LetterBoardPage = () => {
         console.error('게시글 목록을 불러오는데 실패했습니다.');
         return { content: [], currentPage: page, totalPages: 1 };
       }
-      console.log('게시글 목록', response);
       return response as SharePostResponse;
     } catch (e) {
       console.error(e);

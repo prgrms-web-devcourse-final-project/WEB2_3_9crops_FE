@@ -30,6 +30,7 @@ export default function index() {
           navigate(`/`);
           sessionStorage.removeItem('onBoarding');
         }}
+        aria-label="홈으로 가기"
       >
         홈으로 가기
       </button>

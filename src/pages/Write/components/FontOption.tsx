@@ -24,6 +24,7 @@ export default function FontOption() {
                   onClick={() => {
                     setLetterRequest({ fontType: font.fontType });
                   }}
+                  aria-label="편지 글꼴 선택"
                 >
                   안녕! 나는 따수미야! 0123456789{' '}
                   <CheckIcon
