@@ -47,7 +47,6 @@ const NotificationsPage = () => {
   const handleGetTimeLines = async () => {
     const res = await getTimeLines();
     if (res?.status === 200) {
-      console.log(res);
       setNoti(res.data.data.content);
     }
   };
@@ -64,8 +63,6 @@ const NotificationsPage = () => {
           return noti;
         }),
       );
-    } else {
-      console.log('읽음처리 에러 발생');
     }
   };
 
@@ -81,8 +78,6 @@ const NotificationsPage = () => {
         });
       });
       setNotReadCount(0);
-    } else {
-      console.log('모두 읽음처리 에러 발생');
     }
   };
 

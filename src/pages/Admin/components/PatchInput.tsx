@@ -33,7 +33,6 @@ export default function PatchInput({
           return e;
         }),
       );
-      console.log('일단 수정했음 api 새로 업데이트되면 바인딩');
       setPatchInputShow(false);
     }
   };

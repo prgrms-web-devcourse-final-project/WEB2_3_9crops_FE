@@ -17,8 +17,6 @@ export default function FilteringManage() {
     const res = await getBadWords();
     if (res?.status === 200) {
       setBadWords(res.data.data);
-    } else {
-      console.log('검열 조회 오류 발생');
     }
   };
 

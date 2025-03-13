@@ -23,7 +23,6 @@ const getReports = async (reportQueryString: ReportQueryString) => {
     const queryStrings = queryParams.toString();
     const res = await client.get(`/api/reports?${queryStrings}`);
     if (!res) throw new Error('신고 목록 데이터 조회 도중 에러가 발생했습니다.');
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
@@ -32,9 +31,8 @@ const getReports = async (reportQueryString: ReportQueryString) => {
 
 const patchReport = async (reportId: number, patchReportRequest: PatchReportRequest) => {
   try {
-    console.log(`/api/reports/${reportId}`, patchReportRequest);
     const res = await client.patch(`/api/reports/${reportId}`, patchReportRequest);
-    console.log(res);
+    return res;
   } catch (error) {
     console.error(error);
   }
@@ -45,7 +43,6 @@ const getBadWords = async () => {
   try {
     const res = await client.get('/api/bad-words');
     if (!res) throw new Error('금칙어 조회 도중 에러가 발생했습니다.');
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
@@ -55,7 +52,6 @@ const getBadWords = async () => {
 const postBadWords = async (badWordsRequest: BadWords) => {
   try {
     const res = await client.post('/api/bad-words', badWordsRequest);
-    console.log(res);
     if (!res) throw new Error('금칙어 등록 도중 에러가 발생했습니다.');
     return res;
   } catch (error) {
@@ -69,7 +65,6 @@ const patchBadWordsUsed = async (badWordId: string, isUsed: string) => {
   try {
     const res = await client.patch(`/api/bad-words/${badWordId}/status`, { isUsed: reverseIsUsed });
     if (!res) throw new Error('검열 활성화/비활성화 도중 에러가 발생했습니다.');
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
@@ -80,7 +75,6 @@ const patchBadWords = async (badWordId: string, word: string) => {
   try {
     const res = await client.patch(`/api/bad-words/${badWordId}`, { word: word });
     if (!res) throw new Error('금칙어 수정중 에러가 발생했습니다.');
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
@@ -91,7 +85,6 @@ const deleteBadWords = async (id: string) => {
   try {
     const res = await client.delete(`/api/bad-words/${id}`);
     if (!res) throw new Error('금칙어 삭제 도중 에러가 발생했습니다.');
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
