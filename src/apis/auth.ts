@@ -33,7 +33,6 @@ export const getNewToken = async () => {
   try {
     const response = await client.post('/api/reissue', {}, { withCredentials: true });
     if (!response) throw new Error('getNewToken: no response data');
-    console.log(response.data);
     return response;
   } catch (error) {
     console.error(error);
