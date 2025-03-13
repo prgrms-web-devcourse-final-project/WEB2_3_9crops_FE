@@ -21,7 +21,7 @@ const ShareApprovalPage = () => {
 
   const handleProposalApproval = async (action: 'approve' | 'reject') => {
     try {
-      const result = await postShareProposalApproval(Number(shareProposalId), action);
+      await postShareProposalApproval(Number(shareProposalId), action);
       if (action === 'approve') {
         setToastActive({
           toastType: 'Success',
