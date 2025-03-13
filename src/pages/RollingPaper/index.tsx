@@ -133,7 +133,6 @@ const RollingPaperPage = () => {
         <WriteCommentButton rollingPaperId={id} />
         <MenuButton />
       </main>
-      <MenuButton />
       <BackgroundBottom />
     </>
   );
