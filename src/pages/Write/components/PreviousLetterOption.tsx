@@ -18,6 +18,7 @@ export default function PreviousLetterOption({ prevLetter = [] }: { prevLetter: 
                   )}
                   onClick={() => setIndex(idx)}
                   key={idx}
+                  aria-label="과거에 주고 받은 편지"
                 >
                   {idx + 1}
                 </button>

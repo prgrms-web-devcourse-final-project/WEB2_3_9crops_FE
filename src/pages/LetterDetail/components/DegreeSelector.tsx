@@ -50,6 +50,7 @@ export default function DegreeSelector({ letterDetail, setLetterDetail }: Degree
             onClick={() => {
               degree.onClick();
             }}
+            aria-label="따숨 온도"
           >
             {degree.icon}
             {degree.title}

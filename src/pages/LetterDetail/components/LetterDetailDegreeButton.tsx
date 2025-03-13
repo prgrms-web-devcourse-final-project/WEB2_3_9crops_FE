@@ -40,6 +40,7 @@ export default function LetterDetailDegreeButton({
           onClick={() => {
             setDegreeModalOpen((cur) => !cur);
           }}
+          aria-label="편지 평가하기"
         >
           <ThermostatIcon className="h-6 w-6" />
           <span className="caption-b text-primary-1">편지 온도</span>

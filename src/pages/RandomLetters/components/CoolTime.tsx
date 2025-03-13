@@ -70,6 +70,7 @@ export default function CoolTime({
           onClick={() => {
             navigate('/');
           }}
+          aria-label="홈으로 돌아가기"
         >
           홈으로 돌아가기
         </button>

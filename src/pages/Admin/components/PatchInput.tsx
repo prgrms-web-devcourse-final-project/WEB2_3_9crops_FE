@@ -67,6 +67,7 @@ export default function PatchInput({
         onClick={() => {
           handlePatchBadWords();
         }}
+        aria-label="추가하기"
       >
         <AddIcon className="h-4 w-4" />
       </button>

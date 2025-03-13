@@ -110,6 +110,7 @@ const NotificationsPage = () => {
           onClick={() => {
             handlePatchReadNotificationAll();
           }}
+          aria-label="모두 읽음"
         >
           모두 읽음
         </button>

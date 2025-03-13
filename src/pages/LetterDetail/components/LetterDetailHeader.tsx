@@ -38,6 +38,7 @@ export default function LetterDetailHeader({
             onClick={() => {
               setDeleteModalOpen(true);
             }}
+            aria-label="삭제하기"
           >
             <DeleteIcon className="text-primary-1 h-6 w-6" />
           </button>
@@ -47,6 +48,7 @@ export default function LetterDetailHeader({
             onClick={() => {
               setReportModalOpen(true);
             }}
+            aria-label="신고하기"
           >
             <SirenOutlinedIcon className="text-primary-1 h-6 w-6" />
           </button>

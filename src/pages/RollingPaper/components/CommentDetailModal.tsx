@@ -24,7 +24,12 @@ const CommentDetailModal = ({
   return (
     <ModalOverlay closeOnOutsideClick onClose={onClose}>
       <>
-        <button type="button" className="body-b ml-auto text-white" onClick={handleButtonClick}>
+        <button
+          type="button"
+          className="body-b ml-auto text-white"
+          onClick={handleButtonClick}
+          aria-label="삭제하기 / 신고하기"
+        >
           {isWriter ? '삭제하기' : '신고하기'}
         </button>
 

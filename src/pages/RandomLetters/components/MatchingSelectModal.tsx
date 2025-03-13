@@ -45,6 +45,7 @@ function MatchingSelectModal({
             onClick={() => {
               setOpenModal(false);
             }}
+            aria-label="거부하기"
           >
             거부하기
           </button>
@@ -56,6 +57,7 @@ function MatchingSelectModal({
                 writerId: `${selectedLetter.writerId}`,
               });
             }}
+            aria-label="승인하기"
           >
             승인하기
           </button>
