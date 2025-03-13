@@ -91,7 +91,6 @@ const LetterBoardDetailPage = () => {
       try {
         const response = await getSharePostLikeCount(postId);
         if (!response) throw new Error('error while fetching like count');
-        console.log('✅ 편지 좋아요 갯수:', response);
         setLikeCount(response.likeCount);
         setIsLike(response.liked);
       } catch (error) {

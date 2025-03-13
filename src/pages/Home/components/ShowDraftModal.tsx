@@ -45,7 +45,6 @@ const ShowDraftModal = ({ onClose }: ShowDraftModalProps) => {
     try {
       await deleteDraftLetters(letterId);
       setDraftLetters((prev) => prev.filter((letter) => letter.letterId !== letterId));
-      console.log(`letterId는 `, letterId);
     } catch (error) {
       console.error(`❌임시저장된 편지를 삭제하던 중 에러가 발생했습니다.`, error);
       setToastActive({

@@ -40,7 +40,6 @@ const WriteCommentButton = ({ rollingPaperId }: WriteCommentButtonProps) => {
   };
 
   const handleAddComment = () => {
-    console.log(rollingPaperId);
     if (newMessage.trim() === '') {
       setError('편지를 작성해주세요.');
       return;

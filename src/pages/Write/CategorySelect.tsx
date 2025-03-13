@@ -27,7 +27,6 @@ export default function CategorySelect({
   const handlePostLetter = async (letterRequest: LetterRequest) => {
     const res = await postLetter(letterRequest);
     if (res?.status === 200) {
-      console.log(letterRequest);
       setSend(true);
       setToastActive({ title: '편지 전송을 완료했습니다.', toastType: 'Success' });
     } else if (res?.status === 400) {

@@ -13,7 +13,6 @@ export default function DegreeSelector({ letterDetail, setLetterDetail }: Degree
     if (!letterId) return alert('편지id값이 담겨있지 않습니다.');
     const res = await postEvaluateLetter(letterId, evaluation);
     if (res?.status === 200) {
-      console.log('평가완료');
       setLetterDetail((cur) => ({ ...cur, evaluated: true }));
     }
   };

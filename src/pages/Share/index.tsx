@@ -22,7 +22,6 @@ const ShareApprovalPage = () => {
   const handleProposalApproval = async (action: 'approve' | 'reject') => {
     try {
       const result = await postShareProposalApproval(Number(shareProposalId), action);
-      console.log(`✅ 편지 공유 ${action === 'approve' ? '수락' : '거절'}됨:`, result);
       if (action === 'approve') {
         setToastActive({
           toastType: 'Success',

@@ -70,7 +70,6 @@ export const getSharePostList = async (page: number = 1, size: number = 10) => {
     const response = await client.get('/api/share-posts', {
       params: { page, size },
     });
-    console.log(`🌟공유 게시글 목록`, response.data.data);
 
     return response.data.data;
   } catch (error) {
@@ -83,7 +82,6 @@ export const getSharePostList = async (page: number = 1, size: number = 10) => {
 export const getSharePostDetail = async (sharePostId: string): Promise<SharePost> => {
   try {
     const response = await client.get(`/api/share-posts/${sharePostId}`);
-    console.log(`🔥공유 게시글 상세 데이터`, response.data);
     return response.data.data;
   } catch (error) {
     console.error('❌ 편지 공유 게시글을 상세 조회하던 중 에러가 발생했습니다', error);
@@ -115,7 +113,6 @@ export const postShareProposals = async (
 export const getShareProposalList = async () => {
   try {
     const response = await client.get('/api/share-proposals/inbox');
-    console.log(`🌟공유 요청 목록`, response.data);
 
     return response.data.data;
   } catch (error) {
@@ -130,7 +127,6 @@ export const getShareProposalDetail = async (
 ): Promise<ShareProposalDetail> => {
   try {
     const response = await client.get(`/api/share-proposals/${shareProposalId}`);
-    console.log(`😎공유 요청 상세 조회 데이터 `, response.data);
     return response.data.data;
   } catch (error) {
     console.error('❌ 편지 공유 요청을 상세 조회하던 중 에러가 발생했습니다', error);

@@ -41,9 +41,7 @@ const LetterBoxDetailPage = () => {
     useInfiniteQuery({
       queryKey: ['mailBoxDetail', userInfo.id],
       queryFn: async ({ pageParam }) => {
-        console.log(`Fetching page: ${pageParam}`);
         const response = await getMailboxDetail(userInfo.id, pageParam);
-        console.log(response.data);
         return response.data;
       },
       enabled: !!userInfo.id,
@@ -69,7 +67,6 @@ const LetterBoxDetailPage = () => {
 
   const disconnectMutation = useMutation({
     mutationFn: async () => {
-      console.log('userInfo', userInfo, userInfo.id);
       const response = await postMailboxDisconnect(userInfo.id);
       if (!response) throw new Error(`no response`);
     },

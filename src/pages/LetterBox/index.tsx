@@ -14,7 +14,6 @@ const fetchMailLists = async () => {
   const response = await getMailbox();
   if (!response) throw new Error();
   const data: LetterBoxData[] = response.data;
-  console.log(data);
   return data;
 };
 
