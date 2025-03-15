@@ -9,7 +9,7 @@
 - 배포 URL : https://www.ddasum.kr/
 
 ## 구성원
-| [한승연](https://github.com/tiffanyhansy) | [안지원](https://github.com/wldnjs990) | [김세빈](https://github.com/nirii00) | [안민하](https://github.com/AAminha) | 
+| [한승연](https://github.com/tifsy) | [안지원](https://github.com/wldnjs990) | [김세빈](https://github.com/nirii00) | [안민하](https://github.com/AAminha) | 
 | --- | --- | --- | --- | 
 | <a href="https://github.com/tiffanyhansy"><img src="https://avatars.githubusercontent.com/u/125551867?v=4" width="100px;" alt=""/></a> | <a href="https://github.com/wldnjs990"><img src="https://avatars.githubusercontent.com/u/139528356?v=4" width="100px;" alt=""/></a> | <a href="https://github.com/nirii00"><img src="https://avatars.githubusercontent.com/u/108220388?v=4" width="100px;" alt=""/></a> | <a href="https://github.com/AAminha"><img src="https://avatars.githubusercontent.com/u/87255791?v=4" width="100px;" alt=""/></a> | 
 | Team-Lead | Clerk  | Clerk | Clerk 
