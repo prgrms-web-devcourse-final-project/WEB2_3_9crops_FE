@@ -110,7 +110,7 @@ export default function Matched({
             handleDeleteRandomLetterMatching();
           }}
           disabled={isDisabled}
-          aria-label="취소버튼"
+          aria-label={isDisabled ? '취소 시간이 지났습니다.' : '답장 취소하기'}
         >
           {isDisabled
             ? '취소 시간이 지났습니다.'

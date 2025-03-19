@@ -111,7 +111,7 @@ export default function MatchingSelect({
                 selectedCategory === category.category && 'bg-primary-1 text-white',
               )}
               key={idx}
-              aria-label="카테고리 제목"
+              aria-label={category.title}
             >
               {category.title}
             </button>
