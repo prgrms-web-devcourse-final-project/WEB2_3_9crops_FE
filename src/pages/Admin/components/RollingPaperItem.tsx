@@ -69,7 +69,7 @@ export default function RollingPaperItem({ information, currentPage }: RollingPa
             type="button"
             className="hover:bg-gray-10 text-gray-60 rounded-md px-3 py-1 hover:text-black"
             onClick={() => toggleStatus()}
-            aria-label="중단하기 / 진행하기"
+            aria-label={information.used ? '중단하기' : '진행하기'}
           >
             {information.used ? '중단하기' : '진행하기'}
           </button>

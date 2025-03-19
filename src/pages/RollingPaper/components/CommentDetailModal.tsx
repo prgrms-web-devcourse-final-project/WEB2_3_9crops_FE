@@ -28,7 +28,7 @@ const CommentDetailModal = ({
           type="button"
           className="body-b ml-auto text-white"
           onClick={handleButtonClick}
-          aria-label="삭제하기 / 신고하기"
+          aria-label={isWriter ? '삭제하기' : '신고하기'}
         >
           {isWriter ? '삭제하기' : '신고하기'}
         </button>

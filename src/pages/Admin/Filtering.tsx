@@ -41,7 +41,6 @@ export default function FilteringManage() {
                 onClick={() => {
                   setAddInputShow(true);
                 }}
-                aria-label="추가하기"
               >
                 <AddIcon className="h-4 w-4" />
               </button>

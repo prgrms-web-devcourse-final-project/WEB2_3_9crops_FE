@@ -44,6 +44,7 @@ const MessageModal = ({
           type="button"
           className="body-m secondary-btn h-10 flex-1 basis-1/2"
           onClick={onCancel}
+          aria-label={`${cancelText} 버튼`}
         >
           {cancelText}
         </button>
@@ -51,6 +52,7 @@ const MessageModal = ({
           type="button"
           className="primary-btn body-m h-10 flex-1 basis-1/2"
           onClick={onComplete}
+          aria-label={`${completeText} 버튼`}
         >
           {completeText}
         </button>

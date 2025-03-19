@@ -54,10 +54,7 @@ export default function Sidebar() {
           </div>
         ))}
       </section>
-      <button
-        className="mt-auto flex w-full items-center gap-3 px-5 py-3 hover:bg-amber-100"
-        aria-label="로그아웃"
-      >
+      <button className="mt-auto flex w-full items-center gap-3 px-5 py-3 hover:bg-amber-100">
         <AlarmIcon className="text-gray-80 h-5 w-5" />
         <span className="text-gray-80 body-l-m" onClick={() => logout()}>
           로그아웃

@@ -74,6 +74,7 @@ const ReportModal = ({ reportType, letterId, onClose }: ReportModalProps) => {
               postReportRequest.reasonType === reason.type && 'bg-primary-2',
             )}
             onClick={() => handleReasonClick(reason.type)}
+            aria-label={`신고 사유: ${reason.name}`}
           >
             {reason.name}
           </button>

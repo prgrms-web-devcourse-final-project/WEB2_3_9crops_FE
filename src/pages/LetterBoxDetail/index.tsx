@@ -210,7 +210,6 @@ const LetterBoxDetailPage = () => {
             type="button"
             className="body-sb text-gray-60 mt-auto text-left underline dark:text-white"
             onClick={() => setIsOpenDisConnectModal(true)}
-            aria-label="더 이상 편지하지 않을래요"
           >
             더 이상 편지하지 않을래요
           </button>
@@ -223,7 +222,6 @@ const LetterBoxDetailPage = () => {
             className="body-m primary-btn w-full py-2 text-black"
             disabled={selected.length === 0}
             onClick={() => setIsOpenShareModal(true)}
-            aria-label="공유하기"
           >
             공유하기
           </button>

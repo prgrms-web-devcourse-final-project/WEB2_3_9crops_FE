@@ -38,6 +38,7 @@ export default function MenuModal({
             content.onClick();
             setModalOpen(false);
           }}
+          aria-label={content.title}
         >
           {content.title}
         </button>

@@ -75,6 +75,8 @@ export default function PagenationNavigation({
               onClick={() => {
                 handlePageButtonClick(num);
               }}
+              aria-label={`${num} 페이지로 이동`}
+              aria-current={nowPageNumberAt === num ? 'page' : undefined}
             >
               {num}
             </button>
@@ -86,7 +88,7 @@ export default function PagenationNavigation({
           onClick={() => {
             handleNextButtonClick();
           }}
-          aria-label="다음으로"
+          aria-label="다음 페이지로"
         >
           next
         </button>
