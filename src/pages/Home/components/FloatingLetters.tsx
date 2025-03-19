@@ -1,10 +1,10 @@
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 
-import letter1 from '@/assets/images/letter-1.png';
-import letter2 from '@/assets/images/letter-2.png';
-import letter3 from '@/assets/images/letter-3.png';
-import letter4 from '@/assets/images/letter-4.png';
+import letter1 from '@/assets/images/letter-1.webp';
+import letter2 from '@/assets/images/letter-2.webp';
+import letter3 from '@/assets/images/letter-3.webp';
+import letter4 from '@/assets/images/letter-4.webp';
 
 const images = [letter1, letter2, letter3, letter4];
 

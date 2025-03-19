@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 
 import { getUnreadLettersCount } from '@/apis/unreadLetters';
-import goToLetterBoxNewLetters from '@/assets/images/go-to-letter-box-new-letters.png';
-import goToLetterBox from '@/assets/images/go-to-letter-box.png';
+import goToLetterBoxNewLetters from '@/assets/images/go-to-letter-box-new-letters.webp';
+import goToLetterBox from '@/assets/images/go-to-letter-box.webp';
 import useToastStore from '@/stores/toastStore';
 
 const GoToLetterBox = () => {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import randomCheerBird from '@/assets/images/field-theme-asset-bird.png';
+import randomCheerBird from '@/assets/images/field-theme-asset-bird.webp';
 import randomCheerBirdDark from '@/assets/images/field-theme-asset-bird-dark.webp';
 
 import { RANDOM_CHEER_LIST } from '../constants';

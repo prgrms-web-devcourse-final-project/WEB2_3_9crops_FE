@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import goToLetterBoard from '@/assets/images/go-to-letter-board.png';
+import goToLetterBoard from '@/assets/images/go-to-letter-board.webp';
 
 const GoToLetterBoard = () => {
   return (

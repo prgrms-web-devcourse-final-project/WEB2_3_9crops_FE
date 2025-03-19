@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import goToWrite from '@/assets/images/postoffice-letter.png';
+import goToWrite from '@/assets/images/postoffice-letter.webp';
 
 const GoToWrite = () => {
   return (
