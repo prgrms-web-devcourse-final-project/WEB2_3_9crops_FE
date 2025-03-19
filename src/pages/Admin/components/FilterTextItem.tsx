@@ -77,7 +77,10 @@ export default function FilterTextItem({
         <DeleteIcon className="h-5 w-5" />
       </button>
 
-      <button onClick={() => handlePatchBadWordsUsed(badWord.id, badWord.isUsed)}>
+      <button
+        onClick={() => handlePatchBadWordsUsed(badWord.id, badWord.isUsed)}
+        aria-label={badWord.isUsed === 'true' ? '비속어 사용 활성화' : '비속어 사용 비활성화'}
+      >
         {badWord.isUsed === 'true' ? (
           <ToggleOn className="h-5 w-5" />
         ) : (

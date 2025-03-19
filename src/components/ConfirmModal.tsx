@@ -37,6 +37,7 @@ const ConfirmModal = ({
             type="button"
             className="body-m secondary-btn h-10 flex-1 basis-1/2"
             onClick={onCancel}
+            aria-label={`${cancelText} 버튼`}
           >
             {cancelText}
           </button>
@@ -45,6 +46,7 @@ const ConfirmModal = ({
             className="primary-btn body-m h-10 flex-1 basis-1/2"
             disabled={confirmDisabled}
             onClick={onConfirm}
+            aria-label={`${confirmText} 버튼`}
           >
             {confirmText}
           </button>
