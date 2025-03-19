@@ -11,7 +11,7 @@ const GoToLetterBoard = () => {
           <img
             src={goToLetterBoard}
             alt="go to letter board"
-            className="w-[160px] sm:w-[200px] md:w-[240px]"
+            className="h-auto w-[160px] sm:w-[200px] md:w-[240px]"
           />
         </Link>
       </div>

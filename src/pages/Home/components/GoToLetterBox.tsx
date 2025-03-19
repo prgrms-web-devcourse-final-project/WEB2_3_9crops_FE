@@ -35,7 +35,7 @@ const GoToLetterBox = () => {
           <img
             src={arrivedCount ? goToLetterBoxNewLetters : goToLetterBox}
             alt="go to letter box"
-            className="w-[190px] sm:w-[210px] md:w-[240px]"
+            className="h-auto w-[190px] sm:w-[210px] md:w-[240px]"
           />
         </Link>
       </div>

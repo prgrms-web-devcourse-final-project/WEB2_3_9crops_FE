@@ -9,7 +9,7 @@ const GoToWrite = () => {
         속마음 나누기
       </p>
       <Link to={'/letter/write'}>
-        <img src={goToWrite} alt="go to write" />
+        <img src={goToWrite} alt="go to write" className="h-auto w-auto" />
       </Link>
     </div>
   );
