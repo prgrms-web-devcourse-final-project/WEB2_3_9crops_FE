@@ -28,18 +28,14 @@ const GoToLetterBox = () => {
   }, []);
 
   return (
-    <div className="absolute bottom-[11%] left-5 z-9 flex">
-      <div className="text-left">
-        <p className="text-gray-60 body-r mb-1 ml-2 dark:text-white">내 편지함</p>
-        <Link to="/letter/box">
-          <img
-            src={arrivedCount ? goToLetterBoxNewLetters : goToLetterBox}
-            alt="go to letter box"
-            className="h-auto w-[190px] sm:w-[210px] md:w-[240px]"
-          />
-        </Link>
-      </div>
-    </div>
+    <Link to="/letter/box" className="absolute bottom-[11%] left-5 z-9 flex-col">
+      <p className="text-gray-60 body-r mb-1 ml-2 dark:text-white">내 편지함</p>
+      <img
+        src={arrivedCount ? goToLetterBoxNewLetters : goToLetterBox}
+        alt={arrivedCount ? '새로운 편지가 있는 내 편지함' : '빈 내 편지함'}
+        className="h-auto w-[190px] sm:w-[210px] md:w-[240px]"
+      />
+    </Link>
   );
 };
 
