@@ -96,7 +96,6 @@ const ShareApprovalPage = () => {
                 type="button"
                 className="body-m secondary-btn h-10 flex-1 basis-1/2"
                 onClick={() => handleProposalApproval('reject')}
-                aria-label="거부하기"
               >
                 거부하기
               </button>
@@ -105,7 +104,6 @@ const ShareApprovalPage = () => {
                 type="button"
                 className="primary-btn body-m h-10 flex-1 basis-1/2"
                 onClick={() => handleProposalApproval('approve')}
-                aria-label="승인하기"
               >
                 승인하기
               </button>

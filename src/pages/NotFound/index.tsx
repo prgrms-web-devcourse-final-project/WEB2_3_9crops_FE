@@ -22,7 +22,6 @@ export default function index() {
         onClick={() => {
           navigate(`/`);
         }}
-        aria-label="집으로 돌아가기"
       >
         집으로 돌아가기
       </button>

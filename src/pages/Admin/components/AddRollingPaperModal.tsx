@@ -64,15 +64,10 @@ export default function AddRollingPaperModal({ currentPage, onClose }: AddRollin
               type="button"
               className="secondary-btn text-gray-80 body-m flex-1 basis-1/2 px-3 py-2"
               onClick={onClose}
-              aria-label="취소하기"
             >
               취소하기
             </button>
-            <button
-              type="submit"
-              className="primary-btn body-m flex-1 basis-1/2 px-3 py-2"
-              aria-label="생성하기"
-            >
+            <button type="submit" className="primary-btn body-m flex-1 basis-1/2 px-3 py-2">
               생성하기
             </button>
           </section>

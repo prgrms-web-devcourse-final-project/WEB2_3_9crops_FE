@@ -41,7 +41,6 @@ const MatchedLetter = ({ matchedLetter }: { matchedLetter: MatchedLetter }) => {
               state: { randomMatched: true, matchedLetter: matchedLetter },
             });
           }}
-          aria-label="편지 작성 버튼"
         >
           편지 작성하기
         </button>

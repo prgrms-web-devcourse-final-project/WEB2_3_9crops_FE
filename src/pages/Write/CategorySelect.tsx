@@ -99,7 +99,6 @@ export default function CategorySelect({
                 setToastActive({ title: '카테고리를 선택해주세요.', toastType: 'Warning' });
               }
             }}
-            aria-label="편지 전송"
           >
             편지 전송
           </button>
