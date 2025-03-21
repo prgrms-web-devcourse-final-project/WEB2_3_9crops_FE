@@ -18,7 +18,7 @@ function WritePageButton({
   const buttonStyle = twMerge(
     'caption-sb text-gray-60 rounded-sm px-2 py-1',
     `bg-${bgColor} rounded-${rounded}`,
-    `${target === text && slideActive && 'bg-primary-1 text-white'}`,
+    `${target === text && slideActive && 'bg-primary-2 text-gray-70'}`,
   );
   return (
     <button

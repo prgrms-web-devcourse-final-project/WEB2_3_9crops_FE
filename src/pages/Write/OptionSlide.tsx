@@ -42,9 +42,9 @@ function OptionSlide({ prevLetter }: { prevLetter: PrevLetter[] }) {
   return (
     <div
       ref={slideRef}
-      className="bg-primary-3 fixed bottom-0 left-[50%] flex w-full max-w-[600px] translate-x-[-50%] flex-col rounded-t-[20px] duration-300"
+      className="bg-primary-4 fixed bottom-0 left-[50%] flex w-full max-w-[600px] translate-x-[-50%] flex-col rounded-t-[20px] duration-300"
     >
-      <div className="border-primary-1 flex cursor-pointer items-center justify-between border-b-2 px-4 pt-6 pb-4">
+      <div className="border-primary-2 flex cursor-pointer items-center justify-between border-b-2 px-4 pt-6 pb-4">
         <div className="flex gap-2">
           <WritePageButton
             text={buttonTitle[0]}
