@@ -4,8 +4,8 @@ import FieldImg from '@/assets/images/home-left-mountain.webp';
 import FieldImgDark from '@/assets/images/home-left-mountain-dark.webp';
 
 import BlurImg from '@/assets/images/landing-blur.png';
-import EnvelopeImg from '@/assets/images/postoffice-letter.png';
-import PostofficeImg from '@/assets/images/postoffice.png';
+import EnvelopeImg from '@/assets/images/postoffice-letter.webp';
+import PostofficeImg from '@/assets/images/postoffice.webp';
 import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
 import useThemeStore from '@/stores/themeStore';
 

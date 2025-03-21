@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import randomCheerBird from '@/assets/images/field-theme-asset-bird.png';
+import randomCheerBird from '@/assets/images/field-theme-asset-bird.webp';
 import randomCheerBirdDark from '@/assets/images/field-theme-asset-bird-dark.webp';
 
 import { RANDOM_CHEER_LIST } from '../constants';
@@ -15,11 +15,19 @@ const RandomCheer = () => {
 
   const [randomCheer, setRandomCheer] = useState(getRandomCheer());
 
+  useEffect(() => {
+    setRandomCheer(getRandomCheer());
+  }, []);
+
+  const handleClick = () => {
+    setRandomCheer(getRandomCheer());
+  };
+
   return (
     <div className="z-26 mr-20 flex flex-col items-end">
       <div
         className="relative mb-3 w-fit rounded-lg border-1 border-white bg-white px-6 py-[7px] text-center"
-        onClick={() => setRandomCheer(getRandomCheer())}
+        onClick={handleClick}
       >
         <p className="caption-m">{randomCheer}</p>
         <div className="absolute right-2 bottom-[-15px] -translate-x-1/2 transform border-x-[10px] border-t-[15px] border-x-transparent border-t-white"></div>
@@ -28,7 +36,7 @@ const RandomCheer = () => {
         src={theme === 'light' ? randomCheerBird : randomCheerBirdDark}
         alt="random cheer bird"
         className="h-[26.5px] w-[21px] opacity-80"
-        onClick={() => setRandomCheer(getRandomCheer())}
+        onClick={handleClick}
       />
     </div>
   );

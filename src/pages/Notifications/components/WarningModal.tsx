@@ -16,7 +16,7 @@ const WarningModal = ({ isOpen, reportContent, onClose }: WarningModalProps) => 
       <article
         className={twMerge(
           'relative w-77 overflow-hidden rounded-sm p-6',
-          'bg-accent-1 bg-[url("/src/assets/images/background-overlay.png")] bg-repeat bg-blend-overlay',
+          'bg-accent-1 bg-[url("/src/assets/images/background-overlay.webp")] bg-repeat bg-blend-overlay',
         )}
       >
         <div className="absolute inset-0 h-full w-full bg-white/90 blur-[25px]" />

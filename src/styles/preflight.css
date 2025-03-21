@@ -53,7 +53,7 @@
 @layer components {
   .mobile-bg {
     background:
-      url('/src/assets/images/background-overlay.png') repeat,
+      url('/src/assets/images/background-overlay.webp') repeat,
       linear-gradient(
           180deg,
           rgba(234, 191, 23, 0.5) 2.83%,
