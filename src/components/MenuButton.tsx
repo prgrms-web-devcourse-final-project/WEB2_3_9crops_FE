@@ -53,7 +53,7 @@ export default function MenuButton() {
           <EditNoteRoundedIcon fontSize="medium" />
         </Link>
 
-        <div
+        <button
           className={twMerge(
             'bg-primary-3 fixed bottom-[30px] z-30 flex h-13 w-13 content-center items-center justify-center rounded-full text-white transition-all duration-200 hover:scale-105 active:scale-90',
             isOpen ? 'rotate-90' : 'rotate-0',
@@ -62,7 +62,7 @@ export default function MenuButton() {
           aria-label="메뉴 열기"
         >
           <MenuRoundedIcon />
-        </div>
+        </button>
       </div>
     </>
   );

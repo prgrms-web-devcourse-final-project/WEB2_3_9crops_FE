@@ -19,7 +19,7 @@ const HomeHeader = () => {
           <FlareRoundedIcon className="h-6 w-6 text-white" onClick={toggleTheme} />
         )}
         <NotificationButton />
-        <Link to="/mypage">
+        <Link to="/mypage" aria-label="마이페이지로 이동">
           <PersonIcon className="h-6 w-6 text-white" />
         </Link>
       </div>
