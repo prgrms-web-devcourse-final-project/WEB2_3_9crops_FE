@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { getShareProposalDetail } from '@/apis/share';
-import { postShareProposalApproval, ShareProposalDetail } from '@/apis/share';
+import { postShareProposalApproval } from '@/apis/share';
 
 import useToastStore from '@/stores/toastStore';
 
