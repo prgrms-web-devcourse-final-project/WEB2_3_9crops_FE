@@ -1,21 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 
+import { fetchMyPageInfo } from '@/apis/myPage';
 import { deleteUserInfo } from '@/apis/auth';
 import ConfirmModal from '@/components/ConfirmModal';
 import useAuthStore from '@/stores/authStore';
-import useMyPageStore from '@/stores/myPageStore';
 
 import { TEMPERATURE_RANGE } from './constants';
 import useToastStore from '@/stores/toastStore';
 import ModalOverlay from '@/components/ModalOverlay';
 
 const MyPage = () => {
-  useEffect(() => {
-    fetchMyPageInfo();
-  }, []);
-
-  const { data, fetchMyPageInfo } = useMyPageStore();
+  const [myInfo, setMyInfo] = useState<MyPage>();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenWarningModal, setIsOpenWarningModal] = useState(false);
@@ -23,12 +19,18 @@ const MyPage = () => {
   const logout = useAuthStore((state) => state.logout);
   const setToastActive = useToastStore((state) => state.setToastActive);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchMyPageInfo();
+      if (data) setMyInfo(data);
+    };
+    fetchData();
+  }, []);
+
   const getDescriptionByTemperature = (temp: number) => {
     const range = TEMPERATURE_RANGE.find((range) => temp >= range.min && temp < range.max);
     return range?.description;
   };
-
-  const description = getDescriptionByTemperature(Number(data.temperature));
 
   const handleLeave = async () => {
     try {
@@ -88,7 +90,7 @@ const MyPage = () => {
 
       <main className="flex grow flex-col gap-12 px-5 pt-20 pb-6">
         <h1 className="h2-b mx-auto flex gap-1.5">
-          {data.zipCode.split('').map((code, index) => (
+          {myInfo?.zipCode.split('').map((code, index) => (
             <div
               key={index}
               className="flex h-13.5 w-10 items-center justify-center rounded-sm bg-white inset-shadow-[0_4px_4px_0] inset-shadow-black/10"
@@ -99,13 +101,15 @@ const MyPage = () => {
         </h1>
         <section>
           <h2 className="mb-2 flex justify-between">
-            <p className="body-sb text-gray-60 dark:text-white">{description}</p>
-            <p className="body-sb text-accent-2">{data.temperature}도</p>
+            <p className="body-sb text-gray-60 dark:text-white">
+              {getDescriptionByTemperature(Number(myInfo?.temperature))}
+            </p>
+            <p className="body-sb text-accent-2">{myInfo?.temperature}도</p>
           </h2>
           <div className="h-4 w-full rounded-full bg-white">
             <div
               className="h-full w-[calc(${degree}%)] rounded-full bg-[#FFB5AC]"
-              style={{ width: `calc(${data.temperature}%)` }}
+              style={{ width: `calc(${myInfo?.temperature}%)` }}
             />
           </div>
         </section>
@@ -131,8 +135,8 @@ const MyPage = () => {
             <div className="flex justify-between">
               <p className="body-sb text-gray-100 dark:text-white">로그인 정보</p>
               <p className="body-r text-gray-60 dark:text-white">
-                <span className="mr-2">{data.social}</span>
-                <span>{data.email}</span>
+                <span className="mr-2">{myInfo?.social}</span>
+                <span>{myInfo?.email}</span>
               </p>
             </div>
             <div
@@ -143,7 +147,7 @@ const MyPage = () => {
             >
               <p className="body-sb text-gray-100 dark:text-white">경고 횟수</p>
               <p className="body-r text-gray-60 dark:text-white">
-                <span>{data.warningCount}회</span>
+                <span>{myInfo?.warningCount}회</span>
               </p>
             </div>
 
