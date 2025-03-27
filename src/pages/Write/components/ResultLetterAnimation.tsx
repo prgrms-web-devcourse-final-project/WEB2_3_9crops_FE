@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import closedLetter from '@/assets/images/closed-letter.png';
-import openedLetterFront from '@/assets/images/opened-letter-front.png';
-import openedLetter from '@/assets/images/opened-letter.png';
+import closedLetter from '@/assets/images/closed-letter.webp';
+import openedLetterFront from '@/assets/images/opened-letter-front.webp';
+import openedLetter from '@/assets/images/opened-letter.webp';
 import useAuthStore from '@/stores/authStore';
 import useWrite from '@/stores/writeStore';
 
