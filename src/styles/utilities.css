@@ -30,8 +30,8 @@
   }
   .celebrate {
     background:
-      url('../assets/images/celebration-theme-asset-side.png') repeat-y,
-      url('../assets/images/celebration-theme-asset-bottom.png') no-repeat bottom,
+      url('../assets/images/celebration-theme-asset-side.webp') repeat-y,
+      url('../assets/images/celebration-theme-asset-bottom.webp') no-repeat bottom,
       #ffffff;
     background-size: 100%;
   }
