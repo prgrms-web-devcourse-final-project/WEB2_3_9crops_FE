@@ -1,17 +1,5 @@
 import client from './client';
 
-export interface DraftLetter {
-  letterId: number;
-  matchingId: number;
-  receiverId: number;
-  parentLetterId: number;
-  title: string;
-  content: string;
-  category: string;
-  paperType: string;
-  fontType: string;
-}
-
 export const getDraftLetters = async (): Promise<DraftLetter[]> => {
   try {
     const { data } = await client.get('/api/letters?status=draft');

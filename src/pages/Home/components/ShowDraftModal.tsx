@@ -2,7 +2,7 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { DraftLetter, getDraftLetters, deleteDraftLetters } from '@/apis/draftLetters';
+import { getDraftLetters, deleteDraftLetters } from '@/apis/draftLetters';
 import ModalBackgroundWrapper from '@/components/ModalBackgroundWrapper';
 import ModalOverlay from '@/components/ModalOverlay';
 
