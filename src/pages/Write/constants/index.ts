@@ -3,15 +3,15 @@ import celebrationStamp from '@/assets/images/celebration-stamp.webp';
 import celebration from '@/assets/images/celebration.webp';
 import congratTheme from '@/assets/images/congrat-theme.webp';
 import consolationStamp from '@/assets/images/consolation-stamp.webp';
-import consolation from '@/assets/images/consolation.png';
+import consolation from '@/assets/images/consolation.webp';
 import consultStamp from '@/assets/images/consult-stamp.webp';
 import cunsult from '@/assets/images/consult.webp';
-import etcStamp from '@/assets/images/etc-stamp.png';
-import etc from '@/assets/images/etc.png';
+import etcStamp from '@/assets/images/etc-stamp.webp';
+import etc from '@/assets/images/etc.webp';
 import fieldTheme from '@/assets/images/field-theme.webp';
 import respondentStamp from '@/assets/images/respondent-stamp.webp';
-import skyTheme from '@/assets/images/sky-theme.png';
-import vintageTheme from '@/assets/images/vintage-theme.png';
+import skyTheme from '@/assets/images/sky-theme.webp';
+import vintageTheme from '@/assets/images/vintage-theme.webp';
 
 const PAPER_TYPE_OBJ: PaperTypeObj = {
   BASIC: 'basic',
