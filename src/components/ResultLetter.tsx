@@ -14,11 +14,6 @@ export default function ResultLetter({
   createdAt?: Date;
 }) {
   const date = createdAt ? new Date(createdAt) : new Date();
-
-  // const today = createdAt
-  //   ? `${createdAt.getFullYear()}년 ${createdAt.getMonth() + 1}월 ${createdAt.getDate()}일`
-  //   : `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
-
   const today = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
   return (
