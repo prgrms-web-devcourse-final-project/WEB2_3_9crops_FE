@@ -4,7 +4,15 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 interface ThemeStore {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
+  applyAutoTheme: () => void;
 }
+
+const getAutoTheme = (): 'light' | 'dark' => {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  return 'light';
+};
 
 const useThemeStore = create(
   persist<ThemeStore>(
@@ -22,6 +30,12 @@ const useThemeStore = create(
 
           return { theme: newTheme };
         }),
+
+      applyAutoTheme: () => {
+        const autoTheme = getAutoTheme();
+        set({ theme: autoTheme });
+        document.documentElement.classList.toggle('dark', autoTheme === 'dark');
+      },
     }),
     {
       name: 'theme',
@@ -29,5 +43,7 @@ const useThemeStore = create(
     },
   ),
 );
+
+useThemeStore.getState().applyAutoTheme();
 
 export default useThemeStore;
