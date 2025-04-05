@@ -1,4 +1,4 @@
-import BgItem from '@/assets/images/field-4.png';
+import BgItem from '@/assets/images/field-theme-asset-bottom.webp';
 import BgItemDark from '@/assets/images/field-4-dark.webp';
 
 import BackgroundImageWrapper from './BackgroundImageWrapper';

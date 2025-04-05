@@ -80,6 +80,7 @@ export default function MatchingSelect({
                         categoryName={list.category}
                         title={list.title}
                         zipCode={list.zipCode}
+                        createdAt={list.createdAt}
                       />
                     </div>
                   </SwiperSlide>

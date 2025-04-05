@@ -6,12 +6,14 @@ export default function ResultLetter({
   categoryName = 'CONSOLATION',
   title,
   zipCode = 'ERROR',
+  createdAt,
 }: {
   categoryName: Category;
   title: string;
   zipCode: string;
+  createdAt?: Date;
 }) {
-  const date = new Date();
+  const date = createdAt ? new Date(createdAt) : new Date();
   const today = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
   return (

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 import { postRollingPaperComment } from '@/apis/rolling';
-import EnvelopeImg from '@/assets/images/closed-letter.png';
+import EnvelopeImg from '@/assets/images/closed-letter.webp';
 import MessageModal from '@/components/MessageModal';
 import useAuthStore from '@/stores/authStore';
 import { AxiosError } from 'axios';
