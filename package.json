@@ -13,6 +13,8 @@
     "@egjs/react-infinitegrid": "^4.12.0",
     "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
+    "@sentry/react": "^9.11.0",
+    "@sentry/tracing": "^7.120.3",
     "@tailwindcss/vite": "^4.0.6",
     "@tanstack/react-query": "^5.66.0",
     "axios": "^1.7.9",
