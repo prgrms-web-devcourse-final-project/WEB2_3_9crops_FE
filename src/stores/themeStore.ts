@@ -6,28 +6,36 @@ interface ThemeStore {
   toggleTheme: () => void;
 }
 
+const getAutoTheme = (): 'light' | 'dark' => {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+};
+
 const useThemeStore = create(
   persist<ThemeStore>(
-    (set, get) => ({
-      theme: get()?.theme ?? 'light',
-      toggleTheme: () =>
-        set((state) => {
-          const newTheme = state.theme === 'light' ? 'dark' : 'light';
+    (set, get) => {
+      const applyTheme = (theme: 'light' | 'dark') => {
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      };
 
-          if (newTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
+      const initialTheme = get()?.theme ?? getAutoTheme();
+      applyTheme(initialTheme);
 
-          return { theme: newTheme };
-        }),
-    }),
+      return {
+        theme: initialTheme,
+        toggleTheme: () =>
+          set((state) => {
+            const newTheme = state.theme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+            return { theme: newTheme };
+          }),
+      };
+    },
     {
       name: 'theme',
       storage: createJSONStorage(() => sessionStorage),
     },
   ),
 );
-
 export default useThemeStore;
