@@ -8,13 +8,13 @@ export default function ReportHandlingModal({
   setHandleModalOpen,
   selectedReportId,
 }: {
-  setReports: React.Dispatch<React.SetStateAction<Report[]>>;
+  setReports: React.Dispatch<React.SetStateAction<Report[] | null>>;
   setHandleModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedReportId: number | null;
 }) {
   const handleDeleteList = (targetId: number) => {
     setReports((curReports) =>
-      curReports.filter((report) => {
+      curReports!.filter((report) => {
         if (report.id === targetId) return false;
         return true;
       }),

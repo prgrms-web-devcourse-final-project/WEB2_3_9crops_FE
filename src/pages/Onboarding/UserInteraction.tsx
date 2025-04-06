@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import envelope from '@/assets/images/closed-letter.png';
-import envelopeFront from '@/assets/images/opened-letter-front.png';
+import envelope from '@/assets/images/closed-letter.webp';
+import envelopeFront from '@/assets/images/opened-letter-front.webp';
 
 export default function UserInteraction({
   setIsAnimationOver,

@@ -37,6 +37,7 @@ function MatchingSelectModal({
             categoryName={selectedLetter.category}
             title={selectedLetter.title}
             zipCode={selectedLetter.zipCode}
+            createdAt={selectedLetter.createdAt}
           />
         </div>
         <div className="mt-12.5 flex w-[300px] gap-4">
