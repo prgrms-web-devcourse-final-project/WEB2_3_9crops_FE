@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router';
 import App from './App';
 import './styles/index.css';
 
+import './Sentry/instrument';
+
 const queryClient = new QueryClient();
 queryClient.setDefaultOptions({
   queries: {

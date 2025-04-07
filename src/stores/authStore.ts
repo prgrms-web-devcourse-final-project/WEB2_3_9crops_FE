@@ -6,11 +6,13 @@ import { getNewToken } from '@/apis/auth';
 interface AuthStore {
   isLoggedIn: boolean;
   zipCode: string;
+  email: string;
   accessToken: string;
   isAdmin: boolean;
   login: () => void;
   logout: () => Promise<void>;
   setZipCode: (zipCode: string) => void;
+  setEmail: (email: string) => void;
   setAccessToken: (accessToken: string) => void;
   setIsAdmin: () => void;
   isRefreshing: boolean;
@@ -24,6 +26,7 @@ const useAuthStore = create(
       isLoggedIn: false,
       accessToken: '',
       zipCode: '',
+      email: '',
       isAdmin: false,
       login: () => set({ isLoggedIn: true }),
       logout: async () => {
@@ -42,6 +45,7 @@ const useAuthStore = create(
         // }
       },
       setZipCode: (zipCode) => set({ zipCode: zipCode }),
+      setEmail: (email) => set({ email: email }),
       setAccessToken: (accessToken) => set({ accessToken: accessToken }),
       setIsAdmin: () => set({ isAdmin: true }),
       isRefreshing: false,

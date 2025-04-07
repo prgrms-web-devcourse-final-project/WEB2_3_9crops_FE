@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import useAuthStore from '@/stores/authStore';
+import Sentry from '@/Sentry/instrument';
+import useToastStore from '@/stores/toastStore';
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -23,6 +25,11 @@ client.interceptors.response.use(
   async (error) => {
     const logout = useAuthStore.getState().logout;
     const isLoggedIn = useAuthStore.getState().isLoggedIn;
+    Sentry.captureException(error);
+    useToastStore.getState().setToastActive({
+      title: '서버에 오류가 발생했습니다.',
+      toastType: 'Error',
+    });
 
     const originalRequest = error.config;
 
@@ -42,6 +49,7 @@ client.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return client(originalRequest);
       } catch (e) {
+        // 센트리 에러 전송
         return Promise.reject(e);
       }
     }
