@@ -8,6 +8,7 @@ import useAuthStore from '@/stores/authStore';
 import useThemeStore from '@/stores/themeStore';
 
 import { STYLE_CLASS } from './constants';
+import WebpImage from '@/components/WebpImage';
 
 const Landing = () => {
   const [step, setStep] = useState(0);
@@ -23,7 +24,7 @@ const Landing = () => {
 
   return (
     <main className="relative flex grow justify-center" onClick={() => setStep((prev) => prev + 1)}>
-      <img
+      <WebpImage
         src={theme === 'light' ? LandingImg : LandingImgDark}
         alt="서비스 소개 이미지"
         className={twMerge(
@@ -31,6 +32,14 @@ const Landing = () => {
           STYLE_CLASS[step].imagePosition,
         )}
       />
+      {/* <img
+        src={theme === 'light' ? LandingImg : LandingImgDark}
+        alt="서비스 소개 이미지"
+        className={twMerge(
+          'fixed bottom-0 h-70 w-auto max-w-none -translate-x-1/2 transition-all duration-200',
+          STYLE_CLASS[step].imagePosition,
+        )}
+      /> */}
       <section
         className={twMerge(
           'fixed z-1 -translate-x-1/2 transition-all duration-200',
