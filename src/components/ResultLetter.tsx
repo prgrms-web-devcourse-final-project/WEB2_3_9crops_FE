@@ -1,6 +1,7 @@
 import { CATEGORYS } from '../pages/Write/constants';
 
 import LetterWrapper from './LetterWrapper';
+import WebpImage from './WebpImage';
 
 export default function ResultLetter({
   categoryName = 'CONSOLATION',
@@ -24,7 +25,9 @@ export default function ResultLetter({
             <span className="caption-b text-gray-60">따숨이님께</span>
             <span className="caption-r text-gray-80 line-clamp-3 break-all">{title}</span>
           </div>
-          <img src={CATEGORYS[categoryName]} alt="우표" />
+
+          <WebpImage src={CATEGORYS[categoryName]} alt="우표" />
+          {/* <img src={CATEGORYS[categoryName]} alt="우표" /> */}
         </div>
         <div className="flex flex-col gap-[5px]">
           <span className="caption-sb text-gray-60">{today}</span>

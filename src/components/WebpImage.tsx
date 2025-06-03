@@ -19,7 +19,7 @@ export default function WebpImage({
 }: {
   src: string;
   alt: string;
-  className: string;
+  className?: string;
 }) {
   const [imageSrc, setImageSrc] = useState(src);
 
