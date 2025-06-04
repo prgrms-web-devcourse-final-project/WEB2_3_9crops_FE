@@ -2,7 +2,7 @@ import useAuthStore from '@/stores/authStore';
 import * as Sentry from '@sentry/react';
 
 Sentry.init({
-  dsn: 'https://29d2c788d61a2d1e6647da9f16c01def@o4509101248413697.ingest.us.sentry.io/4509101251100672',
+  dsn: import.meta.env.VITE_SENTRY_URL,
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration({
