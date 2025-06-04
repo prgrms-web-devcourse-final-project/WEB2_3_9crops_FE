@@ -13,6 +13,7 @@ const AuthCallbackPage = () => {
   const logout = useAuthStore((state) => state.logout);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setZipCode = useAuthStore((state) => state.setZipCode);
+  const setEmail = useAuthStore((state) => state.setEmail);
   const setIsAdmin = useAuthStore((state) => state.setIsAdmin);
   const navigate = useNavigate();
   let accessToken = '';
@@ -42,6 +43,7 @@ const AuthCallbackPage = () => {
             const zipCodeResponse = await getMydata();
             if (!zipCodeResponse) throw new Error('Error fetching user data');
             setZipCode(zipCodeResponse.data.data.zipCode);
+            setEmail(zipCodeResponse.data.data.email);
           }
           break;
 

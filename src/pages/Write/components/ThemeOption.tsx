@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import useWrite from '@/stores/writeStore';
 
 import { CATEGORY_LIST } from '../constants';
+import WebpImage from '@/components/WebpImage';
 
 export default function ThemeOption() {
   const letterRequest = useWrite((state) => state.letterRequest);
@@ -20,7 +21,7 @@ export default function ThemeOption() {
             aria-label="편지 테마 설정하기"
           >
             <span className="caption-m">{target.name}</span>
-            <img
+            <WebpImage
               src={target.src}
               alt="테마 이미지"
               className={twMerge(
@@ -28,6 +29,14 @@ export default function ThemeOption() {
                 letterRequest.paperType === target.paperType && 'border-primary-1-hover border-2',
               )}
             />
+            {/* <img
+              src={target.src}
+              alt="테마 이미지"
+              className={twMerge(
+                'w-full',
+                letterRequest.paperType === target.paperType && 'border-primary-1-hover border-2',
+              )}
+            /> */}
           </button>
         );
       })}
