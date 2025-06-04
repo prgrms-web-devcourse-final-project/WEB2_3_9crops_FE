@@ -15,9 +15,20 @@ Sentry.init({
       mask: ['.secret', 'input[type="password"]'],
     }),
   ],
-  tracesSampleRate: 1.0,
-  replaysSessionSampleRate: 1.0,
-  replaysOnErrorSampleRate: 1.0,
+
+  // 아래 옵션은 사용자에게 발생하는 오류에 대해 모니터링 서비스를 선택하는 코드들임
+  // 0~1의 수치는 사용자 발생 오류의 몇 %를 저장할것인지 정하는 값
+  // 0.1당 10%임
+  // 0.1이니깐 사용자 100명중 10명의 오류 세션을 저장하는 형태()
+  tracesSampleRate: 0.1,
+  // tracesSampleRate는 사용자가 이용하는 서비스의 성능을 기록하는 속성
+  replaysOnErrorSampleRate: 0.1,
+  // replaysOnErrorSampleRate는 세션을 버퍼라는 휘발성 메모리 공간에 보관해두다가 오류가 발생한 시점에 세션만 저장하는 속성
+
+  // replaysSessionSampleRate: 0.1,
+  // replaysSessionSampleRate는 사용자의 서비스 이용 처음부터 끝까지 모든 세션을 저장해두는 속성
+  // 오류가 없어도 서비스 이용 사항을 세부적으로 추적 가능하지만 비용이 어마무시해서(0.1이 에러샘플녹화 1보다 더 많이 듬) 실배포에선 돈 진짜 많으면 켜두자
+
   // tracePropagationTargets: ["localhost", '백엔드 도메인 주소']
   // tracePropagationTargets는 프론트엔드와 백엔드의 퍼포먼스 추적을 연결할때 사용하는 속성으로 백엔드도 Sentry를 사용해야 서로 연결 가능하다.
 });
